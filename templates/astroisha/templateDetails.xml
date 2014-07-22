@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="template">
+        <name>AstroIsha</name>
+        <creationDate>2014-07-16</creationDate>
+        <author>Luffy Mugiwara</author>
+        <authorEmail>kopnite@gmail.com</authorEmail>
+        <authorUrl>https://www.facebook.com/luffy.mugiwara.58173</authorUrl>
+        <license>GNU/GPL</license>
+        <version>1.0</version>
+        <description>Responsive Template for Site</description>
+        <files>
+                <filename>index.php</filename>
+                <filename>templateDetails.xml</filename>
+                <folder>images</folder>
+                <folder>css</folder>
+                <folder>js</folder>
+                <folder>bootstrap/css</folder>
+                <folder>bootstrap/fonts</folder>
+                <folder>bootstrap/js</folder>
+        </files>
+        <positions>
+                <position>breadcrumbs</position>
+                <position>jbanner</position>
+                <position>menu</position>
+                <position>menu1</position>
+                <position>menu2</position>
+                <position>menu3</position>
+                <position>menu4</position>
+                <position>userlogin</position>
+                <position>relatedarticles</position>
+                <position>footer</position>
+                <position>socialplugins</position>
+                <position>fblikeplugin</position>
+                <position>sidebar</position>
+                <position>searchbox</position>
+                <position>relatedarticles</position>
+                <position>adwords</position>
+                <position>articleslider</position>
+                <position>articleslider2</position>
+                <position>paypaldonate</position>
+        </positions>
+</extension>

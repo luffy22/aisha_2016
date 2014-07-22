@@ -1,0 +1,90 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<extension type="module" version="1.0" client = "site" method="install">
+ <name>Dropdown Login</name>
+ <author>Mugiwara Luffy</author>
+ <creationDate>February 2014</creationDate>
+ <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+ <authorEmail>admin@jyotishividya.co.in</authorEmail>
+ <authorUrl>https://www.facebook.com/luffy.mugiwara.58173</authorUrl>
+ <version>1.0</version>
+ <description>Dropdown Login with Facebook and Google Login</description>
+	<files>
+        <filename>mod_droplogin.xml</filename>
+        <filename module="mod_droplogin">mod_droplogin.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+        <filename>tmpl/index.html</filename>
+    </files>
+    <languages>
+		<language tag="en-GB">en-GB.mod_login.ini</language>
+		<language tag="en-GB">en-GB.mod_login.sys.ini</language>
+	</languages>
+    <help key="JHELP_EXTENSIONS_MODULE_MANAGER_MENU" />
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="login"
+					type="menuitem"
+					disable="separator"
+					label="Redirection Page"
+					description="Default Redirection Page after Login" >
+					<option
+						value="">JDEFAULT</option>
+				</field>
+				<field
+					name="logout"
+					type="menuitem"
+					disable="separator"
+					label="Redirection Page"
+					description="Choose Redirection Page after Login/Logout" >
+					<option
+						value="">JDEFAULT</option>
+				</field>
+				<field
+					name="greeting"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="Show Greeting"
+					description="Greeting Text Enabled/Disabled">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+					name="name"
+					type="list"
+					default="0"
+					label="Show Username/Name"
+					description="Whether to show username or name">
+					<option
+						value="0">Name</option>
+					<option
+						value="1">Username</option>
+				</field>
+				<field
+					name="usesecure"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="0"
+					label="Secure Connection"
+					description="Secure Socket Layer Connection">
+					<option value="1">Yes</option>
+					<option value="0">No</option>
+				</field>
+				<field
+					name="usetext"
+					type="list"
+					default="0"
+					label="Icons/Text"
+					description="Whether to use icons or text">
+					<option
+						value="0">Icons</option>
+					<option
+						value="1">Text</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+ </extension>

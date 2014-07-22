@@ -1,0 +1,35 @@
+<?php
+    error_reporting(0);
+    defined( '_JEXEC' ) or die( 'Restricted access' );
+    JHtml::_('jquery.framework');       // Loads the Jquery framework in noConflict Mode
+    JHtml::_('bootstrap.framework');  // Loads the bootstrap framework in noConflict Mode
+?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+   xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap-theme.min.css" type="text/css" />
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery.min.js" type="text/javascript" language="javascript"></script>
+<!--<script src="<?php echo $this->baseurl?>/media/jui/js/jquery-noconflict.js"></script>-->
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
+</head>
+<body id="body">
+<jdoc:include type="modules" name="top" /> 
+<jdoc:include type="component" />
+<button type="button" name="go" id="go" onclick="buttonCalls();">Change Background</button>
+<jdoc:include type="modules" name="bottom" />
+<div class="dropdown">
+  <a data-toggle="dropdown" href="#">Dropdown trigger</a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    <li>apple</li>
+<li>pineapples</li>
+<li>tomatoes</li>
+<li>apple</li>
+  </ul>
+</div>
+</body>
+</html>
