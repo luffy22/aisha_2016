@@ -19,8 +19,8 @@ class JConfig {
 	public $dbprefix = 'jv_';
 	public $live_site = '';
 	public $secret = '9JjhrY9oZnagjJWo';
-	public $gzip = '0';
-	public $error_reporting = 'default';
+	public $gzip = '1';
+	public $error_reporting = 'none';
 	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&keyref=Help{major}{minor}:{keyref}';
 	public $ftp_host = '127.0.0.1';
 	public $ftp_port = '21';
@@ -41,8 +41,8 @@ class JConfig {
 	public $smtpsecure = 'none';
 	public $smtpport = '25';
 	public $caching = '0';
-	public $cache_handler = 'file';
-	public $cachetime = '15';
+	public $cache_handler = 'cachelite';
+	public $cachetime = '30';
 	public $MetaDesc = 'Comprehensive Site on Vedic Astrology';
 	public $MetaKeys = '';
 	public $MetaTitle = '1';
@@ -50,9 +50,9 @@ class JConfig {
 	public $MetaVersion = '0';
 	public $robots = '';
 	public $sef = '1';
-	public $sef_rewrite = '0';
-	public $sef_suffix = '0';
-	public $unicodeslugs = '0';
+	public $sef_rewrite = '1';
+	public $sef_suffix = '1';
+	public $unicodeslugs = '1';
 	public $feed_limit = '10';
 	public $log_path = '/opt/lampp/htdocs/aisha/logs';
 	public $tmp_path = '/opt/lampp/htdocs/aisha/tmp';

@@ -29,3 +29,8 @@ Disallow: /plugins/
 Disallow: /templates/
 Disallow: /tmp/
 
+User-agent: *
+Allow: /
+Allow: /sitemap.htm
+Sitemap: http://www.astroisha.com/sitemap.xml
+

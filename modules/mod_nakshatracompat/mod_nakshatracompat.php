@@ -17,6 +17,6 @@ require_once __DIR__ . '/helper.php';
 //$boysMenu                   = modNakshatraCompatHelper::showBoysMenu();
 //$boysNakshatra              = modNakshatraCompatHelper::showBoysNakshatra();
 //$boysPada                   = modNakshatraCompatHelper::showBoysPada();
-$layout                     = $params->get('layout', 'default');
+$layout                       = $params->get('layout', 'default');
 require JModuleHelper::getLayoutPath('mod_nakshatracompat', $layout);
 

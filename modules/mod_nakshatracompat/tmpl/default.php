@@ -8,7 +8,6 @@
  */
 JHtml::_('behavior.keepalive');
 JHtml::_('bootstrap.tooltip');
-define('_JEXEC',1);
 ?>
 <h3>Nakshatra Compatibility Calculator</h3>
 <div class="row">

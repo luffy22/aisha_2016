@@ -14,11 +14,11 @@
  * @subpackage  mod_login
  * @since       1.5
  */
-
+define('_JEXEC', 1); 
 class modNakshatraCompatHelper
 {
 
-    public static function GirlNakshatraAjax()
+    public function GirlNakshatraAjax()
     {
         if(isset($_GET['g_rashi']))
         {
@@ -26,7 +26,7 @@ class modNakshatraCompatHelper
             
             $db             = JFactory::getDbo();  // Get db connection
             $query          = $db->getQuery(true);
-            $query          = "SELECT DISTINCT girls_nakshatra "."FROM jv_nakshatra_compatibility"." where girls_rashi='$girlsrashi' GROUP BY girls_nakshatra";
+            $query          = "SELECT DISTINCT girls_nakshatra "."FROM jv_nakshatra_compatibility"." where girls_rashi='$girlsrashi'";
             $db             ->setQuery($query);
             $row            =$db->loadColumn();
             $count          = count($db->loadColumn());
@@ -45,7 +45,7 @@ class modNakshatraCompatHelper
             echo "error";
         }
     }
-    public static function BoyNakshatraAjax()
+    public function BoyNakshatraAjax()
     {
         if(isset($_GET['b_rashi']))
         {
@@ -53,7 +53,7 @@ class modNakshatraCompatHelper
             
             $db             = JFactory::getDbo();  // Get db connection
             $query          = $db->getQuery(true);
-            $query          = "SELECT DISTINCT boys_nakshatra "."FROM jv_nakshatra_compatibility"." where boys_rashi='$boysrashi' GROUP BY boys_nakshatra";
+            $query          = "SELECT DISTINCT boys_nakshatra "."FROM jv_nakshatra_compatibility"." where boys_rashi='$boysrashi'";
             $db             ->setQuery($query);
             $row            =$db->loadColumn();
             $count          = count($db->loadColumn());
@@ -72,7 +72,7 @@ class modNakshatraCompatHelper
             echo "error";
         }
     }
-    public static function GirlPadaAjax()
+    public function GirlPadaAjax()
     {
         if((isset($_GET['g_rashi']))&&(isset($_GET['g_nakshatra'])))
         {
@@ -100,7 +100,7 @@ class modNakshatraCompatHelper
             echo "error";
         }
     }
-    public static function BoyPadaAjax()
+    public function BoyPadaAjax()
     {
         if((isset($_GET['b_rashi']))&&(isset($_GET['b_nakshatra'])))
         {
@@ -128,7 +128,7 @@ class modNakshatraCompatHelper
             echo "error";
         }
     }
-    public static function GetPointsAjax()
+    public function GetPointsAjax()
     {
         if((isset($_GET['g_1']))&&(isset($_GET['g_2']))&&(isset($_GET['g_3']))
          &&(isset($_GET['b_1']))&&(isset($_GET['b_2']))&&(isset($_GET['b_3'])))

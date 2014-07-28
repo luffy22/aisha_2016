@@ -31,11 +31,36 @@
     <div class="login-module" id="login-cred">
         <jdoc:include type="modules" name="userlogin" style="none" />
     </div>
+     <div class="header-menu visible-desktop">
+        <div class="home_icon">
+            <a href="index.php"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="35px" height="35px" /></a>
+        </div>
+        <div class="navigation_menu">
+            <ul class="nav nav-pills visible-md visible-lg">
+                <li class="dropdown">
+                    <jdoc:include type="modules" name="menu1" style="none" />
+                </li>
+                <li class="dropdown">
+                    <jdoc:include type="modules" name="menu2" style="none" />
+                </li>
+                <li class="dropdown">
+                    <jdoc:include type="modules" name="menu3" style="none" />
+                </li>
+                <li class="dropdown">
+                    <jdoc:include type="modules" name="menu4" style="none" />
+                </li>
+                <li class="dropdown">
+                    <jdoc:include type="modules" name="menu" style="none" />
+                </li>
+            </ul>
+        </div>
+     </div>
 </div>
 <div class="container-fluid">
     <div class="row">
     <div class="col-md-3">
-        <jdoc:include type="modules" name="menu" style="none" />
+        <div class="spacer"></div>
+        <jdoc:include type="modules" name="sidebar" style="none" />
     </div>
     <div class="col-md-6">
         <div class="spacer"></div>
