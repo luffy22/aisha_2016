@@ -31,7 +31,7 @@
     <div class="login-module" id="login-cred">
         <jdoc:include type="modules" name="userlogin" style="none" />
     </div>
-     <div class="header-menu visible-desktop">
+    <div class="header-menu visible-desktop">
         <div class="home_icon">
             <a href="index.php"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="35px" height="35px" /></a>
         </div>

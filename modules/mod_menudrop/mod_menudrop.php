@@ -6,6 +6,7 @@ require_once __DIR__ . '/helper.php';
 
 $list		= ModMenuDropHelper::getList($params);
 $base           = ModMenuDropHelper::getBase($params);
+$active         = ModMenuDropHelper::getActive($params);
 require JModuleHelper::getLayoutPath('mod_menudrop', $params->get('layout', 'default'));
 
 

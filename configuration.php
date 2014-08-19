@@ -5,7 +5,7 @@ class JConfig {
 	public $display_offline_message = '1';
 	public $offline_image = '';
 	public $sitename = 'Astro Isha';
-	public $editor = 'none';
+	public $editor = 'jce';
 	public $captcha = '0';
 	public $list_limit = '20';
 	public $access = '5';
@@ -78,7 +78,7 @@ class JConfig {
 	public $session_memcache_server_port = '11211';
 	public $session_memcached_server_host = 'localhost';
 	public $session_memcached_server_port = '11211';
-	public $frontediting = '1';
+	public $frontediting = '2';
 	public $feed_email = 'author';
 	public $cookie_domain = '';
 	public $cookie_path = '';
