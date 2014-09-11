@@ -378,6 +378,18 @@
     <changefreq>Monthly</changefreq>
   </url>
   <url>
+	  <loc>http://www.astroisha.com/featured-articles/73-kuja.html</loc>
+	  <changefreq>Monthly</changefreq>
+	  </url>
+    <url>
+    <loc>http://www.astroisha.com/featured-articles/94-lucky-charms.html</loc>
+    <changefreq>Monthly</changefreq>
+   </url>
+    <url>
+    <loc>http://www.astroisha.com/featured-articles/93-numerology-myth.html</loc>
+    <changefreq>Monthly</changefreq>
+  </url>
+  <url>
     <loc>http://www.astroisha.com/main.html?start=10</loc>
     <changefreq>Monthly</changefreq>
     

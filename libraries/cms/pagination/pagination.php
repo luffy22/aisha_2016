@@ -667,16 +667,16 @@ class JPagination
 	{
 		// Reverse output rendering for right-to-left display.
 		$html = '<ul>';
-		$html .= '<li class="pagination-start">' . $list['start']['data'] . '</li>';
-		$html .= '<li class="pagination-prev">' . $list['previous']['data'] . '</li>';
+		$html .= '<li class="pagination2-start">' . $list['start']['data'] . '</li>';
+		$html .= '<li class="pagination2-prev">' . $list['previous']['data'] . '</li>';
 
 		foreach ($list['pages'] as $page)
 		{
 			$html .= '<li>' . $page['data'] . '</li>';
 		}
 
-		$html .= '<li class="pagination-next">' . $list['next']['data'] . '</li>';
-		$html .= '<li class="pagination-end">' . $list['end']['data'] . '</li>';
+		$html .= '<li class="pagination2-next">' . $list['next']['data'] . '</li>';
+		$html .= '<li class="pagination2-end">' . $list['end']['data'] . '</li>';
 		$html .= '</ul>';
 
 		return $html;

@@ -10,7 +10,7 @@ class AstroLoginModelProcess extends JModelItem
     public function registerUser($user_details)
     {
         $username     = $user_details['username'];
-        $password           = sha1($user_details['password']);
+        $password     = sha1($user_details['password']);
         $email        = $user_details['email'];
         $logintype          = $user_details['logintype'];
         $joindate           = $user_details['joindate'];

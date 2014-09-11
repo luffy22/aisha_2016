@@ -9,14 +9,12 @@
         <version>1.0</version>
         <description>Responsive Template for Site</description>
         <files>
-                <filename>index.php</filename>
-                <filename>templateDetails.xml</filename>
-                <folder>images</folder>
-                <folder>css</folder>
-                <folder>js</folder>
-                <folder>bootstrap/css</folder>
-                <folder>bootstrap/fonts</folder>
-                <folder>bootstrap/js</folder>
+            <filename>index.php</filename>
+            <filename>templateDetails.xml</filename>
+            <folder>images</folder>
+            <folder>css</folder>
+            <folder>js</folder>
+            <folder>html</folder>
         </files>
         <positions>
                 <position>breadcrumbs</position>
