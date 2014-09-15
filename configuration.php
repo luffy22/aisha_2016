@@ -5,7 +5,7 @@ class JConfig {
 	public $display_offline_message = '1';
 	public $offline_image = '';
 	public $sitename = 'Astro Isha';
-	public $editor = 'jce';
+	public $editor = 'none';
 	public $captcha = '0';
 	public $list_limit = '20';
 	public $access = '5';
@@ -51,7 +51,7 @@ class JConfig {
 	public $robots = '';
 	public $sef = '1';
 	public $sef_rewrite = '1';
-	public $sef_suffix = '0';
+	public $sef_suffix = '1';
 	public $unicodeslugs = '0';
 	public $feed_limit = '10';
 	public $log_path = '/opt/lampp/htdocs/aisha/logs';
@@ -72,7 +72,7 @@ class JConfig {
 	public $proxy_user = '';
 	public $proxy_pass = '';
 	public $MetaRights = '2014 All Rights Reserved';
-	public $sitename_pagetitles = '0';
+	public $sitename_pagetitles = '1';
 	public $force_ssl = '0';
 	public $session_memcache_server_host = 'localhost';
 	public $session_memcache_server_port = '11211';
