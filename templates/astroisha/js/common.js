@@ -358,3 +358,18 @@ function checkCompatibility()
         });
     }
 }
+function getLagna()
+{
+    var lagna   = document.getElementById("lagna_1");
+    var gender  = document.getElementById("lagna_gender1");
+    var dob     = document.getElementById("datepicker");
+    /*if(lagna.value=="")
+    {
+        
+        $("#lagna_grp_1").addClass("has-error has-feedback");
+        $("#lagna_ico_1").addClass("glyphicon glyphicon-remove");
+        document.getElementById('lagna_err_1').style.visibility = "visible";
+    }*/
+
+ 
+}

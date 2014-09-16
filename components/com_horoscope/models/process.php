@@ -5,5 +5,10 @@ jimport('joomla.application.component.modelitem');
 
 class AstroLoginModelProcess extends JModelItem
 {
+    // register user and send notification email
+    public function getLagna($user_details)
+    {
+        
+    }
 }
 ?>
