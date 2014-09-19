@@ -3,7 +3,7 @@ defined('_JEXEC') or die;  // No direct Access
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
 
-class AstroLoginModelProcess extends JModelItem
+class AstroLoginModelLagna extends JModelItem
 {
     public $fname;
     public $gender;
@@ -24,7 +24,7 @@ class AstroLoginModelProcess extends JModelItem
         $this->lat          = $user_details['lat'];
         $this->tz           = $user_details['tz'];
         
-        $siderealTime       = $this->getSiderealTime();
+        return $this->getSiderealTime();
     }
     // Method to get the sidereal Time
     public function getSiderealTime()
@@ -39,7 +39,27 @@ class AstroLoginModelProcess extends JModelItem
         $query          -> select($db->quoteName('Sidereal'));
         $query          -> from($db->quoteName('#__sidereal_1'));
         $query          -> where($db->quoteName('Month').'='.$db->quote($monthName).'AND'.
-                                 $db->quoteName('Date')."=".$db->quote());
+                                 $db->quoteName('Date')."=".$db->quote($dob[2]));
+        $db             ->setQuery($query);
+        $count          = count($db->loadResult());
+        $row            =$db->loadAssoc();
+        return $row['Sidereal'];;
+        /*if($count>0)
+        {
+            $get_sidetime_year                          = strtotime($row['Sidereal']);
+            $date					= new DateTime($this->dob);		// Datetime object with user date of birth
+            $date					->setTimeStamp($get_sidetime_year);		// time of birth for user
+            $date					->format('H:i:s');
+            if($monthName == "January" || $monthName == "February")
+            {
+                $query_sideyear			= mysqli_query($con, "SELECT corr_time FROM jv_sidereal_2 WHERE Year='".$dob_split[0]."' AND leap='*'");
+            }
+            else
+            {
+                $query_sideyear			= mysqli_query($con, "SELECT corr_time FROM jv_sidereal_2 WHERE Year='".$dob_split[0]."'");
+            }
+
+        }
         // The below query fetches sidereal time for particular year;
         $query_sidetime			= mysqli_query($con, "SELECT Sidereal FROM jv_sidereal_1 WHERE Month='".$monthName."'
                                                AND Date='".$dob_split[2]."'");
@@ -104,7 +124,7 @@ class AstroLoginModelProcess extends JModelItem
                         $date					->add(new DateInterval('PT'.$diff[1].'S'));
                 }
         }
-    return $date->format('H:i:s');
+    return $date->format('H:i:s');*/
     }
 }
 ?>
