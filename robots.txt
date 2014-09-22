@@ -34,4 +34,3 @@ Allow: /
 Allow: /sitemap.htm
 Sitemap: http://www.astroisha.com/sitemap.xml
 
-

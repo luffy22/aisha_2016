@@ -23,7 +23,9 @@ class HoroscopeControllerProcess extends HoroscopeController
                                     'fname'=>$fname,'gender'=>$gender,'dob'=>$dob,
                                     'tob'=>$tob,'lon'=>$lon,'lat'=>$lat,'tz'=>$timezone
                                     );
-            
+            /*echo "<pre>";
+            print_r($user_details);
+            echo "</pre>";*/
             $model          = &$this->getModel('process');  // Add the array to model
             $model          ->getLagna($user_details);
         }
@@ -35,5 +37,6 @@ class HoroscopeControllerProcess extends HoroscopeController
         //$model          ->getLagna();
         //echo "calls";
     }
+   
 }
 ?>

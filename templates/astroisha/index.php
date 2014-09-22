@@ -6,8 +6,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
    xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
 <head>
+<?php
+    $doc = JFactory::getDocument();
+    $head_data = $doc->getHeadData();	
+?>
+<title><?php echo $head_data['title']; ?></title>
+<meta name="description" content="<?php echo $head_data['description']; ?>">
+<meta name="keywords" content="<?php echo $head_data['metaTags']['standard']['keywords']; ?>">
+<meta name="robots" content="index, follow" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="msvalidate.01" content="E689BB58897C0A89BDC88E5DF8800B2F" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/media/system/css/system.css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/style.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap.min.css" type="text/css" />
@@ -94,7 +103,8 @@
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery-ui/jquery-ui.min.js" language="javascript"></script>
 <script>
   $(function() {
-    $( "#datepicker" ).datepicker({ yearRange: "1900:2099" });
+    $( "#datepicker" ).datepicker({ dateFormat:"yy/mm/dd", yearRange: "1900:2099",changeMonth: true,
+      changeYear: true });
   });
 </script>
 <script>
