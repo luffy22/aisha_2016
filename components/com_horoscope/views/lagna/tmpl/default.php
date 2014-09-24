@@ -11,7 +11,7 @@ defined('_JEXEC') or die();
 ?>
  <div>
 <form class="form-horizontal" role="form" enctype="application/x-www-form-urlencoded" method="post" 
-      action="<?php echo JRoute::_('index.php?option=com_horoscope&task=process.findlagna'); ?>">
+      action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.findlagna'); ?>">
     <div class="form-group" id="lagna_grp_1">
         <label for="inputName" class="col-sm-2 control-label">Name:</label>
         <div class="col-sm-10">

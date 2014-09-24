@@ -370,6 +370,53 @@ function getLagna()
         $("#lagna_ico_1").addClass("glyphicon glyphicon-remove");
         document.getElementById('lagna_err_1').style.visibility = "visible";
     }*/
-
- 
 }
+  $(function() {
+     var location = window.location.protocol + "//" + window.location.host;
+    
+    $( "#lagna_pob" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "ajaxcalls/autocomplete.php",
+          dataType: "html",
+          data: {
+            q: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
+        });
+      },
+      minLength: 3,
+            
+    });
+  });
+/*$(function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#lagna_pob" ).autocomplete({
+      source: availableTags
+    });
+  });*/

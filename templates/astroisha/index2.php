@@ -7,8 +7,8 @@
    xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
 <head>
 <?php
-                $doc = JFactory::getDocument();
-                $head_data = $doc->getHeadData();	
+    $doc = JFactory::getDocument();
+    $head_data = $doc->getHeadData();	
 ?>
 <title><?php echo $head_data['title']; ?></title>
 <meta name="description" content="<?php echo $head_data['description']; ?>">
@@ -21,8 +21,6 @@
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap-theme.min.css" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"/>
-<link rel="shortcut icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/favicon.ico" type="image/x-icon">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -104,7 +102,7 @@
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery-ui/jquery-ui.min.js" language="javascript"></script>
 <script>
   $(function() {
-    $( "#datepicker" ).datepicker({ yearRange: "1900:2099",changeMonth: true,
+    $( "#datepicker" ).datepicker({ dateFormat:"yy/mm/dd", yearRange: "1900:2099",changeMonth: true,
       changeYear: true });
   });
 </script>
