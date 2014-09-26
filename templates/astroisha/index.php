@@ -1,15 +1,13 @@
 <?php
     error_reporting(0);
     defined( '_JEXEC' ) or die( 'Restricted access' );
+    $doc = JFactory::getDocument();
+    $head_data = $doc->getHeadData();	
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
    xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
 <head>
-<?php
-                $doc = JFactory::getDocument();
-                $head_data = $doc->getHeadData();	
-?>
 <title><?php echo $head_data['title']; ?></title>
 <meta name="description" content="<?php echo $head_data['description']; ?>">
 <meta name="keywords" content="<?php echo $head_data['metaTags']['standard']['keywords']; ?>">
@@ -100,24 +98,13 @@
 <!--Scripts at the bottom of the Page -->
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery.min.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
-<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery-ui/jquery-ui.min.js" language="javascript"></script>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 <script>
   $(function() {
     $( "#datepicker" ).datepicker({ yearRange: "1900:2099",changeMonth: true,
       changeYear: true });
   });
-</script>
-<script>
-  (function() {
-    var cx = '006812877761787834600:kranbsbb5p8';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//www.google.com/cse/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
 </script>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

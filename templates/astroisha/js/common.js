@@ -378,12 +378,12 @@ function getLagna()
       source: function( request, response ) {
         $.ajax({
           url: "ajaxcalls/autocomplete.php",
-          dataType: "html",
+          dataType: "jsonp",
           data: {
             q: request.term
           },
           success: function( data ) {
-            response( data );
+            $("#lagna_pob").append(data.city+', '+data.country);
           }
         });
       },
