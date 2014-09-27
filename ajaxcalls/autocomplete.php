@@ -10,7 +10,7 @@ if (mysqli_connect_errno()) {
 }
 else
 {
-    $search     = $_GET['q'];
+    $search     = $_GET['term'];
     $query	= "SELECT * FROM jv_location WHERE country LIKE '".$search."%' OR city LIKE '".$search."%' LIMIT 5";
     $result	= mysqli_query($mysqli, $query);
     $json       = array();

@@ -373,50 +373,62 @@ function getLagna()
 }
   $(function() {
      var location = window.location.protocol + "//" + window.location.host;
-    
-    $( "#lagna_pob" ).autocomplete({
+  $( "#lagna_pob" ).autocomplete({
       source: function( request, response ) {
+
         $.ajax({
-          url: "ajaxcalls/autocomplete.php",
-          dataType: "jsonp",
-          data: {
-            q: request.term
+            dataType: "json",
+            type : 'Get',
+            url: 'ajaxcalls/autocomplete.php',
+            data: {
+            term: request.term
+            },
+            dataType: "json",
+            success: function(data) {
+              $('#lagna_pob').removeClass('ui-autocomplete-loading');  // hide loading image
+
+            response( $.map( data, function(item) {
+                
+            }));
           },
-          success: function( data ) {
-            $("#lagna_pob").append(data.city+', '+data.country);
+          error: function(data) {
+              $('input.suggest-user').removeClass('ui-autocomplete-loading');  
           }
         });
       },
       minLength: 3,
-            
+      open: function() {
+
+      },
+      close: function() {
+
+      },
+      focus:function(event,ui) {
+
+      },
+      select: function( event, ui ) {
+
+      }
     });
+    /*$( "#lagna_pob" ).autocomplete({
+     // source: function( event, ui ) {
+        $.ajax({
+          url: "ajaxcalls/autocomplete.php",
+          dataType: "jsonp",
+          data: {
+            term: event.term
+          },
+          
+        });
+      },
+      minLength: 2,
+     select: function (event, ui)
+    {
+        var test = ui.item.city;
+        if (test > 0)
+        {
+           alert(test);
+        }
+    }  
+    });*/
   });
-/*$(function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#lagna_pob" ).autocomplete({
-      source: availableTags
-    });
-  });*/

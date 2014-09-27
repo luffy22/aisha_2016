@@ -102,7 +102,7 @@ defined('_JEXEC') or die();
     <div class="form-group">
         <label for="dob" class="col-sm-2 control-label">Place Of Birth</label>
         <div class="col-sm-10">
-        <input type="text" id="lagna_pob" name="lagna_pob" class="form-control" placeholder="Enter text for list of places" />
+        <input type="text" id="lagna_pob" name="lagna_pob" class="form-control ui-autocomplete-loading" placeholder="Enter text for list of places" />
         </div>
     </div>
     <div class="form-group">

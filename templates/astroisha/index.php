@@ -38,12 +38,12 @@
     <div class="login-module" id="login-cred">
         <jdoc:include type="modules" name="userlogin" style="none" />
     </div>
-    <div class="header-menu visible-desktop">
+    <div class="header-menu visible-md visible-lg">
         <div class="home_icon">
             <a href="index.php"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="35px" height="35px" /></a>
         </div>
         <div class="navigation_menu">
-            <ul class="nav nav-pills visible-md visible-lg">
+            <ul class="nav nav-pills">
                 <li class="dropdown">
                     <jdoc:include type="modules" name="menu1" style="none" />
                 </li>
