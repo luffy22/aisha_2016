@@ -9,7 +9,7 @@
 JHtml::_('behavior.keepalive');
 JHtml::_('bootstrap.tooltip');
 ?>
-<h3>Nakshatra Compatibility Calculator</h3>
+<h3><span class="nak_heading">Nakshatra Matching</span></h3>
 <div class="row">
     <div class="col-md-6">
         <div id="g_rashi_notice"><label>Choose Girls Rashi</label></div>
@@ -67,7 +67,7 @@ JHtml::_('bootstrap.tooltip');
         </div>
     </div> 
 </div>
-<div class="mini-spacer"></div>
+<!--<div class="mini-spacer"></div>
 <div class="row">
     <div class="col-md-6">
         <div id="g_pada_notice"><label>Choose Girls Pada</label></div>
@@ -81,11 +81,11 @@ JHtml::_('bootstrap.tooltip');
             <option value="" default="default">Select Default</option>
         </select>
     </div>
-</div>
-<div class="mini-spacer"></div>
+</div>-->
+<div class="spacer"></div>
 <div class="row">
     <div class="col-md-6">
-        <button class="btn btn-primary" id="compat-submit" onclick="checkCompatibility()">Check Compatibility</button>
+        <button class="btn btn-primary" id="compat-submit" onclick="checkCompatibility()">Check Matching Points</button>
     </div>
 </div>
 <div class="mini-spacer"></div>

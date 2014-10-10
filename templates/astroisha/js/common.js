@@ -37,20 +37,6 @@ function hideLoginField()
     $('.login-form').css('visibility','visible');
     return false;
 }
-
-
-function showSideMenu()
-{
-    $('#sidemenu_left').removeClass('visible-desktop');
-    $('#sidemenu_left').toggle();
-    jQuery('#main-content').hide();
-    jQuery('#sidemenu_left').css('position', 'absolute');
-    jQuery('#sidemenu_left').css('zindex', '10010')
-    jQuery('#sidemenu_left').css('width', '180px');
-    jQuery('#sidemenu_left').css('height','100%');
-    jQuery('#sidemenu_left').css('left', '0' );
-    jQuery('#sidemenu_left').css('top', '350px');
-}
 function validateLogin()
 {
     var uname = document.getElementById("al_uname").value;
@@ -91,17 +77,6 @@ function validateRegister()
         return true;
     }
 }
-
-jQuery("#slideshow > div:gt(0)").hide();
-
-setInterval(function() { 
-jQuery('#slideshow > div:first')
-    .fadeOut(1000)
-    .next()
-    .fadeIn(1000)
-    .end()
-    .appendTo('#slideshow');
-},  3000);
 
 function LoginUser()
 {
@@ -152,14 +127,13 @@ function getGirlsNakshatra()
     g_rashi.style.background = "none";
     if(g_rashi.value=="")
     {
-        g_rashi.style.background = "#FF0000";
         document.getElementById("g_rashi_notice").innerHTML = "Please select a rashi for girl";
         document.getElementById("loadergif").style.display = 'none';
     }
     else
     {
         var request = jQuery.ajax({
-         url: "index.php?option=com_ajax&module=nakshatracompat&format=raw&method=GirlNakshatra",
+         url: "ajaxcalls/nakshatracalc.php",
         data: "g_rashi="+g_rashi.value,
         dataType: "text"
         });
@@ -183,7 +157,7 @@ function getGirlsNakshatra()
         });
     }
 }
-function getGirlsPada()
+/*function getGirlsPada()
 {
     var g_nakshatra  = document.getElementById("g_nakshatra");
     var g_rashi      = document.getElementById("g_rashi");
@@ -219,7 +193,7 @@ function getGirlsPada()
             document.getElementById("loadergif").style.display = 'none';
         });
     }
-}
+}*/
 function getBoysNakshatra()
 {
     document.getElementById('match_message').innerHTML = "";
@@ -236,7 +210,7 @@ function getBoysNakshatra()
     else
     {
         var request = jQuery.ajax({
-         url: "index.php?option=com_ajax&module=nakshatracompat&format=raw&method=BoyNakshatra",
+        url: "ajaxcalls/nakshatracalc.php",
         data: "b_rashi="+b_rashi.value,
         dataType: "text"
         });
@@ -260,7 +234,7 @@ function getBoysNakshatra()
         });
     }
 }
-function getBoysPada()
+/*function getBoysPada()
 {
     var b_nakshatra  = document.getElementById("b_nakshatra");
     var b_rashi      = document.getElementById("b_rashi");
@@ -297,21 +271,20 @@ function getBoysPada()
         });
     }
 }
+*/
 function checkCompatibility()
 {
     var g_1     = document.getElementById("g_rashi");
     var g_2         = document.getElementById("g_nakshatra");
-    var g_3          = document.getElementById("g_pada"); 
     var b_1     = document.getElementById("b_rashi");
     var b_2         = document.getElementById("b_nakshatra");
-    var b_3          = document.getElementById("b_pada");
     document.getElementById("loadergif").style.display = 'block';
-    if(g_1.value==""||g_2.value==""||g_3.value=="")
+    if(g_1.value==""||g_2.value=="")
     {
         alert("One of the values is missing for girl");
         document.getElementById("loadergif").style.display = 'none';
     }
-    else if(b_1.value==""||b_2.value==""||b_3.value=="")
+    else if(b_1.value==""||b_2.value=="")
     {
         alert("One of the values is missing for boy");
         document.getElementById("loadergif").style.display = 'none';
@@ -319,8 +292,8 @@ function checkCompatibility()
     else
     {
         var request = jQuery.ajax({
-         url: "index.php?option=com_ajax&module=nakshatracompat&format=raw&method=GetPoints",
-        data: "g_1="+g_1.value+'&g_2='+g_2.value+'&g_3='+g_3.value+"&b_1="+b_1.value+'&b_2='+b_2.value+'&b_3='+b_3.value,
+        url: "ajaxcalls/nakshatracalc.php",
+        data: "g_1="+g_1.value+'&g_2='+g_2.value+"&b_1="+b_1.value+'&b_2='+b_2.value,
         dataType: "text"
         });
         request.done(function(msg)
@@ -402,33 +375,34 @@ $(function()
             var lat_dir       = lat.substring(0,1);
             var lat_deg       = lat.split(".")[0];
             var lat_min       = lat.split(".")[1].substr(0,2);
-            
-        
             var lon_dir       = lon.substring(0,1);
             var lon_deg       = lon.split(".")[0];
             var lon_min       = lon.split(".")[1].substr(0,2);
-            
-            document.getElementById("lagna_long_1").value = lon_deg;
-            document.getElementById("lagna_long_2").value = lon_min;
-            document.getElementById("lagna_lat_1").value = lat_deg;
-            document.getElementById("lagna_lat_2").value = lat_min;
+           
             if(lon_dir == "-")
             {
                 document.getElementById("lagna_long_direction").value = "W";
-                
+                document.getElementById("lagna_long_1").value = lon_deg.slice(1);
+                document.getElementById("lagna_long_2").value = lon_min;
             }
             else
             {
                 document.getElementById("lagna_long_direction").value = "E";
+                document.getElementById("lagna_long_1").value = lon_deg;
+                document.getElementById("lagna_long_2").value = lon_min;
             }
                 
             if(lat_dir == "-")
             {
                 document.getElementById("lagna_lat_direction").value = "S";
+                document.getElementById("lagna_lat_1").value = lat_deg.slice(1);
+                document.getElementById("lagna_lat_2").value = lat_min;
             }
             else
             {
                 document.getElementById("lagna_lat_direction").value = "N";
+                document.getElementById("lagna_lat_1").value = lat_deg;
+                document.getElementById("lagna_lat_2").value = lat_min;
             }
       },
       open: function() {
