@@ -69,6 +69,7 @@ class HoroscopeModelLagna extends JModelItem
                 //$query_sideyear			= mysqli_query($con, "SELECT corr_time FROM jv_sidereal_2 WHERE Year='".$dob_split[0]."'");
             }
             $db                 ->setQuery($query);
+            unset($count);
             $count              = count($db->loadResult());
             
             $time_diff          = $db->loadAssoc();
@@ -105,10 +106,43 @@ class HoroscopeModelLagna extends JModelItem
             }
            
             $query              ->clear();
-                       
+            $query              = "select corr_sign, st_correction FROM jv_sidereal_3 WHERE longitude >= '".($lon[0].'.'.$lon[1])."'
+                                    order by abs(longitude - '".($lon[0].'.'.$lon[1])."') limit 1";
+            $db                 ->setQuery($query);
+            unset($count);
+            $count              = count($db->loadResult());
+            $sid_corr           = $db->loadAssoc();     // sidereal correction in seconds
+            if($sid_corr['corr_sign'] == "-")
+            {
+                    //$get_sidereal_timediff	= 
+                //$date           ->sub(new DateInterval('PT'.$corr_mins.'M'.$corr_secs.'S'));
+                $diff           = explode(".",$sid_corr['st_correction']);
+                if($diff[0] != "00"||$diff[0] != "0")
+                {
+                        $date	->sub(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
+                }
+                else
+                {
+                        $date	->sub(new DateInterval('PT'.$diff[1].'S'));
+                }
+            }
+            else if($corr_diff['corr_sign'] == "+")
+            {
+                //$get_sidereal_timediff	= 
+                $date	->add(new DateInterval('PT'.$corr_mins.'M'.$corr_secs.'S'));
+                $diff	= explode(".",$corr_diff['st_correction']);
+                if($diff[0] != "00"||$diff[0] != "0")
+                {
+                    $date   ->add(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
+                }
+                else
+                {
+                    $date   ->add(new DateInterval('PT'.$diff[1].'S'));
+                }
+            }
             return $date->format('H:i:s');
         }
-        
+        //longitude >= '".($lon)."'
     }
     public function getLmt()
     {
