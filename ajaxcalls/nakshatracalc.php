@@ -54,6 +54,8 @@ else
         $count      = mysqli_num_rows($result);
         if($count>0)
         {
+			$query1		= "UPDATE jv_hits_counter SET hits=hits+1 WHERE product='nakshatra_counter'";
+            $result1     = mysqli_query($mysqli, $query1);
             while($row=mysqli_fetch_array($result))
             {
                 echo $row['points'];
