@@ -58,7 +58,7 @@ class ModMenuDropHelper
         {
             $app		= JFactory::getApplication();
             $menu		= $app->getMenu();
-		$id             = $menu->getActive()->id;
+            $id             = $menu->getActive()->id;
         }
         
 }

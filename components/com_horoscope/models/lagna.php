@@ -11,7 +11,7 @@ class HoroscopeModelLagna extends JModelItem
     public $tob;
     public $lon;
     public $lat;
-    public $tz;
+    public $tmz;
     // Get lagna using sidereal tables and corrections
     public function getLagna($user_details)
     {
@@ -23,9 +23,9 @@ class HoroscopeModelLagna extends JModelItem
         $this->tob          = $user_details['tob'];
         $this->lon          = $user_details['lon'];
         $this->lat          = $user_details['lat'];
-        $this->tz           = $user_details['tz'];
+        $this->tmz          = $user_details['tmz'];
         
-        echo $this->getSiderealTime();
+        echo $this->getLmt();
       
     }
     // Method to get the sidereal Time
@@ -148,7 +148,26 @@ class HoroscopeModelLagna extends JModelItem
     {
         $lon        = explode(":", $this->lon);
         $lat        = explode(":", $this->lat);
+        $gmt        = "GMT".$this->tmz;
         
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
+        
+        $query          ->select($db->quoteName('std_meridian'));
+        $query          ->from($db->quoteName('#__std_meridian'));
+        $query          ->where($db->quoteName('timezone').'='.$db->quote($gmt));
+        $db             ->setQuery($query);
+        $count          = count($db->loadResult());
+        
+        if($count > 0)
+        {
+            $meridian   = $db->loadAssoc();
+            return $meridian['std_meridian'];
+        }
+        else
+        {
+            return "No matching results";
+        }
     }
 }
 ?>

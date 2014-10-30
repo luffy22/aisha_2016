@@ -22,7 +22,7 @@ class HoroscopeControllerLagna extends HoroscopeController
             
             $user_details   = array(
                                     'fname'=>$fname,'gender'=>$gender,'dob'=>$dob,
-                                    'tob'=>$tob,'lon'=>$lon,'lat'=>$lat,'tz'=>$timezone
+                                    'tob'=>$tob,'lon'=>$lon,'lat'=>$lat,'tmz'=>$timezone
                                     );
             $model          = &$this->getModel('lagna');  // Add the array to model
             $model          ->getLagna($user_details);
