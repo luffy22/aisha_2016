@@ -25,7 +25,7 @@ class HoroscopeModelLagna extends JModelItem
         $this->lat          = $user_details['lat'];
         $this->tmz          = $user_details['tmz'];
         
-        echo $this->getLmt();
+        
       
     }
     // Method to get the sidereal Time
@@ -33,7 +33,7 @@ class HoroscopeModelLagna extends JModelItem
     {
         $lon            = explode(":", $this->lon);
         $dob            = explode("/",$this->dob);
-        $monthNum       = $dob[0];  // The month in number format (ex. 06 for June)
+        $monthNum       = $dob[1];  // The month in number format (ex. 06 for June)
         $monthName      = date("F", mktime(0, 0, 0, $monthNum, 10));		// month in word format (ex. June/July/August)
         
         $db             = JFactory::getDbo();  // Get db connection
@@ -42,7 +42,7 @@ class HoroscopeModelLagna extends JModelItem
         $query          -> select($db->quoteName('Sidereal'));
         $query          -> from($db->quoteName('#__sidereal_1'));
         $query          -> where($db->quoteName('Month').'='.$db->quote($monthName).'AND'.
-                                 $db->quoteName('Date')."=".$db->quote($dob[1]));
+                                 $db->quoteName('Date')."=".$db->quote($dob[2]));
         $db             ->setQuery($query);
         $count          = count($db->loadResult());
         $row            =$db->loadAssoc();
@@ -58,14 +58,14 @@ class HoroscopeModelLagna extends JModelItem
             {
                 $query      ->select($db->quoteName('corr_time'));
                 $query      ->from($db->quoteName('#__sidereal_2'));
-                $query      ->where($db->quoteName('Year').'='.$db->quote($dob[2]).' AND '.
+                $query      ->where($db->quoteName('Year').'='.$db->quote($dob[0]).' AND '.
                                     $db->quote('leap').'='.'*');
             }
             else
             {
                 $query      ->select($db->quoteName('corr_time'));
                 $query      ->from($db->quoteName('#__sidereal_2'));
-                $query      ->where($db->quoteName('Year').'='.$db->quote($dob[2]));
+                $query      ->where($db->quoteName('Year').'='.$db->quote($dob[0]));
                 //$query_sideyear			= mysqli_query($con, "SELECT corr_time FROM jv_sidereal_2 WHERE Year='".$dob_split[0]."'");
             }
             $db                 ->setQuery($query);
@@ -149,6 +149,18 @@ class HoroscopeModelLagna extends JModelItem
         $lon        = explode(":", $this->lon);
         $lat        = explode(":", $this->lat);
         $gmt        = "GMT".$this->tmz;
+        $dob        = $this->dob;
+       
+        $tob        = explode(":",$this->tob);
+        if($tob[3]=="PM")
+        {
+            $tob[0] = $tob[0]+12;
+            $tob1   = strtotime($tob[0].":".$tob[1].":".$tob[2]);
+        }
+        else
+        {
+            $tob1   = strtotime($tob[0].":".$tob[1].":".$tob[2]);
+        }
         
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
@@ -161,8 +173,103 @@ class HoroscopeModelLagna extends JModelItem
         
         if($count > 0)
         {
-            $meridian   = $db->loadAssoc();
-            return $meridian['std_meridian'];
+            $meridian           = $db->loadAssoc();
+            $std_meridian       = explode(".",$meridian['std_meridian']);
+            $std_lon_min        = $std_meridian[0];
+            $std_lon_sec        = $std_meridian[1];
+            $loc_lon_min        = $lon[0];
+            $loc_lon_sec        = $lon[2];
+            
+            $new_std_lon_sec	= ($std_lon_min*60*4)+($std_lon_sec*4);		// convert minutes into seconds & multiply by 4 then add to seconds multiplied by 4
+            $new_loc_lon_sec	= ($loc_lon_min*60*4)+($loc_lon_sec*4);			// convert minutes into seconds & multiply by 4 then add to seconds multiplied by 4
+
+            if($new_std_lon_sec > $new_loc_lon_sec)
+            {
+                $new_diff	= $new_std_lon_sec - $new_loc_lon_sec;
+                $new_diff	= gmdate('H:i:s', $new_diff);
+            }
+            else
+            {
+                $new_diff	= $new_loc_lon_sec	- $new_std_lon_sec;
+                $new_diff	= gmdate('H:i:s', $new_diff);
+            }
+            
+            // Computation to check Sidereal Time
+            $date		= new DateTime($dob);		// Datetime object with user date of birth
+            $date		->setTimeStamp($tob1);		// time of birth for user
+            $date		->format('H:i:s');
+            $diff		= explode(":",$new_diff);
+            
+            if($std_loc_min > $loc_lon_min)
+            {
+                
+                $date			->sub(new DateInterval('PT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
+                $get_sidereal_hour	= explode(":", $date->format('H:i:s'));	
+                $sidereal_hr            = $get_sidereal_hour[0];
+                $sidereal_min           = $get_sidereal_hour[1];
+                
+                $query                  ->clear();
+                $query                  ->select($db->quoteName('min'));
+                $query                  ->from($db->quoteName('#__sidereal_4'));
+                $query                  ->where($db->quoteName('hour').'='.$db->quote($sidereal_hr));
+                $db                     ->setQuery($query);
+                $sid_diff_min		= $db->loadAssoc();
+                $sid_diff_1		= explode(":",$sid_diff_min['min']);
+		
+                if($sid_diff_1[0] != "00")
+                {
+                        $date		->add(new DateInterval('PT'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
+                }
+                else
+                {
+                        $date		->add(new DateInterval('PT'.$sid_diff_1[1].'S'));
+                }
+                $query                  ->clear();
+                $query                  ->select($db->quoteName('diff'));
+                $query                  ->from($db->quoteName('#__sidereal_5'));
+                $query                  ->where($db->quoteName('min').'>='.$db->quote($sidereal_min));
+                $db                     ->setQuery($query);
+                $sid_diff_sec		= $db->loadAssoc();
+                
+                $sid_diff_2		= explode(":", $sid_diff_sec['diff']);
+                $date			->add(new DateInterval('PT'.$sid_diff_2[1].'S'));
+            }
+            else
+            {
+          
+                $date			->add(new DateInterval('PT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
+                $get_sidereal_hour	= explode(":", $date->format('H:i:s'));	
+                $sidereal_hr            = $get_sidereal_hour[0];
+                $sidereal_min           = $get_sidereal_hour[1];
+  
+                $query                  ->clear();
+                $query                  ->select($db->quoteName('min'));
+                $query                  ->from($db->quoteName('#__sidereal_4'));
+                $query                  ->where($db->quoteName('hour').'='.$db->quote($sidereal_hr));
+                $db                     ->setQuery($query);
+                $sid_diff_min		= $db->loadAssoc();
+                $sid_diff_1		= explode(":",$sid_diff_min['min']);
+			
+                if($sid_diff_1[0] != "00")
+                {
+                    $date		->add(new DateInterval('PT'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
+                }
+                else
+                {
+                    $date		->add(new DateInterval('PT'.$sid_diff_1[1].'S'));
+                }
+
+                $query                  ->clear();
+                $query                  ->select($db->quoteName('diff'));
+                $query                  ->from($db->quoteName('#__sidereal_5'));
+                $query                  ->where($db->quoteName('min').'>='.$db->quote($sidereal_min));
+                $db                     ->setQuery($query);
+                $sid_diff_sec		= $db->loadAssoc();
+               
+                $sid_diff_2		= explode(":", $sid_diff_sec['diff']);
+                $date			->add(new DateInterval('PT'.$sid_diff_2[1].'S'));  
+            }
+            return $date->format('H:i:s');
         }
         else
         {

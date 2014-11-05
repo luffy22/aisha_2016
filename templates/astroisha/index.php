@@ -34,6 +34,7 @@
 <div id="fb-root"></div>
     <div id="loadergif" class="loader"><img src="<?php echo $this->baseurl ?>/images/loader.gif" /></div>
 <div class="main-header">
+    <div id="call-me"></div>
     <div class="header-logo">
         <a href="index.php"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/jv_logo.png" alt="Astro Isha" title="Navigate to Home Page" class="image-logo" /></a>
     </div>
@@ -106,8 +107,8 @@
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery-ui/jquery-ui.min.js" language="javascript"></script>
 <script>
   $(function() {
-    $( "#datepicker" ).datepicker({ yearRange: "1900:2099",changeMonth: true,
-      changeYear: true });
+    $( "#datepicker" ).datepicker({ yearRange: "1940:2050",changeMonth: true,
+      changeYear: true, dateFormat: "yy/mm/dd"  });
   });
 </script>
 <script>(function(d, s, id) {

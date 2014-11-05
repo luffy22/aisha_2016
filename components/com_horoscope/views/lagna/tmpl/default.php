@@ -30,7 +30,7 @@ defined('_JEXEC') or die();
     <div class="form-group">
         <label for="dob" class="col-sm-2 control-label">Date Of Birth:</label>
         <div class="col-sm-10">
-        <input type="text" name="dob" id="datepicker" class="form-control" placeholder="Click to select date of birth" />
+        <input type="text" name="dob" id="datepicker" class="form-control" placeholder="Date Of Birth in Year/Month/Day Format" />
         </div>
     </div>
     <div class="form-group">
@@ -131,6 +131,7 @@ defined('_JEXEC') or die();
         <label for="latitude" class="col-sm-2 control-label">Timezone: <strong>GMT</strong></label>
         <div class="col-sm-10">
             <input type="text" id="lagna_timezone" class="form-text" name="lagna_timezone"  />
+            <input type="button" class="btn btn-primary" onclick="javascript:getTimezone();" value="Get Timezone" />
         </div>
     </div>
     <div class="form-group">

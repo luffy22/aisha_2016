@@ -51,7 +51,7 @@ class JConfig {
 	public $robots = '';
 	public $sef = '1';
 	public $sef_rewrite = '1';
-	public $sef_suffix = '1';
+	public $sef_suffix = '0';
 	public $unicodeslugs = '0';
 	public $feed_limit = '10';
 	public $log_path = '/opt/lampp/htdocs/aisha/logs';
