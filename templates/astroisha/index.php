@@ -134,6 +134,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-49809214-1', 'astroisha.com');
+  ga('require', 'linkid', 'linkid.js');
   ga('send', 'pageview');
 
 </script>

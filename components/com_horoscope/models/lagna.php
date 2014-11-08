@@ -25,6 +25,17 @@ class HoroscopeModelLagna extends JModelItem
         $this->lat          = $user_details['lat'];
         $this->tmz          = $user_details['tmz'];
         
+        $tob        = explode(":",$this->tob);
+        if($tob[3]=="PM")
+        {
+            $tob[0] = $tob[0]+12;
+            $tob1   = strtotime($tob[0].":".$tob[1].":".$tob[2]);
+        }
+        else
+        {
+            $tob1   = strtotime($tob[0].":".$tob[1].":".$tob[2]);
+        }
+        $this->tob          = $tob1;
         
       
     }
@@ -150,17 +161,7 @@ class HoroscopeModelLagna extends JModelItem
         $lat        = explode(":", $this->lat);
         $gmt        = "GMT".$this->tmz;
         $dob        = $this->dob;
-       
-        $tob        = explode(":",$this->tob);
-        if($tob[3]=="PM")
-        {
-            $tob[0] = $tob[0]+12;
-            $tob1   = strtotime($tob[0].":".$tob[1].":".$tob[2]);
-        }
-        else
-        {
-            $tob1   = strtotime($tob[0].":".$tob[1].":".$tob[2]);
-        }
+        $tob        = $this->tob;
         
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
@@ -196,7 +197,7 @@ class HoroscopeModelLagna extends JModelItem
             
             // Computation to check Sidereal Time
             $date		= new DateTime($dob);		// Datetime object with user date of birth
-            $date		->setTimeStamp($tob1);		// time of birth for user
+            $date		->setTimeStamp($tob);		// time of birth for user
             $date		->format('H:i:s');
             $diff		= explode(":",$new_diff);
             
@@ -275,6 +276,14 @@ class HoroscopeModelLagna extends JModelItem
         {
             return "No matching results";
         }
+    }
+    public function calculateLagna()
+    {
+        $lat                    = $this->lat;
+        $siderealTime		= strtotime($this->getSiderealTime());
+	$lmt			= explode(":",$this->getLmt());
+        $dob                    = $this->dob;
+        $doy			= explode("/", $dob);
     }
 }
 ?>
