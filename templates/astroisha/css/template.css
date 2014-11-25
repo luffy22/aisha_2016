@@ -19,4 +19,10 @@
 .pagination2{margin:20px 0;}.select2{padding: 6px 12px;}.form-text{padding:6px 12px;width:20%;}
 .ui-autocomplete-loading {
     background: white url("images/ajaxloader.gif") right center no-repeat;
-  }#lagna_pob{ width: 25em; }
+  }#lagna_pob{ width: 25em; }.dropdown-menu>li>a {
+color: #FFFFFF !important;
+}
+.dropdown-menu>li>a:hover {
+color: #333 !important;
+
+}
