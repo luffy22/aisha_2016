@@ -53,7 +53,7 @@ JHtml::_('bootstrap.tooltip');
     <div class="col-md-6">
         <div id="nakshatra_calc">
             <div id="g_nakshtra_notice"><label>Choose Girls Nakshatra</label></div>
-            <select id="g_nakshatra" name="girls_nakshatra" class="selectcomp form-control" onclick="getGirlsPada();">
+            <select id="g_nakshatra" name="girls_nakshatra" class="selectcomp form-control">
                 <option value="" default="default">Select Default</option>
             </select>
         </div>
@@ -61,7 +61,7 @@ JHtml::_('bootstrap.tooltip');
     <div class="col-md-6">
         <div id="nakshatra_b_calc">
             <div id="b_nakshtra_notice"><label>Choose Boys Nakshatra</label></div>
-            <select id="b_nakshatra" name="boys_nakshatra" class="selectcomp form-control" onclick="getBoysPada();">
+            <select id="b_nakshatra" name="boys_nakshatra" class="selectcomp form-control">
                 <option value="" default="default">Select Default</option>
             </select>
         </div>
