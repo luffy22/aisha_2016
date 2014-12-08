@@ -7,8 +7,8 @@
    xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
 <head>
 <?php
-                $doc = JFactory::getDocument();
-                $head_data = $doc->getHeadData();	
+    $doc = JFactory::getDocument();
+    $head_data = $doc->getHeadData();	
 ?>
 <title><?php echo $head_data['title']; ?></title>
 <meta name="description" content="<?php echo $head_data['description']; ?>">
@@ -34,16 +34,15 @@
 <div id="fb-root"></div>
     <div id="loadergif" class="loader"><img src="<?php echo $this->baseurl ?>/images/loader.gif" /></div>
 <div class="main-header">
-    <div id="call-me"></div>
     <div class="header-logo">
-        <a href="index.php"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/jv_logo.png" alt="Astro Isha" title="Navigate to Home Page" class="image-logo" /></a>
+        <h1 id="heading"><a href="<?php echo JURI::base(); ?>"><img src="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/images/jv_logo4.png" alt="Astro Isha" title="Navigate to Home Page" class="image-logo" /><span class="head_title">Astro Isha</span></a></h1>
     </div>
     <div class="login-module" id="login-cred">
         <jdoc:include type="modules" name="userlogin" style="none" />
     </div>
     <div class="header-menu visible-md visible-lg">
         <div class="home_icon">
-            <a href="index.php"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="35px" height="35px" /></a>
+            <a style="text-decoration: none;" href="<?php echo JURI::base(); ?>"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="35px" height="35px" /></a>
         </div>
         <div class="navigation_menu">
             <ul class="nav nav-pills">

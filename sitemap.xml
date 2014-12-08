@@ -162,6 +162,38 @@
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
+	<loc>http://www.astroisha.com/12-ascendants/104-taurus-females</loc>
+	<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	<loc>http://www.astroisha.com/12-ascendants/105-taurus-males</loc>
+	<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	<loc>http://www.astroisha.com/12-ascendants/106-gemini-females</loc>
+	<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	<loc>http://www.astroisha.com/12-ascendants/107-gemini-males</loc>
+	<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	<loc>http://www.astroisha.com/12-ascendants/108-cancer-females</loc>
+	<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	<loc>http://www.astroisha.com/12-ascendants/109-cancer-males</loc>
+	<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+       <loc>http://www.astroisha.com/12-ascendants/110-simha-females</loc>
+       <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+       <loc>http://www.astroisha.com/12-ascendants/111-simha-males</loc>
+       <changefreq>Weekly</changefreq>
+   </url>
+   <url>
     <loc>http://www.astroisha.com/27-nakshatras</loc>
     <changefreq>Weekly</changefreq>
    </url>
@@ -407,6 +439,14 @@
    <url>
     <loc>http://www.astroisha.com/featured-articles/99-str</loc>
     <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/featured-articles/112-don-t-blame-stars</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/featured-articles/113-fasting-science</loc>
+	  <changefreq>Weekly</changefreq>
   </url>
      <url>
     <loc>http://www.astroisha.com/contact-us</loc>
