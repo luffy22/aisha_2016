@@ -218,6 +218,22 @@
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
+	   <loc>http://www.astroisha.com/12-ascendants/120-sagittarius-females</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/12-lagnas/121-sagittarius-males</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/12-ascendants/123-capricorn-females</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/12-lagnas/124-capricorn-males</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
     <loc>http://www.astroisha.com/27-nakshatras</loc>
     <changefreq>Weekly</changefreq>
    </url>
@@ -435,6 +451,10 @@
      <url>
     <loc>http://www.astroisha.com/home-page/89-dushamsthanas</loc>
     <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/home-page/101-lagna</loc>
+	   <changefreq>Weekly</changefreq>
    </url>
      <url>
     <loc>http://www.astroisha.com/featured-articles</loc>
