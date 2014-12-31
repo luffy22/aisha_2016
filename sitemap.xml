@@ -154,11 +154,11 @@
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/12-lagnas/102-aries-males</loc>
+	<loc>http://www.astroisha.com/12-ascendants/103-aries-females</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/12-lagnas/103-aries-females</loc>
+	<loc>http://www.astroisha.com/12-ascendants/102-aries-males</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
@@ -194,27 +194,27 @@
        <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/12-lagnas/114-kanya-females</loc>
+	   <loc>http://www.astroisha.com/12-ascendants/114-kanya-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/12-lagnas/115-kanya-males</loc>
+	   <loc>http://www.astroisha.com/12-ascendants/115-kanya-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/12-lagnas/116-libra-females</loc>
+	   <loc>http://www.astroisha.com/12-ascendants/116-libra-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/12-lagnas/117-libra-males</loc>
+	   <loc>http://www.astroisha.com/12-ascendants/117-libra-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/12-lagnas/118-scorpio-females</loc>
+	   <loc>http://www.astroisha.com/12-ascendants/118-scorpio-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/12-lagnas/119-scorpio-males</loc>
+	   <loc>http://www.astroisha.com/12-ascendants/119-scorpio-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
@@ -222,7 +222,7 @@
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/12-lagnas/121-sagittarius-males</loc>
+	   <loc>http://www.astroisha.com/12-ascendants/121-sagittarius-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
@@ -230,7 +230,23 @@
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/12-lagnas/124-capricorn-males</loc>
+	   <loc>http://www.astroisha.com/12-ascendants/124-capricorn-males</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/12-ascendants/125-aquarius-females</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/12-ascendants/126-aquarius-males</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/12-ascendants/127-pisces-females</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/12-ascendants/128-pisces-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
