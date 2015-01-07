@@ -16,7 +16,7 @@
 .nakshatratable,.nakshatratr{width:450px;margin: 10px 0;}
 .nakshatratdl{width:220px;float:left}.nakshatratdr{width:220px;float:right;}.selectcomp{width:180px;}#match_message{width:450px;height:50px;padding:10px;background-color: #FFFFFF;border:1px solid black;font-weight: bold;}
 .image-logo{max-height: 150%;max-width:90%;}.mini-spacer{margin-top:10px !important;}
-.pagination2{margin:20px 0;}.select2{padding: 6px 12px;}.form-text{padding:6px 12px;width:20%;}
+.select2{padding: 6px 12px;}.form-text{padding:6px 12px;width:20%;}
 .ui-autocomplete-loading {
     background: white url("images/ajaxloader.gif") right center no-repeat;
   }#lagna_pob{ width: 25em; }.dropdown-menu>li>a {
@@ -26,3 +26,87 @@ color: #FFFFFF !important;
 color: #333 !important;
 }#heading{font-family: "Georgia";margin:0px; align-content:center;}#heading a{text-decoration: none !important;}.head_title{color:#2d6ca2 !important;}.head_title:hover{color:#FFFFFF !important;}
 .nav>li.active{background-color: aliceblue;font-weight: bold;}
+.pagination{display:block !important;}
+.pagenav {
+	text-align: right
+}
+
+.pagenav ul {
+	display: inline-block;
+	*display: inline;
+	/* IE7 inline-block hack */
+	list-style-type: none;
+	margin-left: 0;
+	margin-bottom: 0;
+}
+
+.pagenav li {
+	display: inline;
+	margin: 0px;
+	padding: 0
+}
+
+.pagenav a,span.pagenav {
+	padding: 0 14px;
+	margin: 0;
+	line-height: 1.9em;
+	text-decoration: none;
+	border: 1px solid #ddd;
+	border-left: 0px solid #ddd;
+	display: inline-block;
+	line-height: 1.9em;
+}
+
+.pagenav li:first-child a,.pagination-start span {
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+	border-left: solid 1px #ddd
+}
+
+.pagenav li:last-child a,.pagination-end span {
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+}
+
+.pagination ul {
+	margin: 10px 10px 10px 0;
+	padding: 0
+}
+
+.pagination li {
+	display: inline;
+}
+
+.pagination a {
+	padding: 0 14px;
+	line-height: 2em;
+	text-decoration: none;
+	border: 1px solid #ddd;
+	border-left: 0px solid #ddd;
+	display: inline-block
+}
+
+.pagination .active a {
+	cursor: default;
+}
+
+.pagination span,.pagination span  a:hover {
+	cursor: default;
+	padding: 0 14px;
+	line-height: 2em;
+}
+
+.pagination li:first-child a {
+	border-left-width: 1px;
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+}
+
+.pagination li:last-child a {
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+}

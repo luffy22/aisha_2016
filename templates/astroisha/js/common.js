@@ -421,3 +421,9 @@ $(function()
             alert(result);
           }*/
 
+ $(function() {
+    $( "#oppos-rashi" ).accordion({
+      heightStyle: "content",
+      collapsible: true
+    });
+  });

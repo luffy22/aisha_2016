@@ -131,7 +131,6 @@ defined('_JEXEC') or die();
         <label for="latitude" class="col-sm-2 control-label">Timezone: <strong>GMT</strong></label>
         <div class="col-sm-10">
             <input type="text" id="lagna_timezone" class="form-text" name="lagna_timezone"  />
-            <input type="button" class="btn btn-primary" onclick="javascript:getTimezone();" value="Get Timezone" />
         </div>
     </div>
     <div class="form-group">

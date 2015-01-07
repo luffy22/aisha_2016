@@ -8,7 +8,7 @@
 <head>
 <?php
     $doc = JFactory::getDocument();
-    $head_data = $doc->getHeadData();	
+    $head_data = $doc->getHeadData();
 ?>
 <title><?php echo $head_data['title']; ?></title>
 <meta name="description" content="<?php echo $head_data['description']; ?>">
@@ -31,6 +31,15 @@
 <![endif]-->
 </head>
 <body class="body">
+    <?php
+     // Get option and view
+    $option = JRequest::getVar('option');
+    $view = JRequest::getVar('view');
+    // Make sure it is a single article
+    if ($option == 'com_content' && $view == 'article'):
+      echo $id = JRequest::getInt('id')."<br/>";
+      endif;
+      ?>
 <div id="fb-root"></div>
     <div id="loadergif" class="loader"><img src="<?php echo $this->baseurl ?>/images/loader.gif" /></div>
 <div class="main-header">
