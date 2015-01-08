@@ -20,7 +20,9 @@
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/style.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap-theme.min.css" type="text/css" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"/>
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/jquery-ui.structure.min.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/jquery-ui.theme.min.css" type="text/css" />
 <link rel="shortcut icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/favicon.ico" type="image/x-icon" />
 <link rel="icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/favicon.ico" type="image/x-icon">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -37,9 +39,13 @@
     $view = JRequest::getVar('view');
     // Make sure it is a single article
     if ($option == 'com_content' && $view == 'article'):
-      echo $id = JRequest::getInt('id')."<br/>";
+      $id = JRequest::getInt('id');
+   ?>
+    <div id="<?php echo $id; ?>" class="accordion-id"></div>
+    <?php
       endif;
       ?>
+
 <div id="fb-root"></div>
     <div id="loadergif" class="loader"><img src="<?php echo $this->baseurl ?>/images/loader.gif" /></div>
 <div class="main-header">
@@ -49,7 +55,7 @@
     <div class="login-module" id="login-cred">
         <jdoc:include type="modules" name="userlogin" style="none" />
     </div>
-    <div class="header-menu visible-md visible-lg">
+    <div class="header-menu visible-md visible-lg" id="header-menu">
         <div class="home_icon">
             <a style="text-decoration: none;" href="<?php echo JURI::base(); ?>"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="35px" height="35px" /></a>
         </div>

@@ -427,3 +427,13 @@ $(function()
       collapsible: true
     });
   });
+  
+  $(document).ready(function()
+  {
+
+      var id = $('.accordion-id').attr('id');
+      $('#accordion-'+id).accordion({
+            heightStyle: "content",
+            collapsible: true
+        });
+    });
