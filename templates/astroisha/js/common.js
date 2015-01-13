@@ -430,7 +430,6 @@ $(function()
   
   $(document).ready(function()
   {
-
       var id = $('.accordion-id').attr('id');
       $('#accordion-'+id).accordion({
             heightStyle: "content",

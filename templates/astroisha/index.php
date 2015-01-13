@@ -103,8 +103,6 @@
     </div>
     <div class="col-md-3 hidden-xs hidden-sm">
         <div class="spacer"></div>
-        <jdoc:include type="modules" name="fblikeplugin" style="none" />
-        <div class="spacer"></div>
         <jdoc:include type="modules" name="socialplugins" style="none" />
         <div class="spacer"></div>
         <jdoc:include type="modules" name="paypaldonate" style="none" />
@@ -117,30 +115,14 @@
 <!--Scripts at the bottom of the Page -->
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery.min.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
-<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery-ui/jquery-ui.min.js" language="javascript"></script>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 <script>
   $(function() {
     $( "#datepicker" ).datepicker({ yearRange: "1940:2050",changeMonth: true,
       changeYear: true, dateFormat: "yy/mm/dd"  });
   });
 </script>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=220390744824296&version=v2.0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<!-- Place this tag after the last widget tag. -->
-<script type="text/javascript">
-(function() {
-var po = document.createElement('script'); po.type = 'text/javascript'; 
-po.src = 'https://apis.google.com/js/platform.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-})();
-</script>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
