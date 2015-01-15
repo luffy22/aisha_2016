@@ -37,7 +37,7 @@ class HoroscopeModelLagna extends JModelItem
         }
         $this->tob          = $tob1;
         
-      
+      echo $this->calculateLagna();
     }
     // Method to get the sidereal Time
     public function getSiderealTime()
@@ -176,14 +176,15 @@ class HoroscopeModelLagna extends JModelItem
         {
             $meridian           = $db->loadAssoc();
             $std_meridian       = explode(".",$meridian['std_meridian']);
+            
             $std_lon_min        = $std_meridian[0];
             $std_lon_sec        = $std_meridian[1];
             $loc_lon_min        = $lon[0];
-            $loc_lon_sec        = $lon[2];
-            
+            $loc_lon_sec        = $lon[1];
+           
             $new_std_lon_sec	= ($std_lon_min*60*4)+($std_lon_sec*4);		// convert minutes into seconds & multiply by 4 then add to seconds multiplied by 4
             $new_loc_lon_sec	= ($loc_lon_min*60*4)+($loc_lon_sec*4);			// convert minutes into seconds & multiply by 4 then add to seconds multiplied by 4
-
+           
             if($new_std_lon_sec > $new_loc_lon_sec)
             {
                 $new_diff	= $new_std_lon_sec - $new_loc_lon_sec;
@@ -194,13 +195,13 @@ class HoroscopeModelLagna extends JModelItem
                 $new_diff	= $new_loc_lon_sec	- $new_std_lon_sec;
                 $new_diff	= gmdate('H:i:s', $new_diff);
             }
-            
+     
             // Computation to check Sidereal Time
             $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($tob);		// time of birth for user
             $date		->format('H:i:s');
             $diff		= explode(":",$new_diff);
-            
+           
             if($std_loc_min > $loc_lon_min)
             {
                 
@@ -225,6 +226,7 @@ class HoroscopeModelLagna extends JModelItem
                 {
                         $date		->add(new DateInterval('PT'.$sid_diff_1[1].'S'));
                 }
+                
                 $query                  ->clear();
                 $query                  ->select($db->quoteName('diff'));
                 $query                  ->from($db->quoteName('#__sidereal_5'));
@@ -237,7 +239,7 @@ class HoroscopeModelLagna extends JModelItem
             }
             else
             {
-          
+
                 $date			->add(new DateInterval('PT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
                 $get_sidereal_hour	= explode(":", $date->format('H:i:s'));	
                 $sidereal_hr            = $get_sidereal_hour[0];
@@ -259,7 +261,7 @@ class HoroscopeModelLagna extends JModelItem
                 {
                     $date		->add(new DateInterval('PT'.$sid_diff_1[1].'S'));
                 }
-
+                
                 $query                  ->clear();
                 $query                  ->select($db->quoteName('diff'));
                 $query                  ->from($db->quoteName('#__sidereal_5'));
@@ -279,11 +281,144 @@ class HoroscopeModelLagna extends JModelItem
     }
     public function calculateLagna()
     {
-        $lat                    = $this->lat;
+        $lat                    = explode(":",$this->lat);
+        $newlat                 = $lat[0].'.'.$lat[1];
+   
         $siderealTime		= strtotime($this->getSiderealTime());
 	$lmt			= explode(":",$this->getLmt());
         $dob                    = $this->dob;
+        $tob                    = gmdate('H:i:a', $this->tob);
+        $tob                    = explode(":",$tob);
+        
         $doy			= explode("/", $dob);
+        $date                   = new DateTime($this->doy);
+        $date                   ->setTimestamp($siderealTime);
+        if($tob[2]== "pm")
+        {
+            $date               ->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
+        }
+        else
+        {
+            $date               ->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
+        }
+
+        $corr_sidereal          = explode(":",$date->format('H:i:s'));
+        $corr_sid_hr            = $corr_sidereal[0];
+        $corr_sid_min           = $corr_sidereal[1];
+        
+        $up_min			= ceil($corr_sid_min/10)*10;
+        $down_min               = floor($corr_sid_min/10)*10;
+        
+        $query                  ->clear();
+        $query                  = "SELECT * FROM jv_lahiri_7";
+
+        $db                     ->setQuery($query);
+        $count1                  = count($db->loadResult());
+        return $count1;
+        /*$get_up_lagna           = $db->loadAssoc();
+        $lagna                  = $get_up_lagna['lagna_sign'];
+       
+        $up_time		= strtotime("0:".$get_up_lagna['lagna_degree'].":".$get_up_lagna['lagna_min']);
+        $query                  ->clear();
+        $query                  ->select($db->quoteName('lagna_sign'), $db->quoteName('lagna_degree'), $db->quoteName('lagna_min'));
+        $query                  ->from($db->quoteName('#__lahiri_7'));
+        $query                  ->where($db->quoteName('latitude').'<'.($db->quote($lat)+0.5).'OR'.
+                                        $db->quoteName('latitude').'='.($db->quote($lat)).'OR'.
+                                        $db->quoteName('latitude').'>'.($db->quote($lat)-0.5).'AND'.
+                                        $db->quoteName('hour').'='.($db->quote($corr_sid_hr)).'AND'.
+                                        $db->quoteName('minute').'='.($db->quote($down_min)).
+                                        ' ORDER BY abs'.($db->quoteName('latitude').'-'.$db->quote($lat)).' limit 1');
+        $get_down_lagna		= $db->loadAssoc();
+        $down_hour		= $get_down_lagna['lagna_degree'];
+        $down_min		= $get_down_lagna['lagna_min'];
+        $down_sign		= $get_down_lagna['lagna_sign'];
+        $date			= new DateTime($dob);
+        $date			->setTimeStamp($up_time);
+        $date			->sub(new DateInterval('PT'.$get_down_lagna['lagna_degree'].'M'.$get_down_lagna['lagna_min'].'S'));
+        
+        $diff			= explode(":",$date->format('H:i:s'));
+
+        $date1			= new DateTime($dob);
+        $date1			->setTimeStamp($strtotime);
+        $date1			->sub(new DateInterval('PT'.$get_down_lagna['hour'].'H'.$get_down_lagna['minute'].'M0S'));
+       
+        $diff1			= explode(":",$date1->format('H:i:s'));
+
+        $get_up_lagna		= $diff[0]*3600+$diff[1]*60+$diff[2];
+        $get_down_lagna		= $diff1[0]*3600+$diff1[1]*60+$diff1[2];
+        
+        $lagna_min		= explode(".",$get_up_lagna*($get_down_lagna/600));
+        $lagna_sec		= explode(".",$lagna_min[1]*60/100);
+
+        $lagna_min1		= $lagna_min[0]%60;
+
+        $lagna_min_div		= explode(".",($lagna_min[0]/60));
+
+        //echo $down_hour." ".$down_min."<br/>";
+        //echo $lagna_min_div[0]." ".$lagna_min1." ".$lagna_sec[0];
+
+        $calc_lagna_min		= $down_min+$lagna_min1;
+        $calc_lagna_deg		= $down_hour+$lagna_min_div[0];
+        if($lagna_sec[0]>=60)
+        {
+            $lagna_min1 = $lagna_min1+1;
+        }
+        while($calc_lagna_min >= 60)
+        {
+            $calc_lagna_min = $calc_lagna_min - 60;
+            $calc_lagna_deg	= $calc_lagna_deg+1;
+        }
+        while($calc_lagna_deg>=30)
+        {
+            $calc_lagna_deg	= $calc_lagna_deg-30;
+            $down_sign	= $down_sign+1;
+        }
+        $query          ->clear();
+        $query                  ->select($db->quoteName('correction'));
+        $query                  ->from($db->quoteName('#__sidereal_6'));
+        $query                  ->where($db->quoteName('year').'>='.$db->quote($doy[0]));
+        $db                     ->setQuery($query);
+        
+        $get_ayanamsha		= $db->loadAssoc();
+        $ayanamsha_corr		= explode(":", $get_ayanamsha['correction']);
+        if($doy[0] <= '2009')
+        {
+            $ayanamsha_corr_min		= $calc_lagna_min+$ayanamsha_corr[1];
+            $ayanamsha_corr_deg		= $calc_lagna_deg+$ayanamsha_corr[0];
+            if($ayanamsha_corr_min >= 60)
+            {
+                    $ayanamsha_corr_min = $ayanamsha_corr_min - 60;
+                    $ayanamsha_corr_deg	= $calc_lagna_deg+1;
+            }
+            else if($ayanamsha_corr_deg >= 30)
+            {
+                    $ayanamsha_corr_deg	= $ayanamsha_corr_deg - 30;
+                    $down_sign			= $down_sign + 1;
+            }
+            echo $down_sign." ".$ayanamsha_corr_deg." ".$ayanamsha_corr_min." ".$lagna_sec[0];
+        }
+        else
+        {
+            if($ayanamsha_corr[1] > $calc_lagna_min)
+            {
+                    $ayanamsha_corr_min = ($calc_lagna_min+60)-$ayanamsha_corr[1];
+                    $ayanamsha_corr_deg	= $calc_lagna_deg-1;
+            }
+            else
+            {
+                    $ayanamsha_corr_min = $calc_lagna_min-$ayanamsha_corr[1];
+            }
+            if($ayanamsha_corr[0] > $calc_lagna_deg)
+            {
+                    $ayanamsha_corr_deg = ($ayanamsha_corr_deg+30)-$ayanamsha_corr[1];
+                    $down_sign			= $down_sign-1;
+            }
+            else
+            {
+                    $ayanamsha_corr_deg = $ayanamsha_corr_deg-$ayanamsha_corr[1];
+            }
+            return $down_sign." ".$ayanamsha_corr_deg." ".$ayanamsha_corr_min." ".$lagna_sec[0];
+        }*/
     }
 }
 ?>
