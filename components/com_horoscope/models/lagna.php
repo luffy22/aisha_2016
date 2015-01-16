@@ -287,8 +287,7 @@ class HoroscopeModelLagna extends JModelItem
         $siderealTime		= strtotime($this->getSiderealTime());
 	$lmt			= explode(":",$this->getLmt());
         $dob                    = $this->dob;
-        
-        $tob                    = gmdate('H:i:a', $this->tob);
+        $tob                    = date('H:i:s', $this->tob);
         $tob                    = explode(":",$tob);
         
         $doy			= explode("/", $dob);
@@ -321,24 +320,23 @@ class HoroscopeModelLagna extends JModelItem
         
         $up_time		= strtotime("0:".$get_up_lagna['lagna_degree'].":".$get_up_lagna['lagna_min']);
         
-        $query                  ->clear();
-        $query                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
-        $db                     ->setQuery($query);
+        $query1                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
+        $db                     ->setQuery($query1);
         $get_down_lagna		= $db->loadAssoc();
-        
+       
         $down_sign		= $get_down_lagna['lagna_sign'];
         $down_deg               = $get_down_lagna['lagna_degree'];
         $down_sec               = $get_down_lagna['lagna_min'];
-        $date			= new DateTime($dob);
+        
+        $date			= new DateTime($this->doy);
         $date			->setTimeStamp($up_time);
         $date			->sub(new DateInterval('PT'.$get_down_lagna['lagna_degree'].'M'.$get_down_lagna['lagna_min'].'S'));
-        
         $diff			= explode(":",$date->format('H:i:s'));
-
-        $date1			= new DateTime($dob);
-        $date1			->setTimeStamp($strtotime);
-        $date1			->sub(new DateInterval('PT'.$down_deg.'H'.$down_sec.'M0S'));
         
+        $date1			= new DateTime($dob);
+        $date1			->setTimeStamp($down_time);
+        $date1			->sub(new DateInterval('PT'.$down_deg.'H'.$down_sec.'M0S'));
+        //return $date1->format('H:i:s');
         $diff1			= explode(":",$date1->format('H:i:s'));
 
         $get_up_lagna		= $diff[0]*3600+$diff[1]*60+$diff[2];
