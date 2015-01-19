@@ -195,7 +195,7 @@ class HoroscopeModelLagna extends JModelItem
                 $new_diff	= $new_loc_lon_sec	- $new_std_lon_sec;
                 $new_diff	= gmdate('H:i:s', $new_diff);
             }
-     
+           
             // Computation to check Sidereal Time
             $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($tob);		// time of birth for user
@@ -283,138 +283,66 @@ class HoroscopeModelLagna extends JModelItem
     {
         $lat                    = explode(":",$this->lat);
         $newlat                 = $lat[0].'.'.$lat[1];
-        
+       
         $siderealTime		= strtotime($this->getSiderealTime());
 	$lmt			= explode(":",$this->getLmt());
         $dob                    = $this->dob;
-        $tob                    = date('H:i:s', $this->tob);
-        $tob                    = explode(":",$tob);
+        $doy                    = explode("/",$dob);
+        $tob                    = $this->tob;
         
-        $doy			= explode("/", $dob);
-        $date                   = new DateTime($this->doy);
-        $date                   ->setTimestamp($siderealTime);
+        $date                   = new DateTime($dob);		// Datetime object with user date of birth
+        $date                   ->setTimestamp($tob);
+        $tob                    = $date->format('g:i:a');
+        $tob                    = explode(":", $tob);
+        
         if($tob[2]== "pm")
         {
-            $date               ->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
+            $date		= new DateTime($dob);		// Datetime object with user date of birth
+            $date               ->setTimeStamp($siderealTime);		// time of birth for user
+            $date		->format('Y-m-d H:i:s');
+            $date		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
         }
         else
         {
-            $date               ->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
+            $date		= new DateTime($dob);		// Datetime object with user date of birth
+            $date		->setTimeStamp($siderealTime);		// time of birth for user
+            $date		->format('Y-m-d H:i:s');
+            $date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
         }
-        
+              
         $corr_sidereal          = explode(":",$date->format('H:i:s'));
         $corr_sid_hr            = $corr_sidereal[0];
         $corr_sid_min           = $corr_sidereal[1];
+        $up_min                 = ceil($corr_sid_min/4)*4;
+        $down_min               = floor($corr_sid_min/4)*4;
         
-        $up_min			= ceil($corr_sid_min/10)*10;
-        $down_min               = floor($corr_sid_min/10)*10;
         $db                     = JFactory::getDbo();  // Get db connection
         $query                  = $db->getQuery(true);
+        $query1                 = $db->getQuery(true);
+        $query2                 = $db->getQuery(true);
         
         $query                  ->clear();
         $query                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$up_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
         $db                     ->setQuery($query);
         
         $get_up_lagna           = $db->loadAssoc();
-        $lagna                  = $get_up_lagna['lagna_sign'];
+        $up_lagna               = $get_up_lagna['lagna_sign'];
+        $up_deg                 = $get_up_lagna['lagna_degree'];
+        $up_min                 = $get_up_lagna['lagna_min'];
         
-        $up_time		= strtotime("0:".$get_up_lagna['lagna_degree'].":".$get_up_lagna['lagna_min']);
-        
-        $query1                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
+             
+        $query1                 = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
         $db                     ->setQuery($query1);
         $get_down_lagna		= $db->loadAssoc();
-       
-        $down_sign		= $get_down_lagna['lagna_sign'];
+        $down_lagna             = $get_down_lagna['lagna_sign'];
         $down_deg               = $get_down_lagna['lagna_degree'];
-        $down_sec               = $get_down_lagna['lagna_min'];
+        $down_min               = $get_down_lagna['lagna_min'];
+       
+        // Difference between upper value and lower value of lagna
+        $diff1            = ((($up_lagna*30*60)+($up_deg*60)+$up_min)-(($down_lagna*30*60)+($down_deg*60)+$down_min));
+        // Difference between 
+       // $diff2            = (());
         
-        $date			= new DateTime($this->doy);
-        $date			->setTimeStamp($up_time);
-        $date			->sub(new DateInterval('PT'.$get_down_lagna['lagna_degree'].'M'.$get_down_lagna['lagna_min'].'S'));
-        $diff			= explode(":",$date->format('H:i:s'));
-        
-        $date1			= new DateTime($dob);
-        $date1			->setTimeStamp($down_time);
-        $date1			->sub(new DateInterval('PT'.$down_deg.'H'.$down_sec.'M0S'));
-        //return $date1->format('H:i:s');
-        $diff1			= explode(":",$date1->format('H:i:s'));
-
-        $get_up_lagna		= $diff[0]*3600+$diff[1]*60+$diff[2];
-        $get_down_lagna		= $diff1[0]*3600+$diff1[1]*60+$diff1[2];
-        
-        $lagna_min		= explode(".",$get_up_lagna*($get_down_lagna/600));
-        $lagna_sec		= explode(".",$lagna_min[1]*60/100);
-
-        $lagna_min1		= $lagna_min[0]%60;
-
-        $lagna_min_div		= explode(".",($lagna_min[0]/60));
-
-        //echo $down_hour." ".$down_min."<br/>";
-        //echo $lagna_min_div[0]." ".$lagna_min1." ".$lagna_sec[0];
-
-        $calc_lagna_min		= $down_min+$lagna_min1;
-        $calc_lagna_deg		= $down_hour+$lagna_min_div[0];
-        if($lagna_sec[0]>=60)
-        {
-            $lagna_min1 = $lagna_min1+1;
-        }
-        while($calc_lagna_min >= 60)
-        {
-            $calc_lagna_min = $calc_lagna_min - 60;
-            $calc_lagna_deg	= $calc_lagna_deg+1;
-        }
-        while($calc_lagna_deg>=30)
-        {
-            $calc_lagna_deg	= $calc_lagna_deg-30;
-            $down_sign	= $down_sign+1;
-        }
-        $query          ->clear();
-        $query                  ->select($db->quoteName('correction'));
-        $query                  ->from($db->quoteName('#__sidereal_6'));
-        $query                  ->where($db->quoteName('year').'>='.$db->quote($doy[0]));
-        $db                     ->setQuery($query);
-        
-        $get_ayanamsha		= $db->loadAssoc();
-        $ayanamsha_corr		= explode(":", $get_ayanamsha['correction']);
-        if($doy[0] <= '2009')
-        {
-            $ayanamsha_corr_min		= $calc_lagna_min+$ayanamsha_corr[1];
-            $ayanamsha_corr_deg		= $calc_lagna_deg+$ayanamsha_corr[0];
-            if($ayanamsha_corr_min >= 60)
-            {
-                    $ayanamsha_corr_min = $ayanamsha_corr_min - 60;
-                    $ayanamsha_corr_deg	= $calc_lagna_deg+1;
-            }
-            else if($ayanamsha_corr_deg >= 30)
-            {
-                    $ayanamsha_corr_deg	= $ayanamsha_corr_deg - 30;
-                    $down_sign			= $down_sign + 1;
-            }
-            echo $down_sign." ".$ayanamsha_corr_deg." ".$ayanamsha_corr_min." ".$lagna_sec[0];
-        }
-        else
-        {
-            if($ayanamsha_corr[1] > $calc_lagna_min)
-            {
-                    $ayanamsha_corr_min = ($calc_lagna_min+60)-$ayanamsha_corr[1];
-                    $ayanamsha_corr_deg	= $calc_lagna_deg-1;
-            }
-            else
-            {
-                    $ayanamsha_corr_min = $calc_lagna_min-$ayanamsha_corr[1];
-            }
-            if($ayanamsha_corr[0] > $calc_lagna_deg)
-            {
-                    $ayanamsha_corr_deg = ($ayanamsha_corr_deg+30)-$ayanamsha_corr[1];
-                    $down_sign			= $down_sign-1;
-            }
-            else
-            {
-                    $ayanamsha_corr_deg = $ayanamsha_corr_deg-$ayanamsha_corr[1];
-            }
-            return "calls";
-            //return $down_sign." ".$ayanamsha_corr_deg." ".$ayanamsha_corr_min." ".$lagna_sec[0];
-        }
     }
 }
 ?>
