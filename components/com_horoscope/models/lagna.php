@@ -293,6 +293,7 @@ class HoroscopeModelLagna extends JModelItem
         $date                   = new DateTime($dob);		// Datetime object with user date of birth
         $date                   ->setTimestamp($tob);
         $tob                    = $date->format('g:i:a');
+        
         $tob                    = explode(":", $tob);
         
         if($tob[2]== "pm")
@@ -309,10 +310,11 @@ class HoroscopeModelLagna extends JModelItem
             $date		->format('Y-m-d H:i:s');
             $date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
         }
-              
+            
         $corr_sidereal          = explode(":",$date->format('H:i:s'));
         $corr_sid_hr            = $corr_sidereal[0];
         $corr_sid_min           = $corr_sidereal[1];
+        $corr_sid_sec           = $corr_sidereal[2];
         $up_min                 = ceil($corr_sid_min/4)*4;
         $down_min               = floor($corr_sid_min/4)*4;
         
@@ -329,7 +331,8 @@ class HoroscopeModelLagna extends JModelItem
         $up_lagna               = $get_up_lagna['lagna_sign'];
         $up_deg                 = $get_up_lagna['lagna_degree'];
         $up_min                 = $get_up_lagna['lagna_min'];
-        
+        $up_hr                  = $get_up_lagna['hour'];
+        $up_minute              = $get_up_lagna['minute'];
              
         $query1                 = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
         $db                     ->setQuery($query1);
@@ -337,11 +340,17 @@ class HoroscopeModelLagna extends JModelItem
         $down_lagna             = $get_down_lagna['lagna_sign'];
         $down_deg               = $get_down_lagna['lagna_degree'];
         $down_min               = $get_down_lagna['lagna_min'];
-       
+        $down_hr                = $get_down_lagna['hour'];
+        $down_minute            = $get_down_lagna['minute'];
         // Difference between upper value and lower value of lagna
-        $diff1            = ((($up_lagna*30*60)+($up_deg*60)+$up_min)-(($down_lagna*30*60)+($down_deg*60)+$down_min));
-        // Difference between 
-       // $diff2            = (());
+        $diff1                  = ((($up_lagna*30*60)+($up_deg*60)+$up_min)-(($down_lagna*30*60)+($down_deg*60)+$down_min));
+        //return $diff1;
+        // Difference between sidereal time and lower value of lagna
+        $diff2                   = (($corr_sid_hr*3600+$corr_sid_min*60+$corr_sid_sec)-($down_hr*3600+$down_minute*60));
+        
+        // Exact degree, minutes, seconds at sidereal time in decimal
+        $diff            = ($diff1*$diff2)/240;
+        return $diff;
         
     }
 }
