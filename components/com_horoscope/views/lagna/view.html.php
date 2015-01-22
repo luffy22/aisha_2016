@@ -10,18 +10,20 @@ jimport('joomla.application.component.view');
  */
 class HoroscopeViewLagna extends JViewLegacy
 {
-    /*protected $siderealTime;
-    public function display($tpl=null)
+    /*function display($tpl = null) 
     {
-        $this->siderealTime     = $this->get('Lagna');
-        echo $this->siderealTime;
-        if(!empty($this->siderealTime))
+        // Get data from the model
+        // Check for errors.
+        $siderealTime  = $this->get('Lagna');
+        if (count($errors = $this->get('Errors'))) 
         {
-            echo $this->siderealTime;
+                JError::raiseError(500, implode('<br />', $errors));
+                return false;
         }
-        else
-        {
-            parent::display($tpl);
-        }
+        
+
+
+        // Display the template
+        parent::display($tpl);
     }*/
 }

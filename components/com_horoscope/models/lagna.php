@@ -12,6 +12,7 @@ class HoroscopeModelLagna extends JModelItem
     public $lon;
     public $lat;
     public $tmz;
+    protected $siderealTime;
     // Get lagna using sidereal tables and corrections
     public function getLagna($user_details)
     {
@@ -322,6 +323,7 @@ class HoroscopeModelLagna extends JModelItem
         $query                  = $db->getQuery(true);
         $query1                 = $db->getQuery(true);
         $query2                 = $db->getQuery(true);
+        $query3                 = $db->getQuery(true);
         
         $query                  ->clear();
         $query                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$up_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
@@ -340,18 +342,224 @@ class HoroscopeModelLagna extends JModelItem
         $down_lagna             = $get_down_lagna['lagna_sign'];
         $down_deg               = $get_down_lagna['lagna_degree'];
         $down_min               = $get_down_lagna['lagna_min'];
+        
         $down_hr                = $get_down_lagna['hour'];
         $down_minute            = $get_down_lagna['minute'];
         // Difference between upper value and lower value of lagna
         $diff1                  = ((($up_lagna*30*60)+($up_deg*60)+$up_min)-(($down_lagna*30*60)+($down_deg*60)+$down_min));
         //return $diff1;
         // Difference between sidereal time and lower value of lagna
-        $diff2                   = (($corr_sid_hr*3600+$corr_sid_min*60+$corr_sid_sec)-($down_hr*3600+$down_minute*60));
+        $diff2                  = (($corr_sid_hr*3600+$corr_sid_min*60+$corr_sid_sec)-($down_hr*3600+$down_minute*60));
         
         // Exact degree, minutes, seconds at sidereal time in decimal
-        $diff            = ($diff1*$diff2)/240;
-        return $diff;
+        $diff                   = $diff1*($diff2/240);
+        $diff                   = explode(".", $diff);
+        $diff_sec               = ($diff[1]*60)/10;  // exact seconds
+        $diff_min               = $diff[0];
+        $diff_deg               = 0;
+        // Convert seconds into minutes if greater then 60
+        while($diff_sec>=60)
+        {
+            $diff_sec           = $diff_sec - 60; // substract 60 seconds 
+            $diff_min           = $diff_min+1;   // add 1 minute to degree
+        }
+        while($diff_min>=60)
+        {
+            $diff_min           = $diff_min - 60;
+            $diff_deg           = 0+1;
+        }
         
+        // Add the difference to the down value of lagna
+        $lagna_acc_sec          = 0+$diff_sec;
+        $lagna_acc_min          = $down_min+$diff_min;
+        $lagna_acc_deg          = $down_deg+$diff_deg;
+        $lagna_acc_sign         = $down_lagna;
+       
+       while($lagna_acc_min>=60)
+       {
+           $lagna_acc_min       = $lagna_acc_min-60;
+           $lagna_acc_deg       = $lagna_acc_deg+1;
+       }
+       
+       if($lagna_acc_deg>=30)
+       {
+           $lagna_acc_deg       = $lagna_acc_deg - 30;
+           $lagna_acc_sign      = $lagna_acc_sign+1;
+       }
+       
+        $year                   = $doy[0];
+        
+        $query3                 = "SELECT correction FROM jv_sidereal_6 WHERE year='".$year."'";
+        $db                     ->setQuery($query3);
+        $get_ayanamsha          = $db->loadAssoc();
+        $ayanamsha_corr		= explode(":", $get_ayanamsha['correction']);
+        if($year <= '2009')
+        {
+            $lagna_acc_min	= $lagna_acc_min+$ayanamsha_corr[1];
+            $langa_acc_deg	= $lagna_acc_deg+$ayanamsha_corr[0];
+            if($lagna_acc_min >= 60)
+            {
+                $lagna_acc_min  = $lagna_acc_min - 60;
+                $lagna_acc_deg	= $lagna_acc_deg+1;
+            }
+            else if($lagna_acc_deg >= 30)
+            {
+                $lagna_acc_deg  = $ayanamsha_corr_deg - 30;
+                $lagna_acc_sign	= $lagna_acc_sign + 1;
+            }
+            
+        }
+        else
+        {
+            if($ayanamsha_corr[1] > $lagna_acc_min)
+            {
+                $lagna_acc_min  = ($lagna_acc_min+60)-$ayanamsha_corr[1];
+                $lagna_acc_deg  = $lagna_acc_deg-1;
+            }
+            else
+            {
+                $lagna_acc_min  = $lagna_acc_min-$ayanamsha_corr[1];
+            }
+            if($ayanamsha_corr[0] > $lagna_acc_deg)
+            {
+                $lagna_acc_deg  = ($lagna_acc_deg+30)-$ayanamsha_corr[1];
+                $lagna_acc_sign		= $lagna_acc_sign-1;
+            }
+            else
+            {
+                $lagna_acc_deg  = $lagna_acc_deg-$ayanamsha_corr[1];
+            }
+            
+        }
+        $this->siderealTime     = $lagna_acc_sign.":".$lagna_acc_deg.":".$lagna_acc_min.":".$lagna_acc_sec;
+        $details                = explode(":",$this->siderealTime);                 
+        $lagna_acc_sign                    = $details[0];
+        $gender                 = $this->gender;
+        
+        if($lagna_acc_sign=="0"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='103'";
+        }
+        else if($lagna_acc_sign=="0"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='102'";
+        }
+        else if($lagna_acc_sign=="1"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='104'";
+        }
+        else if($lagna_acc_sign=="1"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='105'";
+        }
+        else if($lagna_acc_sign=="2"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='106'";
+        }
+        else if($lagna_acc_sign=="2"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='107'";
+        }
+        else if($lagna_acc_sign=="3"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='108'";
+        }
+        else if($lagna_acc_sign=="3"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='109'";
+        }
+        else if($lagna_acc_sign=="4"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='110'";
+        }
+        else if($lagna_acc_sign=="4"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='111'";
+        }
+        else if($lagna_acc_sign=="5"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='114'";
+        }
+        else if($lagna_acc_sign=="5"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='115'";
+        }
+        else if($lagna_acc_sign=="6"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='116'";
+        }
+        else if($lagna_acc_sign=="6"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='117'";
+        }
+        else if($lagna_acc_sign=="7"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='118'";
+        }
+        else if($lagna_acc_sign=="7"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='119'";
+        }
+        else if($lagna_acc_sign=="8"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='120'";
+        }
+        else if($lagna_acc_sign=="8"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='121'";
+        }
+        else if($lagna_acc_sign=="9"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='123'";
+        }
+        else if($lagna_acc_sign=="9"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='124'";
+        }
+        else if($lagna_acc_sign=="10"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='125'";
+        }
+        else if($lagna_acc_sign=="10"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='126'";
+        }
+        else if($lagna_acc_sign=="11"&&$gender=="female")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='127'";
+        }
+        else if($lagna_acc_sign=="11"&&$gender=="male")
+        {
+            $query              ->clear();
+            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='128'";
+        }
+        $db                 ->setQuery($query);
+        $description        =  $db->loadAssoc();
+        count                = count($db->loadResult());
+        return $count;
     }
 }
 ?>
