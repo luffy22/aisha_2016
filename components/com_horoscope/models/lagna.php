@@ -25,7 +25,6 @@ class HoroscopeModelLagna extends JModelItem
         $this->lon          = $user_details['lon'];
         $this->lat          = $user_details['lat'];
         $this->tmz          = $user_details['tmz'];
-        
         $tob        = explode(":",$this->tob);
         if($tob[3]=="PM")
         {
@@ -46,8 +45,9 @@ class HoroscopeModelLagna extends JModelItem
         $lon            = explode(":", $this->lon);
         $dob            = explode("/",$this->dob);
         $monthNum       = $dob[1];  // The month in number format (ex. 06 for June)
+        $year           = $dob[0];
         $monthName      = date("F", mktime(0, 0, 0, $monthNum, 10));		// month in word format (ex. June/July/August)
-        
+        $leap           = date("L", mktime(0,0,$dob[2], $monthNum, $year));
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         
@@ -61,17 +61,18 @@ class HoroscopeModelLagna extends JModelItem
         
         if($count>0)
         {
+
             $get_sidetime_year                          = strtotime($row['Sidereal']);
             $date					= new DateTime($this->dob);		// Datetime object with user date of birth
             $date					->setTimeStamp($get_sidetime_year);		// time of birth for user
                       
             $query      ->clear();
-            if($monthName == "January" || $monthName == "February")
+            if(($monthName == "January" || $monthName == "February")&&($leap=="1"))
             {
                 $query      ->select($db->quoteName('corr_time'));
                 $query      ->from($db->quoteName('#__sidereal_2'));
                 $query      ->where($db->quoteName('Year').'='.$db->quote($dob[0]).' AND '.
-                                    $db->quote('leap').'='.'*');
+                                    $db->quote('leap').'='.'leap');
             }
             else
             {
@@ -83,7 +84,7 @@ class HoroscopeModelLagna extends JModelItem
             $db                 ->setQuery($query);
             unset($count);
             $count              = count($db->loadResult());
-            
+           
             $time_diff          = $db->loadAssoc();
             $correction         = $time_diff['corr_time'];      // correction time diff using sidereal_2 table
             
@@ -116,7 +117,7 @@ class HoroscopeModelLagna extends JModelItem
                     $date	->add(new DateInterval('PT'.$diff[1].'S'));
                 }
             }
-           
+            
             $query              ->clear();
             $query              = "select corr_sign, st_correction FROM jv_sidereal_3 WHERE longitude >= '".($lon[0].'.'.$lon[1])."'
                                     order by abs(longitude - '".($lon[0].'.'.$lon[1])."') limit 1";
@@ -163,7 +164,7 @@ class HoroscopeModelLagna extends JModelItem
         $gmt        = "GMT".$this->tmz;
         $dob        = $this->dob;
         $tob        = $this->tob;
-        
+
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         
@@ -284,7 +285,7 @@ class HoroscopeModelLagna extends JModelItem
     {
         $lat                    = explode(":",$this->lat);
         $newlat                 = $lat[0].'.'.$lat[1];
-       
+        
         $siderealTime		= strtotime($this->getSiderealTime());
 	$lmt			= explode(":",$this->getLmt());
         $dob                    = $this->dob;
@@ -324,7 +325,7 @@ class HoroscopeModelLagna extends JModelItem
         $query1                 = $db->getQuery(true);
         $query2                 = $db->getQuery(true);
         $query3                 = $db->getQuery(true);
-        
+        $query                  = $db->getQuery($true);
         $query                  ->clear();
         $query                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$up_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
         $db                     ->setQuery($query);
@@ -335,7 +336,7 @@ class HoroscopeModelLagna extends JModelItem
         $up_min                 = $get_up_lagna['lagna_min'];
         $up_hr                  = $get_up_lagna['hour'];
         $up_minute              = $get_up_lagna['minute'];
-             
+         
         $query1                 = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
         $db                     ->setQuery($query1);
         $get_down_lagna		= $db->loadAssoc();
@@ -388,7 +389,7 @@ class HoroscopeModelLagna extends JModelItem
        }
        
         $year                   = $doy[0];
-        
+
         $query3                 = "SELECT correction FROM jv_sidereal_6 WHERE year='".$year."'";
         $db                     ->setQuery($query3);
         $get_ayanamsha          = $db->loadAssoc();
@@ -438,128 +439,113 @@ class HoroscopeModelLagna extends JModelItem
         
         if($lagna_acc_sign=="0"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='103'";
+           $query4              = "SELECT * FROM jv_content WHERE id='127'";
         }
         else if($lagna_acc_sign=="0"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='102'";
+            $query4              = "SELECT * FROM jv_content WHERE id='128'";
         }
         else if($lagna_acc_sign=="1"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='104'";
+            $query4              = "SELECT * FROM jv_content WHERE id='103'";
         }
         else if($lagna_acc_sign=="1"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='105'";
+           $query4              = "SELECT * FROM jv_content WHERE id='102'";
         }
         else if($lagna_acc_sign=="2"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='106'";
+            $query4              = "SELECT * FROM jv_content WHERE id='104'";
         }
         else if($lagna_acc_sign=="2"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='107'";
+            $query4              = "SELECT * FROM jv_content WHERE id='105'";
         }
         else if($lagna_acc_sign=="3"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='108'";
+            $query4              = "SELECT * FROM jv_content WHERE id='106'";
         }
         else if($lagna_acc_sign=="3"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='109'";
+            $query4              = "SELECT * FROM jv_content WHERE id='107'";
         }
         else if($lagna_acc_sign=="4"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='110'";
+            $query4              = "SELECT * FROM jv_content WHERE id='108'";
         }
         else if($lagna_acc_sign=="4"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='111'";
+            $query4              = "SELECT * FROM jv_content WHERE id='109'";
         }
         else if($lagna_acc_sign=="5"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='114'";
+            $query4              = "SELECT * FROM jv_content WHERE id='110'";
         }
         else if($lagna_acc_sign=="5"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='115'";
+            $query4              = "SELECT * FROM jv_content WHERE id='111'";
         }
         else if($lagna_acc_sign=="6"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='116'";
+            $query4              = "SELECT * FROM jv_content WHERE id='114'";
         }
         else if($lagna_acc_sign=="6"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='117'";
+            $query4              = "SELECT * FROM jv_content WHERE id='115'";
         }
         else if($lagna_acc_sign=="7"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='118'";
+            $query4              = "SELECT * FROM jv_content WHERE id='116'";
         }
         else if($lagna_acc_sign=="7"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='119'";
+            $query4              = "SELECT * FROM jv_content WHERE id='117'";
         }
         else if($lagna_acc_sign=="8"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='120'";
+            $query4              = "SELECT * FROM jv_content WHERE id='118'";
         }
         else if($lagna_acc_sign=="8"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='121'";
+            $query4              = "SELECT * FROM jv_content WHERE id='119'";
         }
         else if($lagna_acc_sign=="9"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='123'";
+            $query4              = "SELECT * FROM jv_content WHERE id='120'";
         }
         else if($lagna_acc_sign=="9"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='124'";
+            $query4              = "SELECT * FROM jv_content WHERE id='121'";
         }
         else if($lagna_acc_sign=="10"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='125'";
+            $query4              = "SELECT * FROM jv_content WHERE id='123'";
         }
         else if($lagna_acc_sign=="10"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='126'";
+            $query4              = "SELECT * FROM jv_content WHERE id='124'";
         }
         else if($lagna_acc_sign=="11"&&$gender=="female")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='127'";
+            $query4              = "SELECT * FROM jv_content WHERE id='125'";
         }
         else if($lagna_acc_sign=="11"&&$gender=="male")
         {
-            $query              ->clear();
-            $query              = "SELECT id,title,introtext FROM jv_content WHERE id='128'";
+            $query4              = "SELECT * FROM jv_content WHERE id='126'";
         }
-        $db                 ->setQuery($query);
+        $db                 ->setQuery($query4);
         $description        =  $db->loadAssoc();
-        count                = count($db->loadResult());
-        return $count;
+        $count                 = count($db->loadResult());
+        if($gender=="male")
+        {
+            $title              = "<h2>Your Lagna has ".str_replace("Lagna Males", " Rashi", $description['title'])."</h2><br/>";
+        }
+        else if($gender=="female")
+        {
+            $title              = "<h2>Your Lagna has ".str_replace("Lagna Females", " Rashi", $description['title'])."</h2><br/>";
+        }
+        return $title.$description['introtext'];;
+        //return $description['title'];
     }
 }
 ?>
