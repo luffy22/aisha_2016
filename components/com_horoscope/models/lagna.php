@@ -12,8 +12,12 @@ class HoroscopeModelLagna extends JModelItem
     public $lon;
     public $lat;
     public $tmz;
-    protected $siderealTime;
+    protected $data;
     // Get lagna using sidereal tables and corrections
+    public function getData()
+    {
+       
+    }
     public function getLagna($user_details)
     {
         
@@ -37,7 +41,7 @@ class HoroscopeModelLagna extends JModelItem
         }
         $this->tob          = $tob1;
         
-      echo $this->calculateLagna();
+       return $this->getData();
     }
     // Method to get the sidereal Time
     public function getSiderealTime()
@@ -97,7 +101,7 @@ class HoroscopeModelLagna extends JModelItem
                 //$get_sidereal_timediff	= 
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                    $date	->sub(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
+                    $date	->sub(new DateInterval('P0Y0DT0H'.$diff[0].'M'.$diff[1].'S'));
                 }
                 else
                 {
@@ -110,7 +114,7 @@ class HoroscopeModelLagna extends JModelItem
                 //$get_sidereal_timediff	= 
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                    $date	->add(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
+                    $date	->add(new DateInterval('P0Y0DT0H'.$diff[0].'M'.$diff[1].'S'));
                 }
                 else
                 {
@@ -132,7 +136,7 @@ class HoroscopeModelLagna extends JModelItem
                 $diff           = explode(".",$sid_corr['st_correction']);
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                        $date	->sub(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
+                        $date	->sub(new DateInterval('P0Y0DT0H'.$diff[0].'M'.$diff[1].'S'));
                 }
                 else
                 {
@@ -142,11 +146,11 @@ class HoroscopeModelLagna extends JModelItem
             else if($corr_diff['corr_sign'] == "+")
             {
                 //$get_sidereal_timediff	= 
-                $date	->add(new DateInterval('PT'.$corr_mins.'M'.$corr_secs.'S'));
+                $date	->add(new DateInterval('P0Y0DT0H'.$corr_mins.'M'.$corr_secs.'S'));
                 $diff	= explode(".",$corr_diff['st_correction']);
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                    $date   ->add(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
+                    $date   ->add(new DateInterval('P0Y0DT0H'.$diff[0].'M'.$diff[1].'S'));
                 }
                 else
                 {
@@ -190,12 +194,12 @@ class HoroscopeModelLagna extends JModelItem
             if($new_std_lon_sec > $new_loc_lon_sec)
             {
                 $new_diff	= $new_std_lon_sec - $new_loc_lon_sec;
-                $new_diff	= gmdate('H:i:s', $new_diff);
+                $new_diff	= date('H:i:s', $new_diff);
             }
             else
             {
                 $new_diff	= $new_loc_lon_sec	- $new_std_lon_sec;
-                $new_diff	= gmdate('H:i:s', $new_diff);
+                $new_diff	= date('H:i:s', $new_diff);
             }
            
             // Computation to check Sidereal Time
@@ -207,7 +211,7 @@ class HoroscopeModelLagna extends JModelItem
             if($std_loc_min > $loc_lon_min)
             {
                 
-                $date			->sub(new DateInterval('PT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
+                $date			->sub(new DateInterval('P0Y0DT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
                 $get_sidereal_hour	= explode(":", $date->format('H:i:s'));	
                 $sidereal_hr            = $get_sidereal_hour[0];
                 $sidereal_min           = $get_sidereal_hour[1];
@@ -222,7 +226,7 @@ class HoroscopeModelLagna extends JModelItem
 		
                 if($sid_diff_1[0] != "00")
                 {
-                        $date		->add(new DateInterval('PT'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
+                        $date		->add(new DateInterval('P0Y0DT0H'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
                 }
                 else
                 {
@@ -242,7 +246,7 @@ class HoroscopeModelLagna extends JModelItem
             else
             {
 
-                $date			->add(new DateInterval('PT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
+                $date			->add(new DateInterval('P0Y0DT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
                 $get_sidereal_hour	= explode(":", $date->format('H:i:s'));	
                 $sidereal_hr            = $get_sidereal_hour[0];
                 $sidereal_min           = $get_sidereal_hour[1];
@@ -257,7 +261,7 @@ class HoroscopeModelLagna extends JModelItem
 			
                 if($sid_diff_1[0] != "00")
                 {
-                    $date		->add(new DateInterval('PT'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
+                    $date		->add(new DateInterval('P0Y0DT0H'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
                 }
                 else
                 {
@@ -285,7 +289,7 @@ class HoroscopeModelLagna extends JModelItem
     {
         $lat                    = explode(":",$this->lat);
         $newlat                 = $lat[0].'.'.$lat[1];
-        
+        $gender                 = $this->gender;
         $siderealTime		= strtotime($this->getSiderealTime());
 	$lmt			= explode(":",$this->getLmt());
         $dob                    = $this->dob;
@@ -303,14 +307,14 @@ class HoroscopeModelLagna extends JModelItem
             $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date               ->setTimeStamp($siderealTime);		// time of birth for user
             $date		->format('Y-m-d H:i:s');
-            $date		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
+            $date		->add(new DateInterval('P0Y0DT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
         }
         else
         {
             $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($siderealTime);		// time of birth for user
             $date		->format('Y-m-d H:i:s');
-            $date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
+            $date		->sub(new DateInterval('P0Y0DT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
         }
             
         $corr_sidereal          = explode(":",$date->format('H:i:s'));
@@ -432,8 +436,8 @@ class HoroscopeModelLagna extends JModelItem
             }
             
         }
-        $this->siderealTime     = $lagna_acc_sign.":".$lagna_acc_deg.":".$lagna_acc_min.":".$lagna_acc_sec;
-        $details                = explode(":",$this->siderealTime);                 
+        $this->data     = array("gender"=>$gender,"lagna"=>$lagna_acc_sign,"deg"=>$lagna_acc_deg,"min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
+        /*$details                = explode(":",$this->siderealTime);                 
         $lagna_acc_sign                    = $details[0];
         $gender                 = $this->gender;
         
@@ -545,7 +549,7 @@ class HoroscopeModelLagna extends JModelItem
             $title              = "<h2>Your Lagna has ".str_replace("Lagna Females", " Rashi", $description['title'])."</h2><br/>";
         }
         return $title.$description['introtext'];;
-        //return $description['title'];
+        //return $description['title'];*/
     }
 }
 ?>

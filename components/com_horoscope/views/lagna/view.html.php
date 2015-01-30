@@ -4,7 +4,7 @@ defined('_JEXEC') or die('Restricted access');
  
 // import Joomla view library
 jimport('joomla.application.component.view');
- 
+jimport('joomla.application.component.modelitem');
 /**
  * HTML View class for the HelloWorld Component
  */
@@ -14,16 +14,20 @@ class HoroscopeViewLagna extends JViewLegacy
     {
         // Get data from the model
         // Check for errors.
-        //$siderealTime  = $this->get('Lagna');
+        $data  = $this->get('Data');
         if (count($errors = $this->get('Errors'))) 
         {
                 JError::raiseError(500, implode('<br />', $errors));
                 return false;
         }
-        
-
-
-        // Display the template
-        parent::display($tpl);
+        if(empty($this->data))
+        {
+            parent::display($tpl);
+        }
+        else
+        {
+            echo data;
+            //$this->loadTemplate('lagna');
+        }
     }
 }
