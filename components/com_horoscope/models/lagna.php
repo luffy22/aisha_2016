@@ -16,7 +16,7 @@ class HoroscopeModelLagna extends JModelItem
     // Get lagna using sidereal tables and corrections
     public function getData()
     {
-       
+      echo $this->data      = $this->calculateLagna();
     }
     public function getLagna($user_details)
     {
@@ -32,6 +32,7 @@ class HoroscopeModelLagna extends JModelItem
         $tob        = explode(":",$this->tob);
         if($tob[3]=="PM")
         {
+            
             $tob[0] = $tob[0]+12;
             $tob1   = strtotime($tob[0].":".$tob[1].":".$tob[2]);
         }
@@ -292,6 +293,7 @@ class HoroscopeModelLagna extends JModelItem
         $gender                 = $this->gender;
         $siderealTime		= strtotime($this->getSiderealTime());
 	$lmt			= explode(":",$this->getLmt());
+        
         $dob                    = $this->dob;
         $doy                    = explode("/",$dob);
         $tob                    = $this->tob;
@@ -301,22 +303,22 @@ class HoroscopeModelLagna extends JModelItem
         $tob                    = $date->format('g:i:a');
         
         $tob                    = explode(":", $tob);
-        
+
         if($tob[2]== "pm")
         {
             $date		= new DateTime($dob);		// Datetime object with user date of birth
-            $date               ->setTimeStamp($siderealTime);		// time of birth for user
-            $date		->format('Y-m-d H:i:s');
+            $date               ->setTimeStamp($siderealTime);		// sidtime of birth for user
+            $date		->format('H:i:s');
             $date		->add(new DateInterval('P0Y0DT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
         }
         else
         {
             $date		= new DateTime($dob);		// Datetime object with user date of birth
-            $date		->setTimeStamp($siderealTime);		// time of birth for user
-            $date		->format('Y-m-d H:i:s');
+            $date		->setTimeStamp($siderealTime);		// sidereal time of birth for user
+            $date		->format('H:i:s');
             $date		->sub(new DateInterval('P0Y0DT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
         }
-            
+        
         $corr_sidereal          = explode(":",$date->format('H:i:s'));
         $corr_sid_hr            = $corr_sidereal[0];
         $corr_sid_min           = $corr_sidereal[1];
@@ -340,28 +342,29 @@ class HoroscopeModelLagna extends JModelItem
         $up_min                 = $get_up_lagna['lagna_min'];
         $up_hr                  = $get_up_lagna['hour'];
         $up_minute              = $get_up_lagna['minute'];
-         
+        
         $query1                 = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
         $db                     ->setQuery($query1);
         $get_down_lagna		= $db->loadAssoc();
         $down_lagna             = $get_down_lagna['lagna_sign'];
         $down_deg               = $get_down_lagna['lagna_degree'];
         $down_min               = $get_down_lagna['lagna_min'];
-        
         $down_hr                = $get_down_lagna['hour'];
         $down_minute            = $get_down_lagna['minute'];
+        
         // Difference between upper value and lower value of lagna
         $diff1                  = ((($up_lagna*30*60)+($up_deg*60)+$up_min)-(($down_lagna*30*60)+($down_deg*60)+$down_min));
+        
         //return $diff1;
         // Difference between sidereal time and lower value of lagna
         $diff2                  = (($corr_sid_hr*3600+$corr_sid_min*60+$corr_sid_sec)-($down_hr*3600+$down_minute*60));
-        
         // Exact degree, minutes, seconds at sidereal time in decimal
-        $diff                   = $diff1*($diff2/240);
+        $diff                   = round($diff1*($diff2/240),2);
         $diff                   = explode(".", $diff);
         $diff_sec               = ($diff[1]*60)/10;  // exact seconds
         $diff_min               = $diff[0];
         $diff_deg               = 0;
+        return $diff_deg.":".$diff_min.":".$diff_sec;
         // Convert seconds into minutes if greater then 60
         while($diff_sec>=60)
         {
@@ -379,7 +382,8 @@ class HoroscopeModelLagna extends JModelItem
         $lagna_acc_min          = $down_min+$diff_min;
         $lagna_acc_deg          = $down_deg+$diff_deg;
         $lagna_acc_sign         = $down_lagna;
-       
+        
+        //return $lagna_acc_sign.":".$lagna_acc_deg.":".$lagna_acc_min.":".$lagna_acc_sec;
        while($lagna_acc_min>=60)
        {
            $lagna_acc_min       = $lagna_acc_min-60;
@@ -393,7 +397,7 @@ class HoroscopeModelLagna extends JModelItem
        }
        
         $year                   = $doy[0];
-
+        
         $query3                 = "SELECT correction FROM jv_sidereal_6 WHERE year='".$year."'";
         $db                     ->setQuery($query3);
         $get_ayanamsha          = $db->loadAssoc();
@@ -436,10 +440,6 @@ class HoroscopeModelLagna extends JModelItem
             }
             
         }
-        $this->data     = array("gender"=>$gender,"lagna"=>$lagna_acc_sign,"deg"=>$lagna_acc_deg,"min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
-        /*$details                = explode(":",$this->siderealTime);                 
-        $lagna_acc_sign                    = $details[0];
-        $gender                 = $this->gender;
         
         if($lagna_acc_sign=="0"&&$gender=="female")
         {
@@ -537,19 +537,9 @@ class HoroscopeModelLagna extends JModelItem
         {
             $query4              = "SELECT * FROM jv_content WHERE id='126'";
         }
-        $db                 ->setQuery($query4);
-        $description        =  $db->loadAssoc();
-        $count                 = count($db->loadResult());
-        if($gender=="male")
-        {
-            $title              = "<h2>Your Lagna has ".str_replace("Lagna Males", " Rashi", $description['title'])."</h2><br/>";
-        }
-        else if($gender=="female")
-        {
-            $title              = "<h2>Your Lagna has ".str_replace("Lagna Females", " Rashi", $description['title'])."</h2><br/>";
-        }
-        return $title.$description['introtext'];;
-        //return $description['title'];*/
+         $db                     ->setQuery($query4);
+         $lagna                 = $db->loadAssoc();
+         return $lagna;
     }
 }
 ?>

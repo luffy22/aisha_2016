@@ -14,20 +14,19 @@ class HoroscopeViewLagna extends JViewLegacy
     {
         // Get data from the model
         // Check for errors.
-        $data  = $this->get('Data');
+        //$data  = $this->get('Data');
         if (count($errors = $this->get('Errors'))) 
         {
                 JError::raiseError(500, implode('<br />', $errors));
                 return false;
         }
-        if(empty($this->data))
-        {
+        //if(empty($this->data))
+        //{
             parent::display($tpl);
-        }
-        else
-        {
-            echo data;
+        //}
+        //else
+        //{
             //$this->loadTemplate('lagna');
-        }
+       // }
     }
 }
