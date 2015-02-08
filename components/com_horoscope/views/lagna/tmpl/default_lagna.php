@@ -1,6 +1,8 @@
-<?php 
-defined('_JEXEC') or die('Restricted access'); 
-//$data       = $this->data
+<?php
 
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+echo "hello world!!";
 ?>
-<h2><?php echo "calls" ?></h2>
