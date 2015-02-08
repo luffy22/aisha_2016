@@ -4,13 +4,13 @@ defined('_JEXEC') or die('Restricted access');
  
 // import Joomla view library
 jimport('joomla.application.component.view');
-jimport('joomla.application.component.modelitem');
+jimport('joomla.application.component.controller');
 /**
  * HTML View class for the HelloWorld Component
  */
 class HoroscopeViewLagna extends JViewLegacy
 {
-     protected $data;
+    protected $data;
     function display($tpl = null) 
     {
        
@@ -30,7 +30,8 @@ class HoroscopeViewLagna extends JViewLegacy
         }
         else
         {
-            echo $this->data;
+            $tpl        = "2";
+            parent::display($tpl);
         }
     }
 }

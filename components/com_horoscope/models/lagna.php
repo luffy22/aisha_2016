@@ -16,8 +16,13 @@ class HoroscopeModelLagna extends JModelItem
     // Get lagna using sidereal tables and corrections
     public function getData()
     {
-       echo $this->data      = $this->calculateLagna();
-       
+        if(empty($data))
+        {
+            return;
+        }
+        {
+            return $this->calculateLagna();
+        }
     }
     public function getLagna($user_details)
     {
@@ -43,7 +48,7 @@ class HoroscopeModelLagna extends JModelItem
         }
         $this->tob          = $tob1;
         
-       return $this->getData();
+       $this->getData();
     }
     // Method to get the sidereal Time
     public function getSiderealTime()
@@ -294,37 +299,74 @@ class HoroscopeModelLagna extends JModelItem
         $newlat                 = $lat[0].'.'.$lat[1];
         $gender                 = $this->gender;
         //return $this->getSiderealTime();
-        $siderealTime		= $this->getSiderealTime();
-	$lmt			= explode(":",$this->getLmt());
-        
+        $sidtime		= explode(":",$this->getSiderealTime());
+       	$lmt			= explode(":",$this->getLmt());
+         
         $dob                    = $this->dob;
         //return $dob;
         $doy                    = explode("/",$dob);
         $tob                    = $this->tob;
 
-        $dateObject 		= new DateTime($tob);
+        $dateObject 		= new DateTime($dob);
+        $dateObject             ->setTimestamp($tob);
         $tob_format		= $dateObject->format('g:i a');
 
         if(strpos($tob_format,"pm"))
         {
-            $date		= new DateTime($dob);		// Datetime object with user date of birth
-            $date               ->setTimeStamp($siderealTime);		// time of birth for user
-            //$date		->format('Y-m-d H:i:s');
-            //$date		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
-
+            /*$date		= new DateTime($dob);		// Datetime object with user date of birth
+            $date		->setTimeStamp($sidtime);		// time of birth for user
+            $date		->format('Y-m-d H:i:s');
+            $date		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));*/
+            $dat_hr             = $sidtime[0]+$lmt[0];
+            $dat_min            = $sidtime[1]+$lmt[1];
+            $dat_sec            = $sidtime[2]+$lmt[2];
+            
+            if($dat_sec>=60)
+            {
+                $dat_min        = $dat_min+1;
+                $dat_sec        = $dat_sec-60;
+            }
+            if($dat_min>=60)
+            {
+                $dat_hr         = $dat_hr+1;
+                $dat_min        = $dat_min-60;
+            }
+            if($dat_hr>=24)
+            {
+                $dat_hr         = $dat_hr-24;
+            }
         }
         else
         {
-            $date		= new DateTime($dob);		// Datetime object with user date of birth
-            $date		->setTimeStamp($siderealTime);		// time of birth for user
-            //$date		->format('Y-m-d H:i:s');
-            //$date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
+            /*$date		= new DateTime($dob);		// Datetime object with user date of birth
+            $date		->setTimeStamp($sidtime);		// time of birth for user
+            $date		->format('Y-m-d H:i:s');
+            $date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			*/
+            if($lmt[2]>$sidtime[2])
+            {
+                $sidtime[1]         = $sidtime[1]-1;
+                $sidtime[2]         = $sidtime[2]+60;
+            }
+            if($lmt[1]>$sidtime[1])
+            {
+                $sidtime[0]         = $sidtime[0]-1;
+                $sidtime[1]         = $sidtime[1]+60;
+            }
+            if($lmt[0]<$sidtime[0])
+            {
+                $dat_hr             = $sidtime[0]-$lmt[0];
+            }
+            else
+            {
+                $dat_hr             = $lmt[0]-$sidtime[0];
+            }
+            $dat_min            = $sidtime[1]-$lmt[1];
+            $dat_sec            = $sidtime[2]-$lmt[2];
         }
-        return $date->format('H:i:s');        
-        $corr_sidereal          = explode(":",$date->format('H:i:s'));
-        $corr_sid_hr            = $corr_sidereal[0];
-        $corr_sid_min           = $corr_sidereal[1];
-        $corr_sid_sec           = $corr_sidereal[2];
+
+        $corr_sid_hr            = $dat_hr;
+        $corr_sid_min           = $dat_min;
+        $corr_sid_sec           = $dat_sec;
         
         if($corr_sid_min%4 =="0")
         {
@@ -445,7 +487,7 @@ class HoroscopeModelLagna extends JModelItem
             if($ayanamsha_corr[0] > $lagna_acc_deg)
             {
                 $lagna_acc_deg  = ($lagna_acc_deg+30)-$ayanamsha_corr[1];
-                $lagna_acc_sign		= $lagna_acc_sign-1;
+                $lagna_acc_sign = $lagna_acc_sign-1;
             }
             else
             {
@@ -453,7 +495,10 @@ class HoroscopeModelLagna extends JModelItem
             }
             
         }
-        return $lagna_acc_sign.":".$lagna_acc_deg.":".$lagna_acc_min.":".$lagna_acc_sec;
+        echo $this->data             = array("name"=>$this->fname,"gender"=>$this->gender,
+                                        "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
+                                        "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
+        
         
         /*if($lagna_acc_sign=="0"&&$gender=="female")
         {
