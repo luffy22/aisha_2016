@@ -24,13 +24,13 @@ class HoroscopeViewLagna extends JViewLegacy
                 // Add a message to the message queue
                
         }
-        if(empty($this->data))
+        if(empty($data))
         {
             parent::display($tpl);
         }
         else
         {
-            $tpl        = "2";
+            $tpl        = "lagna";
             parent::display($tpl);
         }
     }

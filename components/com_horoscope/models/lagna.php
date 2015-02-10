@@ -13,17 +13,7 @@ class HoroscopeModelLagna extends JModelItem
     public $lat;
     public $tmz;
     protected $data;
-    // Get lagna using sidereal tables and corrections
-    public function getData()
-    {
-        if(empty($data))
-        {
-            return;
-        }
-        {
-            return $this->calculateLagna();
-        }
-    }
+    
     public function getLagna($user_details)
     {
         
@@ -293,7 +283,7 @@ class HoroscopeModelLagna extends JModelItem
             return "No matching results";
         }
     }
-    public function calculateLagna()
+    public function getData()
     {
         $lat                    = explode(":",$this->lat);
         $newlat                 = $lat[0].'.'.$lat[1];
@@ -495,7 +485,7 @@ class HoroscopeModelLagna extends JModelItem
             }
             
         }
-        echo $this->data             = array("name"=>$this->fname,"gender"=>$this->gender,
+        return $this->data             = array("name"=>$this->fname,"gender"=>$this->gender,
                                         "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
                                         "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
         
