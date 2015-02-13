@@ -38,7 +38,7 @@ class HoroscopeModelLagna extends JModelItem
         }
         $this->tob          = $tob1;
         
-       $this->getData();
+       $this->calculatelagna();
     }
     // Method to get the sidereal Time
     public function getSiderealTime()
@@ -283,7 +283,7 @@ class HoroscopeModelLagna extends JModelItem
             return "No matching results";
         }
     }
-    public function getData()
+    public function calculatelagna()
     {
         $lat                    = explode(":",$this->lat);
         $newlat                 = $lat[0].'.'.$lat[1];
@@ -485,11 +485,12 @@ class HoroscopeModelLagna extends JModelItem
             }
             
         }
-        return $this->data             = array("name"=>$this->fname,"gender"=>$this->gender,
+        $data             = array("name"=>$this->fname,"gender"=>$this->gender,
                                         "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
                                         "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
+        $this->getData($data);
         
-        
+       
         /*if($lagna_acc_sign=="0"&&$gender=="female")
         {
            $query4              = "SELECT * FROM jv_content WHERE id='127'";
@@ -589,6 +590,19 @@ class HoroscopeModelLagna extends JModelItem
          $db                     ->setQuery($query4);
          $lagna                 = $db->loadAssoc();*/
          //return $lagna;
+    }
+    public function getData($data = null)
+    {
+        if(empty($data))
+        {
+            return false;
+        }
+        else
+        {
+            $this->data = $data;
+        }
+        return $this->data;
+        
     }
 }
 ?>

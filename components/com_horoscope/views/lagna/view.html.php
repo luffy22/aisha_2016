@@ -16,7 +16,8 @@ class HoroscopeViewLagna extends JViewLegacy
        
         // Get data from the model
         // Check for errors.
-        $this->data  = $this->get('Data');
+        $model          = &$this->getModel('lagna');  // Add the array to model
+        $model          ->getData($data);
         if (count($errors = $this->get('Errors'))) 
         {
               
@@ -30,8 +31,8 @@ class HoroscopeViewLagna extends JViewLegacy
         }
         else
         {
-            $tpl        = "lagna";
-            parent::display($tpl);
+            echo gettype($data);
         }
     }
+    
 }
