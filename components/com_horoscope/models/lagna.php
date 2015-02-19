@@ -485,13 +485,13 @@ class HoroscopeModelLagna extends JModelItem
             }
             
         }
-        $data             = array("name"=>$this->fname,"gender"=>$this->gender,
-                                        "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
-                                        "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
-        $this->getData($data);
+        //$data             = array("name"=>$this->fname,"gender"=>$this->gender,
+                                       // "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
+                                       // "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
+        //$this->getData($data);
         
        
-        /*if($lagna_acc_sign=="0"&&$gender=="female")
+        if($lagna_acc_sign=="0"&&$gender=="female")
         {
            $query4              = "SELECT * FROM jv_content WHERE id='127'";
         }
@@ -588,8 +588,8 @@ class HoroscopeModelLagna extends JModelItem
             $query4              = "SELECT * FROM jv_content WHERE id='126'";
         }
          $db                     ->setQuery($query4);
-         $lagna                 = $db->loadAssoc();*/
-         //return $lagna;
+         $lagna                 = $db->loadAssoc();
+         echo $lagna['title'];
     }
     public function getData($data = null)
     {
