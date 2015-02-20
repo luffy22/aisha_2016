@@ -100,20 +100,6 @@
     </div>
     <div class="col-md-6">
         <div class="spacer"></div>
-<script>
-  (function() {
-    var cx = '006812877761787834600:kranbsbb5p8';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//www.google.com/cse/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
-<gcse:search></gcse:search>
-        <div class="spacer"></div>
         <div class="breadcrumb">
             <jdoc:include type="modules" name="breadcrumbs" style="none" />
         </div>

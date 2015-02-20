@@ -2,7 +2,7 @@
 defined('_JEXEC') or die;  // No direct Access
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
-
+require_once JPATH_COMPONENT.'/controller.php';
 class HoroscopeModelLagna extends JModelItem
 {
     public $fname;
@@ -39,6 +39,7 @@ class HoroscopeModelLagna extends JModelItem
         $this->tob          = $tob1;
         
        $this->calculatelagna();
+       
     }
     // Method to get the sidereal Time
     public function getSiderealTime()
@@ -485,13 +486,13 @@ class HoroscopeModelLagna extends JModelItem
             }
             
         }
-        //$data             = array("name"=>$this->fname,"gender"=>$this->gender,
-                                       // "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
-                                       // "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
-        //$this->getData($data);
+        $this->data             = array("name"=>$this->fname,"gender"=>$this->gender,
+                                        "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
+                                        "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
+        $this->getData($this->data);  
         
-       
-        if($lagna_acc_sign=="0"&&$gender=="female")
+        
+        /*if($lagna_acc_sign=="0"&&$gender=="female")
         {
            $query4              = "SELECT * FROM jv_content WHERE id='127'";
         }
@@ -589,9 +590,9 @@ class HoroscopeModelLagna extends JModelItem
         }
          $db                     ->setQuery($query4);
          $lagna                 = $db->loadAssoc();
-         echo $lagna['title'];
+         echo $lagna['title'];*/
     }
-    public function getData($data = null)
+    public function getData($data)
     {
         if(empty($data))
         {
@@ -599,10 +600,11 @@ class HoroscopeModelLagna extends JModelItem
         }
         else
         {
-            $this->data = $data;
+
+            return $data;
         }
-        return $this->data;
-        
+        $app        = &JFactory::getApplication();
+        $app        ->redirect('index.php?option=com_horoscope&task=lagna.switchview');
     }
 }
 ?>

@@ -35,6 +35,11 @@ class HoroscopeControllerLagna extends HoroscopeController
         //$model          ->getLagna();
         //echo "calls";
     }
-   
+    public function switchview()
+    {
+        $view = &$this->getView('lagna', 'html');
+        $view->setModel($this->getModel('lagna'),false);
+        $view->display();
+    }
 }
 ?>
