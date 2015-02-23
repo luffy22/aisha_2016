@@ -10,32 +10,18 @@ jimport('joomla.application.component.controller');
  */
 class HoroscopeViewLagna extends JViewLegacy
 {
-    protected $data;
+    //protected $data;
     function display($tpl = null) 
     {
-       
-        // Get data from the model
-        // Check for errors.
-        $model          = &$this->getModel('lagna');  // Add the array to model
-        $lagna          = $model->getData();
-
-        if (count($errors = $this->get('Errors'))) 
+        if (count($errors = $this->get('Errors')))
         {
-              
-                JError::getError();
-                // Add a message to the message queue
-               
+                JError::raiseError(500, implode('<br />', $errors));
+                return false;
         }
-        $this->data         = &$lagna;
-        if(empty($data))
-        {
-            parent::display($tpl);
-        }
-        else
-        {
-            $tpl            = "lagna";
-            parent::display($tpl);
-        }
+        
+        //echo gettype($this->data);
+        parent::display($tpl);
+        
     }
     
 }

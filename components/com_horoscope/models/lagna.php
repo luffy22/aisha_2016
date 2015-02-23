@@ -486,13 +486,14 @@ class HoroscopeModelLagna extends JModelItem
             }
             
         }
-        $this->data             = array("name"=>$this->fname,"gender"=>$this->gender,
+        $data            = array("name"=>$this->fname,"gender"=>$this->gender,
                                         "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
                                         "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
-        $this->getData($this->data);  
-        
-        
-        /*if($lagna_acc_sign=="0"&&$gender=="female")
+       
+        //$this->getData($data);
+        //$app        = &JFactory::getApplication();
+        //$app        ->redirect(JUri::base().'calculate-lagna'); 
+        if($lagna_acc_sign=="0"&&$gender=="female")
         {
            $query4              = "SELECT * FROM jv_content WHERE id='127'";
         }
@@ -590,21 +591,21 @@ class HoroscopeModelLagna extends JModelItem
         }
          $db                     ->setQuery($query4);
          $lagna                 = $db->loadAssoc();
-         echo $lagna['title'];*/
-    }
-    public function getData($data)
-    {
-        if(empty($data))
-        {
-            return false;
-        }
-        else
-        {
+         if($gender=="male")
+         {
+            echo "<h2>Your Lagna is ".str_replace("Lagna Males","",$lagna['title'])."</h2>";
+         }
+         else if($gender=="female")
+         {
+            echo "<h2>Your Lagna is ".str_replace("Lagna Females","",$lagna['title'])."</h2>"; 
+         }
+         ?>
+    <div class="lagna_find" id="<?php echo $lagna['id']; ?>"></div>
+    <?php
+    echo "<br/>";
+    echo $lagna['introtext'];
 
-            return $data;
-        }
-        $app        = &JFactory::getApplication();
-        $app        ->redirect('index.php?option=com_horoscope&task=lagna.switchview');
     }
+    
 }
 ?>
