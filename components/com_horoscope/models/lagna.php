@@ -55,7 +55,7 @@ class HoroscopeModelLagna extends JModelItem
         $query          = $db->getQuery(true);
         
         $query          -> select($db->quoteName('Sidereal'));
-        $query          -> from($db->quoteName('#__sidereal_1'));
+        $query          -> from($db->quoteName('#__lahiri_1'));
         $query          -> where($db->quoteName('Month').'='.$db->quote($monthName).'AND'.
                                  $db->quoteName('Date')."=".$db->quote($dob[2]));
         $db             ->setQuery($query);
@@ -64,23 +64,23 @@ class HoroscopeModelLagna extends JModelItem
         
         if($count>0)
         {
-
             $get_sidetime_year                          = strtotime($row['Sidereal']);
             $date					= new DateTime($this->dob);		// Datetime object with user date of birth
             $date					->setTimeStamp($get_sidetime_year);		// time of birth for user
-                      
+            $date                                       ->add(new DateInterval('PT12H0M0S'));
+      
             $query      ->clear();
             if(($monthName == "January" || $monthName == "February")&&($leap=="1"))
             {
                 $query      ->select($db->quoteName('corr_time'));
-                $query      ->from($db->quoteName('#__sidereal_2'));
+                $query      ->from($db->quoteName('#__lahiri_2'));
                 $query      ->where($db->quoteName('Year').'='.$db->quote($dob[0]).' AND '.
                                     $db->quote('leap').'='.'leap');
             }
             else
             {
                 $query      ->select($db->quoteName('corr_time'));
-                $query      ->from($db->quoteName('#__sidereal_2'));
+                $query      ->from($db->quoteName('#__lahiri_2'));
                 $query      ->where($db->quoteName('Year').'='.$db->quote($dob[0]));
                 //$query_sideyear			= mysqli_query($con, "SELECT corr_time FROM jv_sidereal_2 WHERE Year='".$dob_split[0]."'");
             }
@@ -97,23 +97,28 @@ class HoroscopeModelLagna extends JModelItem
             
             if($corr_diff == "-")
             {
+                //echo $corr_diff;exit;
                 //$get_sidereal_timediff	= 
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                    $date	->sub(new DateInterval('P0Y0DT0H'.$diff[0].'M'.$diff[1].'S'));
+                    $date	->sub(new DateInterval('PT'.'0H'.$diff[0].'M'.$diff[1].'S'));
+                    //echo $date->format('H:i:s');
                 }
                 else
                 {
-                    $date	->sub(new DateInterval('PT'.$diff[1].'S'));
+                    $date	->sub(new DateInterval('PT'.'0H0M'.$diff[1].'S'));
+                    //echo $date->format('H:i:s');
                 }
                
             }
             else if($corr_diff == "+")
             {
+                //echo $corr_diff;exit;
+                //echo $diff[0].":".$diff[1];exit;
                 //$get_sidereal_timediff	= 
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                    $date	->add(new DateInterval('P0Y0DT0H'.$diff[0].'M'.$diff[1].'S'));
+                    $date	->add(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
                 }
                 else
                 {
@@ -130,26 +135,30 @@ class HoroscopeModelLagna extends JModelItem
             $sid_corr           = $db->loadAssoc();     // sidereal correction in seconds
             if($sid_corr['corr_sign'] == "-")
             {
+                //echo $sid_corr['corr_sign'];exit;
                     //$get_sidereal_timediff	= 
                 //$date           ->sub(new DateInterval('PT'.$corr_mins.'M'.$corr_secs.'S'));
+                flush($diff);
                 $diff           = explode(".",$sid_corr['st_correction']);
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                        $date	->sub(new DateInterval('P0Y0DT0H'.$diff[0].'M'.$diff[1].'S'));
+                    $date	->sub(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
                 }
                 else
                 {
-                        $date	->sub(new DateInterval('PT'.$diff[1].'S'));
+                    $date	->sub(new DateInterval('PT'.$diff[1].'S'));
                 }
             }
             else if($corr_diff['corr_sign'] == "+")
             {
-                //$get_sidereal_timediff	= 
-                $date	->add(new DateInterval('P0Y0DT0H'.$corr_mins.'M'.$corr_secs.'S'));
-                $diff	= explode(".",$corr_diff['st_correction']);
+                //$get_sidereal_timediff
+                //echo $corr_diff['st_correction'];echo "calls";exit;
+                flush($diff);
+                $diff	= explode(".",$sid_corr['st_correction']);
+                //echo $date->format('H:i:s');exit;
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                    $date   ->add(new DateInterval('P0Y0DT0H'.$diff[0].'M'.$diff[1].'S'));
+                    $date   ->add(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
                 }
                 else
                 {
@@ -167,7 +176,7 @@ class HoroscopeModelLagna extends JModelItem
         $gmt        = "GMT".$this->tmz;
         $dob        = $this->dob;
         $tob        = $this->tob;
-
+       
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         
@@ -204,13 +213,12 @@ class HoroscopeModelLagna extends JModelItem
             // Computation to check Sidereal Time
             $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($tob);		// time of birth for user
-            $date		->format('H:i:s');
+            $tob_format                = $date->format('g:i a');
+            
             $diff		= explode(":",$new_diff);
-           
-            if($std_loc_min > $loc_lon_min)
+            if($std_lon_min > $loc_lon_min)
             {
-                
-                $date			->sub(new DateInterval('P0Y0DT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
+                $date			->sub(new DateInterval('PT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
                 $get_sidereal_hour	= explode(":", $date->format('H:i:s'));	
                 $sidereal_hr            = $get_sidereal_hour[0];
                 $sidereal_min           = $get_sidereal_hour[1];
@@ -225,7 +233,7 @@ class HoroscopeModelLagna extends JModelItem
 		
                 if($sid_diff_1[0] != "00")
                 {
-                    $date		->add(new DateInterval('P0Y0DT0H'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
+                    $date		->add(new DateInterval('PT'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
                 }
                 else
                 {
@@ -244,8 +252,7 @@ class HoroscopeModelLagna extends JModelItem
             }
             else
             {
-
-                $date			->add(new DateInterval('P0Y0DT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
+                $date			->add(new DateInterval('PT'.$diff[0].'H'.$diff[1].'M'.$diff[2].'S'));
                 $get_sidereal_hour	= explode(":", $date->format('H:i:s'));	
                 $sidereal_hr            = $get_sidereal_hour[0];
                 $sidereal_min           = $get_sidereal_hour[1];
@@ -260,11 +267,11 @@ class HoroscopeModelLagna extends JModelItem
 			
                 if($sid_diff_1[0] != "00")
                 {
-                    $date		->add(new DateInterval('P0Y0DT0H'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
+                    $date		->add(new DateInterval('PT'.$sid_diff_1[0].'M'.$sid_diff_1[1].'S'));
                 }
                 else
                 {
-                    $date		->add(new DateInterval('P0Y0DT0H0M'.$sid_diff_1[1].'S'));
+                    $date		->add(new DateInterval('PT'.$sid_diff_1[1].'S'));
                 }
                 
                 $query                  ->clear();
@@ -275,8 +282,15 @@ class HoroscopeModelLagna extends JModelItem
                 $sid_diff_sec		= $db->loadAssoc();
                
                 $sid_diff_2		= explode(":", $sid_diff_sec['diff']);
-                $date			->add(new DateInterval('P0Y0DT0H0M'.$sid_diff_2[1].'S'));  
+                $date			->add(new DateInterval('PT'.$sid_diff_2[1].'S'));  
+                
             }
+            // check if am/pm. If am minud time from 12 hrs
+            /*$tob_format                 = $this->tob;exit;*/
+            //if(strpos($tob_format,"am"))
+            //{
+                //$date                   ->sub(new DateInterval('PT12H0M0S'));
+            //}
             return $date->format('H:i:s');
         }
         else
@@ -289,26 +303,26 @@ class HoroscopeModelLagna extends JModelItem
         $lat                    = explode(":",$this->lat);
         $newlat                 = $lat[0].'.'.$lat[1];
         $gender                 = $this->gender;
-        //return $this->getSiderealTime();
-        $sidtime		= explode(":",$this->getSiderealTime());
+        //echo $this->getSiderealTime()."<br/>";
+        //echo $this->getLmt();exit;
+        $sidtime		= strtotime($this->getSiderealTime());
        	$lmt			= explode(":",$this->getLmt());
          
         $dob                    = $this->dob;
         //return $dob;
         $doy                    = explode("/",$dob);
         $tob                    = $this->tob;
-
+       
         $dateObject 		= new DateTime($dob);
         $dateObject             ->setTimestamp($tob);
         $tob_format		= $dateObject->format('g:i a');
-
+       
         if(strpos($tob_format,"pm"))
         {
-            /*$date		= new DateTime($dob);		// Datetime object with user date of birth
+            $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($sidtime);		// time of birth for user
-            $date		->format('Y-m-d H:i:s');
-            $date		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));*/
-            $dat_hr             = $sidtime[0]+$lmt[0];
+            $date		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
+            /*$dat_hr             = $sidtime[0]+$lmt[0];
             $dat_min            = $sidtime[1]+$lmt[1];
             $dat_sec            = $sidtime[2]+$lmt[2];
             
@@ -325,15 +339,14 @@ class HoroscopeModelLagna extends JModelItem
             if($dat_hr>=24)
             {
                 $dat_hr         = $dat_hr-24;
-            }
+            }*/
         }
         else
         {
-            /*$date		= new DateTime($dob);		// Datetime object with user date of birth
+            $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($sidtime);		// time of birth for user
-            $date		->format('Y-m-d H:i:s');
-            $date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			*/
-            if($lmt[2]>$sidtime[2])
+            $date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
+            /*if($lmt[2]>$sidtime[2])
             {
                 $sidtime[1]         = $sidtime[1]-1;
                 $sidtime[2]         = $sidtime[2]+60;
@@ -352,12 +365,13 @@ class HoroscopeModelLagna extends JModelItem
                 $dat_hr             = $lmt[0]-$sidtime[0];
             }
             $dat_min            = $sidtime[1]-$lmt[1];
-            $dat_sec            = $sidtime[2]-$lmt[2];
+            $dat_sec            = $sidtime[2]-$lmt[2];*/
         }
-
-        $corr_sid_hr            = $dat_hr;
-        $corr_sid_min           = $dat_min;
-        $corr_sid_sec           = $dat_sec;
+        //echo $date->format('H:i:s');exit;
+        $dat_hr                 = explode(":",$date->format('H:i:s'));
+        $corr_sid_hr            = $dat_hr[0];
+        $corr_sid_min           = $dat_hr[1];
+        $corr_sid_sec           = $dat_hr[2];
         
         if($corr_sid_min%4 =="0")
         {
@@ -444,11 +458,14 @@ class HoroscopeModelLagna extends JModelItem
        
         $year                   = $doy[0];
         
-        $query3                 = "SELECT correction FROM jv_sidereal_6 WHERE year='".$year."'";
+        $query3                 = "SELECT correction FROM jv_lahiri_5 WHERE year='".$year."'";
         $db                     ->setQuery($query3);
         $get_ayanamsha          = $db->loadAssoc();
         $ayanamsha_corr		= explode(":", $get_ayanamsha['correction']);
-        if($year <= '2009')
+        $ayanamsha_corr[0]      = substr($ayanamsha_corr[0], 1);
+        echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
+        //echo $ayanamsha_corr[0].":".$ayanamsha_corr[1];exit;
+        if($year <= '1938')
         {
             $lagna_acc_min	= $lagna_acc_min+$ayanamsha_corr[1];
             $langa_acc_deg	= $lagna_acc_deg+$ayanamsha_corr[0];
@@ -468,7 +485,8 @@ class HoroscopeModelLagna extends JModelItem
         {
             if($ayanamsha_corr[1] > $lagna_acc_min)
             {
-                $lagna_acc_min  = ($lagna_acc_min+60)-$ayanamsha_corr[1];
+                
+                $lagna_acc_min  = ($lagna_acc_min+60)-$ayanamsha_corr[0];
                 $lagna_acc_deg  = $lagna_acc_deg-1;
             }
             else
@@ -477,117 +495,119 @@ class HoroscopeModelLagna extends JModelItem
             }
             if($ayanamsha_corr[0] > $lagna_acc_deg)
             {
-                $lagna_acc_deg  = ($lagna_acc_deg+30)-$ayanamsha_corr[1];
+               
+                $lagna_acc_deg  = ($lagna_acc_deg+30)-$ayanamsha_corr[0];
                 $lagna_acc_sign = $lagna_acc_sign-1;
             }
             else
             {
-                $lagna_acc_deg  = $lagna_acc_deg-$ayanamsha_corr[1];
+                $lagna_acc_deg  = $lagna_acc_deg-$ayanamsha_corr[0];
+
             }
             
         }
         $data            = array("name"=>$this->fname,"gender"=>$this->gender,
                                         "sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
                                         "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
-       
+        //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
         //$this->getData($data);
         //$app        = &JFactory::getApplication();
         //$app        ->redirect(JUri::base().'calculate-lagna'); 
         if($lagna_acc_sign=="0"&&$gender=="female")
         {
-           $query4              = "SELECT * FROM jv_content WHERE id='127'";
+           $query4              = "SELECT * FROM jv_content WHERE id='103'";
         }
         else if($lagna_acc_sign=="0"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='128'";
+            $query4              = "SELECT * FROM jv_content WHERE id='102'";
         }
         else if($lagna_acc_sign=="1"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='103'";
+            $query4              = "SELECT * FROM jv_content WHERE id='104'";
         }
         else if($lagna_acc_sign=="1"&&$gender=="male")
         {
-           $query4              = "SELECT * FROM jv_content WHERE id='102'";
+           $query4              = "SELECT * FROM jv_content WHERE id='105'";
         }
         else if($lagna_acc_sign=="2"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='104'";
+            $query4              = "SELECT * FROM jv_content WHERE id='106'";
         }
         else if($lagna_acc_sign=="2"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='105'";
+            $query4              = "SELECT * FROM jv_content WHERE id='107'";
         }
         else if($lagna_acc_sign=="3"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='106'";
+            $query4              = "SELECT * FROM jv_content WHERE id='108'";
         }
         else if($lagna_acc_sign=="3"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='107'";
+            $query4              = "SELECT * FROM jv_content WHERE id='109'";
         }
         else if($lagna_acc_sign=="4"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='108'";
+            $query4              = "SELECT * FROM jv_content WHERE id='110'";
         }
         else if($lagna_acc_sign=="4"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='109'";
+            $query4              = "SELECT * FROM jv_content WHERE id='111'";
         }
         else if($lagna_acc_sign=="5"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='110'";
+            $query4              = "SELECT * FROM jv_content WHERE id='114'";
         }
         else if($lagna_acc_sign=="5"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='111'";
+            $query4              = "SELECT * FROM jv_content WHERE id='115'";
         }
         else if($lagna_acc_sign=="6"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='114'";
+            $query4              = "SELECT * FROM jv_content WHERE id='116'";
         }
         else if($lagna_acc_sign=="6"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='115'";
+            $query4              = "SELECT * FROM jv_content WHERE id='117'";
         }
         else if($lagna_acc_sign=="7"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='116'";
+            $query4              = "SELECT * FROM jv_content WHERE id='118'";
         }
         else if($lagna_acc_sign=="7"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='117'";
+            $query4              = "SELECT * FROM jv_content WHERE id='119'";
         }
         else if($lagna_acc_sign=="8"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='118'";
+            $query4              = "SELECT * FROM jv_content WHERE id='120'";
         }
         else if($lagna_acc_sign=="8"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='119'";
+            $query4              = "SELECT * FROM jv_content WHERE id='121'";
         }
         else if($lagna_acc_sign=="9"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='120'";
+            $query4              = "SELECT * FROM jv_content WHERE id='123'";
         }
         else if($lagna_acc_sign=="9"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='121'";
+            $query4              = "SELECT * FROM jv_content WHERE id='124'";
         }
         else if($lagna_acc_sign=="10"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='123'";
+            $query4              = "SELECT * FROM jv_content WHERE id='125'";
         }
         else if($lagna_acc_sign=="10"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='124'";
+            $query4              = "SELECT * FROM jv_content WHERE id='126'";
         }
         else if($lagna_acc_sign=="11"&&$gender=="female")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='125'";
+            $query4              = "SELECT * FROM jv_content WHERE id='127'";
         }
         else if($lagna_acc_sign=="11"&&$gender=="male")
         {
-            $query4              = "SELECT * FROM jv_content WHERE id='126'";
+            $query4              = "SELECT * FROM jv_content WHERE id='128'";
         }
          $db                     ->setQuery($query4);
          $lagna                 = $db->loadAssoc();
