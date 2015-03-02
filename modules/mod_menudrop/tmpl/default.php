@@ -2,7 +2,7 @@
 defined('_JEXEC') or die;
 ?>
 <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" id="<?php echo "menu_".$base->id; ?>" data-toggle="dropdown" href="#"
+    <button class="btn btn-primary dropdown-toggle" type="button" id="<?php echo "menu_".$id; ?>" data-toggle="dropdown" href="#"
            onclick="javascript:toggleMenu(<?php echo "menu_".$base->id;; ?>)" data-toggle="dropdown">
 <?php
         echo trim($params->get('showTitle'));

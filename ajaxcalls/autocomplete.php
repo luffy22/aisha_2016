@@ -18,8 +18,8 @@ else
         $city       = $row['city'].", ".$row['country'];
         $lat        = $row['latitude'];
         $lon        = $row['longitude'];
-        $tmz        = $row['timezone'];
-        $json[]     = array('label'=>$city, 'lat'=>$lat, 'lon'=>$lon,'tmz'=>$tmz);
+        
+        $json[]     = array('label'=>$city, 'lat'=>$lat, 'lon'=>$lon);
     }
 
     $data       = json_encode($json);

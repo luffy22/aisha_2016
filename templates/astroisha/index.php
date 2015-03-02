@@ -104,9 +104,8 @@
             <jdoc:include type="modules" name="breadcrumbs" style="none" />
         </div>
         <div class="container-main">
-            <div class="visible-md visible-lg">
+            <div class="spacer"></div>
             <jdoc:include type="modules" name="articleslider" style="none" />
-            </div>
             <div class="spacer"></div>
             <jdoc:include type="modules" name="articleslider2" style="none" />
             <jdoc:include type="component" />

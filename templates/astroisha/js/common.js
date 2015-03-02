@@ -4,6 +4,14 @@
  */
 
 // Dropdown menu is closed & opened using this function.
+$(document).ready(function()
+  {
+      //var id = $('.accordion-id').attr('id');
+      $('#topcontent-1').accordion({
+            heightStyle: "content",
+            collapsible: true
+        });
+    });
 function buttonCalls()
 {
 $('#body').css("background","pink");

@@ -1,6 +1,6 @@
 <?php
-$host   = "localhost";$user = "root";
-$pwd    = "desai1985";$db   = "astroisha";$port = "3306";
+$host   = "localhost";$user = "astroxou_admin";
+$pwd    = "0sdGXmEtCv9q";$db   = "astroxou_jvidya";$port = "3306";
 $mysqli = new mysqli($host, $user, $pwd, $db, $port);
 if (mysqli_connect_errno()) {
         printf("Connect failed: %s\n", mysqli_connect_error());
@@ -50,6 +50,7 @@ else
         $b2             = $_GET['b_2'];
         $query          = "SELECT points FROM jv_nakshatra_compatibility"." where girls_rashi='$g1' AND girls_nakshatra='$g2'
                                AND boys_rashi='$b1' AND boys_nakshatra='$b2'";
+        
         $result     = mysqli_query($mysqli, $query);
         $count      = mysqli_num_rows($result);
         if($count>0)
@@ -59,6 +60,7 @@ else
             while($row=mysqli_fetch_array($result))
             {
                 echo $row['points'];
+                
             }
         }
         else
