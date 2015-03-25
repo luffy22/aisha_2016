@@ -5,7 +5,7 @@ class JConfig {
 	public $display_offline_message = '1';
 	public $offline_image = 'images/maintenance.jpg';
 	public $sitename = 'Astro Isha';
-	public $editor = 'none';
+	public $editor = 'jce';
 	public $captcha = '0';
 	public $list_limit = '20';
 	public $access = '1';
@@ -14,7 +14,7 @@ class JConfig {
 	public $dbtype = 'mysqli';
 	public $host = 'localhost';
 	public $user = 'astroxou_admin';
-	public $password = '8Vd6JWv0,[T}';
+	public $password = '*Jrp;F.=OKzG';
 	public $db = 'astroxou_jvidya';
 	public $dbprefix = 'jv_';
 	public $live_site = '';
@@ -51,7 +51,7 @@ class JConfig {
 	public $robots = '';
 	public $sef = '1';
 	public $sef_rewrite = '1';
-	public $sef_suffix = '1';
+	public $sef_suffix = '0';
 	public $unicodeslugs = '0';
 	public $feed_limit = '10';
 	public $log_path = '/home/astroxou/public_html/logs';
@@ -66,4 +66,21 @@ class JConfig {
 	public $cookie_domain = '';
 	public $cookie_path = '';
 	public $asset_id = '1';
+	public $memcache_persist = '1';
+	public $memcache_compress = '0';
+	public $memcache_server_host = 'localhost';
+	public $memcache_server_port = '11211';
+	public $memcached_persist = '1';
+	public $memcached_compress = '0';
+	public $memcached_server_host = 'localhost';
+	public $memcached_server_port = '11211';
+	public $proxy_enable = '0';
+	public $proxy_host = '';
+	public $proxy_port = '';
+	public $proxy_user = '';
+	public $proxy_pass = '';
+	public $session_memcache_server_host = 'localhost';
+	public $session_memcache_server_port = '11211';
+	public $session_memcached_server_host = 'localhost';
+	public $session_memcached_server_port = '11211';
 }

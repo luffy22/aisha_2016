@@ -25,18 +25,10 @@
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/jquery-ui.theme.min.css" type="text/css" />
 <link rel="shortcut icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/favicon.ico" type="image/x-icon" />
 <link rel="icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/favicon.ico" type="image/x-icon">
-<script>
-  (function() {
-    var cx = '006812877761787834600:kranbsbb5p8';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//www.google.com/cse/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery.min.js" type="text/javascript" language="javascript"></script>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery-ui/jquery-ui.min.js" language="javascript"></script>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -94,10 +86,11 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" id="sidebar">
         <div class="spacer"></div>
         <jdoc:include type="modules" name="sidebar" style="none" />
     </div>
+    <!--<div class="visible-xs visible-sm"><img src="<?php echo $this->baseurl; ?>/images/menu_btn.png" id="showmenu" width="32px" height="32px" alt="Show Menu" title="Show Menu"  /></div>-->
     <div class="col-md-6">
         <div class="spacer"></div>
         <div class="breadcrumb">
@@ -108,7 +101,9 @@
             <jdoc:include type="modules" name="articleslider" style="none" />
             <div class="spacer"></div>
             <jdoc:include type="modules" name="articleslider2" style="none" />
+            <div class="spacer"></div>
             <jdoc:include type="component" />
+            <div class="spacer"></div>
             <jdoc:include type="message" />
         </div>
     </div>
@@ -121,13 +116,13 @@
     </div>
 </div>
 <div class="footer">
+    <div class="spacer"></div>
+    <jdoc:include type="modules" name="footer2" style="none" />
+</div>
+<div class="footer">
     <jdoc:include type="modules" name="footer" style="none" />
 </div>
 <!--Scripts at the bottom of the Page -->
-<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/jquery.min.js" type="text/javascript" language="javascript"></script>
-<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
-<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery-ui/jquery-ui.min.js" language="javascript"></script>
-<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 <script>
   $(function() {
     $( "#datepicker" ).datepicker({ yearRange: "1940:2050",changeMonth: true,

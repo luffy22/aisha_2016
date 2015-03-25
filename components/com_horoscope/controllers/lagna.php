@@ -24,7 +24,7 @@ class HoroscopeControllerLagna extends HoroscopeController
                                     'fname'=>$fname,'gender'=>$gender,'dob'=>$dob,
                                     'tob'=>$tob,'lon'=>$lon,'lat'=>$lat,'tmz'=>$timezone
                                     );
-            $model          = &$this->getModel('lagna');  // Add the array to model
+            $model          = $this->getModel('lagna');  // Add the array to model
             $model          ->getLagna($user_details);
         }
         else

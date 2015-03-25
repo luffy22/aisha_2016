@@ -8,8 +8,9 @@ $(document).ready(function()
   {
       //var id = $('.accordion-id').attr('id');
       $('#topcontent-1').accordion({
-            heightStyle: "content",
-            collapsible: true
+            heightStyle : "content",
+            collapsible : true,
+            active      : false
         });
     });
 function buttonCalls()
@@ -441,7 +442,8 @@ $(function()
       var id = $('.accordion-id').attr('id');
       $('#accordion-'+id).accordion({
             heightStyle: "content",
-            collapsible: true
+            collapsible: true,
+            active : false
         });
     });
  $(document).ready(function()
@@ -449,6 +451,13 @@ $(function()
       var id = $('.lagna_find').attr('id');
       $('#accordion-'+id).accordion({
             heightStyle: "content",
-            collapsible: true
+            collapsible: true,
+            active      : false
         });
     });
+    
+    $('#showmenu').click(function() {
+        alert("calls");
+        //$("#sidebar").removeClass("hidden-xs hidden-sm");
+        //$("#sidebar").toggle( "fold", 1000 );
+});

@@ -37,8 +37,21 @@ class HoroscopeModelLagna extends JModelItem
             $tob1   = strtotime($tob[0].":".$tob[1].":".$tob[2]);
         }
         $this->tob          = $tob1;
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
+        $query2         = $db->getQuery(true);
+        $query          = "SELECT hits FROM jv_hits_counter WHERE product='calc_lagna'";
+        $db             ->setQuery($query);
+        $hits           = $db->loadAssoc();
         
-       $this->calculatelagna();
+        $hits       = (int)$hits['hits'];
+        
+        $hits       = $hits+1;
+        
+        $query2      = "UPDATE jv_hits_counter SET hits='".$hits."' WHERE product='calc_lagna'";
+        $db                 ->setQuery($query2);
+        $db->execute();
+        $this->calculatelagna();
        
     }
     // Method to get the sidereal Time
@@ -53,7 +66,6 @@ class HoroscopeModelLagna extends JModelItem
         
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        
         $query          -> select($db->quoteName('Sidereal'));
         $query          -> from($db->quoteName('#__lahiri_1'));
         $query          -> where($db->quoteName('Month').'='.$db->quote($monthName).'AND'.
@@ -67,8 +79,7 @@ class HoroscopeModelLagna extends JModelItem
             $get_sidetime_year                          = strtotime($row['Sidereal']);
             $date					= new DateTime($this->dob);		// Datetime object with user date of birth
             $date					->setTimeStamp($get_sidetime_year);		// time of birth for user
-            $date                                       ->add(new DateInterval('PT12H0M0S'));
-      
+   
             $query      ->clear();
             if(($monthName == "January" || $monthName == "February")&&($leap=="1"))
             {
@@ -101,12 +112,12 @@ class HoroscopeModelLagna extends JModelItem
                 //$get_sidereal_timediff	= 
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
-                    $date	->sub(new DateInterval('PT'.'0H'.$diff[0].'M'.$diff[1].'S'));
+                    $date	->sub(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
                     //echo $date->format('H:i:s');
                 }
                 else
                 {
-                    $date	->sub(new DateInterval('PT'.'0H0M'.$diff[1].'S'));
+                    $date	->sub(new DateInterval('PT'.$diff[1].'S'));
                     //echo $date->format('H:i:s');
                 }
                
@@ -149,7 +160,7 @@ class HoroscopeModelLagna extends JModelItem
                     $date	->sub(new DateInterval('PT'.$diff[1].'S'));
                 }
             }
-            else if($corr_diff['corr_sign'] == "+")
+            else if($sid_corr['corr_sign'] == "+")
             {
                 //$get_sidereal_timediff
                 //echo $corr_diff['st_correction'];echo "calls";exit;
@@ -167,6 +178,7 @@ class HoroscopeModelLagna extends JModelItem
             }
             return $date->format('H:i:s');
         }
+        
         //longitude >= '".($lon)."'
     }
     public function getLmt()
@@ -176,7 +188,7 @@ class HoroscopeModelLagna extends JModelItem
         $gmt        = "GMT".$this->tmz;
         $dob        = $this->dob;
         $tob        = $this->tob;
-       
+
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         
@@ -209,11 +221,15 @@ class HoroscopeModelLagna extends JModelItem
                 $new_diff	= $new_loc_lon_sec	- $new_std_lon_sec;
                 $new_diff	= gmdate('H:i:s', $new_diff);
             }
-           
+            //echo $new_diff;exit;
             // Computation to check Sidereal Time
             $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($tob);		// time of birth for user
-            $tob_format                = $date->format('g:i a');
+            $tob_format		= $date->format('g:i a');
+            if(strpos($tob_format, pm))
+            {
+                $date           ->add(new DateInterval('PT12H0M0S'));
+            }
             
             $diff		= explode(":",$new_diff);
             if($std_lon_min > $loc_lon_min)
@@ -239,7 +255,6 @@ class HoroscopeModelLagna extends JModelItem
                 {
                     $date		->add(new DateInterval('PT'.$sid_diff_1[1].'S'));
                 }
-                
                 $query                  ->clear();
                 $query                  ->select($db->quoteName('diff'));
                 $query                  ->from($db->quoteName('#__sidereal_5'));
@@ -285,13 +300,20 @@ class HoroscopeModelLagna extends JModelItem
                 $date			->add(new DateInterval('PT'.$sid_diff_2[1].'S'));  
                 
             }
-            // check if am/pm. If am minud time from 12 hrs
-            /*$tob_format                 = $this->tob;exit;*/
-            //if(strpos($tob_format,"am"))
-            //{
-                //$date                   ->sub(new DateInterval('PT12H0M0S'));
-            //}
-            return $date->format('H:i:s');
+            //echo $date->format('H:i:s');exit;
+            $am_pm                      = explode(":",$date->format('H:i:s'));
+            if(strpos($tob_format,"am"))
+            {
+                $dateObject             = new DateTime($dob);
+                $dateObject             ->setTimestamp(strtotime('12:00:00'));
+                $dateObject             ->sub(new DateInterval('PT'.$am_pm[0].'H'.$am_pm[1].'M'.$am_pm[2].'S'));
+            }
+            else
+            {
+                $dateObject             = new DateTime($dob);
+                $dateObject             ->setTimestamp(strtotime($am_pm[0].":".$am_pm[1].":".$am_pm[2]));
+            }
+            return $dateObject->format('H:i:s');
         }
         else
         {
@@ -322,51 +344,15 @@ class HoroscopeModelLagna extends JModelItem
             $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($sidtime);		// time of birth for user
             $date		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
-            /*$dat_hr             = $sidtime[0]+$lmt[0];
-            $dat_min            = $sidtime[1]+$lmt[1];
-            $dat_sec            = $sidtime[2]+$lmt[2];
-            
-            if($dat_sec>=60)
-            {
-                $dat_min        = $dat_min+1;
-                $dat_sec        = $dat_sec-60;
-            }
-            if($dat_min>=60)
-            {
-                $dat_hr         = $dat_hr+1;
-                $dat_min        = $dat_min-60;
-            }
-            if($dat_hr>=24)
-            {
-                $dat_hr         = $dat_hr-24;
-            }*/
+      
         }
         else
         {
             $date		= new DateTime($dob);		// Datetime object with user date of birth
             $date		->setTimeStamp($sidtime);		// time of birth for user
             $date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
-            /*if($lmt[2]>$sidtime[2])
-            {
-                $sidtime[1]         = $sidtime[1]-1;
-                $sidtime[2]         = $sidtime[2]+60;
-            }
-            if($lmt[1]>$sidtime[1])
-            {
-                $sidtime[0]         = $sidtime[0]-1;
-                $sidtime[1]         = $sidtime[1]+60;
-            }
-            if($lmt[0]<$sidtime[0])
-            {
-                $dat_hr             = $sidtime[0]-$lmt[0];
-            }
-            else
-            {
-                $dat_hr             = $lmt[0]-$sidtime[0];
-            }
-            $dat_min            = $sidtime[1]-$lmt[1];
-            $dat_sec            = $sidtime[2]-$lmt[2];*/
         }
+        //echo $dat_hr.":".$dat_min.":".$dat_sec;exit;
         //echo $date->format('H:i:s');exit;
         $dat_hr                 = explode(":",$date->format('H:i:s'));
         $corr_sid_hr            = $dat_hr[0];
@@ -384,12 +370,13 @@ class HoroscopeModelLagna extends JModelItem
             $down_min               = floor($corr_sid_min/4)*4;
         }
         
-        $db                     = JFactory::getDbo();  // Get db connection
-        $query                  = $db->getQuery(true);
-        $query1                 = $db->getQuery(true);
-        $query2                 = $db->getQuery(true);
-        $query3                 = $db->getQuery(true);
-        $query                  = $db->getQuery($true);
+        $db                     =   JFactory::getDbo();  // Get db connection
+        $query                  =   $db->getQuery(true);
+        $query1                 =   $db->getQuery(true);
+        $query2                 =   $db->getQuery(true);
+        $query3                 =   $db->getQuery(true);
+        $query4                 =   $db->getQuery(true);
+        $query5                 =   $db->getQuery(true);
         $query                  ->clear();
         $query                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$newlat."' AND hour='".$corr_sid_hr."' AND minute='".$up_min."' ORDER BY abs(latitude-'".$newlat."') limit 1";
         $db                     ->setQuery($query);
@@ -463,7 +450,7 @@ class HoroscopeModelLagna extends JModelItem
         $get_ayanamsha          = $db->loadAssoc();
         $ayanamsha_corr		= explode(":", $get_ayanamsha['correction']);
         $ayanamsha_corr[0]      = substr($ayanamsha_corr[0], 1);
-        echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
+        //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
         //echo $ayanamsha_corr[0].":".$ayanamsha_corr[1];exit;
         if($year <= '1938')
         {
@@ -625,6 +612,7 @@ class HoroscopeModelLagna extends JModelItem
     echo "<br/>";
     echo $lagna['introtext'];
 
+    
     }
     
 }

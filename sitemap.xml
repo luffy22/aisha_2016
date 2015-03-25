@@ -425,6 +425,10 @@
     <changefreq>Weekly</changefreq>
    </url>
    <url>
+	   <loc>http://www.astroisha.com/yogas/145-sunapha-yoga</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
     <loc>http://www.astroisha.com/education</loc>
     <changefreq>Weekly</changefreq>
    </url>
@@ -564,7 +568,27 @@
 	  <loc>http://www.astroisha.com/planets-bhavas/140-chandra-7th-bouse</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
-     <url>
+  <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/141-chandra-8th-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/142-chandra-9th-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/143-chandra-10th-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/144-chandra-11th-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/146-chandra-12th-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
     <loc>http://www.astroisha.com/contact-us</loc>
     <changefreq>Weekly</changefreq>
    </url>

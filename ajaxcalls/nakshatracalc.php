@@ -1,6 +1,6 @@
 <?php
-$host   = "localhost";$user = "astroxou_admin";
-$pwd    = "0sdGXmEtCv9q";$db   = "astroxou_jvidya";$port = "3306";
+$host   = "localhost";$user = "root";
+$pwd    = "desai1985";$db   = "astroisha";$port = "3306";
 $mysqli = new mysqli($host, $user, $pwd, $db, $port);
 if (mysqli_connect_errno()) {
         printf("Connect failed: %s\n", mysqli_connect_error());
@@ -55,7 +55,7 @@ else
         $count      = mysqli_num_rows($result);
         if($count>0)
         {
-			$query1		= "UPDATE jv_hits_counter SET hits=hits+1 WHERE product='nakshatra_counter'";
+            $query1		= "UPDATE jv_hits_counter SET hits=hits+1 WHERE product='nakshatra_counter'";
             $result1     = mysqli_query($mysqli, $query1);
             while($row=mysqli_fetch_array($result))
             {
