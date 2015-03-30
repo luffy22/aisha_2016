@@ -115,7 +115,7 @@
     </div>
     </div>
 </div>
-<div class="footer">
+<div class="footer2">
     <div class="spacer"></div>
     <jdoc:include type="modules" name="footer2" style="none" />
 </div>

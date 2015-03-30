@@ -5,7 +5,8 @@ require_once __DIR__ . '/helper.php';
 
 
 //$toprated 	= modTopContentHelper::gettoprated();
-$topview	= modTopContentHelper::gettopview();	
+$topview	= modTopContentHelper::gettopview();
+$toprecent      = modTopContentHelper::getRecentTop();
 require( JModuleHelper::getLayoutPath('mod_topcontent'));
 
 ?>

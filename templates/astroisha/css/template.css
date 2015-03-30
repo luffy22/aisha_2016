@@ -56,7 +56,7 @@ color: #333 !important;
 	display: inline-block;
 	line-height: 1.9em;
 }
-
+.footer2{background:url(../images/back_footer.png)!important;height:120px!important;width:100%;color:#FFFFFF;padding:2px;}
 .pagenav li:first-child a,.pagination-start span {
 	-webkit-border-radius: 3px 0 0 3px;
 	-moz-border-radius: 3px 0 0 3px;
@@ -114,3 +114,4 @@ color: #333 !important;
 color: #428bca !important;
 }
 .ui-accordion-content {padding: 1em 1em;}
+.footer2 li a{color:#FFFFFF;}

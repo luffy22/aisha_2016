@@ -11,7 +11,6 @@ class modTopContentHelper
     {
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query2         = $db->getQuery($true);
         /*$query 		->select($db->quoteName(array('id','alias','asset_id','title','introtext','catid', 'hits')))
                                 ->from($db->quoteName('#__content'))
                                  ->order('hits DESC'.' LIMIT 5');*/
@@ -19,6 +18,30 @@ class modTopContentHelper
                             jv_content.asset_id AS article_assetid,jv_content.title, jv_content.introtext,
                             jv_content.hits, jv_categories.alias AS cat_alias, jv_content.catid FROM jv_content INNER JOIN jv_categories
                             ON jv_content.catid = jv_categories.id ORDER BY hits DESC LIMIT 5";     
+        $db->setQuery($query);
+      
+        // Load the results as a list of stdClass objects (see later for more options on retrieving data).
+        $results = $db->loadObjectList();
+        
+        return $results;
+    }
+    
+    public function getRecentTop()
+    {
+        $today         = new DateTime('NOW');
+        $todate        = $today->format('Y-m-d H:i:s');
+        $today    ->sub(new DateInterval('P0Y6M0DT0H0M0S'));
+        $month_6        = $today->format('Y-m-d H:i:s');
+        
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
+        
+        $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
+                            jv_content.asset_id AS article_assetid,jv_content.title, jv_content.introtext,
+                            jv_content.hits, jv_categories.alias AS cat_alias, jv_content.catid FROM jv_content INNER JOIN jv_categories
+                            ON jv_content.catid = jv_categories.id AND created between '$month_6' AND '$todate'
+                            ORDER BY hits DESC LIMIT 5";
+        
         $db->setQuery($query);
       
         // Load the results as a list of stdClass objects (see later for more options on retrieving data).
