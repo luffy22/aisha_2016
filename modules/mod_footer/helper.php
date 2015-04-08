@@ -23,7 +23,7 @@ class ModFooterHelper
 ?>
         <div class="footer-text">
             <div class="custom">
-	<h4>2014 Astro Isha | Designer: <a title="Check out my Facebook Profile" href="https://www.facebook.com/luffy.mugiwara.58173">Rohan Desai</a> | Developer: <a title="Check out my Linkedin Profile" href="http://www.linkedin.com/profile/view?id=246015976">Rohan Desai</a></h4>
+	<h4>2015 Astro Isha | Designer: <a title="Check out my Facebook Profile" href="https://www.facebook.com/luffy.mugiwara.58173">Rohan Desai</a> | Developer: <a title="Check out my Linkedin Profile" href="http://www.linkedin.com/profile/view?id=246015976">Rohan Desai</a></h4>
             </div>
         </div>
 <?php

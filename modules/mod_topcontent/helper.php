@@ -36,7 +36,7 @@ class modTopContentHelper
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         
-        $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
+        $query          = "SELECT jv_content.id AS article_id, jv_content.alias, jv_content.created as article_alias,
                             jv_content.asset_id AS article_assetid,jv_content.title, jv_content.introtext,
                             jv_content.hits, jv_categories.alias AS cat_alias, jv_content.catid FROM jv_content INNER JOIN jv_categories
                             ON jv_content.catid = jv_categories.id AND created between '$month_6' AND '$todate'

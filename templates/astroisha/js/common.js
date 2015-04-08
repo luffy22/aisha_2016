@@ -13,6 +13,15 @@ $(document).ready(function()
             active      : false
         });
     });
+    $(document).ready(function()
+  {
+      //var id = $('.accordion-id').attr('id');
+      $('#topcontent-2').accordion({
+            heightStyle : "content",
+            collapsible : true,
+            active      : false
+        });
+    });
 function buttonCalls()
 {
 $('#body').css("background","pink");
