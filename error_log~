@@ -1,0 +1,3 @@
+[18-Apr-2015 12:01:22 Etc/GMT] PHP Warning:  mktime() expects parameter 5 to be long, string given in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 65
+[27-Apr-2015 19:32:37 Etc/GMT] PHP Warning:  mktime() expects parameter 5 to be long, string given in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 65
+[27-Apr-2015 19:33:02 Etc/GMT] PHP Warning:  mktime() expects parameter 5 to be long, string given in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 65

@@ -59,7 +59,7 @@ class HoroscopeModelLagna extends JModelItem
     {
         $lon            = explode(":", $this->lon);
         $dob            = explode("/",$this->dob);
-        $monthNum       = $dob[1];  // The month in number format (ex. 06 for June)
+        $monthNum       = intval($dob[1]);  // The month in number format (ex. 06 for June)
         $year           = $dob[0];
         $monthName      = date("F", mktime(0, 0, 0, $monthNum, 10));		// month in word format (ex. June/July/August)
         $leap           = date("L", mktime(0,0,$dob[2], $monthNum, $year));

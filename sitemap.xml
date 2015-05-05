@@ -478,6 +478,31 @@
    </url>
    <url>
 		<loc>http://www.astroisha.com/yogas/160-vesi-yoga</loc>
+		<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+		<loc>http://www.astroisha.com/yogas/161-obyachari-yoga</loc>
+		<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+		<loc>http://www.astroisha.com/yogas/162-budh-aditya</loc>
+		<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+		<loc>http://www.astroisha.com/yogas/163-mahabhagya-yoga</loc>
+		<changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/yogas/165-pushkala-yoga</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/yogas/167-laxmi-yoga</loc>
+	   <changefreq>Weekly</changefreq>
+   </url>
+   <url>
+	   <loc>http://www.astroisha.com/yogas/168-gauri-yoga</loc>
+	   <changefreq>Weekly</changefreq>
    </url>
    <url>
     <loc>http://www.astroisha.com/education</loc>
@@ -592,6 +617,14 @@
 	  <changefreq>Weekly</changefreq>
   </url>
   <url>
+	  <loc>http://www.astroisha.com/relationship-astrology/164-divorce-reasons</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/relationship-astrology/169-run-marry</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
 	  <loc>http://www.astroisha.com/planets-bhavas/134-chandra-1st-house</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
@@ -637,6 +670,14 @@
   </url>
   <url>
 	  <loc>http://www.astroisha.com/planets-bhavas/146-chandra-12th-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/170-shani-1st-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/171-shani-2nd-house</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
   <url>
