@@ -25,7 +25,6 @@ color: #FFFFFF !important;
 .dropdown-menu>li>a:hover {
 color: #333 !important;
 }#heading{font-family: "Georgia";margin:0px; align-content:center;}#heading a{text-decoration: none !important;}.head_title{color:#2d6ca2 !important;}.head_title:hover{color:#FFFFFF !important;}
-.nav>li.active{background-color: aliceblue;font-weight: bold;}
 .pagination{display:block !important;}
 .pagenav {
 	text-align: right
@@ -114,4 +113,6 @@ color: #333 !important;
 color: #428bca !important;
 }
 .ui-accordion-content {padding: 1em 1em;}
-.footer2 li a{color:#FFFFFF;}
+.footer2 li a{color:#FFFFFF;}#mob_menu{margin: 5px 0 0 10px;}
+.nav-special a{background-color: #428bca;color:#FFFFFF;}
+.nav-special>li.active>a{background-color:#eee !important; color: #000000 !important;font-weight:bold;}

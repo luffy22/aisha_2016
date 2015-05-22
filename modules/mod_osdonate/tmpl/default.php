@@ -32,13 +32,15 @@ if ($langSite != '') {
 //need more comments when I have some time
 $introtext = '';
 if ($params->get('show_text', 1)) {
-    $introtext = '<p align="left">' . $params->get('intro_text', '') . '</p>' . "\n";
+    $introtext = '<h2>Donate</h2>';
+    $introtext .= '<p align="left"><strong>' . $params->get('intro_text', '') . '</strong></p>' . "\n";
 }
 
 
 //need more comments when I have some time
 $amountLine = '';
 if (!$params->get('show_amount')) {
+
     $amountLine .= '<input type="hidden" name="amount" value="' . $params->get('amount') . '" />' . "\n";
 } else {
     $amountLine .= JText::_(
@@ -144,7 +146,7 @@ if ($use_sticky_hover == 1) {
     $sticky .= $vertical_reference_side . ":";
     $sticky .= $vertical_distance . "px;width:" . $widthOfModule . "px;z-index:1000;\" id=\"osdonatesticky\">";
 } else {
-    $sticky .= "<div align=\"center\" id=\"osdonatestatic\">";
+    $sticky .= "<div align=\"left\" id=\"osdonatestatic\">";
 }
 
 echo $sticky;

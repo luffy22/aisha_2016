@@ -86,11 +86,16 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-    <div class="col-md-3" id="sidebar">
+        <div class="hidden-md hidden-lg" id="mob_menu" onclick="javascript:showSideMenu();">
+            <img src="<?php echo $this->baseurl; ?>/images/menu_btn.png" id="showmenu" width="32px" height="32px" alt="Show Menu" title="Show Menu"  />
+            <a style="text-decoration: none;" href="<?php echo JURI::base(); ?>"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="40px" height="35px" /></a>
+        </div>
+    <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div class="spacer"></div>
         <jdoc:include type="modules" name="sidebar" style="none" />
+        <div class="spacer"></div>
+        <jdoc:include type="modules" name="paypaldonate" style="none" />
     </div>
-    <!--<div class="visible-xs visible-sm"><img src="<?php echo $this->baseurl; ?>/images/menu_btn.png" id="showmenu" width="32px" height="32px" alt="Show Menu" title="Show Menu"  /></div>-->
     <div class="col-md-6">
         <div class="spacer"></div>
         <div class="breadcrumb">
@@ -105,13 +110,13 @@
             <jdoc:include type="component" />
             <div class="spacer"></div>
             <jdoc:include type="message" />
+            <div class="spacer"></div>
+            <jdoc:include type="modules" name="relatedarticles" style="none" />
         </div>
     </div>
     <div class="col-md-3 hidden-xs hidden-sm">
         <div class="spacer"></div>
         <jdoc:include type="modules" name="socialplugins" style="none" />
-        <div class="spacer"></div>
-        <jdoc:include type="modules" name="paypaldonate" style="none" />
     </div>
     </div>
 </div>
