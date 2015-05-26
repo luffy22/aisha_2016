@@ -1,5 +1,5 @@
 <?php
-    error_reporting(0);
+    //error_reporting(0);
     defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 <!DOCTYPE html>
@@ -117,6 +117,8 @@
     <div class="col-md-3 hidden-xs hidden-sm">
         <div class="spacer"></div>
         <jdoc:include type="modules" name="socialplugins" style="none" />
+        <div class="spacer"></div>
+        <jdoc:include type="modules" name="searchbox" style="none" />
     </div>
     </div>
 </div>

@@ -1,2 +1,0 @@
-[12-May-2015 05:44:19 Etc/GMT] PHP Strict Standards:  Only variables should be assigned by reference in /home/astroxou/public_html/components/com_astrologin/views/astrologin/tmpl/default.php on line 11
-[19-May-2015 13:45:03 Etc/GMT] PHP Warning:  mktime() expects parameter 5 to be long, string given in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 65

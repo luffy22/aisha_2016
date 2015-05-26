@@ -1,0 +1,20 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<extension type="module" version="3.0" client = "site" method="upgrade">
+	<name>Top Rated Content</name>
+        <description>Show top rated articles</description>
+	<author>Mugiwara Luffy</author>
+	<creationDate>May 2015</creationDate>
+	<authorEmail>admin@astroisha.com</authorEmail>
+	<version>1.0</version>
+        <description>Module for Top Rated Articles</description>
+	<files>
+        <filename>mod_ratingbest.xml</filename>
+        <filename module="mod_ratingbest">mod_ratingbest.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+        <filename>tmpl/index.html</filename>
+    </files>
+    <config>
+    </config>
+</extension>
