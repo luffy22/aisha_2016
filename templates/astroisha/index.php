@@ -93,9 +93,12 @@
     <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div class="spacer"></div>
         <jdoc:include type="modules" name="sidebar" style="none" />
+        <div class="hidden-xs hidden-sm">
         <div class="spacer"></div>
         <jdoc:include type="modules" name="paypaldonate" style="none" />
+        </div>
     </div>
+    
     <div class="col-md-6">
         <div class="spacer"></div>
         <div class="breadcrumb">
