@@ -13,5 +13,6 @@ defined('_JEXEC') or die;
 require_once __DIR__ . '/helper.php';
 
 
-$msg	          = modRatingBest::getTopRatedId();
-require JModuleHelper::getLayoutPath('mod_ratingbest', $layout);
+$msg	          = modRatingBestHelper::getTopRatedId();
+
+require JModuleHelper::getLayoutPath('mod_ratingbest');

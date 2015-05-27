@@ -1,3 +1,5 @@
-<div>
-	<?php echo $msg; ?>
-</div>
+<?php
+defined('_JEXEC') or die;
+
+
+
