@@ -121,6 +121,8 @@
         <div class="spacer"></div>
         <jdoc:include type="modules" name="socialplugins" style="none" />
         <div class="spacer"></div>
+        <jdoc:include type="modules" name="fblikeplugin" style="none" />
+        <div class="spacer"></div>
         <jdoc:include type="modules" name="searchbox" style="none" />
     </div>
     </div>
