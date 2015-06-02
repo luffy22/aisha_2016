@@ -475,3 +475,66 @@ function showSideMenu()
     $('#sidebar').removeClass('hidden-md hidden-xs');
     $('#sidebar').toggle(1200);
 }
+$(function() 
+{
+   var result       = "";
+   $( "#ques_pob" ).autocomplete({
+      source: 
+       function(request, response) {
+        $.ajax({
+          url: "ajaxcalls/autocomplete.php",
+          dataType: "json",
+          data: {
+            term: request.term
+          },
+          success: function( data ) {
+          response(data);
+          
+          }
+        
+        });
+      },
+      minLength: 3,
+     
+      open: function() {
+        $('#ques_pob').removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+         $(".ui-autocomplete").css("z-index", 1000);
+      },
+      close: function() {
+        $('#ques_pob').removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
+   })
+   
+});
+$(function() {
+$( "#ques_dob" ).datepicker({ yearRange: "1900:2050",changeMonth: true,
+  changeYear: true, dateFormat: "yy/mm/dd"  });
+});
+
+function checkDetails()
+{
+   var name             = document.getElementById("ques_1");
+   var email            = document.getElementById("ques_2");
+   var pob              = document.getElementById("ques_pob");
+   var dob              = document.getElementById("ques_dob");
+   var email_regex      = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+   if(name.value=="")
+   {
+       $('#ques_grp_1').addClass(" has-error");
+       $('#ques_err_1').css('visibility','visible');
+   }
+   else if(email.value=="")
+   {
+       $('#ques_grp_2').addClass(" has-error");
+       $('#ques_err_2').css('visibility','visible');
+   }
+   else if(dob.value=="")
+   {
+       $('#ques_grp_3').addClass(" has-error");
+       $('#ques_err_3').css('visibility','visible');
+   }
+   else if(pob.value=="")
+   {
+       
+   }
+}
