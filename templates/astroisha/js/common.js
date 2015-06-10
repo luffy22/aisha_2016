@@ -465,11 +465,6 @@ $(function()
         });
     });
     
-    $('#showmenu').click(function() {
-        alert("calls");
-        //$("#sidebar").removeClass("hidden-xs hidden-sm");
-        //$("#sidebar").toggle( "fold", 1000 );
-});
 function showSideMenu()
 {
     $('#sidebar').removeClass('hidden-md hidden-xs');
