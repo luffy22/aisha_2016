@@ -41,7 +41,7 @@ defined('_JEXEC') or die('Restricted access');
     <div class="col-sm-10">
     <input type="text" name="dob" id="ques_dob" class="form-control" placeholder="Date Of Birth in Year/Month/Day Format" />
     <span class="form-control-feedback" id="ques_ico_3"></span>
-    <span class="error1" id="ques_err_3">Please input a valid email.</span>
+    <span class="error1" id="ques_err_3">Please input a valid date of birth.</span>
     </div>
 </div>
 <div class="form-group">
@@ -114,16 +114,29 @@ defined('_JEXEC') or die('Restricted access');
     <label for="dob" class="col-sm-2 control-label">Place Of Birth</label>
     <div class="col-sm-10 ui-widget">
     <input type="text" id="ques_pob" name="ques_pob" class="form-control" placeholder="Enter full name of city/town, state, country" />
+    <span class="form-control-feedback" id="ques_ico_4"></span>
+    <span class="error1" id="ques_err_4">Please enter city/town name, country name</span>
     </div>
 </div>
 <div class="form-group">
     <div class="col-sm-10">
         <button type="button" class="btn btn-primary" name="quesnext" onclick="javascript:checkDetails();return false;">Next</button>
-         <button type="button" class="btn btn-danger">Reset</button>
+        <button type="button" class="btn btn-danger">Reset</button>
     </div>
 </div>
 </div>
 <div id="ques_page_2">
+    <h3>Ask Your Questions (max 3 questions)</h3>
+    <div class="form-group" id="ques_grp_5">
+        <label>Number of Questions</label>
+        <div class="col-sm-10">
+            <select>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+    </div>
 </div>
 </form>
 
