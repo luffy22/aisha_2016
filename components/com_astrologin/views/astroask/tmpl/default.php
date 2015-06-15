@@ -21,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
     <span class="error1" id="ques_err_1">Please input a valid name.</span>
     </div>
 </div>
-    <div class="form-group" id="ques_grp_2">
+<div class="form-group" id="ques_grp_2">
     <label for="ques_2" class="col-sm-2 control-label">Email:</label>
     <div class="col-sm-10">
     <input type="email" name="quest_email" class="form-control" id="ques_2" placeholder="Enter your email" />
@@ -111,7 +111,7 @@ defined('_JEXEC') or die('Restricted access');
     </div>
 </div>
 <div class="form-group" id="ques_grp_4">
-    <label for="dob" class="col-sm-2 control-label">Place Of Birth</label>
+    <label for="ques_pob" class="col-sm-2 control-label">Place Of Birth</label>
     <div class="col-sm-10 ui-widget">
     <input type="text" id="ques_pob" name="ques_pob" class="form-control" placeholder="Enter full name of city/town, state, country" />
     <span class="form-control-feedback" id="ques_ico_4"></span>
@@ -128,15 +128,34 @@ defined('_JEXEC') or die('Restricted access');
 <div id="ques_page_2">
     <h3>Ask Your Questions (max 3 questions)</h3>
     <div class="form-group" id="ques_grp_5">
-        <label>Number of Questions</label>
-        <div class="col-sm-10">
-            <select>
+        <label for="ques_choice">Number of Questions</label>
+            <select class="form-control" id="ques_choice" onchange="javascript:explainChoice()">
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
             </select>
+    </div>
+    <div class="form-group" id="ques_grp_6">
+        <label for="ques_choice">Do you want short or detailed explanation?</label>
+            <select class="form-control" id="ques_explain" onchange="javascript:explainChoice()">
+                <option value="none">Please enter your choice</option>
+                <option value="detail">Detailed Explanation (300 &#8377; for each answer)</option>
+                <option value="short">Short Explanation (100 &#8377; for each answer)</option>
+            </select>
+    </div>
+    <div class="form-group" id="ques_grp_7">
+        
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="button" class="btn btn-primary" name="quesnext1" onclick="javascript:backPage();return false;">Back</button>
+            <button type="button" class="btn btn-primary" name="quesnext1" onclick="javascript:nextPage();return false;">Next</button>
+            
         </div>
     </div>
+</div>
+<div id="ques_page_3">
+    <h3>Ask your questions</h3>
 </div>
 </form>
 

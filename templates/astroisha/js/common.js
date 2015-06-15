@@ -549,3 +549,76 @@ function checkDetails()
        $('#ques_page_2').show();
    }
 }
+function explainChoice()
+{
+    if(document.getElementById("ques_explain").value=="detail")
+    {
+        document.getElementById("ques_grp_7").innerHTML = 
+            "<h3>Detailed Explanation</h3><p>Answer would be more thorough after examining all pros and cons in your horoscope for given question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
+        if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="1"))
+        {
+            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 300 "+"<html>&#8377;</html>"+"</strong></p>";
+        }
+        if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="2"))
+        {
+            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 600 "+"<html>&#8377;</html>"+"</strong></p>";
+        }
+        if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="3"))
+        {
+            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 900 "+"<html>&#8377;</html>"+"</strong></p>";
+        }
+        
+    }
+    else if(document.getElementById("ques_explain").value=="short")
+    {
+        document.getElementById("ques_grp_7").innerHTML = 
+            "<h3>Short Explanation</h3><p>Answer would be brief and to the point. No remedial measures or causes would be explained unless asked in the question itself. No follow up questions would be entertained.</p>";
+        if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="1"))
+        {
+            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 100 "+"<html>&#8377;</html>"+"</strong></p>";
+        }
+        else if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="2"))
+        {
+            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 200 "+"<html>&#8377;</html>"+"</strong></p>";
+        }
+        else if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="3"))
+        {
+            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 300 "+"<html>&#8377;</html>"+"</strong></p>";
+        }
+    }
+    else if(document.getElementById("ques_explain").value=="none")
+    {
+       document.getElementById("ques_grp_7").innerHTML = "none";
+    }
+    
+}
+function backPage()
+{
+    $('#ques_page_1').css('visibility','visible');
+    $('#ques_page_2').css('visibility','hidden');
+    $('#ques_page_3').css('visibility','hidden');
+    $('#ques_page_1').show();
+    $('#ques_page_2').hide();
+    $('#ques_page_3').hide();
+}
+function nextPage()
+{
+    if(document.getElementById("ques_explain").value=="none")
+    {
+        alert("One of the values is missing.");
+    }
+    else
+    {
+        $('#ques_page_1').css('visibility','hidden');
+        $('#ques_page_2').css('visibility','hidden');
+        $('#ques_page_3').css('visibility','visible');
+        $('#ques_page_1').hide();
+        $('#ques_page_2').hide();
+        $('#ques_page_3').show();
+        
+        if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="1"))
+        {
+            
+        }
+    }
+}
