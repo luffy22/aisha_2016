@@ -14,39 +14,28 @@ defined('_JEXEC') or die('Restricted access');
 <form class="form-horizontal" id="ques_form" role="form" enctype="application/x-www-form-urlencoded" method="post" 
       action="<?php echo JRoute::_('index.php?option=com_astrologin&task=askQuestions1'); ?>">
 <div class="form-group" id="ques_grp_1">
-    <label for="ques_1" class="col-sm-2 control-label">Name:</label>
-    <div class="col-sm-10">
+    <label for="ques_1">Name:</label>
     <input type="text" name="ques_name" class="form-control" id="ques_1" placeholder="Enter your full name" />
-    <span class="form-control-feedback" id="ques_ico_1"></span>
     <span class="error1" id="ques_err_1">Please input a valid name.</span>
-    </div>
 </div>
 <div class="form-group" id="ques_grp_2">
-    <label for="ques_2" class="col-sm-2 control-label">Email:</label>
-    <div class="col-sm-10">
-    <input type="email" name="quest_email" class="form-control" id="ques_2" placeholder="Enter your email" />
-    <span class="form-control-feedback" id="ques_ico_2"></span>
+    <label for="ques_2">Email:</label>
+    <input type="email" name="ques_email" class="form-control" id="ques_2" placeholder="Enter your email" />
     <span class="error1" id="ques_err_2">Please input a valid email.</span>
-    </div>
-</div>
-<div class="form-group">
-    <label for="ques_gender" class="col-sm-2 control-label">Gender:</label>
-    <div class="col-sm-10">
-    <input type="radio" name="ques_gender" value="male" id="ques_gender1"> Male
-    <input type="radio" name="ques_gender" value="female" id="ques_gender2"> Female
-    </div>
 </div>
 <div class="form-group" id="ques_grp_3">
-    <label for="dob" class="col-sm-2 control-label">Date Of Birth:</label>
-    <div class="col-sm-10">
-    <input type="text" name="dob" id="ques_dob" class="form-control" placeholder="Date Of Birth in Year/Month/Day Format" />
-    <span class="form-control-feedback" id="ques_ico_3"></span>
-    <span class="error1" id="ques_err_3">Please input a valid date of birth.</span>
-    </div>
+    <label for="ques_gender">Gender:</label><br/>
+    <input type="radio" name="ques_gender" value="male" id="ques_gender1" /> Male
+    <input type="radio" name="ques_gender" value="female" id="ques_gender2" checked /> Female
+    <span class="error1" id="ques_err_3">Enter a gender.</span>
 </div>
+<div class="form-group" id="ques_grp_4">
+    <label for="dob" >Date Of Birth:</label>
+    <input type="text" name="dob" id="ques_dob" class="form-control" placeholder="Date Of Birth in Year/Month/Day Format" />
+    <span class="error1" id="ques_err_4">Please input a valid date of birth.</span>
+    </div>
 <div class="form-group">
-    <label for="dob" class="col-sm-2 control-label">Time Of Birth:</label>
-    <div class="col-sm-10">
+    <label>Time Of Birth:</label><br/>
     <select class="select2" id="lagna_tob_hr" name="lagna_hr">
     <?php
          for($i=0;$i<12;$i++)
@@ -108,21 +97,15 @@ defined('_JEXEC') or die('Restricted access');
         <option>AM</option>
         <option>PM</option>
     </select>
-    </div>
 </div>
-<div class="form-group" id="ques_grp_4">
-    <label for="ques_pob" class="col-sm-2 control-label">Place Of Birth</label>
-    <div class="col-sm-10 ui-widget">
+<div class="form-group" id="ques_grp_5">
+    <label for="ques_pob">Place Of Birth</label>
     <input type="text" id="ques_pob" name="ques_pob" class="form-control" placeholder="Enter full name of city/town, state, country" />
-    <span class="form-control-feedback" id="ques_ico_4"></span>
-    <span class="error1" id="ques_err_4">Please enter city/town name, country name</span>
-    </div>
+    <span class="error1" id="ques_err_5">Please enter city/town name, country name</span>
 </div>
 <div class="form-group">
-    <div class="col-sm-10">
         <button type="button" class="btn btn-primary" name="quesnext" onclick="javascript:checkDetails();return false;">Next</button>
         <button type="button" class="btn btn-danger">Reset</button>
-    </div>
 </div>
 </div>
 <div id="ques_page_2">
@@ -149,13 +132,22 @@ defined('_JEXEC') or die('Restricted access');
     <div class="form-group">
         <div class="col-sm-10">
             <button type="button" class="btn btn-primary" name="quesnext1" onclick="javascript:backPage();return false;">Back</button>
-            <button type="button" class="btn btn-primary" name="quesnext1" onclick="javascript:nextPage();return false;">Next</button>
+            <button type="button" class="btn btn-primary" name="quesnext2" onclick="javascript:nextPage();return false;">Next</button>
             
         </div>
     </div>
 </div>
 <div id="ques_page_3">
-    <h3>Ask your questions</h3>
+    <div id="ques-content">
+        <div id="loadergif2" class="loader"><img src="<?php echo $this->baseurl ?>/images/loader.gif" /></div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="button" class="btn btn-primary" name="quesnext3" onclick="javascript:backPage1();return false;">Back</button>
+            <button type="button" class="btn btn-primary" name="quesnext4" onclick="javascript:nextPage1();return false;">Next</button>
+            
+        </div>
+    </div>
 </div>
 </form>
 

@@ -515,12 +515,12 @@ function checkDetails()
    var email_regex      = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
    $('#ques_err_1').css('visibility','hidden');
    $('#ques_err_2').css('visibility','hidden');
-   $('#ques_err_3').css('visibility','hidden');
    $('#ques_err_4').css('visibility','hidden');
+   $('#ques_err_5').css('visibility','hidden');
    $('#ques_grp_1').removeClass(" has-error");
    $('#ques_grp_2').removeClass(" has-error");
-   $('#ques_grp_3').removeClass(" has-error");
    $('#ques_grp_4').removeClass(" has-error");
+   $('#ques_grp_5').removeClass(" has-error");
    if(name.value=="")
    {
        $('#ques_grp_1').addClass(" has-error");
@@ -533,13 +533,13 @@ function checkDetails()
    }
    else if(dob.value=="")
    {
-       $('#ques_grp_3').addClass(" has-error");
-       $('#ques_err_3').css('visibility','visible');
+       $('#ques_grp_4').addClass(" has-error");
+       $('#ques_err_4').css('visibility','visible');
    }
    else if(pob.value=="")
    {
-       $('#ques_grp_4').addClass(" has-error");
-       $('#ques_err_4').css('visibility','visible');
+       $('#ques_grp_5').addClass(" has-error");
+       $('#ques_err_5').css('visibility','visible');
    }
    else
    {
@@ -554,7 +554,7 @@ function explainChoice()
     if(document.getElementById("ques_explain").value=="detail")
     {
         document.getElementById("ques_grp_7").innerHTML = 
-            "<h3>Detailed Explanation</h3><p>Answer would be more thorough after examining all pros and cons in your horoscope for given question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
+            "<h3>Detailed Explanation</h3><p>Answer would be more thorough and after examining minute details related to the question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
         if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="1"))
         {
             document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 300 "+"<html>&#8377;</html>"+"</strong></p>";
@@ -601,6 +601,15 @@ function backPage()
     $('#ques_page_2').hide();
     $('#ques_page_3').hide();
 }
+function backPage1()
+{
+    $('#ques_page_1').css('visibility','hidden');
+    $('#ques_page_2').css('visibility','visible');
+    $('#ques_page_3').css('visibility','hidden');
+    $('#ques_page_1').hide();
+    $('#ques_page_2').show();
+    $('#ques_page_3').hide();
+}
 function nextPage()
 {
     if(document.getElementById("ques_explain").value=="none")
@@ -609,6 +618,7 @@ function nextPage()
     }
     else
     {
+        $("#loadergif2").css('display','block');
         $('#ques_page_1').css('visibility','hidden');
         $('#ques_page_2').css('visibility','hidden');
         $('#ques_page_3').css('visibility','visible');
@@ -618,7 +628,33 @@ function nextPage()
         
         if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="1"))
         {
-            
+            $( "#ques-content" ).load( "ajaxcalls/1questiondetail.html" );
+            $("#loadergif2").css('display','none');
+        }
+        else if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="1"))
+        {
+            $( "#ques-content" ).load( "ajaxcalls/1questionshort.html" );
+            $("#loadergif2").css('display','none');
+        }
+        else if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="2"))
+        {
+            $( "#ques-content" ).load( "ajaxcalls/2questionshort.html" );
+            $("#loadergif2").css('display','none');
+        }
+        else if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="2"))
+        {
+            $( "#ques-content" ).load( "ajaxcalls/2questiondetail.html" );
+            $("#loadergif2").css('display','none');
+        }
+        else if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="3"))
+        {
+            $( "#ques-content" ).load( "ajaxcalls/3questionshort.html" );
+            $("#loadergif2").css('display','none');
+        }
+        else if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="3"))
+        {
+            $( "#ques-content" ).load( "ajaxcalls/3questiondetail.html" );
+            $("#loadergif2").css('display','none');
         }
     }
 }

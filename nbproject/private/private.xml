@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/opt/lampp/htdocs/aisha/templates/astroisha/index.php</file>
         <file>file:/opt/lampp/htdocs/aisha/templates/astroisha/js/common.js</file>
+        <file>file:/opt/lampp/htdocs/aisha/components/com_astrologin/views/astroask/tmpl/default.php</file>
+        <file>file:/opt/lampp/htdocs/aisha/templates/astroisha/css/template.css</file>
+        <file>file:/opt/lampp/htdocs/aisha/templates/astroisha/index.php</file>
+        <file>file:/opt/lampp/htdocs/aisha/ajaxcalls/1question.html</file>
+        <file>file:/opt/lampp/htdocs/aisha/templates/astroisha/bootstrap/css/bootstrap.css</file>
     </open-files>
 </project-private>
