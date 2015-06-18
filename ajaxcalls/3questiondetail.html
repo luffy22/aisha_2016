@@ -7,11 +7,11 @@
         </a>
       </h4>
     </div>
-    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
         <div class="form-group">
         <label>Question is about</label>
-        <select class="form-control" id="ques_1_option" onchange="javascript:explainChoice()">
+        <select class="form-control" id="ques_1_option" name="ques_1_option">
             <option value="1">Marriage</option>
             <option value="2">Career</option>
             <option value="3">Finance</option>
@@ -22,14 +22,16 @@
         </div>
         <div class="form-group" id="ques_grp_8">
             <label for="ques_8">Ask Your Question?</label>
-            <input type="text" name="ques_ask_1" class="form-control" id="ques_8" placeholder="Please enter your question here.." />
-            <span class="form-control-feedback" id="ques_ico_1"></span>
-            <span class="error1" id="ques_err_8">Please enter your question</span>
+            <input type="text" name="ques_ask_1" class="form-control" id="ques_ask_1" placeholder="Please enter your question here.." />
+            <span class="form-control-feedback" id="ques_ask1"></span>
+            <span class="error1" id="ques_err_ask1">Please enter your question</span>
         </div>
         <div class="form-group" id="ques_grp_9">
             <label for="ques_8" >Explain your problem in detail</label>
-            <textarea id="ques_9" name="ques_detail_1" class="form-control" rows="7"
-                          placeholder="Please explain your problem in some words. Keep it simple and brief. It would help in finding a better solution after knowing more details about your problem."></textarea>
+            <textarea id="ques_detail_1" name="ques_detail_1" class="form-control" rows="7"
+                          placeholder="Explain your problem in some words. Keep it simple and brief. It would help in finding a better solution after knowing more details about your problem."></textarea>
+            <span class="form-control-feedback" id="ques_ico_det1"></span>
+            <span class="error1" id="ques_err_det1">Explain your problem in few words..</span>
         </div>
       </div>
     </div>
@@ -42,11 +44,11 @@
         </a>
       </h4>
     </div>
-    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
         <div class="form-group">
         <label>Question is about</label>
-        <select class="form-control" id="ques_1_option" onchange="javascript:explainChoice()">
+        <select class="form-control" id="ques_2_option" name="ques_2_option">
             <option value="1">Marriage</option>
             <option value="2">Career</option>
             <option value="3">Finance</option>
@@ -57,14 +59,16 @@
         </div>
         <div class="form-group" id="ques_grp_8">
             <label for="ques_8">Ask Your Question?</label>
-            <input type="text" name="ques_ask_1" class="form-control" id="ques_8" placeholder="Please enter your question here.." />
-            <span class="form-control-feedback" id="ques_ico_1"></span>
-            <span class="error1" id="ques_err_8">Please enter your question</span>
+            <input type="text" name="ques_ask_2" class="form-control" id="ques_ask_2" placeholder="Please enter your question here.." />
+            <span class="form-control-feedback" id="ques_ask2"></span>
+            <span class="error1" id="ques_err_ask2">Please enter your question</span>
         </div>
         <div class="form-group" id="ques_grp_9">
-            <label for="ques_8" >Explain your problem in detail</label>
-            <textarea id="ques_9" name="ques_detail_1" class="form-control" rows="7"
-                          placeholder="Please explain your problem in some words. Keep it simple and brief. It would help in finding a better solution after knowing more details about your problem."></textarea>
+            <label for="ques_detail_2" >Explain your problem in detail</label>
+            <textarea id="ques_detail_2" name="ques_detail_2" class="form-control" rows="7"
+                          placeholder="Explain your problem in some words. Keep it simple and brief. It would help in finding a better solution after knowing more details about your problem."></textarea>
+            <span class="form-control-feedback" id="ques_ico_det2"></span>
+            <span class="error1" id="ques_err_det2">Explain your problem in few words..</span>
         </div>
       </div>
     </div>
@@ -77,11 +81,11 @@
         </a>
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+       <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
-         <div class="form-group">
+        <div class="form-group">
         <label>Question is about</label>
-        <select class="form-control" id="ques_1_option" onchange="javascript:explainChoice()">
+        <select class="form-control" id="ques_3_option" name="ques_3_option">
             <option value="1">Marriage</option>
             <option value="2">Career</option>
             <option value="3">Finance</option>
@@ -92,14 +96,16 @@
         </div>
         <div class="form-group" id="ques_grp_8">
             <label for="ques_8">Ask Your Question?</label>
-            <input type="text" name="ques_ask_1" class="form-control" id="ques_8" placeholder="Please enter your question here.." />
-            <span class="form-control-feedback" id="ques_ico_1"></span>
-            <span class="error1" id="ques_err_8">Please enter your question</span>
+            <input type="text" name="ques_ask_3" class="form-control" id="ques_ask_3" placeholder="Please enter your question here.." />
+            <span class="form-control-feedback" id="ques_ask3"></span>
+            <span class="error1" id="ques_err_ask3">Please enter your question</span>
         </div>
         <div class="form-group" id="ques_grp_9">
             <label for="ques_8" >Explain your problem in detail</label>
-            <textarea id="ques_9" name="ques_detail_1" class="form-control" rows="7"
-                          placeholder="Please explain your problem in some words. Keep it simple and brief. It would help in finding a better solution after knowing more details about your problem."></textarea>
+            <textarea id="ques_detail_3" name="ques_detail_1" class="form-control" rows="7"
+                          placeholder="Explain your problem in some words. Keep it simple and brief. It would help in finding a better solution after knowing more details about your problem."></textarea>
+            <span class="form-control-feedback" id="ques_ico_det3"></span>
+            <span class="error1" id="ques_err_det3">Explain your problem in few words..</span>
         </div>
       </div>
     </div>

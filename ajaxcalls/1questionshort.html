@@ -1,5 +1,4 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <input type="hidden" name="ques_type" value="short" />
   <div class="panel panel-primary">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
@@ -12,7 +11,7 @@
       <div class="panel-body">
         <div class="form-group">
         <label>Question is about</label>
-        <select class="form-control" id="ques_1_option">
+        <select class="form-control" id="ques_1_option" name="ques_1_option">
             <option value="1">Marriage</option>
             <option value="2">Career</option>
             <option value="3">Finance</option>
@@ -23,12 +22,10 @@
         </div>
         <div class="form-group" id="ques_grp_8">
             <label for="ques_8">Ask Your Question?</label>
-            <input type="text" name="ques_ask_1" class="form-control" id="ques_8" placeholder="Please enter your question here.." />
-            <span class="form-control-feedback" id="ques_ico_1"></span>
-            <span class="error1" id="ques_err_8">Please enter your question</span>
+            <input type="text" name="ques_ask_1" class="form-control" id="ques_ask_1" placeholder="Please enter your question here.." />
+            <span class="form-control-feedback" id="ques_ask1"></span>
+            <span class="error1" id="ques_err_ask1">Please enter your question</span>
         </div>
-        <input type="hidden" name="ques_ask_2" value="0" />
-        <input type="hidden" name="ques_ask_3" value="0" />
       </div>
     </div>
   </div>

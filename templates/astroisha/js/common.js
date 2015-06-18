@@ -658,3 +658,13 @@ function nextPage()
         }
     }
 }
+function nextPage1()
+{
+     if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="1"))
+     {
+         if(document.getElementById("ques_ask_1").value=="")
+         {
+             
+         }
+     }
+}
