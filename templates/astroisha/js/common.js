@@ -22,10 +22,7 @@ $(document).ready(function()
             active      : false
         });
     });
-function buttonCalls()
-{
-$('#body').css("background","pink");
-}
+
 function toggleMenu(id)
 {
     var menu_id = id;
@@ -588,7 +585,7 @@ function explainChoice()
     }
     else if(document.getElementById("ques_explain").value=="none")
     {
-       document.getElementById("ques_grp_7").innerHTML = "none";
+       document.getElementById("ques_grp_7").innerHTML = "";
     }
     
 }
@@ -597,18 +594,22 @@ function backPage()
     $('#ques_page_1').css('visibility','visible');
     $('#ques_page_2').css('visibility','hidden');
     $('#ques_page_3').css('visibility','hidden');
+    $('#ques_page_4').css('visibility','hidden');
     $('#ques_page_1').show();
     $('#ques_page_2').hide();
     $('#ques_page_3').hide();
+    $('#ques_page_4').hide();
 }
 function backPage1()
 {
     $('#ques_page_1').css('visibility','hidden');
     $('#ques_page_2').css('visibility','visible');
     $('#ques_page_3').css('visibility','hidden');
+    $('#ques_page_4').css('visibility','hidden');
     $('#ques_page_1').hide();
     $('#ques_page_2').show();
     $('#ques_page_3').hide();
+    $('#ques_page_4').hide();
 }
 function nextPage()
 {
@@ -622,9 +623,11 @@ function nextPage()
         $('#ques_page_1').css('visibility','hidden');
         $('#ques_page_2').css('visibility','hidden');
         $('#ques_page_3').css('visibility','visible');
+        $('#ques_page_4').css('visibility','hidden');
         $('#ques_page_1').hide();
         $('#ques_page_2').hide();
         $('#ques_page_3').show();
+        $('#ques_page_4').hide();
         
         if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="1"))
         {
@@ -660,11 +663,337 @@ function nextPage()
 }
 function nextPage1()
 {
-     if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="1"))
+     if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="1"))
      {
          if(document.getElementById("ques_ask_1").value=="")
          {
-             
+            ques_grp_1_open();
+            ques_txt1_open();
+         }
+         else
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+         }
+        
+     }
+     else if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="2"))
+     {
+         if(document.getElementById("ques_ask_1").value=="")
+         {
+            ques_grp_1_open();
+            ques_txt1_open();
+            ques_grp_2_close();
+            ques_txt2_close();
+         }
+         else if(document.getElementById("ques_ask_2").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_grp_2_open();
+            ques_txt2_open();;
+         }
+         else
+         {
+            ques_grp_2_close();
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_txt2_close();
+
+         }
+    }
+     else if((document.getElementById("ques_explain").value=="short")&&(document.getElementById("ques_choice").value=="3"))
+     {
+         if(document.getElementById("ques_ask_1").value=="")
+         {
+            ques_grp_1_open();
+            ques_txt1_open();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_grp_3_close();
+            ques_txt3_close();
+         }
+         else if(document.getElementById("ques_ask_2").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_grp_2_open();
+            ques_txt2_open();
+            ques_grp_3_close();
+            ques_txt3_close();
+         }
+         else if(document.getElementById("ques_ask_3").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_grp_3_open();
+            ques_txt3_open();
+         }
+         else
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_grp_3_close();
+            ques_txt3_close();
+
          }
      }
+     else if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="1"))
+     {
+         if(document.getElementById("ques_ask_1").value=="")
+         {
+            ques_grp_1_open();
+            ques_txt1_open();
+            ques_det1_close();
+         }
+         else if(document.getElementById("ques_detail_1").value=="")
+         {
+            ques_grp_1_open();
+            ques_txt1_close();
+            ques_det1_open();
+         }
+         else
+         {
+            ques_grp_1_close();
+            ques_det1_close();
+            ques_txt1_close();
+
+         }
+     }
+     else if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="2"))
+     {
+         if(document.getElementById("ques_ask_1").value=="")
+         {
+            ques_grp_1_open();
+            ques_txt1_open();
+            ques_det1_close();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_det2_close();
+
+         }
+         else if(document.getElementById("ques_detail_1").value=="")
+         {
+            ques_grp_1_open();
+            ques_txt1_close();
+            ques_det1_open();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_det2_close();
+         }
+         else if(document.getElementById("ques_ask_2").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_det1_close();
+            ques_grp_2_open();
+            ques_txt2_open();
+            ques_det2_close();
+
+         }
+         else if(document.getElementById("ques_detail_2").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_det1_close();
+            ques_grp_2_open();
+            ques_txt2_close();
+            ques_det2_open();
+         }
+         else
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_det1_close();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_det2_close();
+         }
+     }
+    else if((document.getElementById("ques_explain").value=="detail")&&(document.getElementById("ques_choice").value=="3"))
+     {
+         if(document.getElementById("ques_ask_1").value=="")
+         {
+            ques_grp_1_open();
+            ques_txt1_open();
+            ques_det1_close();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_det2_close();
+            ques_grp_3_close();
+            ques_txt3_close();
+            ques_det3_close();
+
+         }
+         else if(document.getElementById("ques_detail_1").value=="")
+         {
+            ques_grp_1_open();
+            ques_txt1_close();
+            ques_det1_open();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_det2_close();
+            ques_grp_3_close();
+            ques_txt3_close();
+            ques_det3_close();
+         }
+         else if(document.getElementById("ques_ask_2").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_det1_close();
+            ques_grp_2_open();
+            ques_txt2_open();
+            ques_det2_close();
+            ques_grp_3_close();
+            ques_txt3_close();
+            ques_det3_close();
+
+         }
+         else if(document.getElementById("ques_detail_2").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_det1_close();
+            ques_grp_2_open();
+            ques_txt2_close();
+            ques_det2_open();
+            ques_grp_3_close();
+            ques_txt3_close();
+            ques_det3_close();
+         }
+         else if(document.getElementById("ques_ask_3").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_det1_close();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_det2_close();
+            ques_grp_3_open();
+            ques_txt3_open();
+            ques_det3_close();
+         }
+         else if(document.getElementById("ques_detail_3").value=="")
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_det1_close();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_det2_close();
+            ques_grp_3_open();
+            ques_txt3_close();
+            ques_det3_open();
+         }
+         else
+         {
+            ques_grp_1_close();
+            ques_txt1_close();
+            ques_det1_close();
+            ques_grp_2_close();
+            ques_txt2_close();
+            ques_det2_close();
+            ques_grp_3_close();
+            ques_txt3_close();
+            ques_det3_close();
+           
+         }
+     }
+     else
+     {
+         alert("done");
+     }
+}
+function ques_grp_1_open()
+{
+    $('#collapseOne').addClass(" in");
+}
+function ques_grp_1_close()
+{
+    $('#collapseOne').removeClass(" in");
+}
+function ques_grp_2_open()
+{
+    $('#collapseTwo').addClass(" in");
+}
+function ques_grp_2_close()
+{
+    $('#collapseTwo').removeClass(" in");
+}
+function ques_grp_3_open()
+{
+    $('#collapseThree').addClass(" in");
+}
+function ques_grp_3_close()
+{
+    $('#collapseThree').removeClass(" in");
+}
+function ques_txt1_open()
+{
+    $('#ques_grp_ask1').addClass(" has-error");
+    $('#ques_err_ask1').css('visibility','visible');
+}
+function ques_txt1_close()
+{
+    $('#ques_grp_ask1').removeClass(" has-error");
+    $('#ques_err_ask1').css('visibility','hidden');
+}
+function ques_txt2_open()
+{
+    $('#ques_grp_ask2').addClass(" has-error");
+    $('#ques_err_ask2').css('visibility','visible');
+}
+
+function ques_txt2_close()
+{
+    $('#ques_grp_ask2').removeClass(" has-error");
+    $('#ques_err_ask2').css('visibility','hidden');
+}
+
+function ques_txt3_open()
+{
+    $('#ques_grp_ask3').addClass(" has-error");
+    $('#ques_err_ask3').css('visibility','visible');
+}
+
+function ques_txt3_close()
+{
+    $('#ques_grp_ask3').removeClass(" has-error");
+    $('#ques_err_ask3').css('visibility','hidden');
+}
+function ques_det1_open()
+{
+    $('#ques_grp_det1').addClass(" has-error");
+    $('#ques_err_det1').css('visibility','visible');
+}
+function ques_det1_close()
+{
+    $('#ques_grp_det1').removeClass(" has-error");
+    $('#ques_err_det1').css('visibility','hidden');
+}
+function ques_det2_open()
+{
+    $('#ques_grp_det2').addClass(" has-error");
+    $('#ques_err_det2').css('visibility','visible');
+    
+}
+function ques_det2_close()
+{
+    $('#ques_grp_det2').removeClass(" has-error");
+    $('#ques_err_det2').css('visibility','hidden');
+}
+function ques_det3_open()
+{
+    $('#ques_grp_det3').addClass(" has-error");
+    $('#ques_err_det3').css('visibility','visible');
+}
+function ques_det3_close()
+{
+    $('#ques_grp_det3').removeClass(" has-error");
+    $('#ques_err_det3').css('visibility','hidden');
 }

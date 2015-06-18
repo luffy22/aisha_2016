@@ -116,4 +116,5 @@ color: #428bca !important;
 .footer2 li a{color:#FFFFFF;}#mob_menu{margin: 5px 0 0 10px;}
 .nav-special a{background-color: #428bca;color:#FFFFFF;}
 .nav-special>li.active>a{background-color:#eee !important; color: #000000 !important;font-weight:bold;}
-#ques_page_2, #ques_page_3{visibility: hidden}#ques_page_1{visibility: visible}
+#ques_page_2, #ques_page_3, #ques_page_4{visibility: hidden}#ques_page_1{visibility: visible}
+#collapseOne,#collapseTwo,#collapseThree{padding: 0 10px;}

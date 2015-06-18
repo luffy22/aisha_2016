@@ -8,11 +8,12 @@ defined('_JEXEC') or die('Restricted access');
 
 </head>
 <body>
+<form class="form-horizontal" id="ques_form" role="form" enctype="application/x-www-form-urlencoded" method="post" 
+      action="<?php echo JRoute::_('index.php?option=com_astrologin&task=askQuestions1'); ?>">
 <div id="ques_page_1">
 <h3>Enter Your Details</h3>
 <div class="spacer"></div>
-<form class="form-horizontal" id="ques_form" role="form" enctype="application/x-www-form-urlencoded" method="post" 
-      action="<?php echo JRoute::_('index.php?option=com_astrologin&task=askQuestions1'); ?>">
+
 <div class="form-group" id="ques_grp_1">
     <label for="ques_1">Name:</label>
     <input type="text" name="ques_name" class="form-control" id="ques_1" placeholder="Enter your full name" />
