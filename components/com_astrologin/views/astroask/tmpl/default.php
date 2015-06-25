@@ -1,13 +1,15 @@
 <?php
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+if(isset($_GET['email'])&&($_GET['email']=='sent'))
+{
+    echo "success";   
+}
+else
+{
 ?>
-<!DOCTYPE html>
-<html>
-<head>
 
-</head>
-<body>
+<div class="container-fluid">
 <form class="form-horizontal" id="ques_form" role="form" enctype="application/x-www-form-urlencoded" method="post" 
       action="<?php echo JRoute::_('index.php?option=com_astrologin&task=astroask.askQuestions'); ?>">
 <div id="ques_page_1">
@@ -111,20 +113,20 @@ defined('_JEXEC') or die('Restricted access');
 </div>
 <div id="ques_page_2">
     <h3>Ask Your Questions (max 3 questions)</h3>
+     <div class="form-group" id="ques_grp_6">
+        <label for="ques_choice">Do you want short or detailed explanation?</label>
+            <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
+                <option value="none">Please enter your choice</option>
+                <option value="detail">Detailed Explanation (300 &#8377; for each answer)</option>
+                <option value="short">Short Explanation (100 &#8377; for each answer)</option>
+            </select>
+    </div>
     <div class="form-group" id="ques_grp_5">
         <label for="ques_choice">Number of Questions</label>
             <select class="form-control" id="ques_choice" name="ques_choice" onchange="javascript:explainChoice()">
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
-            </select>
-    </div>
-    <div class="form-group" id="ques_grp_6">
-        <label for="ques_choice">Do you want short or detailed explanation?</label>
-            <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
-                <option value="none">Please enter your choice</option>
-                <option value="detail">Detailed Explanation (300 &#8377; for each answer)</option>
-                <option value="short">Short Explanation (100 &#8377; for each answer)</option>
             </select>
     </div>
     <div class="form-group" id="ques_grp_7">
@@ -150,7 +152,7 @@ defined('_JEXEC') or die('Restricted access');
     </div>
 </div>
 </form>
-
-
-
-</body>
+</div>
+<?php
+}
+?>

@@ -8,9 +8,9 @@ class AstrologinModelAstroask extends JModelItem
     public function askQuestions($details)
     {
         $token      = uniqid('token_');
-        $name       = $details['name'];
+        $name       = ucfirst($details['name']);
         $email      = $details['email'];
-        $gender     = $details['gender'];
+        $gender     = ucfirst($details['gender']);
         $explain    = $details['explain'];
         $dob        = $details['dob'];
         $tob        = $details['tob'];
@@ -89,13 +89,24 @@ class AstrologinModelAstroask extends JModelItem
         $choice             = $details['choice'];
         $explain            = $details['explain'];
         $to                 = $details['email'];
-        $bcc                = 'kopnite@gmail';
-        $subject            = "Ask Astrologer Token No: ".$details['token'];
-        if($explain=="detail"&&$choice=='1')
+        $bcc                = 'kopnite@gmail.com';
+        $subject            = "Ask AstroIsha Quesion Token No: ".$details['token'];
+        $ques_topic1        = $details['ques_topic_1'];
+        $ques_1             = $details['ques_1'];
+        $ques_explain1      = $details['ques_1_explain'];
+        $ques_topic2        = $details['ques_topic_2'];
+        $ques_2             = $details['ques_2'];
+        $ques_explain2      = $details['ques_2_explain'];
+        $ques_topic3        = $details['ques_topic_3'];
+        $ques_3             = $details['ques_3'];
+        $ques_explain3      = $details['ques_3_explain'];
+        
+        if($explain=="detail")
         {
-            $body               = "Dear ".$name.",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Once your payment of 300 <html>&#8377;</html> is received we would process your query and give answer and logical solution to your asked questions in 7 Working Days. 
-                                Once you transfer the money please reply back to this email with confirmation of payment. If payment in not received in 10 Working Days then there would be termed as Cancellation of Order.<br/><br/>";
-            $body               .= "Your Details are as below. Please reply back if any changes are needed.<br/>";
+            $money  = 300;      // for detailed questions
+            $body               = "Dear ".$name.",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Once your payment of<html>&nbsp</html>".($money*$choice)."<html>&#8377;</html> is received we would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<html>&nbsp;</html>
+                                    Once you transfer the money please reply back to this email with confirmation of payment. If payment is not received in 10 Working Days then that would be termed as Cancellation of Order.<br/><br/>";
+            $body               .= "Your Details are as below.<br/><br/>";
             $body               .= "Name: ".$name."<br/>";
             $body               .= "Email: ".$to."<br/>";
             $body               .= "Gender: ".$gender."<br/>";
@@ -103,19 +114,24 @@ class AstrologinModelAstroask extends JModelItem
             $body               .= "Time Of Birth: ".$tob."<br/>";
             $body               .= "Place Of Birth: ".$pob."<br/>";
             $body               .= "Number Of Questions: ".$choice."<br/>";
-            $body               .= "Explanation (Detail/Short): ".$explain."<br/>";
-            $body               .= "Question 1:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_1']."<br/>";
-            $body               .= "Question: ".$details['ques_1']."<br/>";
-            $body               .= "Background: ".$details['ques_1_explain']."<br/>";
-            $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
+            $body               .= "Explanation (Detail/Short): ".$explain."<br/><br/>";
+            for($i=0;$i<$choice;$i++)
+            {
+                $j=$i+1;
 
+                $body               .= "<strong>Question ".$j.":</strong><br/>";
+                $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
+                $body               .= "Question: ".${"ques_".$j}."<br/>";
+                $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
+            }
+            $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
         }
-        else if($explain=="short"&&$choice=='1')
+        else if($explain=="short")
         {
-            $body               = "Dear ".$name."<br/>"."This is to confirm that your question form has been received. Once your payment of 100 <html>&#8377;</html> is received we would provide an answer to your question in 7 Working Days. 
-                                Once you transfer the money please reply back to this email with confirmation of payment. If payment in not received in 10 Working Days then there would be termed as Cancellation of Order.<br/><br/>";
-            $body               .= "Your Details are as below. Please reply back if any changes are needed.<br/>";
+            $money              = 100;      // for short questions
+            $body               = "Dear ".$name.",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Once your payment of<html>&nbsp</html>".($money*$choice)."<html>&#8377;</html> is received we would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<html>&nbsp;</html>
+                                    Once you transfer the money please reply back to this email with confirmation of payment. If payment is not received in 10 Working Days then that would be termed as Cancellation of Order.<br/><br/>";
+            $body               .= "Your Details are as below.<br/>";
             $body               .= "Name: ".$name."<br/>";
             $body               .= "Email: ".$to."<br/>";
             $body               .= "Gender: ".$gender."<br/>";
@@ -123,107 +139,17 @@ class AstrologinModelAstroask extends JModelItem
             $body               .= "Time Of Birth: ".$tob."<br/>";
             $body               .= "Place Of Birth: ".$pob."<br/>";
             $body               .= "Number Of Questions: ".$choice."<br/>";
-            $body               .= "Explanation (Detail/Short): ".$explain."<br/>";
-            $body               .= "Question 1:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_1']."<br/>";
-            $body               .= "Question: ".$details['ques_1']."<br/>";
+            $body               .= "Explanation (Detail/Short): ".$explain."<br/><br/>";
+            for($i=0;$i<$choice;$i++)
+            {
+                $j              = $i+1;
+                $body               .= "<strong>Question ".$j.":</strong><br/>";
+                $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
+                $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
+            }
             $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
         }
-        else if($explain=="detail"&&$choice=='2')
-        {
-            $body               = "Dear ".$name."<br/>"."This is to confirm that your question form has been received. Once your payment of 300 <html>&#8377;</html> is received we would process your query and give answer and logical solution to your asked questions in 7 Working Days. 
-                                Once you transfer the money please reply back to this email with confirmation of payment. If payment in not received in 10 Working Days then there would be termed as Cancellation of Order.<br/><br/>";
-            $body               .= "Your Details are as below. Please reply back if any changes are needed.<br/>";
-            $body               .= "Name: ".$name."<br/>";
-            $body               .= "Email: ".$email."<br/>";
-            $body               .= "Gender: ".$gender."<br/>";
-            $body               .= "Date Of Birth: ".$dob."<br/>";
-            $body               .= "Time Of Birth: ".$tob."<br/>";
-            $body               .= "Place Of Birth: ".$pob."<br/>";
-            $body               .= "Number Of Questions: ".$choice."<br/>";
-            $body               .= "Explanation (Detail/Short): ".$explain."<br/>";
-            $body               .= "Question 1:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_1']."<br/>";
-            $body               .= "Question: ".$details['ques_1']."<br/>";
-            $body               .= "Background: ".$details['ques_1_explain']."<br/>";
-            $body               .= "Question 2:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_2']."<br/>";
-            $body               .= "Question: ".$details['ques_2']."<br/>";
-            $body               .= "Background: ".$details['ques_2_explain']."<br/>";
-            $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
-        }
-         else if($explain=="short"&&$choice=='2')
-        {
-            $body               = "Dear ".$name."<br/>"."This is to confirm that your question form has been received. Once your payment of 100 <html>&#8377;</html> is received we would provide an answer to your question in 7 Working Days. 
-                                Once you transfer the money please reply back to this email with confirmation of payment. If payment in not received in 10 Working Days then there would be termed as Cancellation of Order.<br/><br/>";
-            $body               .= "Your Details are as below. Please reply back if any changes are needed.<br/>";
-            $body               .= "Name: ".$name."<br/>";
-            $body               .= "Email: ".$email."<br/>";
-            $body               .= "Gender: ".$gender."<br/>";
-            $body               .= "Date Of Birth: ".$dob."<br/>";
-            $body               .= "Time Of Birth: ".$tob."<br/>";
-            $body               .= "Place Of Birth: ".$pob."<br/>";
-            $body               .= "Number Of Questions: ".$choice."<br/>";
-            $body               .= "Explanation (Detail/Short): ".$explain."<br/>";
-            $body               .= "Question 1:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_1']."<br/>";
-            $body               .= "Explanation (Detail/Short): ".$details->explain."<br/>";
-            $body               .= "Question 2:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_2']."<br/>";
-            $body               .= "Question: ".$details['ques_2']."<br/>";
-            $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
-        }
-         else if($explain=="detail"&&$choice=='3')
-        {
-            $body               = "Dear ".$name."<br/>"."This is to confirm that your question form has been received. Once your payment of 300 <html>&#8377;</html> is received we would process your query and give answer and logical solution to your asked questions in 7 Working Days. 
-                                Once you transfer the money please reply back to this email with confirmation of payment. If payment in not received in 10 Working Days then there would be termed as Cancellation of Order.<br/><br/>";
-            $body               .= "Your Details are as below. Please reply back if any changes are needed.<br/>";
-            $body               .= "Name: ".$name."<br/>";
-            $body               .= "Email: ".$email."<br/>";
-            $body               .= "Gender: ".$gender."<br/>";
-            $body               .= "Date Of Birth: ".$dob."<br/>";
-            $body               .= "Time Of Birth: ".$tob."<br/>";
-            $body               .= "Place Of Birth: ".$pob."<br/>";
-            $body               .= "Number Of Questions: ".$choice."<br/>";
-            $body               .= "Explanation (Detail/Short): ".$explain."<br/>";
-            $body               .= "Question 1:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_1']."<br/>";
-            $body               .= "Question: ".$details['ques_1']."<br/>";
-            $body               .= "Background: ".$details['ques_1_explain']."<br/>";
-            $body               .= "Question 2:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_2']."<br/>";
-            $body               .= "Question: ".$details['ques_2']."<br/>";
-            $body               .= "Background: ".$details['ques_2_explain']."<br/>";
-            $body               .= "Question 3:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_3']."<br/>";
-            $body               .= "Question: ".$details['ques_3']."<br/>";
-            $body               .= "Background: ".$details['ques_3_explain']."<br/>";
-            $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
-        }
-         else if($explain=="short"&&$choice=='3')
-        {
-            $body               = "Dear ".$name."<br/>"."This is to confirm that your question form has been received. Once your payment of 100 <html>&#8377;</html> is received we would provide an answer to your question in 7 Working Days. 
-                                Once you transfer the money please reply back to this email with confirmation of payment. If payment in not received in 10 Working Days then there would be termed as Cancellation of Order.<br/><br/>";
-            $body               .= "Your Details are as below. Please reply back if any changes are needed.<br/>";
-            $body               .= "Name: ".$name."<br/>";
-            $body               .= "Email: ".$email."<br/>";
-            $body               .= "Gender: ".$gender."<br/>";
-            $body               .= "Date Of Birth: ".$dob."<br/>";
-            $body               .= "Time Of Birth: ".$tob."<br/>";
-            $body               .= "Place Of Birth: ".$pob."<br/>";
-            $body               .= "Number Of Questions: ".$choice."<br/>";
-            $body               .= "Explanation (Detail/Short): ".$explain."<br/>";
-            $body               .= "Question 1:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_1']."<br/>";
-            $body               .= "Explanation (Detail/Short): ".$details->explain."<br/>";
-            $body               .= "Question 2:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_2']."<br/>";
-            $body               .= "Question: ".$details['ques_2']."<br/>";
-            $body               .= "Question 3:<br/>";
-            $body               .= "Topic: ".$details['ques_topic_3']."<br/>";
-            $body               .= "Question: ".$details['ques_3']."<br/><br/>";
-            $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
-        }
+       
         $mailer             = JFactory::getMailer();
         $config             = JFactory::getConfig();
         $sender             = array( 
@@ -244,7 +170,7 @@ class AstrologinModelAstroask extends JModelItem
             echo 'Error sending email: ' . $send->__toString();
         } else {
             $app                =&JFactory::getApplication();
-            $app                ->redirect('index.php?option=com_astrologin&view=astrosask&email=sent'); 
+            $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm'); 
         }
     }
 }

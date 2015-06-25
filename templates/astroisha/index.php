@@ -61,7 +61,10 @@
     </div>
     <div class="header-menu visible-md visible-lg" id="header-menu">
         <div class="home_icon">
-            <a style="text-decoration: none;" href="<?php echo JURI::base(); ?>"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="35px" height="35px" /></a>
+            <a style="text-decoration: none;" href="<?php echo JURI::base(); ?>">
+            <button type="button" class="btn btn-primary" aria-label="Navigate To Home Page">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </button></a>
         </div>
         <div class="navigation_menu">
             <ul class="nav nav-pills">
@@ -86,9 +89,15 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="hidden-md hidden-lg" id="mob_menu" onclick="javascript:showSideMenu();">
-            <img src="<?php echo $this->baseurl; ?>/images/menu_btn.png" id="showmenu" width="32px" height="32px" alt="Show Menu" title="Show Menu"  />
-            <a style="text-decoration: none;" href="<?php echo JURI::base(); ?>"><img src="<?php echo $this->baseurl; ?>/images/home_logo.png" alt="Astro Isha" title="Navigate to Home Page" width="40px" height="35px" /></a>
+        <div class="hidden-md hidden-lg" id="mob_menu">
+            <button type="button" class="btn btn-primary" aria-label="Show Menu" onclick="javascript:showSideMenu();">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+            </button>
+             <a style="text-decoration: none;" href="<?php echo JURI::base(); ?>">
+            <button type="button" class="btn btn-primary" aria-label="Navigate To Home Page">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </button></a>
+            </button></a>
         </div>
     <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div class="spacer"></div>
