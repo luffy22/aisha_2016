@@ -129,7 +129,7 @@ class AstrologinModelAstroask extends JModelItem
         else if($explain=="short")
         {
             $money              = 100;      // for short questions
-            $body               = "Dear ".$name.",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Once your payment of<html>&nbsp</html>".($money*$choice)."<html>&#8377;</html> is received we would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<html>&nbsp;</html>
+            $body               = "Dear ".$name.",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Once your payment of<html>&nbsp;</html>".($money*$choice)."<html>&#8377;</html> is received we would process your query and give answers to your questions in 7 Working Days.<html>&nbsp;</html>
                                     Once you transfer the money please reply back to this email with confirmation of payment. If payment is not received in 10 Working Days then that would be termed as Cancellation of Order.<br/><br/>";
             $body               .= "Your Details are as below.<br/>";
             $body               .= "Name: ".$name."<br/>";

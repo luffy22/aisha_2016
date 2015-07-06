@@ -47,7 +47,7 @@ defined('_JEXEC') or die('Restricted access');
     </div>
   </div>
   <br/>
-  <a href="<?php echo JURI::base().'/ask-question'; ?>">
+  <a href="<?php echo JURI::base().'ask-question'; ?>">
   <button type="button" class="btn btn-primary" aria-label="Left Align">
   <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back
   </button></a><a href="<?php echo JURI::base(); ?>">
