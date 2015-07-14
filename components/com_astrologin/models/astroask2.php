@@ -124,24 +124,6 @@ class AstrologinModelAstroask extends JModelItem
                 $body               .= "Question: ".${"ques_".$j}."<br/>";
                 $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
             }
-            $body				.= "Bank Details of Astro Isha are as Follows: ";
-            $body				.= "<br/>For Canara Bank";
-            $body				.= "<div><strong>Payable To:</strong><code>&nbsp;</code>ROHAN Y DESAI</div>
-        <div><strong>Account No:</strong><code>&nbsp;</code>0175101023581<br/>
-        1st Floor, Sashwat Complex, Kankaria Road,<br/> Ahmedabad - 380022
-        </div>
-        <div><strong>IFSC Code:</strong><code>&nbsp;</code>CNRB0000175</div>
-        <div><strong>MICR Code:</strong><code>&nbsp;</code>380015008</div>
-        <div><strong>Swift Code:</strong><code>&nbsp;</code>CNRBINBBAFD</div><br/><br/>";
-			$body 				.=  "For Bank Of Baroda";
-			$body				.= "<div><strong>Payable To:</strong><code>&nbsp;</code>ROHAN YATINKUMAR DESAI</div>
-        <div><strong>Account No:</strong><code>&nbsp;</code>03290100012275<br/>
-        Gita Mandir, Bhulabhai Cross Road,<br/> Ahmedabad - 380022
-        </div>
-        <div><strong>IFSC Code:</strong><code>&nbsp;</code>BARBOGITAMA</div>
-        <div><strong>MICR Code:</strong><code>&nbsp;</code>380012014</div>
-        <div><strong>Swift Code:</strong><code>&nbsp;</code>BARBINBBBHD</div><br/><br/>";
-			$body 				.= "Please reply back to this email with the bank where you submitted the money. Otherwise we would not be able to process your request.";
             $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
         }
         else if($explain=="short")
@@ -165,24 +147,6 @@ class AstrologinModelAstroask extends JModelItem
                 $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
                 $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
             }
-            $body				.= "Bank Details of Astro Isha are as Follows: ";
-            $body				.= "<br/>For Canara Bank";
-            $body				.= "<div><strong>Payable To:</strong><code>&nbsp;</code>ROHAN Y DESAI</div>
-        <div><strong>Account No:</strong><code>&nbsp;</code>0175101023581<br/>
-        1st Floor, Sashwat Complex, Kankaria Road,<br/> Ahmedabad - 380022
-        </div>
-        <div><strong>IFSC Code:</strong><code>&nbsp;</code>CNRB0000175</div>
-        <div><strong>MICR Code:</strong><code>&nbsp;</code>380015008</div>
-        <div><strong>Swift Code:</strong><code>&nbsp;</code>CNRBINBBAFD</div><br/><br/>";
-			$body 				.=  "For Bank Of Baroda";
-			$body				.= "<div><strong>Payable To:</strong><code>&nbsp;</code>ROHAN YATINKUMAR DESAI</div>
-        <div><strong>Account No:</strong><code>&nbsp;</code>03290100012275<br/>
-        Gita Mandir, Bhulabhai Cross Road,<br/> Ahmedabad - 380022
-        </div>
-        <div><strong>IFSC Code:</strong><code>&nbsp;</code>BARBOGITAMA</div>
-        <div><strong>MICR Code:</strong><code>&nbsp;</code>380012014</div>
-        <div><strong>Swift Code:</strong><code>&nbsp;</code>BARBINBBBHD</div><br/><br/>";
-			$body 				.= "Please reply back to this email with the bank where you submitted the money. Otherwise we would not be able to process your request.";
             $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
         }
        

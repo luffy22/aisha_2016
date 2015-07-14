@@ -144,12 +144,7 @@ else
     <div id="ques-content">
         <div id="loadergif2" class="loader"><img src="<?php echo $this->baseurl ?>/images/loader.gif" /></div>
     </div>
-    <div class="form-group">
-        <div class="col-sm-10">
-            <button type="button" class="btn btn-primary" name="quesnext3" onclick="javascript:backPage1();return false;">Back</button>
-            <button type="submit" class="btn btn-success" name="ques_submit">Submit</button>
-        </div>
-    </div>
+
 </div>
 </form>
 </div>
