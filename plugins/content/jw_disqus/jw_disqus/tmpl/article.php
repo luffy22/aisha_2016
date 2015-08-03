@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 
 ?>
-
 <a id="startOfPage"></a>
 
 <?php if($disqusArticleCounter): ?>
@@ -25,7 +24,18 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 
 <?php echo $row->text; ?>
-
+<ul class="nav nav-tabs" role="tablist">
+<li class="active" role="presentation"><a href="#fb" role="tab" data-toggle="tab">FB Comments</a></li>
+<li role="presentation"><a href="#disqus" role="tab" data-toggle="tab">Disqus</a></li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+<div class="spacer"></div>
+<div id="fb" class="tab-pane active" role="tabpanel">
+<?php $url =  JURI::current(); ?>
+<div class="fb-comments" data-href="<?php echo $url; ?>" data-numposts="2"></div>
+</div>
+<div id="disqus" class="tab-pane" role="tabpanel">
 <!-- DISQUS comments block -->
 <div class="jwDisqusForm">
 	<?php echo $output->comments; ?>
@@ -36,8 +46,7 @@ defined('_JEXEC') or die;
 		<a id="jwDisqusBackToTop" href="#startOfPage">
 			<?php echo JText::_("JW_DISQUS_BACK_TO_TOP"); ?>
 		</a>
-		<div class="clr"></div>
 	</div>
 </div>
-
-<div class="clr"></div>
+</div>
+</div>

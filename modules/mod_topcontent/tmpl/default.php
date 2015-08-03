@@ -37,9 +37,8 @@ foreach($topview as $data)
     <div><strong>Hits: <?php echo $data->hits; ?></strong></div>
     <p>
     <?php
-
-            echo substr(strip_tags(trim($data->introtext)), 1, 1000);
-            echo "....";
+        echo strip_tags(trim($data->article_text));
+        echo "....";
     ?>
         <a href="<?php echo $data->link; ?>" title="<?php echo $data->title; ?>">Read More</a>
     </p>    
@@ -76,8 +75,8 @@ foreach($toprecent as $data)
     <p>
     <?php
 
-            echo substr(strip_tags(trim($data->introtext)), 1, 1000);
-            echo "....";
+        echo strip_tags(trim($data->article_text));
+        echo "....";
     ?>
         <a href="<?php echo $data->link; ?>" title="<?php echo $data->title; ?>">Read More</a>
     </p>    

@@ -20,7 +20,7 @@ defined('_JEXEC') or die;
            <div class="col-md-1">
             <?php 
                     $rating = (int)$data->rating_sum/(int)$data->rating_count;
-                    $rating = round($rating, 0, PHP_ROUND_HALF_DOWN);
+                    $rating = round($rating, 1, PHP_ROUND_HALF_DOWN);
                     echo $rating;
             ?>
            </div>

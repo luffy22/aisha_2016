@@ -32,6 +32,7 @@ class AstroLoginModelProcess extends JModelItem
             $db             = JFactory::getDbo();  // Get db connection
             $query          = $db->getQuery(true);
 
+            $query    = $db->getQuery(true);
             $columns        = array('username','password','email', 'logintype', 'joindate', 'webauthcode');
             $values         = array($db->quote($username), $db->quote($password), $db->quote($email),
                                     $db->quote($logintype), $db->quote($joindate), $db->quote($webauthcode));

@@ -108,6 +108,5 @@ public function resetpwd()
         echo "Passwords do not match";
     }
 }
-
 }
 ?>

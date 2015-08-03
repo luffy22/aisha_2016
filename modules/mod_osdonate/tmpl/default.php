@@ -174,3 +174,4 @@ echo $introtext;
 
 </form>
 </div>
+<div class="spacer"></div>
