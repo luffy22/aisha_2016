@@ -14,7 +14,7 @@ function getIP() {
   //$ip = '212.58.244.20';
   //$ip   = '223.223.146.119';
   //$ip   = '208.91.198.52';
-  $ip = '180.215.190.214';
+  $ip = '110.21.50.187';
   return $ip;
 }
    
@@ -132,6 +132,10 @@ else
 </div>
 </div>
 <div id="ques_page_2">
+<input type="hidden" name="user_loc" id="user_loc" value="<?php echo $data->geobytesinternet; ?>" />
+<input type="hidden" name="user_cont" id="user_cont" value="<?php echo $data->geobytesmapreference; ?>" />
+<input type="hidden" name="user_curr" id="user_curr" value="<?php echo $data->geobytescurrencycode; ?>" />
+<input type="hidden" name="user_curr_full" id="user_curr_full" value="<?php echo $data->geobytescurrency; ?>" />
 <h3>Ask Your Questions (max 3 questions)</h3>
 <?php
     if($data->geobytesinternet == 'IN')
@@ -141,8 +145,8 @@ else
         <label for="ques_choice">Do you want short or detailed explanation?</label>
             <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
                 <option value="none">Please enter your choice</option>
-                <option value="detail_in">Detailed Explanation (300 &#8377; for each answer)</option>
-                <option value="short_in">Short Explanation (100 &#8377; for each answer)</option>
+                <option value="detail">Detailed Explanation (300 &#8377; for each answer)</option>
+                <option value="short">Short Explanation (100 &#8377; for each answer)</option>
             </select>
     </div>
 <?php
@@ -154,23 +158,21 @@ else
     <label for="ques_choice">Do you want short or detailed explanation?</label>
     <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
         <option value="none">Please enter your choice</option>
-        <option value="detail_uk">Detailed Explanation (10 &#8356; for each answer)</option>
-        <option value="short_uk">Short Explanation (3.5 &#8356; for each answer)</option>
+        <option value="detail">Detailed Explanation (10 &#8356; for each answer)</option>
+        <option value="short">Short Explanation (3.5 &#8356; for each answer)</option>
     </select>
     </div>
 <?php
     }
-    else if($data->geobytesinternet=='FR'||$data->geobytesinternet=='DE'||$data->geobytesinternet=='ES'||
-            $data->geobytesinternet=='CH'||$data->geobytesinternet=='SE'||
-            $data->geobytesinternet=='DK')
+    else if(($data->geobytesinternet!=='UK')&&($data->geobytesmapreference=="Europe"))
     {
     ?>
     <div class="form-group" id="ques_grp_6">
     <label for="ques_choice">Do you want short or detailed explanation?</label>
     <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
         <option value="none">Please enter your choice</option>
-        <option value="detail_eu">Detailed Explanation (10 &#8364; for each answer)</option>
-        <option value="short_eu">Short Explanation (3.5 &#8364; for each answer)</option>
+        <option value="detail">Detailed Explanation (10 &#8364; for each answer)</option>
+        <option value="short">Short Explanation (3.5 &#8364; for each answer)</option>
     </select>
     </div>
 <?php
@@ -182,8 +184,8 @@ else
     <label for="ques_choice">Do you want short or detailed explanation?</label>
     <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
         <option value="none">Please enter your choice</option>
-        <option value="detail_ca">Detailed Explanation (15 CAD &#36; for each answer)</option>
-        <option value="short_ca">Short Explanation (5 CAD &#36; for each answer)</option>
+        <option value="detail">Detailed Explanation (15 &#36; for each answer)</option>
+        <option value="short">Short Explanation (5 &#36; for each answer)</option>
     </select>
     </div>
 <?php
@@ -195,8 +197,8 @@ else
     <label for="ques_choice">Do you want short or detailed explanation?</label>
     <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
         <option value="none">Please enter your choice</option>
-        <option value="detail_au">Detailed Explanation (15 AUS &#36; for each answer)</option>
-        <option value="short_au">Short Explanation (5 AUS &#36; for each answer)</option>
+        <option value="detail">Detailed Explanation (15 &#36; for each answer)</option>
+        <option value="short">Short Explanation (5 &#36; for each answer)</option>
     </select>
     </div>
 <?php
@@ -208,8 +210,8 @@ else
     <label for="ques_choice">Do you want short or detailed explanation?</label>
     <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
         <option value="none">Please enter your choice</option>
-        <option value="detail_sg">Detailed Explanation (15 SGD &#36; for each answer)</option>
-        <option value="short_sg">Short Explanation (5 SGD &#36; for each answer)</option>
+        <option value="detail">Detailed Explanation (15 &#36; for each answer)</option>
+        <option value="short">Short Explanation (5 &#36; for each answer)</option>
     </select>
     </div>
 <?php
@@ -221,8 +223,21 @@ else
     <label for="ques_choice">Do you want short or detailed explanation?</label>
     <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
         <option value="none">Please enter your choice</option>
-        <option value="detail_nz">Detailed Explanation (15 NZ &#36; for each answer)</option>
-        <option value="short_nz">Short Explanation (5 NZ &#36; for each answer)</option>
+        <option value="detail">Detailed Explanation (15 &#36; for each answer)</option>
+        <option value="short">Short Explanation (5 &#36; for each answer)</option>
+    </select>
+    </div>
+<?php
+    } 
+    else if($data->geobytesinternet=='US')
+    {
+?>
+    <div class="form-group" id="ques_grp_6">
+    <label for="ques_choice">Do you want short or detailed explanation?</label>
+    <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
+        <option value="none">Please enter your choice</option>
+        <option value="detail">Detailed Explanation (15 &#36; for each answer)</option>
+        <option value="short">Short Explanation (5 &#36; for each answer)</option>
     </select>
     </div>
 <?php
@@ -234,14 +249,13 @@ else
     <label for="ques_choice">Do you want short or detailed explanation?</label>
     <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
         <option value="none">Please enter your choice</option>
-        <option value="detail_us">Detailed Explanation (10 &#36; for each answer)</option>
-        <option value="short_us">Short Explanation (3.5 &#36; for each answer)</option>
+        <option value="detail">Detailed Explanation (10 &#36; for each answer)</option>
+        <option value="short">Short Explanation (3.5 &#36; for each answer)</option>
     </select>
     </div>
 <?php
     }
-?>
-    <div class="form-group" id="ques_grp_5">
+?>    <div class="form-group" id="ques_grp_5">
         <label for="ques_choice">Number of Questions</label>
             <select class="form-control" id="ques_choice" name="ques_choice" onchange="javascript:explainChoice()">
                 <option value="1">One</option>

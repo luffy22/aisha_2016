@@ -230,119 +230,66 @@ function checkDetails()
 }
 function explainChoice()
 {
-    if(document.getElementById("ques_explain").value=="detail_in")
+    if(document.getElementById("user_loc").value=="IN"&&document.getElementById("user_curr").value=="INR")
+    {
+        var currency_detail = 300*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 100*parseInt(document.getElementById("ques_choice").value);
+    }
+    else if(document.getElementById("user_loc").value=="UK"&&document.getElementById("user_curr").value=="GBP")
+    {
+        var currency_detail = 10*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 3.5*parseInt(document.getElementById("ques_choice").value);
+    }
+    else if(document.getElementById("user_loc").value=="US"&&document.getElementById("user_curr").value=="USD")
+    {
+        var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
+    }
+    else if(document.getElementById("user_loc").value=="AU"&&document.getElementById("user_curr").value=="AUD")
+    {
+        var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
+    }
+    else if(document.getElementById("user_loc").value=="CA"&&document.getElementById("user_curr").value=="CAD")
+    {
+        var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
+    }
+    else if(document.getElementById("user_loc").value=="NZ"&&document.getElementById("user_curr").value=="NZD")
+    {
+        var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
+    }
+    else if(document.getElementById("user_loc").value=="SG"&&document.getElementById("user_curr").value=="SGD")
+    {
+        var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
+    }
+    else
+    {
+        var currency_detail = 10*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 3.5*parseInt(document.getElementById("ques_choice").value);
+    }
+    if(document.getElementById("ques_explain").value=="detail")
     {
         document.getElementById("ques_grp_7").innerHTML = 
-            "<h3>Detailed Explanation</h3><p>Answer would be more thorough and after examining minute details related to the question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
-        if((document.getElementById("ques_explain").value=="detail_in")&&(document.getElementById("ques_choice").value=="1"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 300 "+"<html>&#8377;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="detail_in")&&(document.getElementById("ques_choice").value=="2"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 600 "+"<html>&#8377;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="detail_in")&&(document.getElementById("ques_choice").value=="3"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 900 "+"<html>&#8377;</html>"+"</strong></p>";
-        }
-        
+        "<h3>Detailed Explanation</h3><p>Answer would be more thorough and after examining minute details related to the question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
+        document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_detail+" "+document.getElementById("user_curr").value+" ("+document.getElementById("user_curr_full").value+")";  
     }
-    else if(document.getElementById("ques_explain").value=="short_in")
+    else if(document.getElementById("ques_explain").value=="short")
     {
         document.getElementById("ques_grp_7").innerHTML = 
-            "<h3>Short Explanation</h3><p>Answer would be brief and to the point. No remedial measures or causes would be explained unless asked in the question itself. No follow up questions would be entertained.</p>";
-        if((document.getElementById("ques_explain").value=="short_in")&&(document.getElementById("ques_choice").value=="1"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 100 "+"<html>&#8377;</html>"+"</strong></p>";
-        }
-        else if((document.getElementById("ques_explain").value=="short_in")&&(document.getElementById("ques_choice").value=="2"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 200 "+"<html>&#8377;</html>"+"</strong></p>";
-        }
-        else if((document.getElementById("ques_explain").value=="short_in")&&(document.getElementById("ques_choice").value=="3"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 300 "+"<html>&#8377;</html>"+"</strong></p>";
-        }
+        "<h3>Short Explanation</h3><p>Answer would be brief and to the point. No remedial measures or causes would be explained unless asked in the question itself. No follow up questions would be entertained.</p>";
+        document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_small+" "+document.getElementById("user_curr").value+" ("+document.getElementById("user_curr_full").value+")";  
     }
-    else if(document.getElementById("ques_explain").value=="detail_uk")
-    {
-        document.getElementById("ques_grp_7").innerHTML = 
-            "<h3>Detailed Explanation</h3><p>Answer would be more thorough and after examining minute details related to the question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
-        if((document.getElementById("ques_explain").value=="detail_uk")&&(document.getElementById("ques_choice").value=="1"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 10 "+"<html>&#8356;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="detail_uk")&&(document.getElementById("ques_choice").value=="2"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 20 "+"<html>&#8356;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="detail_uk")&&(document.getElementById("ques_choice").value=="3"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 30 "+"<html>&#8356;</html>"+"</strong></p>";
-        }
-        
-    }
-    else if(document.getElementById("ques_explain").value=="short_uk")
-    {
-        document.getElementById("ques_grp_7").innerHTML = 
-          "<h3>Short Explanation</h3><p>Answer would be brief and to the point. No remedial measures or causes would be explained unless asked in the question itself. No follow up questions would be entertained.</p>";
-        if((document.getElementById("ques_explain").value=="short_uk")&&(document.getElementById("ques_choice").value=="1"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 3.5 "+"<html>&#8356;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="short_uk")&&(document.getElementById("ques_choice").value=="2"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 7 "+"<html>&#8356;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="short_uk")&&(document.getElementById("ques_choice").value=="3"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 10.5 "+"<html>&#8356;</html>"+"</strong></p>";
-        }
-        
-    }
-    else if(document.getElementById("ques_explain").value=="short_us")
-    {
-        document.getElementById("ques_grp_7").innerHTML = 
-           "<h3>Short Explanation</h3><p>Answer would be brief and to the point. No remedial measures or causes would be explained unless asked in the question itself. No follow up questions would be entertained.</p>";
-        if((document.getElementById("ques_explain").value=="short_us")&&(document.getElementById("ques_choice").value=="1"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 3.5 "+"<html>&#36;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="short_us")&&(document.getElementById("ques_choice").value=="2"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 7 "+"<html>&#36;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="short_us")&&(document.getElementById("ques_choice").value=="3"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 10.5 "+"<html>&#36;</html>"+"</strong></p>";
-        }
-        
-    }
-    else if(document.getElementById("ques_explain").value=="detail_us")
-    {
-        document.getElementById("ques_grp_7").innerHTML = 
-            "<h3>Detailed Explanation</h3><p>Answer would be more thorough and after examining minute details related to the question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
-        if((document.getElementById("ques_explain").value=="detail_us")&&(document.getElementById("ques_choice").value=="1"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 10 "+"<html>&#36;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="detail_us")&&(document.getElementById("ques_choice").value=="2"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 20 "+"<html>&#36;</html>"+"</strong></p>";
-        }
-        if((document.getElementById("ques_explain").value=="detail_us")&&(document.getElementById("ques_choice").value=="3"))
-        {
-            document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: 30 "+"<html>&#36;</html>"+"</strong></p>";
-        }
-        
-    }
+    
     else if(document.getElementById("ques_explain").value=="none")
     {
        document.getElementById("ques_grp_7").innerHTML = "";
     }
     
 }
+
 function backPage()
 {
     $('#ques_page_1').css('visibility','visible');
