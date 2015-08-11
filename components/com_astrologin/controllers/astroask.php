@@ -13,6 +13,10 @@ class AstrologinControllerAstroask extends AstroLoginController
             $dob            = $_POST['ques_dob'];
             $pob            = $_POST['ques_pob'];
             $tob            = $_POST['lagna_hr'].":".$_POST['lagna_min'].":".$_POST['lagna_sec']." ".$_POST['lagna_time'];
+            $fees           = $_POST['ques_charge'];
+            $user_loc       = $_POST['user_loc'];
+            $user_curr      = $_POST['user_curr'];
+            $user_curr_full = $_POST['user_curr_full'];
             $choice         = $_POST['ques_choice'];
             $explain        = $_POST['ques_explain'];
             if($explain == "short"&&$choice=="1")
@@ -25,13 +29,7 @@ class AstrologinControllerAstroask extends AstroLoginController
                 $ques_det2  = "0";
                 $option3    = "0";
                 $ques3      = "0";
-                $ques_det3  = "0";
-                $details    = array("name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
-                                    "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,
-                                    "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
-                                    "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
-                                    "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
-                                    );
+                $ques_det3  = "0";         
             }
             else if($explain=="short"&&$choice=="2")
             {
@@ -44,12 +42,6 @@ class AstrologinControllerAstroask extends AstroLoginController
                 $option3    = "0";
                 $ques3      = "0";
                 $ques_det3  = "0";
-                $details    = array("name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
-                                    "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,
-                                    "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
-                                    "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
-                                    "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
-                                    );
             }
             else if($explain=="short"&&$choice=="3")
             {
@@ -62,13 +54,7 @@ class AstrologinControllerAstroask extends AstroLoginController
                 $option3    = $_POST['ques_3_option'];
                 $ques3      = $_POST['ques_ask_3'];
                 $ques_det3  = "0";
-                $details    = array("name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
-                                    "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,
-                                    "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
-                                    "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
-                                    "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
-                                    );
-               }
+            }
             else if($explain=="detail"&&$choice=="1")
             {
                 $option1    = $_POST['ques_1_option'];
@@ -80,12 +66,6 @@ class AstrologinControllerAstroask extends AstroLoginController
                 $option3    = "0";
                 $ques3      = "0";
                 $ques_det3  = "0";
-                $details    = array("name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
-                                    "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,
-                                    "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
-                                    "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
-                                    "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
-                                    );
             }
             else if($explain=="detail"&&$choice=="2")
             {
@@ -98,12 +78,6 @@ class AstrologinControllerAstroask extends AstroLoginController
                 $option3    = "0";
                 $ques3      = "0";
                 $ques_det3  = "0";
-                $details    = array("name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
-                                    "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,
-                                    "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
-                                    "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
-                                    "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
-                                    );
             }
             else if($explain=="detail"&&$choice=="3")
             {
@@ -116,14 +90,14 @@ class AstrologinControllerAstroask extends AstroLoginController
                 $option3    = $_POST['ques_3_option'];
                 $ques3      = $_POST['ques_ask_3'];
                 $ques_det3  = $_POST['ques_detail_3'];
-                $details    = array("name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
-                                    "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,
+           }
+           $details    = array("name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
+                                    "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,"fees"=>$fees,
+                                    "user_loc"=>$user_loc,"user_curr"=>$user_curr,"user_curr_full"=>$user_curr_full,
                                     "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
                                     "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
                                     "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
                                     );
-                
-            }
             $model          = $this->getModel('astroask');  // Add the array to model
             $model->askQuestions($details);
         }

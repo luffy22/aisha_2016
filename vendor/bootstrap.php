@@ -2,7 +2,6 @@
 /*
  * Sample bootstrap file.
  */
-
 // Include the composer Autoloader
 // The location of your project's vendor autoloader.
 $composerAutoload = dirname(dirname(dirname(__DIR__))) . '/autoload.php';

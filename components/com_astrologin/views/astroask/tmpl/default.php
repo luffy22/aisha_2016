@@ -14,7 +14,8 @@ function getIP() {
   //$ip = '212.58.244.20';
   //$ip   = '223.223.146.119';
   //$ip   = '208.91.198.52';
-  $ip = '110.21.50.187';
+  $ip    = '64.233.172.185'; // us ip
+  //$ip = '110.21.50.187';
   return $ip;
 }
    
@@ -137,6 +138,7 @@ else
 <input type="hidden" name="user_curr" id="user_curr" value="<?php echo $data->geobytescurrencycode; ?>" />
 <input type="hidden" name="user_curr_full" id="user_curr_full" value="<?php echo $data->geobytescurrency; ?>" />
 <h3>Ask Your Questions (max 3 questions)</h3>
+<input type="hidden" name="ques_charge" id="ques_charge"   />
 <?php
     if($data->geobytesinternet == 'IN')
     {

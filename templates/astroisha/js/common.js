@@ -230,37 +230,38 @@ function checkDetails()
 }
 function explainChoice()
 {
-    if(document.getElementById("user_loc").value=="IN"&&document.getElementById("user_curr").value=="INR")
+    var location = document.getElementById("user_loc");
+    if(location.value=="IN"&&document.getElementById("user_curr").value=="INR")
     {
         var currency_detail = 300*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 100*parseInt(document.getElementById("ques_choice").value);
     }
-    else if(document.getElementById("user_loc").value=="UK"&&document.getElementById("user_curr").value=="GBP")
+    else if(location.value=="UK"&&document.getElementById("user_curr").value=="GBP")
     {
         var currency_detail = 10*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 3.5*parseInt(document.getElementById("ques_choice").value);
     }
-    else if(document.getElementById("user_loc").value=="US"&&document.getElementById("user_curr").value=="USD")
+    else if(location.value=="US"&&document.getElementById("user_curr").value=="USD")
     {
         var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
     }
-    else if(document.getElementById("user_loc").value=="AU"&&document.getElementById("user_curr").value=="AUD")
+    else if(location.value=="AU"&&document.getElementById("user_curr").value=="AUD")
     {
         var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
     }
-    else if(document.getElementById("user_loc").value=="CA"&&document.getElementById("user_curr").value=="CAD")
+    else if(location.value=="CA"&&document.getElementById("user_curr").value=="CAD")
     {
         var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
     }
-    else if(document.getElementById("user_loc").value=="NZ"&&document.getElementById("user_curr").value=="NZD")
+    else if(location.value=="NZ"&&document.getElementById("user_curr").value=="NZD")
     {
         var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
     }
-    else if(document.getElementById("user_loc").value=="SG"&&document.getElementById("user_curr").value=="SGD")
+    else if(location.value=="SG"&&document.getElementById("user_curr").value=="SGD")
     {
         var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
@@ -270,19 +271,46 @@ function explainChoice()
         var currency_detail = 10*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 3.5*parseInt(document.getElementById("ques_choice").value);
     }
-    if(document.getElementById("ques_explain").value=="detail")
+    if((document.getElementById("ques_explain").value=="detail")&&(location.value=="SG"||
+    location.value=="NZ"||location.value=="CA"||location.value=="CA"||location.value=="AU"||
+    location.value=="US"||location.value=="UK"||location.value=="IN"))
     {
         document.getElementById("ques_grp_7").innerHTML = 
         "<h3>Detailed Explanation</h3><p>Answer would be more thorough and after examining minute details related to the question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
-        document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_detail+" "+document.getElementById("user_curr").value+" ("+document.getElementById("user_curr_full").value+")";  
+        document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_detail+" "+document.getElementById("user_curr").value+" ("+document.getElementById("user_curr_full").value+")";
+        document.getElementById("ques_charge").value        = currency_detail;
     }
-    else if(document.getElementById("ques_explain").value=="short")
+    else if((document.getElementById("ques_explain").value=="detail")&&(location.value!=="SG"||
+    location.value!=="NZ"||location.value!=="CA"||location.value!=="AU"||
+    location.value!=="US"||location.value=="UK"||location.value!=="IN"))
+    {
+        document.getElementById("ques_grp_7").innerHTML = 
+        "<h3>Detailed Explanation</h3><p>Answer would be more thorough and after examining minute details related to the question. Causes and Remedial Measures would be provided in detail. Follow Up questions related to subject would be answered.</p>";
+        document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_detail+" $(US Dollars)";
+        document.getElementById("ques_charge").value        = currency_detail;
+        document.getElementById("user_curr").value      = "USD";
+        document.getElementById("user_curr_full")       = "US Dollar";
+    }
+    else if((document.getElementById("ques_explain").value=="short")&&(location.value=="SG"||
+    location.value=="NZ"||location.value=="CA"||location.value=="CA"||location.value=="AU"||
+    location.value=="US"||location.value=="UK"||location.value=="IN"))
     {
         document.getElementById("ques_grp_7").innerHTML = 
         "<h3>Short Explanation</h3><p>Answer would be brief and to the point. No remedial measures or causes would be explained unless asked in the question itself. No follow up questions would be entertained.</p>";
         document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_small+" "+document.getElementById("user_curr").value+" ("+document.getElementById("user_curr_full").value+")";  
+        document.getElementById("ques_charge").value        = currency_small;
     }
-    
+    else if((document.getElementById("ques_explain").value=="short")&&(location.value!=="SG"||
+    location.value!=="NZ"||location.value=="CA"||location.value!=="CA"||location.value!=="AU"||
+    location.value!=="US"||location.value=="UK"||location.value!=="IN"))
+    {
+        document.getElementById("ques_grp_7").innerHTML = 
+        "<h3>Short Explanation</h3><p>Answer would be brief and to the point. No remedial measures or causes would be explained unless asked in the question itself. No follow up questions would be entertained.</p>";
+        document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_small+" $(US Dollars)"; 
+        document.getElementById("ques_charge").value        = currency_small;
+        document.getElementById("user_curr").value      = "USD";
+        document.getElementById("user_curr_full")       = "US Dollar";
+    }
     else if(document.getElementById("ques_explain").value=="none")
     {
        document.getElementById("ques_grp_7").innerHTML = "";
