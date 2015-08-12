@@ -33,8 +33,13 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
         //ResultPrinter::printError("Executed Payment", "Payment", null, null, $ex); exit(1); }
     //ResultPrinter::printResult("Get Payment", "Payment", $payment->getId(), null, $payment);
     }
-    echo $payment;
-
+    //return $payment;
+    $info	= json_decode($payment);
+    $id         = $info->id;
+    $server     = 'http://'.$_SERVER['SERVER_NAME'];
+    header('Location:'.$server.'/aisha/index.php?option=com_astrologin&task=astroask.confirmPayment&format=raw&id='.$id);
+    
+	//echo $info->invoice_number;
 }
 else if(isset($_GET['success']) && $_GET['success'] == 'false')
 {   

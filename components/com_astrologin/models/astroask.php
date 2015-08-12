@@ -80,6 +80,7 @@ public function askQuestions($details)
                                         'ques_topic_2'=>$row['ques_topic2'],'ques_2'=>$row['ques_2'],'ques_2_explain'=>$row['ques_2_explain'],
                                         'ques_topic_3'=>$row['ques_topic3'],'ques_3'=>$row['ques_3'],'ques_3_explain'=>$row['ques_3_explain']
                                     );
+       
        if($details['user_location']=="IN")
        {
            $this->sendConfirmMail($details);
@@ -93,6 +94,101 @@ public function askQuestions($details)
     else
     {
         $app        ->redirect('index.php?option=com_astrologin&view=astroask&failure=fail'); 
+    }
+}
+public function confirmPayment($details)
+{
+    $id         = $details['paypal_id'];
+    $db = JFactory::getDbo();
+    $query = $db->getQuery(true);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('paypal_confirm') . ' = ' . $db->quote('yes'));
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('paypal_id').'='.$db->quote($id)
+    );
+    $query->update($db->quoteName('#__questions'))->set($fields)->where($conditions);
+ 
+    $db->setQuery($query);
+ 
+    $result = $db->execute();
+    if($result)
+    {
+        $query      ->clear();
+        $query              ->select($db->quoteName(array('UniqueID','name','email',
+                                    'gender','dob','pob','tob','fees','choice','explain_choice',
+                                    'user_currency','user_curr_full','paypal_id',
+                                    'ques_topic1','ques_1','ques_1_explain',
+                                    'ques_topic2','ques_2','ques_2_explain',
+                                    'ques_topic3','ques_3','ques_3_explain')))
+                            ->from($db->quoteName('#__questions'))
+                            ->where($db->quoteName('paypal_id').'='.$db->quote($id));
+       $db                  ->setQuery($query);
+       $details                 = $db->loadAssoc();
+       $fees                = $details['fees'];
+       $choice              = $details['choice'];
+
+        $bcc                = 'kopnite@gmail.com';
+        $subject            = "Ask AstroIsha Quesion Token No: ".$details['token'];
+        $ques_topic1        = $details['ques_topic_1'];
+        $ques_1             = $details['ques_1'];
+        $ques_explain1      = $details['ques_1_explain'];
+        $ques_topic2        = $details['ques_topic_2'];
+        $ques_2             = $details['ques_2'];
+        $ques_explain2      = $details['ques_2_explain'];
+        $ques_topic3        = $details['ques_topic_3'];
+        $ques_3             = $details['ques_3'];
+        $ques_explain3      = $details['ques_3_explain'];
+        
+        $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Also your payment of ".$fees." ".$details['user_currency']."(".$details['user_curr_full'].")".
+                                " has been received. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<br/><br/>";
+        $body               .= "Your Details are as below.<br/><br/>";
+        $body               .= "Name: ".$details['name']."<br/>";
+        $body               .= "Email: ".$details['email']."<br/>";
+        $body               .= "Gender: ".$details['gender']."<br/>";
+        $body               .= "Date Of Birth: ".$details['dob']."<br/>";
+        $body               .= "Time Of Birth: ".$details['tob']."<br/>";
+        $body               .= "Place Of Birth: ".$details['pob']."<br/>";
+        $body               .= "Number Of Questions: ".$details['choice']."<br/>";
+        $body               .= "Explanation (Detail/Short): ".$details['explain_choice']."<br/><br/>";
+        for($i=0;$i<$choice;$i++)
+        {
+            $j=$i+1;
+
+            $body               .= "<strong>Question ".$j.":</strong><br/>";
+            $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
+            $body               .= "Question: ".${"ques_".$j}."<br/>";
+            $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
+        }
+         $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
+         
+         $mailer             = JFactory::getMailer();
+    $config             = JFactory::getConfig();
+    $sender             = array( 
+                                    $config->get( 'mailfrom' ),
+                                    $config->get( 'fromname' ) 
+                                );
+
+    $mailer             ->setSender($sender);
+    $mailer             ->addRecipient($to);
+    $mailer             ->addBCC($bcc, 'Rohan Desai');
+    $mailer             ->setSubject($subject);
+    $mailer             ->isHTML(true);
+    $mailer             ->Encoding = 'base64';
+    $mailer             ->setBody($body);
+
+    $send = $mailer->Send();
+    if ( $send !== true ) {
+        echo 'Error sending email: ' . $send->__toString();
+    } else {
+        $app                =&JFactory::getApplication();
+        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm'); 
+    }
+    }
+    else
+    {
+        echo "Failed to Send Mail: Wait For Confirmation if you are sure payment is done.";
     }
 }
 protected function sendConfirmMail($details)
@@ -225,5 +321,6 @@ protected function sendConfirmMail($details)
         $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm'); 
     }
 }
+    
 }
 ?>

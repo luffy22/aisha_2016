@@ -94,17 +94,21 @@ else
             printf("Connect failed: %s\n", mysqli_connect_error());
             exit();
     }
-
+    
     $query = "UPDATE jv_questions SET paypal_id='$payment_id' WHERE UniqueID='$token'";
     $result	= mysqli_query($mysqli, $query);
+    
     if($result)
     {
+        mysqli_close($myqli);
         header('Location:'.$approvalUrl);
+
     }
     else
     {
         echo "Unable to process requests";
     }
+   
 }
 //header('Location:'.$approvalUrl);
 //echo $approvalUrl;exit;
