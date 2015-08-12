@@ -80,7 +80,6 @@ public function askQuestions($details)
                                         'ques_topic_2'=>$row['ques_topic2'],'ques_2'=>$row['ques_2'],'ques_2_explain'=>$row['ques_2_explain'],
                                         'ques_topic_3'=>$row['ques_topic3'],'ques_3'=>$row['ques_3'],'ques_3_explain'=>$row['ques_3_explain']
                                     );
-       
        if($details['user_location']=="IN")
        {
            $this->sendConfirmMail($details);
@@ -130,7 +129,7 @@ public function confirmPayment($details)
        $choice              = $details['choice'];
 
         $bcc                = 'kopnite@gmail.com';
-        $subject            = "Ask AstroIsha Quesion Token No: ".$details['token'];
+        $subject            = "Ask AstroIsha Quesion Token No: ".$details['UniqueID'];
         $ques_topic1        = $details['ques_topic_1'];
         $ques_1             = $details['ques_1'];
         $ques_explain1      = $details['ques_1_explain'];
@@ -142,7 +141,7 @@ public function confirmPayment($details)
         $ques_explain3      = $details['ques_3_explain'];
         
         $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Also your payment of ".$fees." ".$details['user_currency']."(".$details['user_curr_full'].")".
-                                " has been received. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<br/><br/>";
+                                " has been confirmed. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<br/><br/>";
         $body               .= "Your Details are as below.<br/><br/>";
         $body               .= "Name: ".$details['name']."<br/>";
         $body               .= "Email: ".$details['email']."<br/>";
@@ -150,20 +149,33 @@ public function confirmPayment($details)
         $body               .= "Date Of Birth: ".$details['dob']."<br/>";
         $body               .= "Time Of Birth: ".$details['tob']."<br/>";
         $body               .= "Place Of Birth: ".$details['pob']."<br/>";
+        $body               .= "Token Number: ".$details['UniqueID']."<br/>";
+        $body               .= "Payment ID: ".$details['paypal_id']."<br/>";
         $body               .= "Number Of Questions: ".$details['choice']."<br/>";
-        $body               .= "Explanation (Detail/Short): ".$details['explain_choice']."<br/><br/>";
-        for($i=0;$i<$choice;$i++)
+        $body               .= "Explanation (Detail/Short): ".ucfirst($details['explain_choice'])."<br/><br/>";
+        if($details['explain_choice'] == 'short')
         {
-            $j=$i+1;
-
-            $body               .= "<strong>Question ".$j.":</strong><br/>";
-            $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
-            $body               .= "Question: ".${"ques_".$j}."<br/>";
-            $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
+            for($i=0;$i<$choice;$i++)
+            {
+                $j=$i+1;
+                $body               .= "<strong>Question ".$j.":</strong><br/>";
+                $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
+                $body               .= "Question: ".${"ques_".$j}."<br/>";
+                $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
+            }
         }
-         $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
-         
-         $mailer             = JFactory::getMailer();
+        else if($details['explain_choice']== 'detail')
+        {
+            for($i=0;$i<$choice;$i++)
+            {
+                $j              = $i+1;
+                $body               .= "<strong>Question ".$j.":</strong><br/>";
+                $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
+                $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
+            }
+        }
+    $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";        
+    $mailer             = JFactory::getMailer();
     $config             = JFactory::getConfig();
     $sender             = array( 
                                     $config->get( 'mailfrom' ),
@@ -171,7 +183,7 @@ public function confirmPayment($details)
                                 );
 
     $mailer             ->setSender($sender);
-    $mailer             ->addRecipient($to);
+    $mailer             ->addRecipient($details['email']);
     $mailer             ->addBCC($bcc, 'Rohan Desai');
     $mailer             ->setSubject($subject);
     $mailer             ->isHTML(true);
@@ -183,7 +195,7 @@ public function confirmPayment($details)
         echo 'Error sending email: ' . $send->__toString();
     } else {
         $app                =&JFactory::getApplication();
-        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm'); 
+        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=paypal'); 
     }
     }
     else
@@ -318,7 +330,7 @@ protected function sendConfirmMail($details)
         echo 'Error sending email: ' . $send->__toString();
     } else {
         $app                =&JFactory::getApplication();
-        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm'); 
+        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=dd'); 
     }
 }
     

@@ -88,7 +88,7 @@ else
 
     $host   = "localhost";$user = "root";
     $pwd    = "desai1985";$db   = "astroisha";
-    $mysqli = new mysqli("localhost", "root", "desai1985", "astroisha");
+    $mysqli = new mysqli($host,$user,$pwd,$db);
     /* check connection */
     if (mysqli_connect_errno()) {
             printf("Connect failed: %s\n", mysqli_connect_error());

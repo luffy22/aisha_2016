@@ -37,7 +37,7 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
     $info	= json_decode($payment);
     $id         = $info->id;
     $server     = 'http://'.$_SERVER['SERVER_NAME'];
-    header('Location:'.$server.'/aisha/index.php?option=com_astrologin&task=astroask.confirmPayment&format=raw&id='.$id);
+    header('Location:'.$server.'/aisha/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$id);
     
 	//echo $info->invoice_number;
 }

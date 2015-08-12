@@ -14,7 +14,7 @@ function getIP() {
   //$ip = '212.58.244.20';
   //$ip   = '223.223.146.119';
   //$ip   = '208.91.198.52';
-  $ip    = '64.233.172.185'; // us ip
+  $ip    = '175.157.193.156'; // us ip
   //$ip = '110.21.50.187';
   return $ip;
 }
@@ -149,6 +149,21 @@ else
                 <option value="none">Please enter your choice</option>
                 <option value="detail">Detailed Explanation (300 &#8377; for each answer)</option>
                 <option value="short">Short Explanation (100 &#8377; for each answer)</option>
+            </select>
+    </div>
+<?php
+    }
+    else if($data->geobytesinternet == 'LK'||$data->geobytesinternet == 'PK'
+            ||$data->geobytesinternet == 'BD'||$data->geobytesinternet == 'NP'
+            ||$data->geobytesinternet == 'ID')
+    {
+    ?>
+    <div class="form-group" id="ques_grp_6">
+        <label for="ques_choice">Do you want short or detailed explanation?</label>
+            <select class="form-control" id="ques_explain" name="ques_explain" onchange="javascript:explainChoice()">
+                <option value="none">Please enter your choice</option>
+                <option value="detail">Detailed Explanation (5 &#8356; for each answer)</option>
+                <option value="short">Short Explanation (1.5 &#8356; for each answer)</option>
             </select>
     </div>
 <?php

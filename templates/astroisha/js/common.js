@@ -266,6 +266,12 @@ function explainChoice()
         var currency_detail = 15*parseInt(document.getElementById("ques_choice").value);
         var currency_small  = 5*parseInt(document.getElementById("ques_choice").value);
     }
+    else if(location.value=="LK"||location.value=="PK"||location.value=="BD"||
+            location.value=="NP"||location.value=="ID")
+    {
+        var currency_detail = 5*parseInt(document.getElementById("ques_choice").value);
+        var currency_small  = 1.5*parseInt(document.getElementById("ques_choice").value);
+    }
     else
     {
         var currency_detail = 10*parseInt(document.getElementById("ques_choice").value);
@@ -289,7 +295,7 @@ function explainChoice()
         document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_detail+" $(US Dollars)";
         document.getElementById("ques_charge").value        = currency_detail;
         document.getElementById("user_curr").value      = "USD";
-        document.getElementById("user_curr_full")       = "US Dollar";
+        document.getElementById("user_curr_full").value       = "US Dollar";
     }
     else if((document.getElementById("ques_explain").value=="short")&&(location.value=="SG"||
     location.value=="NZ"||location.value=="CA"||location.value=="CA"||location.value=="AU"||
@@ -309,7 +315,7 @@ function explainChoice()
         document.getElementById("ques_grp_7").innerHTML += "<p><strong>Total: "+currency_small+" $(US Dollars)"; 
         document.getElementById("ques_charge").value        = currency_small;
         document.getElementById("user_curr").value      = "USD";
-        document.getElementById("user_curr_full")       = "US Dollar";
+        document.getElementById("user_curr_full").value       = "US Dollar";
     }
     else if(document.getElementById("ques_explain").value=="none")
     {
