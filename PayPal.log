@@ -804,3 +804,10 @@
 
 ================================================================================================================================
 
+[12-08-2015 02:20:37] PayPal\Core\PayPalHttpConnection: ERROR	: Not allowed to keep 'Debug' level for Live Environments. Reduced to 'INFO'
+[12-08-2015 02:20:37] PayPal\Core\PayPalHttpConnection: INFO	: POST https://api.paypal.com/v1/oauth2/token
+[12-08-2015 02:20:39] PayPal\Core\PayPalHttpConnection: INFO	: Response Status 	: 200
+[12-08-2015 02:20:39] PayPal\Core\PayPalHttpConnection: ERROR	: Not allowed to keep 'Debug' level for Live Environments. Reduced to 'INFO'
+[12-08-2015 02:20:39] PayPal\Core\PayPalHttpConnection: INFO	: POST https://api.paypal.com/v1/payments/payment
+[12-08-2015 02:20:41] PayPal\Core\PayPalHttpConnection: INFO	: Response Status 	: 400
+[12-08-2015 02:20:41] PayPal\Core\PayPalHttpConnection: ERROR	: Got Http response code 400 when accessing https://api.paypal.com/v1/payments/payment. {"name":"CURRENCY_NOT_ALLOWED","message":"Currency is not supported","information_link":"https://developer.paypal.com/webapps/developer/docs/api/#CURRENCY_NOT_ALLOWED","debug_id":"0e10adda658e9"}

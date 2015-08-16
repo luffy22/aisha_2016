@@ -75,12 +75,14 @@ public function askQuestions($details)
                                         'token'=>$row['UniqueID'],'name'=>$row['name'],'email'=>$row['email'],
                                         'gender'=>$row['gender'],'dob'=>$row['dob'],'pob'=>$row['pob'],'tob'=>$row['tob'],
                                         'fees'=>$row['fees'],'choice'=>$row['choice'],'explain'=>$row['explain_choice'],
+                                        'location'=>$row['user_location'],
                                         'user_curr'=>$row['user_currency'],'user_curr_full'=>$row['user_curr_full'],
                                         'ques_topic_1'=>$row['ques_topic1'],'ques_1'=>$row['ques_1'],'ques_1_explain'=>$row['ques_1_explain'],
                                         'ques_topic_2'=>$row['ques_topic2'],'ques_2'=>$row['ques_2'],'ques_2_explain'=>$row['ques_2_explain'],
                                         'ques_topic_3'=>$row['ques_topic3'],'ques_3'=>$row['ques_3'],'ques_3_explain'=>$row['ques_3_explain']
                                     );
-       if($details['user_location']=="IN")
+
+       if($details['location']=="IN")
        {
            $this->sendConfirmMail($details);
        }
@@ -130,13 +132,13 @@ public function confirmPayment($details)
 
         $bcc                = 'kopnite@gmail.com';
         $subject            = "Ask AstroIsha Quesion Token No: ".$details['UniqueID'];
-        $ques_topic1        = $details['ques_topic_1'];
+        $ques_topic1        = $details['ques_topic1'];
         $ques_1             = $details['ques_1'];
         $ques_explain1      = $details['ques_1_explain'];
-        $ques_topic2        = $details['ques_topic_2'];
+        $ques_topic2        = $details['ques_topic2'];
         $ques_2             = $details['ques_2'];
         $ques_explain2      = $details['ques_2_explain'];
-        $ques_topic3        = $details['ques_topic_3'];
+        $ques_topic3        = $details['ques_topic3'];
         $ques_3             = $details['ques_3'];
         $ques_explain3      = $details['ques_3_explain'];
         
@@ -157,21 +159,21 @@ public function confirmPayment($details)
         {
             for($i=0;$i<$choice;$i++)
             {
-                $j=$i+1;
+                $j              = $i+1;
                 $body               .= "<strong>Question ".$j.":</strong><br/>";
                 $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
-                $body               .= "Question: ".${"ques_".$j}."<br/>";
-                $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
+                $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
             }
         }
         else if($details['explain_choice']== 'detail')
         {
             for($i=0;$i<$choice;$i++)
             {
-                $j              = $i+1;
+                $j=$i+1;
                 $body               .= "<strong>Question ".$j.":</strong><br/>";
                 $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
-                $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
+                $body               .= "Question: ".${"ques_".$j}."<br/>";
+                $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
             }
         }
     $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";        
