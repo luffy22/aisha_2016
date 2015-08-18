@@ -14,7 +14,7 @@ function getIP() {
   //$ip = '212.58.244.20';
   //$ip   = '223.223.146.119';
   //$ip   = '208.91.198.52';
-  $ip    = '175.157.193.156'; // us ip
+  $ip    = '176.102.49.192'; // us ip
   //$ip = '110.21.50.187';
   return $ip;
 }
@@ -139,6 +139,13 @@ else
 <input type="hidden" name="user_curr_full" id="user_curr_full" value="<?php echo $data->geobytescurrency; ?>" />
 <h3>Ask Your Questions (max 3 questions)</h3>
 <input type="hidden" name="ques_charge" id="ques_charge"   />
+<div class="form-group" id="ques_grp_pay">
+    <label>How Do You Wish to Pay?</label>
+    <select class="form-control" name="ques_pay_type" id="ques_pay_type">
+        <option value="card" checked>Using Credit Card/Debit Card</option>
+        <option value="paypal">Using Paypal</option>
+    </select>
+</div>
 <?php
     if($data->geobytesinternet == 'IN')
     {
