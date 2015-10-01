@@ -16,6 +16,7 @@ public function askQuestions($details)
     $tob                = $details['tob'];
     $pob                = $details['pob'];
     $fees               = $details['fees'];
+    $paytype            = $details['pay_type'];
     $user_loc           = $details['user_loc'];
     $user_curr          = $details['user_curr'];
     $user_curr_full     = $details['user_curr_full'];
@@ -35,7 +36,7 @@ public function askQuestions($details)
     $query          = $db->getQuery(true);
 
     $columns        = array('UniqueID','name','email','gender', 'dob', 'tob', 
-                            'pob','fees','choice','explain_choice',
+                            'pob','fees','choice','explain_choice','payment_type',
                             'user_location','user_currency','user_curr_full',
                             'ques_topic1','ques_1','ques_1_explain',
                             'ques_topic2','ques_2','ques_2_explain',
@@ -44,7 +45,7 @@ public function askQuestions($details)
     $values         = array(
                             $db->quote($token), $db->quote($name), $db->quote($email),
                             $db->quote($gender), $db->quote($dob), $db->quote($tob),$db->quote($pob),$db->quote($fees),
-                            $db->quote($choice),$db->quote($explain),
+                            $db->quote($choice),$db->quote($explain),$db->quote($paytype),
                             $db->quote($user_loc),$db->quote($user_curr),$db->quote($user_curr_full),
                             $db->quote($opt1), $db->quote($ques1), $db->quote($ques_det1),
                             $db->quote($opt2), $db->quote($ques2), $db->quote($ques_det2),
@@ -63,7 +64,7 @@ public function askQuestions($details)
         $query              ->clear();
         $query              ->select($db->quoteName(array('UniqueID','name','email',
                                     'gender','dob','pob','tob','fees','choice', 'explain_choice',
-                                    'user_currency','user_curr_full','user_location',
+                                    'payment_type','user_currency','user_curr_full','user_location',
                                     'ques_topic1','ques_1','ques_1_explain',
                                     'ques_topic2','ques_2','ques_2_explain',
                                     'ques_topic3','ques_3','ques_3_explain')))
@@ -72,8 +73,8 @@ public function askQuestions($details)
        $db                  ->setQuery($query);
        $row                 = $db->loadAssoc();
        $details             = array(
-                                        'token'=>$row['UniqueID'],'name'=>$row['name'],'email'=>$row['email'],
-                                        'gender'=>$row['gender'],'dob'=>$row['dob'],'pob'=>$row['pob'],'tob'=>$row['tob'],
+                                        'token'=>$row['UniqueID'],'name'=>$row['name'],'email'=>$row['email'],'payment_type'=>$row['payment_type'],
+                                        'gender'=>$row['gender'],'dob'=>$row['dob'],'pob'=>$row['pob'],'tob'=>$row['tob'], 'location'=>$row['user_location'],
                                         'fees'=>$row['fees'],'choice'=>$row['choice'],'explain'=>$row['explain_choice'],
                                         'location'=>$row['user_location'],
                                         'user_curr'=>$row['user_currency'],'user_curr_full'=>$row['user_curr_full'],
@@ -86,11 +87,18 @@ public function askQuestions($details)
        {
            $this->sendConfirmMail($details);
        }
-       else
+       else if($details['payment_type']=="card")
+       {
+            header('Location:'.JUri::base().'vendor2/CardPayment.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
+       }
+       else if($details['payment_type']=="paypal")
        {
            header('Location:'.JUri::base().'vendor/paypal.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
        }
-
+       else
+       {
+           $this->sendConfirmMail($details);
+       }
     }
     else
     {

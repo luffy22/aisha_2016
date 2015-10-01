@@ -1,5 +1,6 @@
 <?php
 header('Content-type: application/json');
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -53,7 +54,7 @@ $amount         ->setCurrency($currency)
 $transaction    = new Transaction();
 $transaction    ->setAmount($amount)
                 ->setItemList($itemlist)
-                ->setDescription("Payment Description")
+                ->setDescription("Ask An Astrologer")
                 ->setInvoiceNumber(uniqid());
                 
 
@@ -78,23 +79,16 @@ try {
 $approvalUrl    = $payment->getApprovalLink();
 $payment_id     = $payment->id;
 
-$conn           = new mysqli("localhost","root","desai1985","astroisha");
-if(!$conn)
-{
-    echo "Error establishing connectiont to Database: ";
+$host   = "localhost";$user = "root";
+$pwd    = "desai1985";$db   = "astroisha";
+$mysqli = new mysqli($host,$user,$pwd,$db);
+/* check connection */
+if (mysqli_connect_errno()) {
+        printf("Connect failed: %s\n", mysqli_connect_error());
+        exit();
 }
 else
 {
-
-    $host   = "localhost";$user = "astroxou_admin";
-    $pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
-    $mysqli = new mysqli($host,$user,$pwd,$db);
-    /* check connection */
-    if (mysqli_connect_errno()) {
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            exit();
-    }
-    
     $query = "UPDATE jv_questions SET paypal_id='$payment_id' WHERE UniqueID='$token'";
     $result	= mysqli_query($mysqli, $query);
     

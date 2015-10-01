@@ -19,6 +19,7 @@ class AstrologinControllerAstroask extends AstroLoginController
             $user_curr_full = $_POST['user_curr_full'];
             $choice         = $_POST['ques_choice'];
             $explain        = $_POST['ques_explain'];
+            $pay_type       = $_POST['ques_pay_type'];
             if($explain == "short"&&$choice=="1")
             {
                 $option1    = $_POST['ques_1_option'];
@@ -91,13 +92,14 @@ class AstrologinControllerAstroask extends AstroLoginController
                 $ques3      = $_POST['ques_ask_3'];
                 $ques_det3  = $_POST['ques_detail_3'];
            }
-           $details    = array("name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
-                                    "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,"fees"=>$fees,
-                                    "user_loc"=>$user_loc,"user_curr"=>$user_curr,"user_curr_full"=>$user_curr_full,
-                                    "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
-                                    "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
-                                    "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
-                                    );
+           $details    = array(
+                                "name"=>$name,"email"=>$email,"gender"=>$gender,"explain"=>$explain,
+                                "dob"=>$dob,"pob"=>$pob, "tob"=>$tob, "choice"=>$choice,"pay_type"=>$pay_type,
+                                "fees"=>$fees,"user_loc"=>$user_loc,"user_curr"=>$user_curr,"user_curr_full"=>$user_curr_full,
+                                "opt1"=>$option1,"ques1"=>$ques1,"ques_det1"=>$ques_det1,
+                                "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
+                                "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
+                                );
             $model          = $this->getModel('astroask');  // Add the array to model
             $model->askQuestions($details);
         }

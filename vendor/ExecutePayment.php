@@ -14,10 +14,11 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
     $paymentId = $_GET['paymentId']; 
     $payment = Payment::get($paymentId, $apiContext);
     $execution = new PaymentExecution();
-    $execution->setPayerId($_GET['PayerID']);
+    $execution->setPayerId($_GET['paymentId']);
     //echo $execution->getPayerId();
     try {
         $result = $payment->execute($execution, $apiContext);
+        
         //ResultPrinter::printResult("Executed Payment", "Payment", $payment->getId(), $execution, $result);
          try { $payment = Payment::get($paymentId, $apiContext); } catch (Exception $ex)
          {
@@ -33,11 +34,11 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
         //ResultPrinter::printError("Executed Payment", "Payment", null, null, $ex); exit(1); }
     //ResultPrinter::printResult("Get Payment", "Payment", $payment->getId(), null, $payment);
     }
-    //return $payment;
-    $info	= json_decode($payment);
-    $id         = $info->id;
-    $server     = 'http://'.$_SERVER['SERVER_NAME'];
-    header('Location:'.$server.'/aisha/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$id);
+    echo $payment->links[0]->href;
+   // $info	= json_decode($payment);
+    //$id         = $info->id;
+    //$server     = 'http://'.$_SERVER['SERVER_NAME'];
+   // header('Location:'.$server.'/aisha/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$id);
     
 	//echo $info->invoice_number;
 }
