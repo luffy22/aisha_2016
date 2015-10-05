@@ -118,28 +118,6 @@
     
     <div class="col-md-6">
         <div class="spacer"></div>
-        <button type="button" class="btn btn-warning" data-toggle="collapse" href="#noticeone" 
-             aria-expanded="false" aria-controls="#noticeone">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Notice
-        </button>
-        <div class="collapse" id="noticeone">
-            <div class="well">
-                There is update to our <a href="http://www.astroisha.com/privacy" target="_blank" title="Navigate to Privacy Policy in New Window">Privacy Policy</a> and the way in which Astro Isha collects information from users. Please check the link provided for more information.
-              </div>
-        </div>
-          <button type="button" class="btn btn-success" data-toggle="collapse" href="#noticetwo" 
-             aria-expanded="false" aria-controls="#noticetwo">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Payments
-        </button>
-        <div class="collapse" id="noticetwo">
-            <div class="well">
-            <img src="<?php echo $this->baseurl ?>/images/paypal_icon.png" alt="Paypal" title="Paypal Logo" height="64px" width="64px" />
-            <br/>Paypal Payments are now accepted on Astro Isha: <a href="<?php echo JUri::base().'ask-question'; ?>">Ask An Astrologer</a> for all countries except India. Due to RBI (Reserve Bank Of India) Guidelines Indian Customers cannot transfer money 
-             via Paypal to India Based Businesses. But we are working on it to solve the issue. Also payment via Credit or Debit Card is
-             not possible at present for other countries.
-              </div>
-        </div>
-        <div class="spacer"></div>
         <div class="breadcrumb">
             <jdoc:include type="modules" name="breadcrumbs" style="none" />
         </div>
