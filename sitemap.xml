@@ -629,6 +629,14 @@
 	  <changefreq>Weekly</changefreq>
   </url>
   <url>
+	  <loc>http://www.astroisha.com/featured-articles/200-science-vs-superstition</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+      <loc>http://www.astroisha.com/featured-articles/207-astro-noconsult</loc>
+      <changefreq>Weekly</changefreq>
+  </url>
+  <url>
 	  <loc>http://www.astroisha.com/relationship-astrology</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
@@ -651,6 +659,26 @@
   <url>
 	  <loc>http://www.astroisha.com/relationship-astrology/169-run-marry</loc>
 	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	<loc>http://www.astroisha.com/relationship-astrology/197-astro-interfaith</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+		<loc>http://www.astroisha.com/relationship-astrology/201-arranged-marriage</loc>
+		<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/relationship-astrology/202-mangal-dosha-marry</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+      <loc>http://www.astroisha.com/relationship-astrology/205-retrograde-divorce</loc>
+      <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+       <loc>http://www.astroisha.com/relationship-astrology/206-right-marriage</loc>
+       <changefreq>Weekly</changefreq>
   </url>
   <url>
 	  <loc>http://www.astroisha.com/planets-bhavas/134-chandra-1st-house</loc>
@@ -749,6 +777,14 @@
 	  <changefreq>Weekly</changefreq>
   </url>
   <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/203-mangal-1st-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/planets-bhavas/204-mangal-2nd-house</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
 	  <loc>http://www.astroisha.com/remedies</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
@@ -774,6 +810,18 @@
   </url>
   <url>
 	  <loc>http://www.astroisha.com/remedies/195-shukra-remedies</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	<loc>http://www.astroisha.com/remedies/196-shani-remedies</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/remedies/198-rahu-remedies</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/remedies/199-ketu-remedies</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
   <url>

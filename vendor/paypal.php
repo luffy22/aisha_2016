@@ -1,6 +1,5 @@
 <?php
 header('Content-type: application/json');
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -20,7 +19,8 @@ if(isset($_GET['token']))
 {
 
 $name               = $_GET['name'];
-$token              = $_GET['token'];
+$token				= $_GET['token'];
+$token_1			= substr($_GET['token'],6);
 $email              = $_GET['email'];
 $quantity           = (int)1;
 $currency           = $_GET['curr'];
@@ -37,7 +37,7 @@ $item = new Item();
 $item->setName($name)
     ->setCurrency($currency)
     ->setQuantity($quantity)
-    ->setSku($token)
+    ->setSku($token_1)
     ->setPrice($fees);
     
 $itemlist       = new ItemList();
@@ -55,7 +55,7 @@ $transaction    = new Transaction();
 $transaction    ->setAmount($amount)
                 ->setItemList($itemlist)
                 ->setDescription("Ask An Astrologer")
-                ->setInvoiceNumber(uniqid());
+                ->setInvoiceNumber("Order Number: ".$token_1);
                 
 
 $baseUrl = getBaseUrl();
@@ -76,8 +76,9 @@ try {
     ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
     exit(1);
 }
+
 $approvalUrl    = $payment->getApprovalLink();
-$payment_id     = $payment->id;
+$pay_id         = $payment->id;
 
 $host   = "localhost";$user = "root";
 $pwd    = "desai1985";$db   = "astroisha";
@@ -89,29 +90,18 @@ if (mysqli_connect_errno()) {
 }
 else
 {
-    $query = "UPDATE jv_questions SET paypal_id='$payment_id' WHERE UniqueID='$token'";
+    $query = "UPDATE jv_questions SET paypal_id='".$payment_id."' WHERE UniqueID='".$token."'";
     $result	= mysqli_query($mysqli, $query);
     
     if($result)
     {
         mysqli_close($myqli);
         header('Location:'.$approvalUrl);
-
     }
     else
     {
         echo "Unable to process requests";
     }
-   
 }
-//header('Location:'.$approvalUrl);
-//echo $approvalUrl;exit;
- //ResultPrinter::printResult("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", "<a href='$approvalUrl' >$approvalUrl</a>", $request, $payment);
-
-
-}
-else
-{
-    echo "Crucial Information Mising. Please Try Again...";
 }
 ?>

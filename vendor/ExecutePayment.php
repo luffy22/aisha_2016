@@ -1,3 +1,4 @@
+
 <?php
 header('Content-type: application/json');
 /*
@@ -12,29 +13,23 @@ use PayPal\Api\PaymentExecution;
 if (isset($_GET['success']) && $_GET['success'] == 'true') 
 {
     $paymentId = $_GET['paymentId']; 
-    $payment = Payment::get($paymentId, $apiContext);
-    $execution = new PaymentExecution();
-    $execution->setPayerId($_GET['paymentId']);
+    //$payment = Payment::get($paymentId, $apiContext);
+    // @return result Array of result which shows payment related information
     //echo $execution->getPayerId();
     try {
-        $result = $payment->execute($execution, $apiContext);
-        
-        //ResultPrinter::printResult("Executed Payment", "Payment", $payment->getId(), $execution, $result);
-         try { $payment = Payment::get($paymentId, $apiContext); } catch (Exception $ex)
-         {
+             // Get payment id, and then execute the payment request
              $payment = Payment::get($paymentId, $apiContext);
+             $execution = new PaymentExecution();
+             $execution->setPayerId($_GET['paymentId']);
+             $result = $payment->execute($execution, $apiContext);  // executing the payment requests
          }
          catch (Exception $ex) 
          {
-            //ResultPrinter::printError("Get Payment", "Payment", null, null, $ex);
-            //exit(1);
+            header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
          }
-    }
-    catch (Exception $ex) {
-        //ResultPrinter::printError("Executed Payment", "Payment", null, null, $ex); exit(1); }
-    //ResultPrinter::printResult("Get Payment", "Payment", $payment->getId(), null, $payment);
-    }
-    echo $payment->links[0]->href;
+
+    echo $result;exit;
+
    // $info	= json_decode($payment);
     //$id         = $info->id;
     //$server     = 'http://'.$_SERVER['SERVER_NAME'];
@@ -44,6 +39,6 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
 }
 else if(isset($_GET['success']) && $_GET['success'] == 'false')
 {   
-    echo "No Way Jose!!";
+    header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
 }
 ?>

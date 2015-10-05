@@ -55,8 +55,10 @@ if(isset($_GET['payment'])&&($_GET['payment']=='dd'))
     else if((isset($_GET['payment']))&&($_GET['payment']=='paypal'))
     {
     ?>
-  <h3 style="align:center">Confirmation Of Payment</h3>
-  <p>&nbsp;&nbsp;&nbsp;This is to confirm that your online payment has been received. We would process your request in 7 Working Days.</p>
+  <h3 style="align:center">Confirmation Of Order</h3>
+  <p>&nbsp;&nbsp;&nbsp;This is to confirm that your question form has been received. Complete Report with answers to your questions would 
+      be provided in 10 Working Days. Payment for the Order would 
+      only be deducted once we have finished the report after which we would send a link for you to Authorize payment. Order would not be made available to you until you authorize the payment for the order. See Payment for more info.</p>
   <?php
     }
   ?>

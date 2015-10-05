@@ -87,17 +87,9 @@ public function askQuestions($details)
        {
            $this->sendConfirmMail($details);
        }
-       else if($details['payment_type']=="card")
-       {
-            header('Location:'.JUri::base().'vendor2/CardPayment.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
-       }
-       else if($details['payment_type']=="paypal")
-       {
-           header('Location:'.JUri::base().'vendor/paypal.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
-       }
        else
        {
-           $this->sendConfirmMail($details);
+            header('Location:'.JUri::base().'vendor/paypal.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
        }
     }
     else
@@ -105,7 +97,7 @@ public function askQuestions($details)
         $app        ->redirect('index.php?option=com_astrologin&view=astroask&failure=fail'); 
     }
 }
-public function confirmPayment($details)
+public function confirmOrder($details)
 {
     $id         = $details['paypal_id'];
     $db = JFactory::getDbo();
