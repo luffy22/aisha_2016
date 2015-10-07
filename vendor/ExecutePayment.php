@@ -9,7 +9,11 @@ include_once('bootstrap.php');
 use PayPal\Api\ExecutePayment; 
 use PayPal\Api\Payment; 
 use PayPal\Api\PaymentExecution;
-
+use Paypal\Api\Authorization;
+use Paypal\Api\Order;
+use Paypal\Api\Transaction;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Amount;
 if (isset($_GET['success']) && $_GET['success'] == 'true') 
 {
     $paymentId = $_GET['paymentId']; 
@@ -18,18 +22,19 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
     //echo $execution->getPayerId();
     try {
              // Get payment id, and then execute the payment request
-             $payment = Payment::get($paymentId, $apiContext);
-             $execution = new PaymentExecution();
-             $execution->setPayerId($_GET['paymentId']);
-             $result = $payment->execute($execution, $apiContext);  // executing the payment requests
+             $payment       = Payment::get($paymentId, $apiContext);
+             $execution     = new PaymentExecution();
+             $execution     ->setPayerId($payment->payer->payer_info->payer_id);
+             $transaction   = new Transaction();
          }
          catch (Exception $ex) 
          {
-            header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
+            //header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
          }
-
-    echo $result;exit;
-
+       
+         echo $payment;exit;
+        //header('Location:'.$approvalUrl);
+        
    // $info	= json_decode($payment);
     //$id         = $info->id;
     //$server     = 'http://'.$_SERVER['SERVER_NAME'];
