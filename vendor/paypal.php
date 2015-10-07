@@ -56,7 +56,7 @@ $transaction    ->setAmount($amount)
                 ->setItemList($itemlist)
                 ->setDescription("Ask An Astrologer")
                 ->setInvoiceNumber("Order Number: ".$token_1);
-                
+             
 
 $baseUrl = getBaseUrl();
 $redirectUrls = new RedirectUrls();

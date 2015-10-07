@@ -9,11 +9,11 @@ include_once('bootstrap.php');
 use PayPal\Api\ExecutePayment; 
 use PayPal\Api\Payment; 
 use PayPal\Api\PaymentExecution;
-use Paypal\Api\Authorization;
-use Paypal\Api\Order;
 use Paypal\Api\Transaction;
-use PayPal\Api\RedirectUrls;
+use Paypal\Api\Payer;
 use PayPal\Api\Amount;
+use PayPal\Api\Authorization;
+
 if (isset($_GET['success']) && $_GET['success'] == 'true') 
 {
     $paymentId = $_GET['paymentId']; 
@@ -22,17 +22,25 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
     //echo $execution->getPayerId();
     try {
              // Get payment id, and then execute the payment request
-             $payment       = Payment::get($paymentId, $apiContext);
-             $execution     = new PaymentExecution();
-             $execution     ->setPayerId($payment->payer->payer_info->payer_id);
-             $transaction   = new Transaction();
+             $payment               = Payment::get($paymentId, $apiContext);
+             $payer_id              = $payment->getPayer()->getPayerInfo()->getPayerId();
+             $transaction           = $payment->transactions;
+             $execution             = new PaymentExecution();
+             $execution             ->setPayerId($payer_id);
+             $execution             ->addTransaction($transaction[0]);
+             $result                = $payment->execute($execution, $apiContext);
+             $payment               = Payment::get($paymentId, $apiContext);
+             
+            
+             //$authorization         = new Authorization();
+             //$result                = $order->authorize($authorization, $apiContext);
+             //$payment               = Payment::get($paymentId, $apiContext);
          }
          catch (Exception $ex) 
          {
             //header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
          }
-       
-         echo $payment;exit;
+         //echo $order;exit;
         //header('Location:'.$approvalUrl);
         
    // $info	= json_decode($payment);
