@@ -12,7 +12,9 @@ use PayPal\Api\PaymentExecution;
 use Paypal\Api\Transaction;
 use Paypal\Api\Payer;
 use PayPal\Api\Amount;
+use Paypal\Api\Details;
 use PayPal\Api\Authorization;
+
 
 if (isset($_GET['success']) && $_GET['success'] == 'true') 
 {
@@ -24,24 +26,31 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
              // Get payment id, and then execute the payment request
              $payment               = Payment::get($paymentId, $apiContext);
              $payer_id              = $payment->getPayer()->getPayerInfo()->getPayerId();
-             $transaction           = $payment->transactions;
+             $transactions           = $payment->getTransactions();
+             $transaction           = $transactions[0];
              $execution             = new PaymentExecution();
              $execution             ->setPayerId($payer_id);
-             $execution             ->addTransaction($transaction[0]);
+             $execution             ->addTransaction($transaction);
              $result                = $payment->execute($execution, $apiContext);
-             $payment               = Payment::get($paymentId, $apiContext);
              
-            
-             //$authorization         = new Authorization();
-             //$result                = $order->authorize($authorization, $apiContext);
-             //$payment               = Payment::get($paymentId, $apiContext);
+             if($result)
+             {
+                 $transactions     = $payment->getTransactions();
+                 $transaction      = $transactions[0];
+                 $relatedResources  = $transaction->getRelatedResources();
+                 $relatedResource   = $relatedResources[0];
+                 $order             = $relatedResource->getOrder();
+                 $authorization     = new Authorization();
+                 $result            = $order->authorize($authorization, $apiContext);
+             }
          }
          catch (Exception $ex) 
          {
             //header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
          }
-         //echo $order;exit;
-        //header('Location:'.$approvalUrl);
+        echo $relatedResources;exit;
+       
+        //header('Location:http://localhost/aisha/vendor/authorizePayment.php?pay_id='.$paymentId);
         
    // $info	= json_decode($payment);
     //$id         = $info->id;
