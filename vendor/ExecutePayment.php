@@ -14,7 +14,7 @@ use Paypal\Api\Payer;
 use PayPal\Api\Amount;
 use Paypal\Api\Details;
 use PayPal\Api\Authorization;
-
+use Paypal\Api\Capture;
 
 if (isset($_GET['success']) && $_GET['success'] == 'true') 
 {
@@ -32,25 +32,38 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
              $execution             ->setPayerId($payer_id);
              $execution             ->addTransaction($transaction);
              $result                = $payment->execute($execution, $apiContext);
-             
-             if($result)
-             {
-                 $transactions     = $payment->getTransactions();
-                 $transaction      = $transactions[0];
-                 $relatedResources  = $transaction->getRelatedResources();
-                 $relatedResource   = $relatedResources[0];
-                 $order             = $relatedResource->getOrder();
-                 $authorization     = new Authorization();
-                 $result            = $order->authorize($authorization, $apiContext);
-             }
+             $transactions          = $payment->getTransactions();
+             $transaction           = $transactions[0];
+             $relatedResources      = $transaction->getRelatedResources();
+             $relatedResource       = $relatedResources[0];
+             $order                 = $relatedResource->getOrder();
+             $currency              = $transaction->getAmount()->getCurrency();
+             $total                 = $transaction->getAmount()->getTotal();
+             $authorization         = new Authorization();
+             $authorization         ->setAmount(new Amount(
+                                    '{
+                                        "total":"'.$total.'",
+                                        "currency":"'.$currency.'"
+                                    }'));
+             $result            = $order->authorize($authorization, $apiContext);
+             /*$capture = new Capture();
+    $capture->setIsFinalCapture(true);
+    $capture->setAmount(new Amount(
+        '                           {
+                                        "total":"'.$total.'",
+                                        "currency":"'.$currency.'"
+                                    }'));
+             $result = $order->capture($capture, $apiContext);*/
+
          }
          catch (Exception $ex) 
          {
             //header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
          }
-        echo $relatedResources;exit;
-       
-        //header('Location:http://localhost/aisha/vendor/authorizePayment.php?pay_id='.$paymentId);
+         
+         //echo $payment;exit;
+        
+        header('Location:http://localhost/aisha/vendor/authorizePayment.php?pay_id='.$paymentId);
         
    // $info	= json_decode($payment);
     //$id         = $info->id;
