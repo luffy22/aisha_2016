@@ -80,8 +80,9 @@ public function askQuestions($details)
                                         'ques_topic_1'=>$row['ques_topic1'],'ques_1'=>$row['ques_1'],'ques_1_explain'=>$row['ques_1_explain'],
                                         'ques_topic_2'=>$row['ques_topic2'],'ques_2'=>$row['ques_2'],'ques_2_explain'=>$row['ques_2_explain'],
                                         'ques_topic_3'=>$row['ques_topic3'],'ques_3'=>$row['ques_3'],'ques_3_explain'=>$row['ques_3_explain']
-                                    );
-       if($details['user_location']=="IN")
+                                  );
+
+       if($details['location']=="IN")
        {
            $this->sendConfirmMail($details);
        }
@@ -95,14 +96,15 @@ public function askQuestions($details)
         $app        ->redirect('index.php?option=com_astrologin&view=astroask&failure=fail'); 
     }
 }
-public function confirmOrder($details)
+// paypal authorize Order
+public function authorizePayment($details)
 {
     $id         = $details['paypal_id'];
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     // Fields to update.
     $fields = array(
-        $db->quoteName('paypal_confirm') . ' = ' . $db->quote('yes'));
+        $db->quoteName('paypal_authorize') . ' = ' . $db->quote('yes'));
     // Conditions for which records should be updated.
     $conditions = array(
         $db->quoteName('paypal_id').'='.$db->quote($id)
@@ -117,7 +119,7 @@ public function confirmOrder($details)
         $query      ->clear();
         $query              ->select($db->quoteName(array('UniqueID','name','email',
                                     'gender','dob','pob','tob','fees','choice','explain_choice',
-                                    'user_currency','user_curr_full','paypal_id',
+                                    'user_currency','user_curr_full','paypal_id', 'paypal_order_id',
                                     'ques_topic1','ques_1','ques_1_explain',
                                     'ques_topic2','ques_2','ques_2_explain',
                                     'ques_topic3','ques_3','ques_3_explain')))
@@ -130,19 +132,18 @@ public function confirmOrder($details)
 
         $bcc                = 'kopnite@gmail.com';
         $subject            = "Ask AstroIsha Quesion Token No: ".$details['UniqueID'];
-        $ques_topic1        = $details['ques_topic_1'];
+        $ques_topic1        = $details['ques_topic1'];
         $ques_1             = $details['ques_1'];
         $ques_explain1      = $details['ques_1_explain'];
-        $ques_topic2        = $details['ques_topic_2'];
+        $ques_topic2        = $details['ques_topic2'];
         $ques_2             = $details['ques_2'];
         $ques_explain2      = $details['ques_2_explain'];
-        $ques_topic3        = $details['ques_topic_3'];
+        $ques_topic3        = $details['ques_topic3'];
         $ques_3             = $details['ques_3'];
         $ques_explain3      = $details['ques_3_explain'];
         
-        $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Complete Report with answers to your questions would 
-                                be provided in 10 Working Days. Payment for the Order would 
-                                only be deducted once we have finished the report after which we would send a link for you to Authorize payment. Order would not be made available to you until you authorize the payment for the order. See Payment for more info.<br/><br/>";
+        $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Also your payment of ".$fees." ".$details['user_currency']."(".$details['user_curr_full'].")".
+                                " has been confirmed. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<br/><br/>";
         $body               .= "Your Details are as below.<br/><br/>";
         $body               .= "Name: ".$details['name']."<br/>";
         $body               .= "Email: ".$details['email']."<br/>";
@@ -152,9 +153,20 @@ public function confirmOrder($details)
         $body               .= "Place Of Birth: ".$details['pob']."<br/>";
         $body               .= "Token Number: ".$details['UniqueID']."<br/>";
         $body               .= "Payment ID: ".$details['paypal_id']."<br/>";
+        $body               .= "Order ID: ".$details['paypal_order_id']."<br/>";
         $body               .= "Number Of Questions: ".$details['choice']."<br/>";
         $body               .= "Explanation (Detail/Short): ".ucfirst($details['explain_choice'])."<br/><br/>";
         if($details['explain_choice'] == 'short')
+        {
+            for($i=0;$i<$choice;$i++)
+            {
+                $j              = $i+1;
+                $body               .= "<strong>Question ".$j.":</strong><br/>";
+                $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
+                $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
+            }
+        }
+        else if($details['explain_choice']== 'detail')
         {
             for($i=0;$i<$choice;$i++)
             {
@@ -163,16 +175,6 @@ public function confirmOrder($details)
                 $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
                 $body               .= "Question: ".${"ques_".$j}."<br/>";
                 $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
-            }
-        }
-        else if($details['explain_choice']== 'detail')
-        {
-            for($i=0;$i<$choice;$i++)
-            {
-                $j              = $i+1;
-                $body               .= "<strong>Question ".$j.":</strong><br/>";
-                $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
-                $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
             }
         }
     $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";        

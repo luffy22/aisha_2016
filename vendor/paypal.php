@@ -1,5 +1,6 @@
 <?php
 header('Content-type: application/json');
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -19,8 +20,8 @@ if(isset($_GET['token']))
 {
 
 $name               = $_GET['name'];
-$token				= $_GET['token'];
-$token_1			= substr($_GET['token'],6);
+$token              = $_GET['token'];
+$token1             = substr($token,6);
 $email              = $_GET['email'];
 $quantity           = (int)1;
 $currency           = $_GET['curr'];
@@ -37,7 +38,7 @@ $item = new Item();
 $item->setName($name)
     ->setCurrency($currency)
     ->setQuantity($quantity)
-    ->setSku($token_1)
+    ->setSku($token)
     ->setPrice($fees);
     
 $itemlist       = new ItemList();
@@ -55,8 +56,8 @@ $transaction    = new Transaction();
 $transaction    ->setAmount($amount)
                 ->setItemList($itemlist)
                 ->setDescription("Ask An Astrologer")
-                ->setInvoiceNumber("Order Number: ".$token_1);
-             
+                ->setInvoiceNumber("Question Number: ".$token1);
+                
 
 $baseUrl = getBaseUrl();
 $redirectUrls = new RedirectUrls();
@@ -74,23 +75,20 @@ try {
     $payment->create($apiContext);
 } catch (Exception $ex) {
     ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
-    exit(1);
 }
-
 $approvalUrl    = $payment->getApprovalLink();
-$pay_id         = $payment->id;
+$payment_id     = $payment->id;
 
-$host   = "localhost";$user = "root";
-$pwd    = "desai1985";$db   = "astroisha";
+$host   = "localhost";$user = "astroxou_admin";
+$pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
 $mysqli = new mysqli($host,$user,$pwd,$db);
 /* check connection */
 if (mysqli_connect_errno()) {
         printf("Connect failed: %s\n", mysqli_connect_error());
-        exit();
 }
 else
 {
-    $query = "UPDATE jv_questions SET paypal_id='".$payment_id."' WHERE UniqueID='".$token."'";
+    $query = "UPDATE jv_questions SET paypal_id='$payment_id' WHERE UniqueID='$token'";
     $result	= mysqli_query($mysqli, $query);
     
     if($result)
@@ -100,8 +98,36 @@ else
     }
     else
     {
-        echo "Unable to process requests";
+        echo "Unable to process requests. Please try again to avoid problems in payment.";
+    ?>
+        <a href="http://www.astroisha.com/ask-question">
+  <button type="button" class="btn btn-primary" aria-label="Left Align">
+  <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back
+  </button></a><a href="http://www.astroisha.com">
+  <button type="button" class="btn btn-primary" aria-label="Left Align">
+  <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home Page
+</button></a>
+    <?php
     }
+   
 }
+//header('Location:'.$approvalUrl);
+//echo $approvalUrl;exit;
+ //ResultPrinter::printResult("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", "<a href='$approvalUrl' >$approvalUrl</a>", $request, $payment);
+
+
+}
+else
+{
+    echo "Crucial Information Mising. Please Try Again...";
+?>
+<a href="http://www.astroisha.com/ask-question">
+  <button type="button" class="btn btn-primary" aria-label="Left Align">
+  <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back
+  </button></a><a href="http://www.astroisha.com">
+  <button type="button" class="btn btn-primary" aria-label="Left Align">
+  <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home Page
+</button></a>
+<?php
 }
 ?>

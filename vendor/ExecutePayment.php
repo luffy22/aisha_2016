@@ -1,4 +1,3 @@
-
 <?php
 header('Content-type: application/json');
 /*
@@ -46,6 +45,29 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
                                         "currency":"'.$currency.'"
                                     }'));
              $result            = $order->authorize($authorization, $apiContext);
+            $host   = "localhost";$user = "astroxou_admin";
+            $pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
+            $mysqli = new mysqli($host,$user,$pwd,$db);
+            /* check connection */
+            if (mysqli_connect_errno()) {
+                printf("Connect failed: %s\n", mysqli_connect_error());
+            }
+            else
+            {
+                $query = "UPDATE jv_questions SET paypal_order_id='".$result->getId()."' WHERE paypal_id='".$paymentId."'";
+                $result	= mysqli_query($mysqli, $query);
+
+                if($result)
+                {
+                    mysqli_close($myqli);
+                    $server     = 'http://'.$_SERVER['SERVER_NAME'];
+                    header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$paymentId);
+                }
+                else
+                {
+                    echo "Unable to process requests";
+                }
+            }
              /*$capture = new Capture();
     $capture->setIsFinalCapture(true);
     $capture->setAmount(new Amount(
@@ -63,7 +85,7 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
          
          //echo $payment;exit;
         
-        header('Location:http://localhost/aisha/vendor/authorizePayment.php?pay_id='.$paymentId);
+        //header('Location:http://localhost/aisha/vendor/authorizePayment.php?pay_id='.$paymentId);
         
    // $info	= json_decode($payment);
     //$id         = $info->id;
@@ -74,6 +96,6 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
 }
 else if(isset($_GET['success']) && $_GET['success'] == 'false')
 {   
-    header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
+    header('Refresh: 2; URL=http://www.astroisha.com/index.php?option=com_astrologin&view=quesconfirm&payment_success=false');
 }
 ?>

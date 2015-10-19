@@ -38,13 +38,23 @@
 </head>
 <body class="body">
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=220390744824296";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '220390744824296',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
     <?php
      // Get option and view
     $option = JRequest::getVar('option');
@@ -114,10 +124,23 @@
         <div class="spacer"></div>
         <jdoc:include type="modules" name="paypaldonate" style="none" />
         </div>
-    </div>
-    
+    </div>   
     <div class="col-md-6">
         <div class="spacer"></div>
+<script>
+  (function() {
+    var cx = '006812877761787834600:vf6wtd5lcuk';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+<div class="spacer"></div>
         <div class="breadcrumb">
             <jdoc:include type="modules" name="breadcrumbs" style="none" />
         </div>
