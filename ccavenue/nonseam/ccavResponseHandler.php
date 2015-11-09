@@ -6,7 +6,7 @@
 	$workingKey='143063E52AFFE0A6170B547A9E7CEAE1';		//Working Key should be provided here.
 	$encResponse=$_POST["encResp"];			//This is the response sent by the CCAvenue Server
 	$rcvdString=decrypt($encResponse,$workingKey);		//Crypto Decryption used as per the specified working key.
-	$order_status="";
+	$order_status="Pending";
 	$decryptValues=explode('&', $rcvdString);
 	$dataSize=sizeof($decryptValues);
 	echo "<center>";
@@ -19,8 +19,21 @@
 
 	if($order_status==="Success")
 	{
-		echo "<br>Your Order with Astro Isha is successful. Please check your email for confirmation.";
-		
+            $values = array("yes");
+            for($i = 0; $i < $dataSize; $i++) 
+            {
+                $information=explode('=',$decryptValues[$i]);
+                //echo '<tr><td>'.$information[0].'</td><td>'.$information[1].'</td></tr>';
+                array_push($values, $information[1]);
+
+            }
+            $token_number           = "token_".$values[1];
+            $ccavenue_track_id      = $values[2];
+            $ccavenue_bank_ref      = $values[3];
+            $ccavenue_order_status  = $values[4];
+            
+            header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmCCPayment&token='.$token_number.'&track_id='.$ccavenue_track_id.'&bank_ref='.$ccavenue_bank_ref.'&status='.$ccavenue_order_status);
+                
 	}
 	else if($order_status==="Aborted")
 	{
