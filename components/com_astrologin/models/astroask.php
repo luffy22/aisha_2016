@@ -84,7 +84,7 @@ public function askQuestions($details)
 
        if($details['location']=="IN")
        {
-           $this->sendConfirmMail($details);
+            header('Location:'.JUri::base().'ccavenue/NON_SEAMLESS_KIT/ccavenue_payment.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
        }
        else
        {
