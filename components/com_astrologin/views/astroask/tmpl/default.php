@@ -2,7 +2,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 function getIP() {
-  /*foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
+  foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
      if (array_key_exists($key, $_SERVER) === true) {
         foreach (explode(',', $_SERVER[$key]) as $ip) {
            if (filter_var($ip, FILTER_VALIDATE_IP) !== false) {
@@ -10,13 +10,13 @@ function getIP() {
            }
         }
      }
-  }*/
-    $ip = '117.196.4.209';
+  }
+    //$ip = '117.196.1.11';
   //$ip = '212.58.244.20';
   //$ip   = '223.223.146.119';
   //$ip   = '208.91.198.52';
-
-  //$ip    = '176.102.49.192'; // us ip
+ //$ip = '66.249.73.190';
+  //$ip    = '176.102.49.192'; // uk ip
   //$ip = '122.175.21.127';
   //$ip = '157.55.39.123';
   return $ip;
@@ -131,8 +131,11 @@ else
     <span class="error1" id="ques_err_5">Please enter city/town name, country name</span>
 </div>
 <div class="form-group">
-        <button type="button" class="btn btn-primary" name="quesnext" onclick="javascript:checkDetails();return false;">Next</button>
-        <button type="reset" class="btn btn-danger">Reset</button>
+    <button type="reset" class="btn btn-danger">Reset</button>
+        <button class="btn btn-primary" type="button" onclick="javascript:checkDetails();return false;">
+                Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> 
+            </button>
+        
 </div>
 </div>
 <div id="ques_page_2">
@@ -288,9 +291,12 @@ else
     </div>
     <div class="form-group">
         <div class="col-sm-10">
-            <button type="button" class="btn btn-primary" name="quesnext1" onclick="javascript:backPage();return false;">Back</button>
-            <button type="button" class="btn btn-primary" name="quesnext2" onclick="javascript:nextPage();return false;">Next</button>
-            
+            <button class="btn btn-primary" type="button" onclick="javascript:backPage();return false;">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+            </button>
+            <button class="btn btn-primary" type="button" onclick="javascript:nextPage();return false;">
+                Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </button>
         </div>
     </div>
 </div>

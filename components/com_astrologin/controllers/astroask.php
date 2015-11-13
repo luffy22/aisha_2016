@@ -4,9 +4,8 @@ require_once JPATH_COMPONENT.'/controller.php';
 class AstrologinControllerAstroask extends AstroLoginController
 {
     public function askQuestions()
-    {
-        if(isset($_POST['ques_submit']))
-        {
+    { 
+
             $name           = $_POST['ques_name'];
             $email          = $_POST['ques_email'];
             $gender         = $_POST['ques_gender'];
@@ -99,9 +98,9 @@ class AstrologinControllerAstroask extends AstroLoginController
                                 "opt2"=>$option2,"ques2"=>$ques2,"ques_det2"=>$ques_det2,
                                 "opt3"=>$option3,"ques3"=>$ques3,"ques_det3"=>$ques_det3,
                                 );
+           
             $model          = $this->getModel('astroask');  // Add the array to model
             $model->askQuestions($details);
-        }
         
     }
     public function confirmPayment()
@@ -120,7 +119,7 @@ class AstrologinControllerAstroask extends AstroLoginController
         
         $details        = array("token"=>$token,"trackid"=>$track_id,"bankref"=>$bank_ref,"status"=>$status);
         $model          = $this->getModel('astroask');  // Add the array to model
-        $model          ->sendConfirmMail($details);
+        $model          ->confirmCCPayment($details);
     }
 }
 ?>

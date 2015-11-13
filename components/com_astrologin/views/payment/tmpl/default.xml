@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-        <layout title="Payment Confirmation">
+        <layout title="Refunds">
                 <message>
-                       Question Confirmation
+                       Payment And Refunds Info
                 </message>
         </layout>
 </metadata>

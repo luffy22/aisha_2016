@@ -515,7 +515,7 @@ function nextPage1()
             ques_grp_1_close();
             ques_det1_close();
             ques_txt1_close();
-            documenent.getElementById("ques_form").submit();
+            document.getElementById("ques_form").submit();
             return true;
          }
      }
@@ -666,7 +666,7 @@ function nextPage1()
             ques_grp_3_close();
             ques_txt3_close();
             ques_det3_close();
-            documenent.getElementById("ques_form").submit();
+            document.getElementById("ques_form").submit();
             return true;
          }
      }

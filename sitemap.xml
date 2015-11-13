@@ -637,6 +637,22 @@
       <changefreq>Weekly</changefreq>
   </url>
   <url>
+      <loc>http://www.astroisha.com/featured-articles/209-shani-test</loc>
+      <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	<loc>http://www.astroisha.com/featured-articles/214-lal-kitab-farce</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/career-astrology/166-career-roles</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/career-astrology/211-career-relocation</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
 	  <loc>http://www.astroisha.com/relationship-astrology</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
@@ -785,6 +801,22 @@
 	  <changefreq>Weekly</changefreq>
   </url>
   <url>
+	<loc>http://www.astroisha.com/planets-bhavas/208-mangal-3rd-house</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+     <loc>http://www.astroisha.com/planets-bhavas/210-mangal-4th-house</loc>
+     <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+     <loc>http://www.astroisha.com/planets-bhavas/212-mangal-5th-house</loc>
+     <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+     <loc>http://www.astroisha.com/planets-bhavas/213-mangal-6th-house</loc>
+     <changefreq>Weekly</changefreq>
+  </url>
+  <url>
 	  <loc>http://www.astroisha.com/remedies</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
@@ -828,5 +860,13 @@
     <loc>http://www.astroisha.com/contact-us</loc>
     <changefreq>Weekly</changefreq>
    </url>
+  <url>
+     <loc>http://www.astroisha.com/privacy</loc>
+     <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	<loc>http://www.astroisha.com/refunds?view=payment</loc>
+	<changefreq>Yearly</changefreq>
+  </url>
 </urlset>
 

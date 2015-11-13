@@ -1,12 +1,17 @@
 <?php include('Crypto.php')?>
 <?php
-
+if((isset($_GET['payment']))&&($_GET['payment']=='fail'))
+{
+    header('Location:http://www.astroisha.com/index.php?option=com_astrologin&view=quesconfirm&payment_success=false');
+}
+else
+{
 	error_reporting(0);
 	
 	$workingKey='143063E52AFFE0A6170B547A9E7CEAE1';		//Working Key should be provided here.
 	$encResponse=$_POST["encResp"];			//This is the response sent by the CCAvenue Server
 	$rcvdString=decrypt($encResponse,$workingKey);		//Crypto Decryption used as per the specified working key.
-	$order_status="Pending";
+	$order_status="";
 	$decryptValues=explode('&', $rcvdString);
 	$dataSize=sizeof($decryptValues);
 	echo "<center>";
@@ -37,23 +42,16 @@
 	}
 	else if($order_status==="Aborted")
 	{
-		echo "<br>Your order is not successful. Please try again in order to complete the order.<br/>"; 
-	?>
-		<a href="http://www.astroisha.com/ask-question">Retry</a>
-		<a href="http://www.astroisha.com">Home Page</a>
-	<?php	
+		header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmCCPayment&token='.$token_number.'&track_id='.$ccavenue_track_id.'&bank_ref='.$ccavenue_bank_ref.'&status='.$ccavenue_order_status);
 	}
 	else if($order_status==="Failure")
 	{
-		echo "<br>Your transaction was declined. Please retry or navigate to Home Page";
-	?>
-		<a href="http://www.astroisha.com/ask-question">Retry</a>
-		<a href="http://www.astroisha.com">Home Page</a>
-	<?php	
+		header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmCCPayment&token='.$token_number.'&track_id='.$ccavenue_track_id.'&bank_ref='.$ccavenue_bank_ref.'&status='.$ccavenue_order_status);
 	}
 	else
 	{
-		echo "<br>Security Error. Illegal access detected";
+		echo "<br>Security Error. Illegal access detected. Please wait while you are redirected.";
+                header('Refresh: 5; url=http://www.astroisha.com/ask-question');
 	
 	}
 
@@ -68,4 +66,5 @@
 
 	echo "</table><br>";
 	echo "</center>";
+}
 ?>

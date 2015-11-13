@@ -7,6 +7,7 @@ class AstrologinModelAstroask extends JModelItem
 {
 public function askQuestions($details)
 {
+
     $token              = uniqid('token_');
     $name               = ucfirst($details['name']);
     $email              = $details['email'];
@@ -16,7 +17,14 @@ public function askQuestions($details)
     $tob                = $details['tob'];
     $pob                = $details['pob'];
     $fees               = $details['fees'];
-    $paytype            = $details['pay_type'];
+    if($details['user_loc']=="IN")
+   {
+        $paytype            = 'ccavenue';
+   }
+   else
+   {
+       $paytype             = 'paypal';
+   }
     $user_loc           = $details['user_loc'];
     $user_curr          = $details['user_curr'];
     $user_curr_full     = $details['user_curr_full'];
@@ -84,7 +92,7 @@ public function askQuestions($details)
 
        if($details['location']=="IN")
        {
-           $this->sendConfirmMail($details);
+            header('Location:'.JUri::base().'ccavenue/nonseam/ccavenue_payment.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
        }
        else
        {
@@ -143,7 +151,7 @@ public function authorizePayment($details)
         $ques_explain3      = $details['ques_3_explain'];
         
         $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Also your payment of ".$fees." ".$details['user_currency']."(".$details['user_curr_full'].")".
-                                " has been confirmed. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<br/><br/>";
+                                " has been authorized. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days. Your money would only be deducted once we have finished the report and mailed it to you.<br/><br/>";
         $body               .= "Your Details are as below.<br/><br/>";
         $body               .= "Name: ".$details['name']."<br/>";
         $body               .= "Email: ".$details['email']."<br/>";
@@ -206,33 +214,73 @@ public function authorizePayment($details)
         echo "Failed to Send Mail: Wait For Confirmation if you are sure payment is done.";
     }
 }
-protected function sendConfirmMail($details)
+public function confirmCCPayment($details)
 {
+    $token              = $details['token'];
+    $trackid            = $details['trackid'];
+    $bankref            = $details['bankref'];
+    $status             = $details['status'];
+    $db = JFactory::getDbo();
+    $query = $db->getQuery(true);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('ccavenue_track_id') . ' = ' . $db->quote($trackid),
+        $db->quoteName('ccavenue_bank_ref_no') . ' = ' . $db->quote($bankref),
+        $db->quoteName('ccavenue_confirm') . ' = ' . $db->quote('yes'),
+        $db->quoteName('ccavenue_status') . ' = ' . $db->quote($status)
+        );
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('UniqueID').'='.$db->quote($token)
+    );
+    $query->update($db->quoteName('#__questions'))->set($fields)->where($conditions);
+ 
+    $db->setQuery($query);
+ 
+    $result = $db->execute();
+    if($result)
+    {
+        $query      ->clear();
+        $query              ->select($db->quoteName(array('UniqueID','name','email',
+                                    'gender','dob','pob','tob','fees','choice','explain_choice',
+                                    'user_currency','user_curr_full','ccavenue_track_id', 'ccavenue_bank_ref_no',
+                                    "ccavenue_confirm","ccavenue_status",
+                                    'ques_topic1','ques_1','ques_1_explain',
+                                    'ques_topic2','ques_2','ques_2_explain',
+                                    'ques_topic3','ques_3','ques_3_explain')))
+                            ->from($db->quoteName('#__questions'))
+                            ->where($db->quoteName('UniqueID').'='.$db->quote($token));
+       $db                  ->setQuery($query);
+       $details                 = $db->loadAssoc();
+
+
+    }
     $name               = $details['name'];
     $gender             = $details['gender'];
     $dob                = $details['dob'];
+    $fees               = $details['fees'];
     $pob                = $details['pob'];
     $tob                = $details['tob'];
     $choice             = $details['choice'];
-    $explain            = $details['explain'];
+    $explain            = $details['explain_choice'];
     $to                 = $details['email'];
     $bcc                = 'kopnite@gmail.com';
-    $subject            = "Ask AstroIsha Quesion Token No: ".$details['token'];
-    $ques_topic1        = $details['ques_topic_1'];
+    $subject            = "Ask AstroIsha Quesion Token No: ".$details['UniqueID'];
+    $ques_topic1        = $details['ques_topic1'];
     $ques_1             = $details['ques_1'];
     $ques_explain1      = $details['ques_1_explain'];
-    $ques_topic2        = $details['ques_topic_2'];
+    $ques_topic2        = $details['ques_topic2'];
     $ques_2             = $details['ques_2'];
     $ques_explain2      = $details['ques_2_explain'];
-    $ques_topic3        = $details['ques_topic_3'];
+    $ques_topic3        = $details['ques_topic3'];
     $ques_3             = $details['ques_3'];
     $ques_explain3      = $details['ques_3_explain'];
-
+    if($details['ccavenue_status']=='Success')
+    {
     if($explain=="detail")
     {
-        $money  = 300;      // for detailed questions
-        $body               = "Dear ".$name.",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Once your payment of<html>&nbsp</html>".($money*$choice)."<html>&#8377;</html> is received we would process your query and give a detailed answer with logical solution to your questions in 7 Working Days.<html>&nbsp;</html>
-                                Once you transfer the money please reply back to this email with confirmation of payment. If payment is not received in 10 Working Days then that would be termed as Cancellation of Order.<br/><br/>";
+        $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Also your payment of ".$fees." ".$details['user_currency']."(".$details['user_curr_full'].")".
+                                " has been authorized. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days. Your money would only be debited from your Account once we have finished the report and mailed it to you.<br/><br/>";
         $body               .= "Your Details are as below.<br/><br/>";
         $body               .= "Name: ".$name."<br/>";
         $body               .= "Email: ".$to."<br/>";
@@ -240,6 +288,9 @@ protected function sendConfirmMail($details)
         $body               .= "Date Of Birth: ".$dob."<br/>";
         $body               .= "Time Of Birth: ".$tob."<br/>";
         $body               .= "Place Of Birth: ".$pob."<br/>";
+        $body               .= "Token Number: ".$details['UniqueID']."<br/>";
+        $body               .= "Track ID: ".$details['ccavenue_track_id']."<br/>";
+        $body               .= "Bank Reference Number: ".$details['ccavenue_bank_ref_no']."<br/>";
         $body               .= "Number Of Questions: ".$choice."<br/>";
         $body               .= "Explanation (Detail/Short): ".$explain."<br/><br/>";
         for($i=0;$i<$choice;$i++)
@@ -251,38 +302,23 @@ protected function sendConfirmMail($details)
             $body               .= "Question: ".${"ques_".$j}."<br/>";
             $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
         }
-        $body				.= "Bank Details of Astro Isha are as Follows: ";
-        $body				.= "<br/>For Canara Bank";
-        $body				.= "<div><strong>Payable To:</strong><code>&nbsp;</code>ROHAN Y DESAI</div>
-    <div><strong>Account No:</strong><code>&nbsp;</code>0175101023581<br/>
-    1st Floor, Sashwat Complex, Kankaria Road,<br/> Ahmedabad - 380022
-    </div>
-    <div><strong>IFSC Code:</strong><code>&nbsp;</code>CNRB0000175</div>
-    <div><strong>MICR Code:</strong><code>&nbsp;</code>380015008</div>
-    <div><strong>Swift Code:</strong><code>&nbsp;</code>CNRBINBBAFD</div><br/><br/>";
-                    $body 				.=  "For Bank Of Baroda";
-                    $body				.= "<div><strong>Payable To:</strong><code>&nbsp;</code>ROHAN YATINKUMAR DESAI</div>
-    <div><strong>Account No:</strong><code>&nbsp;</code>03290100012275<br/>
-    Gita Mandir, Bhulabhai Cross Road,<br/> Ahmedabad - 380022
-    </div>
-    <div><strong>IFSC Code:</strong><code>&nbsp;</code>BARBOGITAMA</div>
-    <div><strong>MICR Code:</strong><code>&nbsp;</code>380012014</div>
-    <div><strong>Swift Code:</strong><code>&nbsp;</code>BARBINBBBHD</div><br/><br/>";
-                    $body 				.= "Please reply back to this email with the bank where you submitted the money. Otherwise we would not be able to process your request.";
-        $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
+            $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
     }
     else if($explain=="short")
     {
-        $money              = 100;      // for short questions
-        $body               = "Dear ".$name.",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Once your payment of<html>&nbsp;</html>".($money*$choice)."<html>&#8377;</html> is received we would process your query and give answers to your questions in 7 Working Days.<html>&nbsp;</html>
-                                Once you transfer the money please reply back to this email with confirmation of payment. If payment is not received in 10 Working Days then that would be termed as Cancellation of Order.<br/><br/>";
-        $body               .= "Your Details are as below.<br/>";
+
+        $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>This is to confirm that your question form has been received. Also your payment of ".$fees." ".$details['user_currency']."(".$details['user_curr_full'].")".
+                                " has been authorized. We would process your query and give a detailed answer with logical solution to your questions in 7 Working Days. Your money would only be debited from your Account once we have finished the report and mailed it to you.<br/><br/>";
+        $body               .= "Your Details are as below.<br/><br/>";
         $body               .= "Name: ".$name."<br/>";
         $body               .= "Email: ".$to."<br/>";
         $body               .= "Gender: ".$gender."<br/>";
         $body               .= "Date Of Birth: ".$dob."<br/>";
         $body               .= "Time Of Birth: ".$tob."<br/>";
         $body               .= "Place Of Birth: ".$pob."<br/>";
+        $body               .= "Token Number: ".$details['UniqueID']."<br/>";
+        $body               .= "Track ID: ".$details['ccavenue_track_id']."<br/>";
+        $body               .= "Bank Reference Number: ".$details['ccavenue_bank_ref_no']."<br/>";
         $body               .= "Number Of Questions: ".$choice."<br/>";
         $body               .= "Explanation (Detail/Short): ".$explain."<br/><br/>";
         for($i=0;$i<$choice;$i++)
@@ -292,36 +328,29 @@ protected function sendConfirmMail($details)
             $body               .= "Topic: ".${"ques_topic".$j}."<br/>";
             $body               .= "Question: ".${"ques_".$j}."<br/><br/>";
         }
-        $body				.= "Bank Details of Astro Isha are as Follows: ";
-        $body				.= "<br/>For Canara Bank";
-        $body				.= "<div><strong>Payable To:</strong><code>&nbsp;</code>ROHAN Y DESAI</div>
-    <div><strong>Account No:</strong><code>&nbsp;</code>0175101023581<br/>
-    1st Floor, Sashwat Complex, Kankaria Road,<br/> Ahmedabad - 380022
-    </div>
-    <div><strong>IFSC Code:</strong><code>&nbsp;</code>CNRB0000175</div>
-    <div><strong>MICR Code:</strong><code>&nbsp;</code>380015008</div>
-    <div><strong>Swift Code:</strong><code>&nbsp;</code>CNRBINBBAFD</div><br/><br/>";
-                    $body 				.=  "For Bank Of Baroda";
-                    $body				.= "<div><strong>Payable To:</strong><code>&nbsp;</code>ROHAN YATINKUMAR DESAI</div>
-    <div><strong>Account No:</strong><code>&nbsp;</code>03290100012275<br/>
-    Gita Mandir, Bhulabhai Cross Road,<br/> Ahmedabad - 380022
-    </div>
-    <div><strong>IFSC Code:</strong><code>&nbsp;</code>BARBOGITAMA</div>
-    <div><strong>MICR Code:</strong><code>&nbsp;</code>380012014</div>
-    <div><strong>Swift Code:</strong><code>&nbsp;</code>BARBINBBBHD</div><br/><br/>";
-                    $body 				.= "Please reply back to this email with the bank where you submitted the money. Otherwise we would not be able to process your request.";
-        $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
+            $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
     }
-
+}
+else if($details['ccavenue_status']=='Invalid'||
+        $details['ccavenue_status']=='Aborted'||
+        $details['ccavenue_status']=='Failure')
+{
+    $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>We were unable to process your request due to Cancellation Of Order. Please try again to make payment.";
+    $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
+}
+else
+{
+    $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>Something went wrong and we are unable to process your Order. Please try again later.";
+    $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";
+}
     $mailer             = JFactory::getMailer();
     $config             = JFactory::getConfig();
     $sender             = array( 
                                     $config->get( 'mailfrom' ),
                                     $config->get( 'fromname' ) 
                                 );
-
     $mailer             ->setSender($sender);
-    $mailer             ->addRecipient($to);
+    $mailer             ->addRecipient($details['email']);
     $mailer             ->addBCC($bcc, 'Rohan Desai');
     $mailer             ->setSubject($subject);
     $mailer             ->isHTML(true);
@@ -331,9 +360,16 @@ protected function sendConfirmMail($details)
     $send = $mailer->Send();
     if ( $send !== true ) {
         echo 'Error sending email: ' . $send->__toString();
-    } else {
+    }
+    else if($details['ccavenue_status']=='Invalid'||
+        $details['ccavenue_status']=='Aborted')
+    {
         $app                =&JFactory::getApplication();
-        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=dd'); 
+        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment_success=false');
+    }
+    else {
+        $app                =&JFactory::getApplication();
+        $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=ccavenue'); 
     }
 }
     
