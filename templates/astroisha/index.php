@@ -106,6 +106,12 @@
      </div>
 </div>
 <div class="container-fluid">
+    <div class="spacer"></div>
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Kindly Note!!</strong> Astro Isha is in the process of modifying some wordings from Sanskrit/Hindi to English. We apologize for the irregularities on the website and resulting inconvenience to users from it.
+    </div>
+    <div class="spacer"></div>
     <div class="row">
         <div class="hidden-md hidden-lg" id="mob_menu">
             <button type="button" class="btn btn-primary" aria-label="Show Menu" onclick="javascript:showSideMenu();">

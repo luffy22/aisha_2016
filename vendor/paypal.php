@@ -61,8 +61,8 @@ $transaction    ->setAmount($amount)
 
 $baseUrl = getBaseUrl();
 $redirectUrls = new RedirectUrls();
-$redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true")
-    ->setCancelUrl("$baseUrl/ExecutePayment.php?success=false");
+$redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true&uniq_id=$token")
+    ->setCancelUrl("$baseUrl/ExecutePayment.php?success=false&uniq_id=$token");
 
 $payment = new Payment();
 $payment->setIntent("order")
@@ -70,48 +70,18 @@ $payment->setIntent("order")
     ->setRedirectUrls($redirectUrls)
     ->setTransactions(array($transaction));
 
-$request = clone $payment;
-try {
-    $payment->create($apiContext);
-} catch (Exception $ex) {
-    ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
-}
-$approvalUrl    = $payment->getApprovalLink();
-$payment_id     = $payment->id;
+    $request = clone $payment;
+    try {
+        $payment->create($apiContext);
+    } catch (Exception $ex) {
+        ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
+    }
+    $approvalUrl    = $payment->getApprovalLink();
+    $payment_id     = $payment->id;
 
-$host   = "localhost";$user = "astroxou_admin";
-$pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
-$mysqli = new mysqli($host,$user,$pwd,$db);
-/* check connection */
-if (mysqli_connect_errno()) {
-        printf("Connect failed: %s\n", mysqli_connect_error());
-}
-else
-{
-    $query = "UPDATE jv_questions SET paypal_id='$payment_id' WHERE UniqueID='$token'";
-    $result	= mysqli_query($mysqli, $query);
+    header('Location:'.$approvalUrl);
     
-    if($result)
-    {
-        mysqli_close($myqli);
-        header('Location:'.$approvalUrl);
-    }
-    else
-    {
-        echo "Unable to process requests. Please try again to avoid problems in payment.";
-    ?>
-        <a href="http://www.astroisha.com/ask-question">
-  <button type="button" class="btn btn-primary" aria-label="Left Align">
-  <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back
-  </button></a><a href="http://www.astroisha.com">
-  <button type="button" class="btn btn-primary" aria-label="Left Align">
-  <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home Page
-</button></a>
-    <?php
-    }
-   
-}
-//header('Location:'.$approvalUrl);
+ //header('Location:'.$approvalUrl);
 //echo $approvalUrl;exit;
  //ResultPrinter::printResult("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", "<a href='$approvalUrl' >$approvalUrl</a>", $request, $payment);
 

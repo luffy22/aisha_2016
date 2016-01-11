@@ -23,6 +23,7 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
     //echo $execution->getPayerId();
     try {
              // Get payment id, and then execute the payment request
+             $token                 = $_GET['uniq_id'];
              $payment               = Payment::get($paymentId, $apiContext);
              $payer_id              = $payment->getPayer()->getPayerInfo()->getPayerId();
              $transactions           = $payment->getTransactions();
@@ -45,29 +46,10 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
                                         "currency":"'.$currency.'"
                                     }'));
              $result            = $order->authorize($authorization, $apiContext);
-            $host   = "localhost";$user = "astroxou_admin";
-            $pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
-            $mysqli = new mysqli($host,$user,$pwd,$db);
-            /* check connection */
-            if (mysqli_connect_errno()) {
-                printf("Connect failed: %s\n", mysqli_connect_error());
-            }
-            else
-            {
-                $query = "UPDATE jv_questions SET paypal_order_id='".$result->getId()."' WHERE paypal_id='".$paymentId."'";
-                $result	= mysqli_query($mysqli, $query);
+             $server            = "http://" . $_SERVER['SERVER_NAME'];
+             //echo $server;exit;
+             header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$paymentId.'&order_id='.$result->getId().'&token='.$token);
 
-                if($result)
-                {
-                    mysqli_close($myqli);
-                    $server     = 'http://'.$_SERVER['SERVER_NAME'];
-                    header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$paymentId);
-                }
-                else
-                {
-                    echo "Unable to process requests";
-                }
-            }
              /*$capture = new Capture();
     $capture->setIsFinalCapture(true);
     $capture->setAmount(new Amount(
@@ -82,20 +64,10 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
          {
             //header('Refresh: 2; URL=http://www.astroisha.com/quesconfirm?payment_success=false');
          }
-         
-         //echo $payment;exit;
-        
-        //header('Location:http://localhost/aisha/vendor/authorizePayment.php?pay_id='.$paymentId);
-        
-   // $info	= json_decode($payment);
-    //$id         = $info->id;
-    //$server     = 'http://'.$_SERVER['SERVER_NAME'];
-   // header('Location:'.$server.'/aisha/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$id);
-    
-	//echo $info->invoice_number;
 }
 else if(isset($_GET['success']) && $_GET['success'] == 'false')
 {   
-    header('Refresh: 2; URL=http://www.astroisha.com/index.php?option=com_astrologin&view=quesconfirm&payment_success=false');
+     $token                 = $_GET['uniq_id'];
+     header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.failPayment&token='.$token);
 }
 ?>

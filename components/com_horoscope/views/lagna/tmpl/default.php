@@ -7,10 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 defined('_JEXEC') or die();
-
+		
 ?>
  <div>
-<h2>Calculate Lagna (India Only)</h2>
+<h2>Calculate Lagna</h2>
 <div class="spacer"></div>
 <form class="form-horizontal" role="form" enctype="application/x-www-form-urlencoded" method="post" 
       action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.findlagna'); ?>">
@@ -26,7 +26,7 @@ defined('_JEXEC') or die();
         <label for="inputGender" class="col-sm-2 control-label">Gender:</label>
         <div class="col-sm-10">
         <input type="radio" name="gender" value="male" id="lagna_gender1"> Male
-        <input type="radio" name="gender" value="female" id="lagna_gender2"> Female
+        <input type="radio" name="gender" value="female" id="lagna_gender2" checked> Female
         </div>
     </div>
     <div class="form-group">

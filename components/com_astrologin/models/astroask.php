@@ -107,15 +107,19 @@ public function askQuestions($details)
 // paypal authorize Order
 public function authorizePayment($details)
 {
-    $id         = $details['paypal_id'];
+    $paypal_id      = $details['paypal_id'];
+    $order_id       = $details['order_id'];
+    $token          = $details['token'];
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     // Fields to update.
     $fields = array(
-        $db->quoteName('paypal_authorize') . ' = ' . $db->quote('yes'));
+        $db->quoteName('paypal_authorize') . ' = ' . $db->quote('yes'),
+        $db->quoteName('paypal_id').'='.$db->quote($paypal_id),
+        $db->quoteName('paypal_order_id').'='.$db->quote($order_id));
     // Conditions for which records should be updated.
     $conditions = array(
-        $db->quoteName('paypal_id').'='.$db->quote($id)
+        $db->quoteName('UniqueID').'='.$db->quote($token)
     );
     $query->update($db->quoteName('#__questions'))->set($fields)->where($conditions);
  
@@ -132,7 +136,7 @@ public function authorizePayment($details)
                                     'ques_topic2','ques_2','ques_2_explain',
                                     'ques_topic3','ques_3','ques_3_explain')))
                             ->from($db->quoteName('#__questions'))
-                            ->where($db->quoteName('paypal_id').'='.$db->quote($id));
+                            ->where($db->quoteName('paypal_id').'='.$db->quote($paypal_id));
        $db                  ->setQuery($query);
        $details                 = $db->loadAssoc();
        $fees                = $details['fees'];
@@ -213,6 +217,67 @@ public function authorizePayment($details)
     {
         echo "Failed to Send Mail: Wait For Confirmation if you are sure payment is done.";
     }
+}
+public function failPayment($details)
+{
+    $token          = $details['token'];
+    $db         = JFactory::getDbo();
+    $query      = $db->getQuery(true);
+     $db = JFactory::getDbo();
+    $query = $db->getQuery(true);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('paypal_authorize') . ' = ' . $db->quote('no'),
+        $db->quoteName('paypal_id').'='.$db->quote($paypal_id));
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('UniqueID').'='.$db->quote($token)
+    );
+    $query->update($db->quoteName('#__questions'))->set($fields)->where($conditions);
+ 
+    $db->setQuery($query);
+ 
+    $result = $db->execute();
+    if($result)
+    {
+        $query      ->clear();
+        $query              ->select($db->quoteName(array('UniqueID','name','email')))
+                            ->from($db->quoteName('#__questions'))
+                            ->where($db->quoteName('UniqueID').'='.$db->quote($token));
+        $db                  ->setQuery($query);
+        $details                 = $db->loadAssoc();
+
+        $bcc                = 'kopnite@gmail.com';
+        $subject            = "Astro Isha Failed Transaction ID: ".$details['UniqueID'];
+            
+        $body               = "Dear ".$details['name'].",<br/>"."<html>&nbsp;&nbsp;&nbsp;</html>Your order with Astro Isha was cancelled. Please try again if you wish your query to be resolved by Astro Isha. If you 
+                               do not wish paid consultation please ignore this email.<br/><br/>";
+        
+        $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";        
+        $mailer             = JFactory::getMailer();
+        $config             = JFactory::getConfig();
+        $sender             = array( 
+                                    $config->get( 'mailfrom' ),
+                                    $config->get( 'fromname' ) 
+                                );
+
+        $mailer             ->setSender($sender);
+        $mailer             ->addRecipient($details['email']);
+        $mailer             ->addBCC($bcc, 'Rohan Desai');
+        $mailer             ->setSubject($subject);
+        $mailer             ->isHTML(true);
+        $mailer             ->Encoding = 'base64';
+        $mailer             ->setBody($body);
+
+        $send = $mailer->Send();
+        if ( $send !== true ) {
+            echo 'Error sending email: ' . $send->__toString();
+        } else {
+            $app                =&JFactory::getApplication();
+            $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=false');
+            
+    }
+}
 }
 public function confirmCCPayment($details)
 {
