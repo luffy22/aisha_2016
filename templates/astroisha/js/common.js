@@ -30,16 +30,39 @@ function toggleMenu(id)
 }
 function getLagna()
 {
+    var inputs = document.getElementsByTagName('input');
     var lagna   = document.getElementById("lagna_1");
-    var gender  = document.getElementById("lagna_gender1");
     var dob     = document.getElementById("datepicker");
-    /*if(lagna.value=="")
+    var pob     = document.getElementById("lagna_pob");
+    for(var i=1;i<=inputs.length;i++)
+    {
+        $("#lagna_grp_"+i).removeClass("has-error has-feedback");
+        $("#lagna_ico_"+i).removeClass("glyphicon glyphicon-remove");
+        $("#lagna_err_"+i).attr("style","visibility:hidden");
+    }
+    if(lagna.value=="")
     {
         
         $("#lagna_grp_1").addClass("has-error has-feedback");
         $("#lagna_ico_1").addClass("glyphicon glyphicon-remove");
         document.getElementById('lagna_err_1').style.visibility = "visible";
-    }*/
+    }
+    else if(dob.value=="")
+    {
+        $("#lagna_grp_3").addClass("has-error has-feedback");
+        $("#lagna_ico_3").addClass("glyphicon glyphicon-remove");
+        document.getElementById('lagna_err_3').style.visibility = "visible";
+    }
+     else if(pob.value=="")
+    {
+        $("#lagna_grp_4").addClass("has-error has-feedback");
+        $("#lagna_ico_4").addClass("glyphicon glyphicon-remove");
+        document.getElementById('lagna_err_4').style.visibility = "visible";
+    }
+    else
+    {
+        form.submit();
+    }
 }
 /*     
  *     var location = window.location.protocol + "//" + window.location.host;

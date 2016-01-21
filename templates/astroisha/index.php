@@ -107,10 +107,19 @@
 </div>
 <div class="container-fluid">
     <div class="spacer"></div>
-    <div class="alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Kindly Note!!</strong> Astro Isha is in the process of modifying some wordings from Sanskrit/Hindi to English. We apologize for the irregularities on the website and resulting inconvenience to users from it.
-    </div>
+    <?php
+		$session 	=&JFactory::getSession();
+		$check 		= $session->isNew();
+		if($check == true)
+		{
+    ?>
+			<div class="alert alert-info alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>Kindly Note!!</strong> Astro Isha is in the process of modifying some wordings from Sanskrit/Hindi to English. We apologize for the irregularities on the website and resulting inconvenience to users from it.
+			</div>
+    <?php
+		}	
+    ?>
     <div class="spacer"></div>
     <div class="row">
         <div class="hidden-md hidden-lg" id="mob_menu">
@@ -144,20 +153,16 @@
 <gcse:search></gcse:search>
 <div class="spacer"></div>
         <div class="breadcrumb">
-            <jdoc:include type="modules" name="breadcrumbs" style="none" />
+        <jdoc:include type="modules" name="breadcrumbs" style="none" />
         </div>
-        <div class="container-main">
-            <div class="spacer"></div>
-            <jdoc:include type="modules" name="articleslider" style="none" />
-            <div class="spacer"></div>
-            <jdoc:include type="modules" name="articleslider2" style="none" />
-            <div class="spacer"></div>
-            <jdoc:include type="component" />
-            <div class="spacer"></div>
-            <jdoc:include type="message" />
-            <div class="spacer"></div>
-            <jdoc:include type="modules" name="relatedarticles" style="none" />
-        </div>
+        <div class="spacer"></div>
+        <jdoc:include type="modules" name="articleslider" style="none" />
+        <div class="spacer"></div>
+        <jdoc:include type="modules" name="articleslider2" style="none" />
+        <jdoc:include type="component" />
+        <jdoc:include type="message" />
+        <div class="spacer"></div>
+        <jdoc:include type="modules" name="relatedarticles" style="none" />
     </div>
     <div class="col-md-3 hidden-xs hidden-sm">
         <div class="spacer"></div>
