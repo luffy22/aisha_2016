@@ -95,10 +95,10 @@ class HoroscopeModelLagna extends JModelItem
             $db                 ->setQuery($query);
             unset($count);
             $count              = count($db->loadResult());
-           
+            
             $time_diff          = $db->loadAssoc();
             $correction         = $time_diff['corr_time'];      // correction time diff using sidereal_2 table
-            
+            //echo $correction;exit;
             $corr_diff          = substr($correction, 0,1);     // the positive/negative sign
             $corr_time		= substr($correction,1);        // the time diff in mm:ss format
             $diff               = explode(":", $corr_time);
@@ -141,6 +141,7 @@ class HoroscopeModelLagna extends JModelItem
             unset($count);
             $count              = count($db->loadResult());
             $sid_corr           = $db->loadAssoc();     // sidereal correction in seconds
+            
             if($sid_corr['corr_sign'] == "-")
             {
                 //echo $sid_corr['corr_sign'];exit;
@@ -166,6 +167,7 @@ class HoroscopeModelLagna extends JModelItem
                 //echo $date->format('H:i:s');exit;
                 if($diff[0] != "00"||$diff[0] != "0")
                 {
+                    echo "calls1";exit;
                     $date   ->add(new DateInterval('PT'.$diff[0].'M'.$diff[1].'S'));
                 }
                 else
@@ -173,7 +175,7 @@ class HoroscopeModelLagna extends JModelItem
                     $date   ->add(new DateInterval('PT'.$diff[1].'S'));
                 }
             }
-            return $date->format('H:i:s');
+            return $date->format('H:i:s');;
         }
         
         //longitude >= '".($lon)."'
@@ -320,6 +322,7 @@ class HoroscopeModelLagna extends JModelItem
     }
     public function calculatelagna($data)
     {
+        //print_r($data);
         $lat                    = explode(":",$data['lat']);
         $lat                    = $lat[0].'.'.$lat[1];
         //$gender                 = $data['gender'];
@@ -330,29 +333,29 @@ class HoroscopeModelLagna extends JModelItem
         $dob                    = $data['dob'];
         //return $dob;
         $doy                    = explode("/",$dob);
-        $tob                    = $data['tob'];
-       
+        $tob                    = strtotime($data['tob']);
+        
         $date    		= new DateTime($dob);
         $date                   ->setTimestamp($tob);
         $tob_format		= $date->format('g:i a');
-        echo $tob_format;exit;
+        
         if(strpos($tob_format,"pm"))
         {
-            $date		= new DateTime($dob);		// Datetime object with user date of birth
-            $date		->setTimeStamp($sidtime);		// time of birth for user
-            $date		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
+            $dateObject		= new DateTime($dob);		// Datetime object with user date of birth
+            $dateObject		->setTimeStamp($sidtime);		// time of birth for user
+            $dateObject		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
       
         }
         else
         {
-            $date		= new DateTime($dob);		// Datetime object with user date of birth
-            $date		->setTimeStamp($sidtime);		// time of birth for user
-            $date		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
+            $dateObject		= new DateTime($dob);		// Datetime object with user date of birth
+            $dateObject		->setTimeStamp($sidtime);		// time of birth for user
+            $dateObject		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
         }
-        
+        //echo $dateObject->format('G:i:s');exit;
         //echo $dat_hr.":".$dat_min.":".$dat_sec;exit;
         //echo $date->format('H:i:s');exit;
-        $dat_hr                 = explode(":",$date->format('G:i:s'));
+        $dat_hr                 = explode(":",$dateObject->format('G:i:s'));
         $corr_sid_hr            = $dat_hr[0];
         $corr_sid_min           = $dat_hr[1];
         $corr_sid_sec           = $dat_hr[2];
@@ -385,7 +388,7 @@ class HoroscopeModelLagna extends JModelItem
         $up_min                 = $get_up_lagna['lagna_min'];
         $up_hr                  = $get_up_lagna['hour'];
         $up_minute              = $get_up_lagna['minute'];
-        echo $lat.":".$corr_sid_hr.":".$down_min;exit;
+        //echo $lat.":".$corr_sid_hr.":".$down_min;exit;
         //return $up_lagna.":".$up_deg.":".$up_min;
         $query                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$lat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$lat."') limit 1";
         $db                     ->setQuery($query);
@@ -472,7 +475,6 @@ class HoroscopeModelLagna extends JModelItem
         {
             if($ayanamsha_corr[1] > $lagna_acc_min)
             {
-                
                 $lagna_acc_min  = ($lagna_acc_min+60)-$ayanamsha_corr[0];
                 $lagna_acc_deg  = $lagna_acc_deg-1;
             }
