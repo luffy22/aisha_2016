@@ -443,7 +443,7 @@ class HoroscopeModelLagna extends JModelItem
            $lagna_acc_deg       = $lagna_acc_deg - 30;
            $lagna_acc_sign      = $lagna_acc_sign+1;
        }
-       
+       //echo $lagna_acc_sign.":".$lagna_acc_deg.":".$lagna_acc_min.":".$lagna_acc_sec;exit;
         $year                   = $doy[0];
         $query1                  ->clear();
         $query1                  = "SELECT correction FROM jv_lahiri_5 WHERE Year='".$year."'";
@@ -451,6 +451,7 @@ class HoroscopeModelLagna extends JModelItem
         $count                  = count($db->loadResult());
        
         $get_ayanamsha          = $db->loadAssoc();
+        //echo $get_ayanamsha['correction'];exit;
         $ayanamsha_corr		= explode(":", $get_ayanamsha['correction']);
         $ayanamsha_corr[0]      = substr($ayanamsha_corr[0], 1);
         //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
@@ -458,7 +459,7 @@ class HoroscopeModelLagna extends JModelItem
         if($year <= '1938')
         {
             $lagna_acc_min	= $lagna_acc_min+$ayanamsha_corr[1];
-            $langa_acc_deg	= $lagna_acc_deg+$ayanamsha_corr[0];
+            $lagna_acc_deg	= $lagna_acc_deg+$ayanamsha_corr[0];
             if($lagna_acc_min >= 60)
             {
                 $lagna_acc_min  = $lagna_acc_min - 60;
@@ -466,7 +467,7 @@ class HoroscopeModelLagna extends JModelItem
             }
             else if($lagna_acc_deg >= 30)
             {
-                $lagna_acc_deg  = $ayanamsha_corr_deg - 30;
+                $lagna_acc_deg  = $lagna_acc_deg - 30;
                 $lagna_acc_sign	= $lagna_acc_sign + 1;
             }
             
@@ -475,7 +476,7 @@ class HoroscopeModelLagna extends JModelItem
         {
             if($ayanamsha_corr[1] > $lagna_acc_min)
             {
-                $lagna_acc_min  = ($lagna_acc_min+60)-$ayanamsha_corr[0];
+                $lagna_acc_min  = ($lagna_acc_min+60)-$ayanamsha_corr[1];
                 $lagna_acc_deg  = $lagna_acc_deg-1;
             }
             else
@@ -484,7 +485,6 @@ class HoroscopeModelLagna extends JModelItem
             }
             if($ayanamsha_corr[0] > $lagna_acc_deg)
             {
-               
                 $lagna_acc_deg  = ($lagna_acc_deg+30)-$ayanamsha_corr[0];
                 $lagna_acc_sign = $lagna_acc_sign-1;
             }
@@ -501,9 +501,9 @@ class HoroscopeModelLagna extends JModelItem
                                         "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
         //print_r($lagna);exit;
         $data            = array_merge($data, $lagna);
-        print_r($data);exit;
+        //print_r($data);exit;
         //return $data;
-        //$this->getMoonData($data);
+        $this->getMoonData($data);
         //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
         //$this->getData($data);
         //$app        = &JFactory::getApplication();
@@ -623,7 +623,62 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function getMoonData($data)
     {
-        
+        //print_r($data);
+        $dob        = explode("/",$data['dob']);
+        $year       = (int)$dob[0];
+        $month      = (int)$dob[1];
+        $day        = (int)$dob[2];
+        if($year < 2000)
+        {
+            $db         = JFactory::getDbo();
+            $query      = $db->getQuery(true);
+            $query      ->select($db->quoteName(array('yob','moon')));
+            $query      ->from($db->quoteName('#__raman_moon2000'));
+            $query      ->where($db->quoteName('year').'='.$db->quote($year).
+                           'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
+                           $db->quoteName('day').'<='.$db->quote($day));
+            $query      ->order($db->quoteName('day').' desc');
+            $query      ->setLimit('1');
+            $db->setQuery($query);
+            $row            = $db->loadAssoc();
+            $down_yob       = $row['yob'];
+            $down_moon      = explode(".",$row['moon']);
+            $query          ->clear();
+            $query          ->select($db->quoteName(array('yob','moon')));
+            $query          ->from($db->quoteName('#__raman_moon2000'));
+            $query          ->where($db->quoteName('year').'='.$db->quote($year).
+                                'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
+                                $db->quoteName('day').'>'.$db->quote($day));
+            $query          ->order($db->quoteName('day').' asc');
+            $query          ->setLimit('1');
+            $db->setQuery($query);
+            flush($row);
+            $row                = $db->loadAssoc();
+            $up_yob             = $row['yob'];
+            $up_moon            = explode(".",$row['moon']);
+            
+            $datetime1          = new DateTime($down_yob);
+            $datetime2          = new DateTime($up_yob);
+            $interval           = $datetime1->diff($datetime2);
+            $intval             = (int)$interval->format('%a');
+            
+            $up_deg_moon        = $up_moon[0];
+            $up_min_moon        = $up_moon[1];
+            $down_deg_moon      = $down_moon[0];
+            $down_min_moon      = $down_moon[1];
+            
+            if($up_min_moon > $down_min_moon)
+            {
+                $new_min_moon   = $up_min_moon - $down_min_moon;
+            }
+            else
+            {
+                $up_deg_moon    = $up_deg_moon - 1;
+                $new_min_moon   = ($up_min_moon+60)- $down_min_moon;
+            }
+            $new_deg_moon       = $up_deg_moon - $down_deg_moon;
+            echo $new_deg_moon.":".$new_min_moon;
+        }
     }
 }
 ?>
