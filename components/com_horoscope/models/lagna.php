@@ -6,7 +6,6 @@ require_once JPATH_COMPONENT.'/controller.php';
 class HoroscopeModelLagna extends JModelItem
 {
     protected $data;
-    
     public function getLagna($user_details)
     {
         
@@ -662,11 +661,16 @@ class HoroscopeModelLagna extends JModelItem
             $interval           = $datetime1->diff($datetime2);
             $intval             = (int)$interval->format('%a');
             //echo $intval."<br/>";
-            $up_mov        = ($up_moon[0]*60*4)+($up_moon[1]*4);
-            $down_mov      = ($down_moon[0]*60*4)+($down_moon[1]*4);
+            $up_mov             = ($up_moon[0]*60*4)+($up_moon[1]*4);
+            $down_mov           = ($down_moon[0]*60*4)+($down_moon[1]*4);
             
-            $one_day_movement   = ($up_mov-$down_mov)/($intval*60*24);
-            
+            $one_day_transit    = ($up_mov-$down_mov)/$intval;
+            $one_day_transit    = $down_mov+$one_day_transit;
+            $date               = new DateTime($data['dob']);
+            $date               ->setTimeStamp(strtotime($data['tob']));
+            $date               ->sub(new DateInterval('PT17H30M0S'));
+            echo $date->format('s');
+            //echo date("g:i:s", $one_day_transit);
         }
     }
 }

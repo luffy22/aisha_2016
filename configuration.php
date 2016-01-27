@@ -5,7 +5,7 @@ class JConfig {
 	public $display_offline_message = '1';
 	public $offline_image = '';
 	public $sitename = 'Astro Isha';
-	public $editor = 'tinymce';
+	public $editor = 'jce';
 	public $captcha = '0';
 	public $list_limit = '20';
 	public $access = '1';
@@ -24,8 +24,8 @@ class JConfig {
 	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&keyref=Help{major}{minor}:{keyref}';
 	public $ftp_host = '127.0.0.1';
 	public $ftp_port = '21';
-	public $ftp_user = '';
-	public $ftp_pass = '';
+	public $ftp_user = 'luffy22';
+	public $ftp_pass = 'Deuxma_1985';
 	public $ftp_root = '';
 	public $ftp_enable = '0';
 	public $offset = 'UTC';
@@ -58,5 +58,29 @@ class JConfig {
 	public $tmp_path = '//var/www/html/aisha/tmp';
 	public $lifetime = '15';
 	public $session_handler = 'database';
-	
+	public $memcache_persist = '1';
+	public $memcache_compress = '0';
+	public $memcache_server_host = 'localhost';
+	public $memcache_server_port = '11211';
+	public $memcached_persist = '1';
+	public $memcached_compress = '0';
+	public $memcached_server_host = 'localhost';
+	public $memcached_server_port = '11211';
+	public $proxy_enable = '0';
+	public $proxy_host = '';
+	public $proxy_port = '';
+	public $proxy_user = '';
+	public $proxy_pass = '';
+	public $MetaRights = '';
+	public $sitename_pagetitles = '0';
+	public $force_ssl = '0';
+	public $session_memcache_server_host = 'localhost';
+	public $session_memcache_server_port = '11211';
+	public $session_memcached_server_host = 'localhost';
+	public $session_memcached_server_port = '11211';
+	public $frontediting = '1';
+	public $feed_email = 'author';
+	public $cookie_domain = '';
+	public $cookie_path = '';
+	public $asset_id = '1';
 }
