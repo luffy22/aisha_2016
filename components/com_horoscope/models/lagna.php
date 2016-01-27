@@ -661,23 +661,12 @@ class HoroscopeModelLagna extends JModelItem
             $datetime2          = new DateTime($up_yob);
             $interval           = $datetime1->diff($datetime2);
             $intval             = (int)$interval->format('%a');
+            //echo $intval."<br/>";
+            $up_mov        = ($up_moon[0]*60*4)+($up_moon[1]*4);
+            $down_mov      = ($down_moon[0]*60*4)+($down_moon[1]*4);
             
-            $up_deg_moon        = $up_moon[0];
-            $up_min_moon        = $up_moon[1];
-            $down_deg_moon      = $down_moon[0];
-            $down_min_moon      = $down_moon[1];
+            $one_day_movement   = ($up_mov-$down_mov)/($intval*60*24);
             
-            if($up_min_moon > $down_min_moon)
-            {
-                $new_min_moon   = $up_min_moon - $down_min_moon;
-            }
-            else
-            {
-                $up_deg_moon    = $up_deg_moon - 1;
-                $new_min_moon   = ($up_min_moon+60)- $down_min_moon;
-            }
-            $new_deg_moon       = $up_deg_moon - $down_deg_moon;
-            echo $new_deg_moon.":".$new_min_moon;
         }
     }
 }
