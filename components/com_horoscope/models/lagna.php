@@ -622,7 +622,7 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function getMoonData($data)
     {
-        //print_r($data);
+        print_r($data);
         $dob        = explode("/",$data['dob']);
         $year       = (int)$dob[0];
         $month      = (int)$dob[1];
@@ -668,9 +668,47 @@ class HoroscopeModelLagna extends JModelItem
             $one_day_transit    = $down_mov+$one_day_transit;
             $date               = new DateTime($data['dob']);
             $date               ->setTimeStamp(strtotime($data['tob']));
-            $date               ->sub(new DateInterval('PT17H30M0S'));
-            echo $date->format('s');
-            //echo date("g:i:s", $one_day_transit);
+            $date1              = new DateTime($data['dob']);
+            $date1              ->setTime('12','00','00');
+            $tmz                = explode(":", $data['tmz']);
+            $sign               = substr($tmz[0],0,1);
+            $tmz_hr             = substr($tmz[0], 1);
+            if($sign == "+")
+            {
+                $date1          ->add(new DateInterval('PT'.$tmz_hr.'H'.$tmz[1].'M0S'));
+            }
+            else if($sign == "-")
+            {
+                $date1          ->sub(new DateInterval('PT'.$tmz_hr.'H'.$tmz[1].'M0S'));
+            }
+            $tob                = strtotime($date->format('G:i:s'));
+            $gmt                = strtotime($date1->format('G:i:s'));
+            if($tob > $gmt)
+            {
+                $date           ->setTimestamp($tob);
+                $gmt            = explode(":",date('G:i:s', $gmt));
+                $date           ->sub(new DateInterval('PT'.$gmt[0].'H'.$gmt[1].'M'.$gmt[2].'S'));
+                //echo $date      ->format('G:i:s');
+            }
+            else if($tob <= $gmt)
+            {
+                $date           ->setTimestamp($gmt);
+                $tob            = explode(":",date('G:i:s', $tob));
+                $date           ->sub(new DateInterval('PT'.$tob[0].'H'.$tob[1].'M'.$tob[2].'S'));
+                //echo $date      ->format('G:i:s');
+            }
+            $time_diff          = explode(":",$date->format("G:i:s"));
+            $actual_transit     = $one_day_transit*(($time_diff[0]*3600)+($time_diff[1]*60)+$time_diff[2])/(24*3600);
+            if($tob > $gmt)
+            {
+                $actual_transit     = $one_day_transit+round($actual_transit,0);
+            }
+            else
+            {
+                $actual_transit     = $one_day_transit-round($actual_transit,0);
+            }
+            $actual_transit         = $actual_transit/(4*60);
+            echo $actual_transit;
         }
     }
 }
