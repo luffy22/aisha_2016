@@ -496,8 +496,8 @@ class HoroscopeModelLagna extends JModelItem
         }
         //$data            = array("name"=>$this->fname,"gender"=>$this->gender,
                                        
-        $lagna           = array("sign"=>$lagna_acc_sign,"degree"=>$lagna_acc_deg,
-                                        "min"=>$lagna_acc_min,"sec"=>$lagna_acc_sec);
+        $lagna           = array("sign"=>$lagna_acc_sign.":".$lagna_acc_deg.":".
+                                        $lagna_acc_min.":".$lagna_acc_sec);
         //print_r($lagna);exit;
         $data            = array_merge($data, $lagna);
         //print_r($data);exit;
@@ -745,12 +745,12 @@ class HoroscopeModelLagna extends JModelItem
             
         }
         $data            = array_merge($data, $moon);
-        print_r($data);
-        //$this->calculateSun($data);
+        //print_r($data);
+        $this->calculateSun($data);
     }
     protected function calculateSun($data)
     {
-        
+        print_r($data);
     }
 }
 ?>
