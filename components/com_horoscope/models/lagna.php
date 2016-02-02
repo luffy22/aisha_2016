@@ -750,7 +750,51 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function calculateSun($data)
     {
-        print_r($data);
+        // print_r($data);
+        $dob        = explode("/",$data['dob']);
+        $year       = (int)$dob[0];
+        $month      = (int)$dob[1];
+        $day        = (int)$dob[2];
+        
+        if($year <= 2000)
+        {
+            $db         = JFactory::getDbo();
+            $query      = $db->getQuery(true);
+            $query          ->select($db->quoteName(array('full_year','surya')));
+            $query          ->from($db->quoteName('#__raman_planets2000'));
+            $query          ->where($db->quoteName('year').'='.$db->quote($year).
+                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
+                                    $db->quoteName('day').'<='.$db->quote($day));
+            $query          ->order($db->quoteName('day').' desc');
+            $query          ->setLimit('1');
+            $db             ->setQuery($query);
+            $result         = $db->loadAssoc();
+            $down_yob       = $result['full_year'];
+            $down_deg       = explode(".",$result['surya']);
+            
+            $query          ->clear();
+            $query          ->select($db->quoteName(array('full_year','surya')));
+            $query          ->from($db->quoteName('#__raman_planets2000'));
+            $query          ->where($db->quoteName('year').'='.$db->quote($year).
+                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
+                                    $db->quoteName('day').'>'.$db->quote($day));
+            $query          ->order($db->quoteName('day').' asc');
+            $query          ->setLimit('1');
+            $db             ->setQuery($query);
+            $result         = $db->loadAssoc();
+            $up_yob         = $result['full_year'];
+            $up_deg         = explode(".",$result['surya']);
+            
+            $datetime1          = new DateTime($down_yob);          // lower value of surya from two arrived values
+            $datetime2          = new DateTime($data['dob']);       // exact dob
+            $interval           = $datetime1->diff($datetime2);     // get difference
+            $intval             = (int)$interval->format('%a');     // format in int example 2
+            
+            $total_transit      = ((($up_deg[0]*60*4)+($up_deg[1]*4))-(($down_deg[0]*60*4)+($down_deg[1]*4)));
+            $dob_transit        = $total_transit/$intval;       // transit up to dob
+            $total_transit      = ($up_deg[0]*60*4)+($up_deg[1]*4)+$dob_transit;
+            echo $total_transit/(60*4);
+        }            
     }
 }
 ?>
