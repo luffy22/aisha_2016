@@ -51,11 +51,11 @@ class HoroscopeModelLagna extends JModelItem
         $gmt_str        = strtotime($gmt);
         if($tob_str>$gmt_str)
         {
-            $diff       = $this->getAddSubTime($dob,$tob_str,$gmt_str,"-");
+            $diff       = "+".$this->getAddSubTime($dob,$tob_str,$gmt_str,"-");
         }
         else if($gmt_str>$tob_str)
         {
-            $diff       = $this->getAddSubTime($dob,$gmt_str,$tob_str,"-");
+            $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$tob_str,"-");
         }
         
         /* 
@@ -134,7 +134,7 @@ class HoroscopeModelLagna extends JModelItem
     // Method to get the sidereal Time
     public function getSiderealTime($data)
     {
-        
+        //print_r($data);exit;
         $lon            = explode(":", $data['lon']);
         $dob            = explode("/",$data['dob']);
         $monthNum       = $dob[1];  // The month in number format (ex. 06 for June)
@@ -155,9 +155,6 @@ class HoroscopeModelLagna extends JModelItem
         if($count>0)
         {
             $get_sidetime_year      = strtotime($row['Sidereal']);
-            $date                   = new DateTime($data['dob']);		// Datetime object with user date of birth
-            $date                   ->setTimeStamp($get_sidetime_year);			// time of birth for user
-            $sidereal_time          = strtotime($date->format('G:i:s'));
             $query      ->clear();
             if(($monthName == "January" || $monthName == "February")&&($leap=="1"))
             {
@@ -180,17 +177,10 @@ class HoroscopeModelLagna extends JModelItem
             $time_diff          = $db->loadAssoc();
             $correction         = $time_diff['corr_time'];      // correction time diff using sidereal_2 table
             $corr_diff          = substr($correction, 0,1);     // the positive/negative sign
-            $corr_time		= strtotime(substr($correction,1));        // the time diff in mm:ss format
-                       
-            if($corr_diff == "-")
-            {
-                $date           = $this->getAddSubTime($data['dob'],$sidereal_time,$corr_time,"-");
-            }
-            else if($corr_diff == "+")
-            {
-                $date           = $this->getAddSubTime($data['dob'],$sidereal_time,$corr_time,"+");
-            }
-            $date               = strtotime($date);
+            $corr_time		= substr($correction,1);        // the time diff in mm:ss format
+            $corr_time          = strtotime("00:".$corr_time);        // corr_time string_to_time    
+            $sid_time           = strtotime($this->getAddSubTime($data['dob'],$get_sidetime_year ,$corr_time,$corr_diff));
+            
             $query              ->clear();
             $query              = "select corr_sign, st_correction FROM jv_sidereal_3 WHERE longitude >= '".($lon[0].'.'.$lon[1])."'
                                     order by abs(longitude - '".($lon[0].'.'.$lon[1])."') limit 1";
@@ -198,23 +188,19 @@ class HoroscopeModelLagna extends JModelItem
             unset($count);
             $count              = count($db->loadResult());
             $sid_corr           = $db->loadAssoc();     // sidereal correction in seconds
-            $corr_time          = strtotime(str_replace(".",":",$sid_corr['st_correction']));
-            
-            if($sid_corr['corr_sign'] == "-")
-            {
-                $date           = $this->getAddSubTime($data['dob'],$date,$corr_time,"-");
-            }
-            else if($sid_corr['corr_sign'] == "+")
-            {
-                 $date           = $this->getAddSubTime($data['dob'],$date,$corr_time,"+");
-            }
-            return $date;
+            $corr_time          = str_replace(".",":",$sid_corr['st_correction']);
+            $sign               = $sid_corr['corr_sign'];
+            $corr_time          = strtotime("00:".$corr_time);
+            $sidereal           = strtotime($this->getAddSubTime($data['dob'],$sid_time,$corr_time,$sign));           
         }
-        
+        $date                   = new DateTime($data['dob']);
+        $date                   ->setTimestamp($sidereal);
+        return $date->format('G:i:s');
         //longitude >= '".($lon)."'
     }
     public function getLmt($data)
     {
+        //print_r($data);exit;
         $lon        = explode(":", $data['lon']);
         $lat        = explode(":", $data['lat']);
         $gmt        = "GMT".$data['tmz'];
@@ -229,99 +215,71 @@ class HoroscopeModelLagna extends JModelItem
         $query          ->where($db->quoteName('timezone').'='.$db->quote($gmt));
         $db             ->setQuery($query);
         $count          = count($db->loadResult());
-
+        
         if($count > 0)
         {
             $meridian           = $db->loadAssoc();
-            $std_meridian       = str_replace(".",":",$meridian['std_meridian']);
-                    
+           
+            $std_meridian       = explode(".",$meridian['std_meridian']);  
+            
             $std_lon_sec	= $this->convertDegMinToSec($std_meridian[0], $std_meridian[1]);		// convert minutes into seconds & multiply by 4 then add to seconds multiplied by 4
             $loc_lon_sec	= $this->convertDegMinToSec($lon[0],$lon[1]);			// convert minutes into seconds & multiply by 4 then add to seconds multiplied by 4
-           
-            if($new_std_lon_sec > $new_loc_lon_sec)
+            if($std_lon_sec > $loc_lon_sec)
             {
+                
                 $new_diff	= $std_lon_sec - $loc_lon_sec;
-                $new_diff	= gmdate('H:i:s', $new_diff);
+                $diff           = strtotime(gmdate("G:i:s",$new_diff));     // gmdate is used for value below 24 hr
+                $date           = strtotime($this->getAddSubTime($dob,$tob,$diff,"-"));
             }
             else
             {
                 $new_diff	= $loc_lon_sec	- $std_lon_sec;
-                $new_diff	= gmdate('H:i:s', $new_diff);
+                $diff           = strtotime(gmdate("G:i:s",$new_diff));     // gmdate is used for value below 24 hr
+                $date           = strtotime($this->getAddSubTime($dob,$tob,$diff,"+"));
             }
+            $dateObject		= new DateTime($dob);		// Datetime object with user date of birth
+            $dateObject		->setTimeStamp($date);		// time of birth for user
+            $tob_format		= $dateObject->format('g:i a');
             
-            // Computation to check Sidereal Time
-            $date               = date("g:i a",$data['tob']);
-                      
-            if(strpos($date, pm))
+            if(strpos($tob_format, am))
             {
-                $hrs_add        = strtotime('12:00:00');    // adding 12 hrs if sidereal is pm
-                $date           = $this->getAddSubTime($dob,$tob,$hrs_add,"+");
-            }
-            
-            $diff		= strtotime($new_diff);
-            if($std_lon_sec > $loc_lon_sec)
-            {
-                $date                   = strtotime($this->getAddSubTime($dob,$tob,$diff,"-"));
-                $query                  ->clear();
-                $query                  ->select($db->quoteName('min'));
-                $query                  ->from($db->quoteName('#__sidereal_4'));
-                $query                  ->where($db->quoteName('hour').'='.$db->quote($sidereal_hr));
-                $db                     ->setQuery($query);
-                $sid_diff_min		= $db->loadAssoc();
-                
-                $diff                   = strtotime($sid_diff_min['min']);
-		$date                   = strtotime($this->getAddSubTime($dob,$date,$diff,"+"));
-                
-                $query                  ->clear();
-                $query                  ->select($db->quoteName('diff'));
-                $query                  ->from($db->quoteName('#__sidereal_5'));
-                $query                  ->where($db->quoteName('min').'>='.$db->quote($sidereal_min));
-                $db                     ->setQuery($query);
-                $sid_diff_sec		= $db->loadAssoc();
-                
-                $sid_diff		= strtotime($sid_diff_sec['diff']);
-                $date                   = $this->getAddSubTime($dob,$date,$sid_diff,"+");
+                // if lmt is am then subtract that time from 12 at noon
+                $noon_time      = strtotime('12:00:00');
+                $date           = $this->getAddSubTime($dob,$noon_time,$date,"-");
             }
             else
             {
-                $date                   = strtotime($this->getAddSubTime($dob,$tob,$diff,"+"));
-                  
-                $query                  ->clear();
-                $query                  ->select($db->quoteName('min'));
-                $query                  ->from($db->quoteName('#__sidereal_4'));
-                $query                  ->where($db->quoteName('hour').'='.$db->quote($sidereal_hr));
-                $db                     ->setQuery($query);
-                $sid_diff_min		= $db->loadAssoc();
-                $diff                   = strtotime($sid_diff_min['min']);
-			
-                $date                   = strtotime($this->getAddSubTime($dob,$date,$diff,"+"));
-                
-                $query                  ->clear();
-                $query                  ->select($db->quoteName('diff'));
-                $query                  ->from($db->quoteName('#__sidereal_5'));
-                $query                  ->where($db->quoteName('min').'>='.$db->quote($sidereal_min));
-                $db                     ->setQuery($query);
-                $sid_diff_sec		= $db->loadAssoc();
-               
-                $sid_diff		= strtotime($sid_diff_sec['diff']);
-                $date                   = strtotime($this->getAddSubTime($dob,$date,$sid_diff,"+"));
-                
-            }
-            //echo $date->format('H:i:s');exit;
-            $am_pm                      = date('g:i a', $date);
-            
-            if(strpos($tob_format,"am"))
-            {
-                $time                   = strtotime('12:00:00');
-                $date                   = $this->getAddSubTime($dob,$time,$date,"-");
-            }
-            else
-            {
-                $dateObject             = new DateTime($dob);
-                $dateObject             ->setTimestamp($date);
+                $date           = $dateObject->format('G:i:s');
             }
             
-            return $dateObject->format('G:i:s');
+            $lmt                = explode(":",$date);
+            $lmt_hr             = $lmt[0];
+            $lmt_min            = $lmt[1];
+            $lmt_sec            = $lmt[2];
+            $lmt                = $lmt_hr*3600+$lmt_min*60+$lmt_sec;
+            $query                  ->clear();
+            $query                  ->select($db->quoteName('min'));
+            $query                  ->from($db->quoteName('#__sidereal_4'));
+            $query                  ->where($db->quoteName('hour').'='.$db->quote($lmt_hr));
+            $db                     ->setQuery($query);
+            $result                 = $db->loadAssoc();
+            
+            $min                = explode(":",$result['min']);
+            $min                = $min[0]*60+$min[1];
+            $lmt                = $lmt+$min;
+            $query                  ->clear();
+            $query                  ->select($db->quoteName('diff'));
+            $query                  ->from($db->quoteName('#__sidereal_5'));
+            $query                  ->where($db->quoteName('min').'>='.$db->quote($lmt_min));
+            $db                     ->setQuery($query);
+            unset($result);
+            $result                 = $db->loadAssoc();
+            $sec                    = explode(":".$result['diff']);
+            $sec                    = $sec[0]*60+$sec[1];
+            $lmt                    = $lmt+$sec;
+            $dateObject             = gmdate('G:i:s',$lmt);
+            
+            return $dateObject;
         }
         else
         {
