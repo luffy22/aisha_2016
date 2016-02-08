@@ -151,7 +151,7 @@ class HoroscopeModelLagna extends JModelItem
         $db             ->setQuery($query);
         $count          = count($db->loadResult());
         $row            =$db->loadAssoc();
-        
+        //echo $row['Sidereal'];exit;
         if($count>0)
         {
             $get_sidetime_year      = strtotime($row['Sidereal']);
@@ -180,7 +180,7 @@ class HoroscopeModelLagna extends JModelItem
             $corr_time		= substr($correction,1);        // the time diff in mm:ss format
             $corr_time          = strtotime("00:".$corr_time);        // corr_time string_to_time    
             $sid_time           = strtotime($this->getAddSubTime($data['dob'],$get_sidetime_year ,$corr_time,$corr_diff));
-            
+            //echo date('G:i:s',$sid_time);exit;
             $query              ->clear();
             $query              = "select corr_sign, st_correction FROM jv_sidereal_3 WHERE longitude >= '".($lon[0].'.'.$lon[1])."'
                                     order by abs(longitude - '".($lon[0].'.'.$lon[1])."') limit 1";
