@@ -100,7 +100,6 @@ class HoroscopeModelLagna extends JModelItem
                 $tmz_min    = $val1[1]-$val2[1];
                 $tmz_hr     = $val1[0]-$val2[0];                
             }
-           
         }
         else
         {
@@ -110,6 +109,117 @@ class HoroscopeModelLagna extends JModelItem
         unset($val1);
         unset($val2);
         return $tmz_hr.":".$tmz_min.":00";
+    }
+    public function convertDegMinSec($deg,$min,$sec)
+    {
+        while($sec>=60)
+        {
+            $sec    = $sec-60;
+            $min    = $min+1; 
+        }
+        while($min>=60)
+        {
+            $min    = $min-60;
+            $deg    = $deg+1;
+        }
+        return $deg.":".$min.":".$sec;
+    }
+   
+    public function getDiffTransit($hr,$min ,$intval, $intval2)
+    {
+        $transit    = ($hr*60*4)+($min*4);
+        $intval     = $intval;
+        $intval2    = $intval2;
+        $transit    = round((($transit*$intval2)/$intval),2);
+        $value      = $this->convertDecimalToDegree($transit);
+        
+        return $value;
+    }
+    public function convertDecimalToDegree($decimal)
+    {
+        $deg        = round(($decimal/(60*4)),2);
+        $real_deg   = explode(".",$deg);
+        $min        = round((($deg-$real_deg[0])*60),0);
+        $sec        = round((($deg-$real_deg[0]-($min/60))*3600),0);
+        
+        return $real_deg[0].":".$min.":".round($sec,0);
+    }
+    public function addDegMinSec($deg1,$min1,$sec1,$deg2,$min2,$sec2)
+    {
+        $deg        = $deg1+$deg2;
+        $min        = $min1+$min2;
+        $sec        = $sec1+$sec2;
+        $value      = $this->convertDegMinSec($deg,$min,$sec);
+        return $value;
+    }
+    public function subDegMinSec($deg1,$min1,$sec1,$deg2,$min2,$sec2)
+    {
+        if($deg1>$deg2)
+        {
+            $deg            = $deg1-$deg2;
+            if($min2>$min1)
+            {
+                $deg        = $deg-1;
+                $min        = ($min1+60)-$min2;
+            }
+            else
+            {
+                $min        = $min1-$min2;
+            }
+            if($sec2>$sec1)
+            {
+                $min        = $min-1;
+                $sec        = ($sec+60)-$sec2;
+            }
+            else
+            {
+                $sec        = $sec-$sec2;
+            }
+        }
+        else if($deg1<$deg2)
+        {
+            $deg        = $deg2-$deg1;
+            if($min2>$min1)
+            {
+                $deg        = $deg-1;
+                $min        = ($min1+60)-$min2;
+            }
+            else
+            {
+                $min        = $min1-$min2;
+            }
+            if($sec2>$sec1)
+            {
+                $min        = $min-1;
+                $sec        = ($sec+60)-$sec2;
+            }
+            else
+            {
+                $sec        = $sec-$sec2;
+            }
+        }
+        $value      = $this->convertDegMinSec($deg,$min,$sec);
+        return $value;
+    }
+    public function multiplyDegMinSec($deg,$min,$sec,$intval,$intval)
+    {
+        $deg        = round((($deg*$intval2)/$intval),0);
+        $min        = round((($min*$intval2)/$intval),0);
+        $sec        = round((($sec*$intval2)/$intval),0);
+        $value      = $this->convertDegMinSec($deg,$min,$sec);
+        return $value;
+    }
+    public function divideDegMinSec($deg,$min,$sec,$divisor)
+    {
+        $new_deg        = round($deg/$divisor,0);
+        $deg_mod        = $deg%$divisor;
+        $new_min        = $min+($deg_mod*60);
+        $new_min1        = round($new_min/$divisor,0);
+        $min_mod        = $new_min%$divisor;
+        $sec            = $sec+($min_mod*60);
+        $new_sec        = round($sec/$divisor,0);
+        $value          = $this->convertDegMinSec($new_deg, $new_min1, $new_sec);
+        return $value;
     }
     public function getAddSubTime($date,$val1,$val2,$sign)
     {
@@ -191,11 +301,9 @@ class HoroscopeModelLagna extends JModelItem
             $corr_time          = str_replace(".",":",$sid_corr['st_correction']);
             $sign               = $sid_corr['corr_sign'];
             $corr_time          = strtotime("00:".$corr_time);
-            $sidereal           = strtotime($this->getAddSubTime($data['dob'],$sid_time,$corr_time,$sign));           
+            $sidereal           = $this->getAddSubTime($data['dob'],$sid_time,$corr_time,$sign);           
         }
-        $date                   = new DateTime($data['dob']);
-        $date                   ->setTimestamp($sidereal);
-        return $date->format('G:i:s');
+        return $sidereal;
         //longitude >= '".($lon)."'
     }
     public function getLmt($data)
@@ -228,15 +336,18 @@ class HoroscopeModelLagna extends JModelItem
             {
                 
                 $new_diff	= $std_lon_sec - $loc_lon_sec;
+                //$new_diff	= gmdate('H:i:s', $new_diff);
                 $diff           = strtotime(gmdate("G:i:s",$new_diff));     // gmdate is used for value below 24 hr
                 $date           = strtotime($this->getAddSubTime($dob,$tob,$diff,"-"));
             }
             else
             {
                 $new_diff	= $loc_lon_sec	- $std_lon_sec;
+                //$new_diff	= gmdate('H:i:s', $new_diff);
                 $diff           = strtotime(gmdate("G:i:s",$new_diff));     // gmdate is used for value below 24 hr
                 $date           = strtotime($this->getAddSubTime($dob,$tob,$diff,"+"));
             }
+            //echo $new_diff;exit;
             $dateObject		= new DateTime($dob);		// Datetime object with user date of birth
             $dateObject		->setTimeStamp($date);		// time of birth for user
             $tob_format		= $dateObject->format('g:i a');
@@ -251,22 +362,22 @@ class HoroscopeModelLagna extends JModelItem
             {
                 $date           = $dateObject->format('G:i:s');
             }
-            
+            //echo $date;exit;
+            $dateObject         = (strtotime($date));
             $lmt                = explode(":",$date);
             $lmt_hr             = $lmt[0];
             $lmt_min            = $lmt[1];
             $lmt_sec            = $lmt[2];
-            $lmt                = $lmt_hr*3600+$lmt_min*60+$lmt_sec;
+            //$lmt                = $lmt_hr*3600+$lmt_min*60+$lmt_sec;
             $query                  ->clear();
             $query                  ->select($db->quoteName('min'));
             $query                  ->from($db->quoteName('#__sidereal_4'));
             $query                  ->where($db->quoteName('hour').'='.$db->quote($lmt_hr));
             $db                     ->setQuery($query);
             $result                 = $db->loadAssoc();
-            
-            $min                = explode(":",$result['min']);
-            $min                = $min[0]*60+$min[1];
-            $lmt                = $lmt+$min;
+            //echo $result['min'];exit;
+            $min                    = strtotime("00:".$result['min']);
+            $lmt                    = strtotime($this->getAddSubTime($dob,$dateObject,$min,"+"));
             $query                  ->clear();
             $query                  ->select($db->quoteName('diff'));
             $query                  ->from($db->quoteName('#__sidereal_5'));
@@ -274,12 +385,11 @@ class HoroscopeModelLagna extends JModelItem
             $db                     ->setQuery($query);
             unset($result);
             $result                 = $db->loadAssoc();
-            $sec                    = explode(":".$result['diff']);
-            $sec                    = $sec[0]*60+$sec[1];
-            $lmt                    = $lmt+$sec;
-            $dateObject             = gmdate('G:i:s',$lmt);
-            
-            return $dateObject;
+            $diff                   = "00:".$result['diff'];
+            $sec                    = strtotime($diff);
+            $date                   = $this->getAddSubTime($dob,$lmt,$sec,"+");
+                      
+            return $date;
         }
         else
         {
@@ -289,131 +399,108 @@ class HoroscopeModelLagna extends JModelItem
     public function calculatelagna($data)
     {
         //print_r($data);
-        $lat                    = explode(":",$data['lat']);
-        $lat                    = $lat[0].'.'.$lat[1];
+        $lat            = explode(":",$data['lat']);
+        $lat            = $lat[0].'.'.$lat[1];
         //$gender                 = $data['gender'];
-        echo $this->getSiderealTime($data)."<br/>";
-        echo $this->getLmt($data);exit;
-        $sidtime		= strtotime($this->getSiderealTime($data));
-       	$lmt			= explode(":",$this->getLmt($data));
-        $dob                    = $data['dob'];
+        //echo $this->getSiderealTime($data)."<br/>";
+        //echo $this->getLmt($data);exit;
+        $sidtime        = strtotime($this->getSiderealTime($data));
+       	$lmt            = strtotime($this->getLmt($data));
+        $dob            = $data['dob'];
         //return $dob;
-        $doy                    = explode("/",$dob);
-        $tob                    = strtotime($data['tob']);
+        $doy            = explode("/",$dob);
+        $tob            = strtotime($data['tob']);
         
-        $date    		= new DateTime($dob);
-        $date                   ->setTimestamp($tob);
-        $tob_format		= $date->format('g:i a');
-        
+        $date           = new DateTime($dob);
+        $date           ->setTimestamp($tob);
+        $tob_format     = $date->format('g:i a');
         if(strpos($tob_format,"pm"))
         {
-            $dateObject		= new DateTime($dob);		// Datetime object with user date of birth
-            $dateObject		->setTimeStamp($sidtime);		// time of birth for user
-            $dateObject		->add(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));
-      
+            $dateObject = $this->getAddSubTime($dob,$sidtime,$lmt,"+");
         }
         else
         {
-            $dateObject		= new DateTime($dob);		// Datetime object with user date of birth
-            $dateObject		->setTimeStamp($sidtime);		// time of birth for user
-            $dateObject		->sub(new DateInterval('PT'.$lmt[0].'H'.$lmt[1].'M'.$lmt[2].'S'));			
+            $dateObject = $this->getAddSubTime($dob,$sidtime,$lmt,"-");
         }
-  
-        $dat_hr                 = explode(":",$dateObject->format('G:i:s'));
-        $corr_sid_hr            = $dat_hr[0];
-        $corr_sid_min           = $dat_hr[1];
-        $corr_sid_sec           = $dat_hr[2];
+        if($sidtime < $lmt)
+        {
+            $date       = strtotime($dateObject);
+            $hrs_add    = strtotime('12:00:00');
+            $dateObject = $this->getAddSubTime($dob,$date,$hrs_add,"+");
+        }
+        //echo $dateObject;exit;
+        $dat_hr         = explode(":",$dateObject);
+        $corr_sid_hr    = $dat_hr[0];
+        $corr_sid_min   = $dat_hr[1];
+        $corr_sid_sec   = $dat_hr[2];
         
         if($corr_sid_min%4 =="0")
         {
-            $up_min             = $corr_sid_min;
-            $down_min           = $corr_sid_min-4;
+            $up_min     = $corr_sid_min+4;
+            $down_min   = $corr_sid_min;
         }
         else
         {
-            $up_min                 = ceil($corr_sid_min/4)*4;
-            $down_min               = floor($corr_sid_min/4)*4;
+            $up_min     = ceil($corr_sid_min/4)*4;
+            $down_min   = floor($corr_sid_min/4)*4;
         }
-        $db                     =   JFactory::getDbo();  // Get db connection
-        $query                  =   $db->getQuery(true);
-        $query1                 =   $db->getQuery(true);
-        $query                  ->clear();
-        
-        $query                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$lat."' AND hour='".$corr_sid_hr."' AND minute='".$up_min."' ORDER BY abs(latitude-'".$lat."') limit 1";
-        $db                     ->setQuery($query);
+        //echo $up_min.":".$down_min;exit;
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName(array('lagna_sign','lagna_degree','lagna_min')));
+        $query          ->from($db->quoteName('#__lahiri_7'));
+        $query          ->where($db->quoteName('latitude').'<='.$db->quote($lat).
+                                'AND'.$db->quoteName('hour').'='.$db->quote($corr_sid_hr).'AND'.
+                                 $db->quoteName('minute').'='.$db->quote($up_min));
+        $query          ->order($db->quoteName('latitude').' desc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
        
-        $get_up_lagna           = $db->loadAssoc();
-        $up_lagna               = $get_up_lagna['lagna_sign'];
-        $up_deg                 = $get_up_lagna['lagna_degree'];
-        $up_min                 = $get_up_lagna['lagna_min'];
-        $up_hr                  = $get_up_lagna['hour'];
-        $up_minute              = $get_up_lagna['minute'];
-        //echo $lat.":".$corr_sid_hr.":".$down_min;exit;
-        //return $up_lagna.":".$up_deg.":".$up_min;
-        $query                  = "SELECT * FROM jv_lahiri_7 WHERE latitude<='".$lat."' AND hour='".$corr_sid_hr."' AND minute='".$down_min."' ORDER BY abs(latitude-'".$lat."') limit 1";
-        $db                     ->setQuery($query);
-        //$count                  = count($db->loadResult());
-        $get_down_lagna		= $db->loadAssoc();
-        $down_lagna             = $get_down_lagna['lagna_sign'];  // lagna sign
-        $down_deg               = $get_down_lagna['lagna_degree'];  // lagna degree
-        $down_min               = $get_down_lagna['lagna_min'];   // lagna minutes
-        $down_hr                = $get_down_lagna['hour'];   // time in hours
-        $down_minute            = $get_down_lagna['minute'];   // time in minutes
-        //return $down_lagna.":".$down_deg.":".$down_min;
+        $up_lagna       = $db->loadAssoc();
+        $up_sign        = $up_lagna['lagna_sign'];
+        $up_deg         = $up_lagna['lagna_degree'];
+        $up_min         = $up_lagna['lagna_min'];
+        //echo $up_sign.":".$up_deg.":".$up_min."<br/>";
+        $query          ->clear();
+        $query          ->select($db->quoteName(array('lagna_sign','lagna_degree','lagna_min','hour','minute')));
+        $query          ->from($db->quoteName('#__lahiri_7'));
+        $query          ->where($db->quoteName('latitude').'<='.$db->quote($lat).
+                                'AND'.$db->quoteName('hour').'='.$db->quote($corr_sid_hr).'AND'.
+                                 $db->quoteName('minute').'='.$db->quote($down_min));
+        $query          ->order($db->quoteName('latitude').' desc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
+        $down_lagna     = $db->loadAssoc();
+        $down_sign      = $down_lagna['lagna_sign'];
+        $down_deg       = $down_lagna['lagna_degree'];
+        $down_min       = $down_lagna['lagna_min'];
+        $down_hr        = $down_lagna['hour'];
+        $down_min       = $down_lagna['minute'];
+        //echo $down_sign.":".$down_deg.":".$down_min;exit;
         // Difference between upper value and lower value of lagna
-        $diff1                  = ((($up_lagna*30*60)+($up_deg*60)+$up_min)-(($down_lagna*30*60)+($down_deg*60)+$down_min));
-        
-        //return $diff1;
-        // Difference between sidereal time and lower value of lagna
-        $diff2                  = (($corr_sid_hr*3600+$corr_sid_min*60+$corr_sid_sec)-($down_hr*3600+$down_minute*60));
+        $diff1                  = ((($up_sign*30*60)+($up_deg*60)+$up_min)-(($down_sign*30*60)+($down_deg*60)+$down_min));
+        //echo $diff1;exit;
+        //echo $corr_sid_hr.":".$corr_sid_min.":".$corr_sid_sec;exit;
+        $diff2                  = ((($corr_sid_hr*3600)+($corr_sid_min*60)+($corr_sid_sec))-(($down_hr*3600)+($down_min*60)));
+        //echo $diff2;exit;
         // Exact degree, minutes, seconds at sidereal time in decimal
-        $diff                   = round($diff1*($diff2/240),2);
-        $diff                   = explode(".", $diff);
-        $diff_sec               = ($diff[1]*60)/10;  // exact seconds
-        $diff_min               = $diff[0];
-        $diff_deg               = 0;
-       
-        // Convert seconds into minutes if greater then 60
-        while($diff_sec>=60)
-        {
-            $diff_sec           = $diff_sec - 60; // substract 60 seconds 
-            $diff_min           = $diff_min+1;   // add 1 minute to degree
-        }
-        while($diff_min>=60)
-        {
-            $diff_min           = $diff_min - 60;
-            $diff_deg           = 0+1;
-        }
+        $diff                   = round((($diff1*$diff2)/240),2);
+        $diff                   = explode(":",$this->convertDecimalToDegree($diff));
+        $diff                   = explode(":",$this->addDegMinSec($down_deg,$down_min,0,$diff[0],$diff[1],$diff[2]));
+        //$diff                   = $this->convertSignDegMinSec($down_sign,$diff[0],$diff[1],$diff[2]);
         
-        // Add the difference to the down value of lagna
-        $lagna_acc_sec          = 0+$diff_sec;
-        $lagna_acc_min          = $down_min+$diff_min;
-        $lagna_acc_deg          = $down_deg+$diff_deg;
-        $lagna_acc_sign         = $down_lagna;
-        
-        //return $lagna_acc_sign.":".$lagna_acc_deg.":".$lagna_acc_min.":".$lagna_acc_sec;
-       while($lagna_acc_min>=60)
-       {
-           $lagna_acc_min       = $lagna_acc_min-60;
-           $lagna_acc_deg       = $lagna_acc_deg+1;
-       }
-       
-       if($lagna_acc_deg>=30)
-       {
-           $lagna_acc_deg       = $lagna_acc_deg - 30;
-           $lagna_acc_sign      = $lagna_acc_sign+1;
-       }
        //echo $lagna_acc_sign.":".$lagna_acc_deg.":".$lagna_acc_min.":".$lagna_acc_sec;exit;
         $year                   = $doy[0];
-        $query1                  ->clear();
-        $query1                  = "SELECT correction FROM jv_lahiri_5 WHERE Year='".$year."'";
-        $db                     ->setQuery($query1);
+        //echo $year;exit;
+        $query                  ->clear();
+        $query                  = "SELECT correction FROM jv_lahiri_5 WHERE Year='".$year."'";
+        $db                     ->setQuery($query);
         $count                  = count($db->loadResult());
        
         $get_ayanamsha          = $db->loadAssoc();
-        //echo $get_ayanamsha['correction'];exit;
         $ayanamsha_corr		= explode(":", $get_ayanamsha['correction']);
-        $ayanamsha_corr[0]      = substr($ayanamsha_corr[0], 1);
+        $sign                   = substr($get_ayanamsha['correction'],0, 1);
+        
         //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
         //echo $ayanamsha_corr[0].":".$ayanamsha_corr[1];exit;
         if($year <= '1938')
@@ -450,9 +537,7 @@ class HoroscopeModelLagna extends JModelItem
             else
             {
                 $lagna_acc_deg  = $lagna_acc_deg-$ayanamsha_corr[0];
-
             }
-            
         }
         //$data            = array("name"=>$this->fname,"gender"=>$this->gender,
                                        
@@ -582,116 +667,7 @@ class HoroscopeModelLagna extends JModelItem
     }
     // function checks seconds, minutes and degrees 
     // seconds and mins less then 60 and adding to degrees
-    public function convertDegMinSec($deg,$min,$sec)
-    {
-        while($sec>=60)
-        {
-            $sec    = $sec-60;
-            $min    = $min+1; 
-        }
-        while($min>=60)
-        {
-            $min    = $min-60;
-            $deg    = $deg+1;
-        }
-        return $deg.":".$min.":".$sec;
-    }
-    public function getDiffTransit($hr,$min ,$intval, $intval2)
-    {
-        $transit    = ($hr*60*4)+($min*4);
-        $intval     = $intval;
-        $intval2    = $intval2;
-        $transit    = round((($transit*$intval2)/$intval),2);
-        $value      = $this->convertDecimalToDegree($transit);
-        
-        return $value;
-    }
-    public function convertDecimalToDegree($decimal)
-    {
-        $deg        = round(($decimal/(60*4)),2);
-        $real_deg   = explode(".",$deg);
-        $min        = round((($deg-$real_deg[0])*60),0);
-        $sec        = round((($deg-$real_deg[0]-($min/60))*3600),0);
-        
-        return $real_deg[0].":".$min.":".round($sec,0);
-    }
-    public function addDegMinSec($deg1,$min1,$sec1,$deg2,$min2,$sec2)
-    {
-        $deg        = $deg1+$deg2;
-        $min        = $min1+$min2;
-        $sec        = $sec1+$sec2;
-        $value      = $this->convertDegMinSec($deg,$min,$sec);
-        return $value;
-    }
-    public function subDegMinSec($deg1,$min1,$sec1,$deg2,$min2,$sec2)
-    {
-        if($deg1>$deg2)
-        {
-            $deg            = $deg1-$deg2;
-            if($min2>$min1)
-            {
-                $deg        = $deg-1;
-                $min        = ($min1+60)-$min2;
-            }
-            else
-            {
-                $min        = $min1-$min2;
-            }
-            if($sec2>$sec1)
-            {
-                $min        = $min-1;
-                $sec        = ($sec+60)-$sec2;
-            }
-            else
-            {
-                $sec        = $sec-$sec2;
-            }
-        }
-        else if($deg1<$deg2)
-        {
-            $deg        = $deg2-$deg1;
-            if($min2>$min1)
-            {
-                $deg        = $deg-1;
-                $min        = ($min1+60)-$min2;
-            }
-            else
-            {
-                $min        = $min1-$min2;
-            }
-            if($sec2>$sec1)
-            {
-                $min        = $min-1;
-                $sec        = ($sec+60)-$sec2;
-            }
-            else
-            {
-                $sec        = $sec-$sec2;
-            }
-        }
-        $value      = $this->convertDegMinSec($deg,$min,$sec);
-        return $value;
-    }
-    public function multiplyDegMinSec($deg,$min,$sec,$intval,$intval)
-    {
-        $deg        = round((($deg*$intval2)/$intval),0);
-        $min        = round((($min*$intval2)/$intval),0);
-        $sec        = round((($sec*$intval2)/$intval),0);
-        $value      = $this->convertDegMinSec($deg,$min,$sec);
-        return $value;
-    }
-    public function divideDegMinSec($deg,$min,$sec,$divisor)
-    {
-        $new_deg        = round($deg/$divisor,0);
-        $deg_mod        = $deg%$divisor;
-        $new_min        = $min+($deg_mod*60);
-        $new_min1        = round($new_min/$divisor,0);
-        $min_mod        = $new_min%$divisor;
-        $sec            = $sec+($min_mod*60);
-        $new_sec        = round($sec/$divisor,0);
-        $value          = $this->convertDegMinSec($new_deg, $new_min1, $new_sec);
-        return $value;
-    }
+    
     protected function getMoonData($data)
     {
         //print_r($data);exit;
