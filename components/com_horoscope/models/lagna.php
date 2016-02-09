@@ -496,58 +496,29 @@ class HoroscopeModelLagna extends JModelItem
         $query                  = "SELECT correction FROM jv_lahiri_5 WHERE Year='".$year."'";
         $db                     ->setQuery($query);
         $count                  = count($db->loadResult());
-       
+        
         $get_ayanamsha          = $db->loadAssoc();
         $ayanamsha_corr		= explode(":", $get_ayanamsha['correction']);
         $sign                   = substr($get_ayanamsha['correction'],0, 1);
-        
-        //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
-        //echo $ayanamsha_corr[0].":".$ayanamsha_corr[1];exit;
-        if($year <= '1938')
+        $diff[0]                = ($down_sign*30)+$diff[0];
+        //echo $diff[0];exit;
+        if($sign=="-")
         {
-            $lagna_acc_min	= $lagna_acc_min+$ayanamsha_corr[1];
-            $lagna_acc_deg	= $lagna_acc_deg+$ayanamsha_corr[0];
-            if($lagna_acc_min >= 60)
-            {
-                $lagna_acc_min  = $lagna_acc_min - 60;
-                $lagna_acc_deg	= $lagna_acc_deg+1;
-            }
-            else if($lagna_acc_deg >= 30)
-            {
-                $lagna_acc_deg  = $lagna_acc_deg - 30;
-                $lagna_acc_sign	= $lagna_acc_sign + 1;
-            }
+            $lagna              = $this->subDegMinSec($diff[0],$diff[1],$diff[2],$ayanamsha_corr[0],$ayanamsha_corr[1],0);
         }
         else
         {
-            if($ayanamsha_corr[1] > $lagna_acc_min)
-            {
-                $lagna_acc_min  = ($lagna_acc_min+60)-$ayanamsha_corr[1];
-                $lagna_acc_deg  = $lagna_acc_deg-1;
-            }
-            else
-            {
-                $lagna_acc_min  = $lagna_acc_min-$ayanamsha_corr[1];
-            }
-            if($ayanamsha_corr[0] > $lagna_acc_deg)
-            {
-                $lagna_acc_deg  = ($lagna_acc_deg+30)-$ayanamsha_corr[0];
-                $lagna_acc_sign = $lagna_acc_sign-1;
-            }
-            else
-            {
-                $lagna_acc_deg  = $lagna_acc_deg-$ayanamsha_corr[0];
-            }
+            $lagna              = $this->addDegMinSec($diff[0],$diff[1],$diff[2],$ayanamsha_corr[0],$ayanamsha_corr[1],0);
         }
+        //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
+        
         //$data            = array("name"=>$this->fname,"gender"=>$this->gender,
-                                       
-        $lagna           = array("sign"=>$lagna_acc_sign.":".$lagna_acc_deg.":".
-                                        $lagna_acc_min.":".$lagna_acc_sec);
+                                      
+        $lagna           = array("lagna"=>$lagna);
         //print_r($lagna);exit;
         $data            = array_merge($data, $lagna);
-        print_r($data);exit;
-        //return $data;
-        //$this->getMoonData($data);
+        //print_r($data);exit;
+        $this->getMoonData($data);
         //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
         //$this->getData($data);
         //$app        = &JFactory::getApplication();
@@ -819,7 +790,7 @@ class HoroscopeModelLagna extends JModelItem
             {
                 $actual_transit    = $dob_transit-$hr_transit;
             }
-            //echo $actual_transit/(4*60);
+            echo $actual_transit/(4*60);
             //$actual_transit         = round($actual_transit/(4*60),2);
             $date1  = null;
             unset($date1);
@@ -849,8 +820,9 @@ class HoroscopeModelLagna extends JModelItem
             $surya                  = array("surya"=>$surya);
         } 
         $data            = array_merge($data, $surya);
-        //print_r($data);
-        $this->calculateMangal($data);      
+        echo "<br/>";
+        print_r($data);
+        //$this->calculateMangal($data);      
     }
     protected function calculateMangal($data)
     {
