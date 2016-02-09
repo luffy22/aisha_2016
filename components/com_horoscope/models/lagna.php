@@ -351,11 +351,10 @@ class HoroscopeModelLagna extends JModelItem
             $dateObject		= new DateTime($dob);		// Datetime object with user date of birth
             $dateObject		->setTimeStamp($date);		// time of birth for user
             $tob_format		= $dateObject->format('g:i a');
-            
+            $noon_time          = strtotime('12:00:00');
             if(strpos($tob_format, am))
             {
                 // if lmt is am then subtract that time from 12 at noon
-                $noon_time      = strtotime('12:00:00');
                 $date           = $this->getAddSubTime($dob,$noon_time,$date,"-");
             }
             else
@@ -388,7 +387,11 @@ class HoroscopeModelLagna extends JModelItem
             $diff                   = "00:".$result['diff'];
             $sec                    = strtotime($diff);
             $date                   = $this->getAddSubTime($dob,$lmt,$sec,"+");
-                      
+            if(strpos($tob_format, pm))
+            {
+                $lmt                    = strtotime($date);
+                $date                   = $this->getAddSubTime($dob,$lmt,$noon_time,"-");          
+            }
             return $date;
         }
         else
@@ -402,8 +405,8 @@ class HoroscopeModelLagna extends JModelItem
         $lat            = explode(":",$data['lat']);
         $lat            = $lat[0].'.'.$lat[1];
         //$gender                 = $data['gender'];
-        //echo $this->getSiderealTime($data)."<br/>";
-        //echo $this->getLmt($data);exit;
+        echo $this->getSiderealTime($data)."<br/>";
+        echo $this->getLmt($data);exit;
         $sidtime        = strtotime($this->getSiderealTime($data));
        	$lmt            = strtotime($this->getLmt($data));
         $dob            = $data['dob'];
@@ -422,13 +425,8 @@ class HoroscopeModelLagna extends JModelItem
         {
             $dateObject = $this->getAddSubTime($dob,$sidtime,$lmt,"-");
         }
-        if($sidtime < $lmt)
-        {
-            $date       = strtotime($dateObject);
-            $hrs_add    = strtotime('12:00:00');
-            $dateObject = $this->getAddSubTime($dob,$date,$hrs_add,"+");
-        }
-        //echo $dateObject;exit;
+        
+        ///echo $dateObject;exit;
         $dat_hr         = explode(":",$dateObject);
         $corr_sid_hr    = $dat_hr[0];
         $corr_sid_min   = $dat_hr[1];
@@ -443,6 +441,11 @@ class HoroscopeModelLagna extends JModelItem
         {
             $up_min     = ceil($corr_sid_min/4)*4;
             $down_min   = floor($corr_sid_min/4)*4;
+        }
+        if($up_min=="60")
+        {
+            $corr_sid_hr    = $corr_sid_hr+1;
+            $up_min         = $up_min-60;
         }
         //echo $up_min.":".$down_min;exit;
         $db             = JFactory::getDbo();  // Get db connection
@@ -517,8 +520,8 @@ class HoroscopeModelLagna extends JModelItem
         $lagna           = array("lagna"=>$lagna);
         //print_r($lagna);exit;
         $data            = array_merge($data, $lagna);
-        //print_r($data);exit;
-        $this->getMoonData($data);
+        print_r($data);exit;
+        //$this->getMoonData($data);
         //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
         //$this->getData($data);
         //$app        = &JFactory::getApplication();
