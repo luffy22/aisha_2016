@@ -110,6 +110,8 @@ class HoroscopeModelLagna extends JModelItem
         unset($val2);
         return $tmz_hr.":".$tmz_min.":00";
     }
+    // function checks seconds, minutes and degrees 
+    // seconds and mins less then 60 and adding to degrees
     public function convertDegMinSec($deg,$min,$sec)
     {
         while($sec>=60)
@@ -124,7 +126,8 @@ class HoroscopeModelLagna extends JModelItem
         }
         return $deg.":".$min.":".$sec;
     }
-   
+    // getting the differential transit when only hours and 
+    // minutes are specified. Return value in Degree, Hours and Minute Format.
     public function getDiffTransit($hr,$min ,$intval, $intval2)
     {
         $transit    = ($hr*60*4)+($min*4);
@@ -133,6 +136,14 @@ class HoroscopeModelLagna extends JModelItem
         $transit    = round((($transit*$intval2)/$intval),2);
         $value      = $this->convertDecimalToDegree($transit);
         
+        return $value;
+    }
+    // This one is for values which are already described in seconds
+    // without converting values into seconds
+    public function getDiffTransit2($val1, $val2, $intval)
+    {
+        $transit    = round((($val1*$val2)/$intval),2);
+        $value      = $this->convertDecimalToDegree($transit);
         return $value;
     }
     public function convertDecimalToDegree($decimal)
@@ -234,7 +245,7 @@ class HoroscopeModelLagna extends JModelItem
         {
             $date           ->add(new DateInterval('PT'.$val2[0].'H'.$val2[1].'M'.$val2[2].'S'));
         }
-        return $date->format('G:i:s');
+        return $date->format('H:i:s');
     }
     public function convertDegMinToSec($deg,$min)
     {
@@ -374,6 +385,7 @@ class HoroscopeModelLagna extends JModelItem
             $query                  ->where($db->quoteName('hour').'='.$db->quote($lmt_hr));
             $db                     ->setQuery($query);
             $result                 = $db->loadAssoc();
+            //$count                  = count($result);
             //echo $result['min'];exit;
             $min                    = strtotime("00:".$result['min']);
             $lmt                    = strtotime($this->getAddSubTime($dob,$dateObject,$min,"+"));
@@ -386,12 +398,8 @@ class HoroscopeModelLagna extends JModelItem
             $result                 = $db->loadAssoc();
             $diff                   = "00:".$result['diff'];
             $sec                    = strtotime($diff);
-            $date                   = $this->getAddSubTime($dob,$lmt,$sec,"+");
-            if(strpos($tob_format, pm))
-            {
-                $lmt                    = strtotime($date);
-                $date                   = $this->getAddSubTime($dob,$lmt,$noon_time,"-");          
-            }
+            $date                   = strtotime($this->getAddSubTime($dob,$lmt,$sec,"+"));
+            $date                   = date('g:i:s',$lmt);
             return $date;
         }
         else
@@ -401,12 +409,14 @@ class HoroscopeModelLagna extends JModelItem
     }
     public function calculatelagna($data)
     {
-        //print_r($data);
+        //print_r($data);exit;
         $lat            = explode(":",$data['lat']);
+        $dir            = $lat[2];
         $lat            = $lat[0].'.'.$lat[1];
+        
         //$gender                 = $data['gender'];
-        echo $this->getSiderealTime($data)."<br/>";
-        echo $this->getLmt($data);exit;
+        //echo $this->getSiderealTime($data)."<br/>";
+        //echo $this->getLmt($data);exit;
         $sidtime        = strtotime($this->getSiderealTime($data));
        	$lmt            = strtotime($this->getLmt($data));
         $dob            = $data['dob'];
@@ -425,8 +435,17 @@ class HoroscopeModelLagna extends JModelItem
         {
             $dateObject = $this->getAddSubTime($dob,$sidtime,$lmt,"-");
         }
-        
-        ///echo $dateObject;exit;
+        if($dir == "S")
+        {
+            $noon           = strtotime('12:00:00');
+            $date           = strtotime($dateObject);
+            $dateObject     = $this->getAddSubTime($dob, $date, $noon, "+");
+        }
+        else
+        {
+            $dateObject     = $dateObject;
+        }
+        //echo $dateObject;exit;
         $dat_hr         = explode(":",$dateObject);
         $corr_sid_hr    = $dat_hr[0];
         $corr_sid_min   = $dat_hr[1];
@@ -505,6 +524,7 @@ class HoroscopeModelLagna extends JModelItem
         $sign                   = substr($get_ayanamsha['correction'],0, 1);
         $diff[0]                = ($down_sign*30)+$diff[0];
         //echo $diff[0];exit;
+        
         if($sign=="-")
         {
             $lagna              = $this->subDegMinSec($diff[0],$diff[1],$diff[2],$ayanamsha_corr[0],$ayanamsha_corr[1],0);
@@ -514,134 +534,32 @@ class HoroscopeModelLagna extends JModelItem
             $lagna              = $this->addDegMinSec($diff[0],$diff[1],$diff[2],$ayanamsha_corr[0],$ayanamsha_corr[1],0);
         }
         //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
-        
+        //echo $lagna;exit;
+        $lagna_sign         = explode(":",$lagna);
         //$data            = array("name"=>$this->fname,"gender"=>$this->gender,
-                                      
+        if($dir == "S")
+        {
+            $lagna_sign[0]              = $lagna_sign[0]+180;
+            if($lagna_sign[0]>360)
+            {
+                $lagna_sign[0]          = $lagna_sign[0]-360;
+            }
+            $lagna              = $lagna_sign[0].":".$lagna_sign[1].":".$lagna_sign[2];
+        } 
+        else
+        {
+            if($lagna_sign[0]>360)
+            {
+                $lagna_sign[0]          = $lagna_sign[0]-360;
+            }
+            $lagna              = $lagna_sign[0].":".$lagna_sign[1].":".$lagna_sign[2];
+        }
         $lagna           = array("lagna"=>$lagna);
         //print_r($lagna);exit;
         $data            = array_merge($data, $lagna);
-        print_r($data);exit;
-        //$this->getMoonData($data);
-        //echo $lagna_acc_sign." ".$lagna_acc_deg." ".$lagna_acc_min." ".$lagna_acc_sec;exit;
-        //$this->getData($data);
-        //$app        = &JFactory::getApplication();
-        //$app        ->redirect(JUri::base().'calculate-lagna'); 
-        /*if($lagna_acc_sign=="0"&&$gender=="female")
-        {
-           $query4              = "SELECT * FROM jv_content WHERE id='103'";
-        }
-        else if($lagna_acc_sign=="0"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='102'";
-        }
-        else if($lagna_acc_sign=="1"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='104'";
-        }
-        else if($lagna_acc_sign=="1"&&$gender=="male")
-        {
-           $query4              = "SELECT * FROM jv_content WHERE id='105'";
-        }
-        else if($lagna_acc_sign=="2"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='106'";
-        }
-        else if($lagna_acc_sign=="2"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='107'";
-        }
-        else if($lagna_acc_sign=="3"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='108'";
-        }
-        else if($lagna_acc_sign=="3"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='109'";
-        }
-        else if($lagna_acc_sign=="4"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='110'";
-        }
-        else if($lagna_acc_sign=="4"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='111'";
-        }
-        else if($lagna_acc_sign=="5"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='114'";
-        }
-        else if($lagna_acc_sign=="5"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='115'";
-        }
-        else if($lagna_acc_sign=="6"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='116'";
-        }
-        else if($lagna_acc_sign=="6"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='117'";
-        }
-        else if($lagna_acc_sign=="7"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='118'";
-        }
-        else if($lagna_acc_sign=="7"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='119'";
-        }
-        else if($lagna_acc_sign=="8"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='120'";
-        }
-        else if($lagna_acc_sign=="8"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='121'";
-        }
-        else if($lagna_acc_sign=="9"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='123'";
-        }
-        else if($lagna_acc_sign=="9"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='124'";
-        }
-        else if($lagna_acc_sign=="10"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='125'";
-        }
-        else if($lagna_acc_sign=="10"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='126'";
-        }
-        else if($lagna_acc_sign=="11"&&$gender=="female")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='127'";
-        }
-        else if($lagna_acc_sign=="11"&&$gender=="male")
-        {
-            $query4              = "SELECT * FROM jv_content WHERE id='128'";
-        }
-         $db                     ->setQuery($query4);
-         $lagna                 = $db->loadAssoc();
-         if($gender=="male")
-         {
-            echo "<h2>Your Lagna is ".str_replace("Lagna Males","",$lagna['title'])."</h2>";
-         }
-         else if($gender=="female")
-         {
-            echo "<h2>Your Lagna is ".str_replace("Lagna Females","",$lagna['title'])."</h2>"; 
-         }*/
-         ?>
-    <div class="lagna_find" id="<?php echo $lagna['id']; ?>"></div>
-    <?php
-    //echo "<br/>";
-    //echo $lagna['introtext'];
-
+        //print_r($data);exit;
+        $this->getMoonData($data);
     }
-    // function checks seconds, minutes and degrees 
-    // seconds and mins less then 60 and adding to degrees
-    
     protected function getMoonData($data)
     {
         //print_r($data);exit;
@@ -694,19 +612,16 @@ class HoroscopeModelLagna extends JModelItem
             $sign               = substr($data['time_diff'],0,1);
             $time_diff          = explode(":",$data['time_diff']);
             $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
-            $hr_transit         = round(($day_transit*$time_diff/(24*3600)),2);
-            $actual_transit     = round(($hr_transit/(4*60)),2);
-            $convert_transit    = explode(".", $actual_transit);
-            $deg                = $convert_transit[0];
-            $min                = round((($actual_transit-$deg)*60),0);
-            $sec                = round((($actual_transit-$deg-($min/60))*3600),0);
+            $intval             = 24*3600;
+            $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval));
+            //echo $hr_transit;exit;
             if($sign == "+")
             {
-                $actual_transit    = explode(":",$this->addDegMinSec($total_transit[0], $total_transit[1], $total_transit[2], $deg, $min, $sec));
+                $actual_transit    = explode(":",$this->addDegMinSec($total_transit[0], $total_transit[1], $total_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
             }
             else if($sign == "-")
             {
-                $actual_transit    = explode(":",$this->subDegMinSec($total_transit[0], $total_transit[1], $total_transit[2], $deg, $min, $sec));
+                $actual_transit    = explode(":",$this->subDegMinSec($total_transit[0], $total_transit[1], $total_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
             }
             //echo $actual_transit/(4*60);
             //$actual_transit         = round($actual_transit/(4*60),2);
@@ -728,7 +643,7 @@ class HoroscopeModelLagna extends JModelItem
             
         }
         $data            = array_merge($data, $moon);
-        //print_r($data);
+        //print_r($data);exit;
         $this->calculateSun($data);
     }
     protected function calculateSun($data)
@@ -778,13 +693,14 @@ class HoroscopeModelLagna extends JModelItem
             $day_transit        = $this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval);       // one day transit
             $dob_transit        = explode(":",$this->getDiffTransit($diff[0],$diff[1],$intval, $intval2));
             $dob_transit        = $this->addDegMinSec($down_deg[0], $down_deg[1], 0, $dob_transit[0], $dob_transit[1], $dob_transit[2]);
-            echo $dob_transit;
+            //echo $dob_transit;exit;
             $time_diff          = substr($data['time_diff'],1);
             $sign               = substr($data['time_diff'],0,1);
             $time_diff          = explode(":",$data['time_diff']);
             $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
-            $hr_transit         = round(($day_transit*$time_diff/(24*3600)),2);
-            
+            $intval             = 24*3600;
+            $hr_transit         = $this->getDiffTransit2($day_transit, $time_diff, $intval);
+            echo $hr_transit;exit;
             if($sign == "+")
             {
                 $actual_transit    = $dob_transit+$hr_transit;
