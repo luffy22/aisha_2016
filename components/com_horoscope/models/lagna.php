@@ -595,6 +595,7 @@ class HoroscopeModelLagna extends JModelItem
             flush($row);
             $row                = $db->loadAssoc();
             $up_yob             = $row['yob'];
+            
             $up_moon            = explode(".",$row['moon']);
             
             $datetime1          = new DateTime($down_yob);
@@ -602,9 +603,18 @@ class HoroscopeModelLagna extends JModelItem
             $interval           = $datetime1->diff($datetime2);
             $intval             = (int)$interval->format('%a');
             
-            $diff               = explode(":",$this->subDegMinSec($up_moon[0],$up_moon[1],0,$down_moon[0],$down_moon[1],0));
-            $one_day_transit    = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));
-            
+            if($up_moon[0]<$down_moon[0])
+            {
+                $up_moon[0]         = $up_moon[0]+360;
+                $diff               = explode(":",$this->subDegMinSec($up_moon[0],$up_moon[1],0,$down_moon[0],$down_moon[1],0));
+            }
+            else
+            {
+                $diff               = explode(":",$this->subDegMinSec($up_moon[0],$up_moon[1],0,$down_moon[0],$down_moon[1],0));
+            }
+            $diff                   = $diff[0]*60*4+$diff[1]*4+$diff[2];
+            $one_day_transit    = explode(":",$this->getDiffTransit2($val1, $val2, $intval));
+            echo $one_day_transit[0].":".$one_day_transit[1].":".$one_day_transit[2];exit;
             $total_transit      = explode(":",$this->addDegMinSec($down_moon[0], $down_moon[1], 0, $one_day_transit[0], $one_day_transit[1], $one_day_transit[2]));
             $day_transit        = ($one_day_transit[0]*60*4)+($one_day_transit[1]*4);
             unset($sign);   // unset variable to reset it
@@ -643,8 +653,8 @@ class HoroscopeModelLagna extends JModelItem
             
         }
         $data            = array_merge($data, $moon);
-        //print_r($data);exit;
-        $this->calculateSun($data);
+        print_r($data);exit;
+        //$this->calculateSun($data);
     }
     protected function calculateSun($data)
     {
