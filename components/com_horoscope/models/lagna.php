@@ -222,14 +222,15 @@ class HoroscopeModelLagna extends JModelItem
     }
     public function divideDegMinSec($deg,$min,$sec,$divisor)
     {
-        $new_deg        = round($deg/$divisor,0);
+        $new_deg        = intval($deg/$divisor);
         $deg_mod        = $deg%$divisor;
         $new_min        = $min+($deg_mod*60);
-        $new_min1        = round($new_min/$divisor,0);
-        $min_mod        = $new_min%$divisor;
+        $new_min        = intval($new_min/$divisor);
+        $min_mod        = $min%$divisor;
         $sec            = $sec+($min_mod*60);
-        $new_sec        = round($sec/$divisor,0);
-        $value          = $this->convertDegMinSec($new_deg, $new_min1, $new_sec);
+        $new_sec        = intval($sec/$divisor);
+        
+        $value          = $this->convertDegMinSec($new_deg, $new_min, $new_sec);
         return $value;
     }
     public function getAddSubTime($date,$val1,$val2,$sign)
@@ -602,7 +603,7 @@ class HoroscopeModelLagna extends JModelItem
             $datetime2          = new DateTime($up_yob);
             $interval           = $datetime1->diff($datetime2);
             $intval             = (int)$interval->format('%a');
-            
+            //echo $intval;exit;
             if($up_moon[0]<$down_moon[0])
             {
                 $up_moon[0]         = $up_moon[0]+360;
@@ -612,15 +613,14 @@ class HoroscopeModelLagna extends JModelItem
             {
                 $diff               = explode(":",$this->subDegMinSec($up_moon[0],$up_moon[1],0,$down_moon[0],$down_moon[1],0));
             }
-            $diff                   = $diff[0]*60*4+$diff[1]*4+$diff[2];
-            $one_day_transit    = explode(":",$this->getDiffTransit2($val1, $val2, $intval));
-            echo $one_day_transit[0].":".$one_day_transit[1].":".$one_day_transit[2];exit;
-            $total_transit      = explode(":",$this->addDegMinSec($down_moon[0], $down_moon[1], 0, $one_day_transit[0], $one_day_transit[1], $one_day_transit[2]));
-            $day_transit        = ($one_day_transit[0]*60*4)+($one_day_transit[1]*4);
+            //echo $diff[0].":".$diff[1].":".$diff[2];exit;
+            $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));
+            $total_transit      = explode(":",$this->addDegMinSec($down_moon[0], $down_moon[1], 0, $day_transit[0], $day_transit[1], $day_transit[2]));
+            $day_transit        = $day_transit[0]*60*4+$day_transit[1]*4;
             unset($sign);   // unset variable to reset it
             $time_diff          = substr($data['time_diff'],1);
             $sign               = substr($data['time_diff'],0,1);
-            $time_diff          = explode(":",$data['time_diff']);
+            $time_diff          = explode(":",$time_diff);
             $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
             $intval             = 24*3600;
             $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval));
