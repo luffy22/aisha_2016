@@ -1,5 +1,5 @@
 <?php
-    //error_reporting(0);       // uncomment on server
+    error_reporting(0);       // uncomment on server
     defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
 <!DOCTYPE html>
@@ -160,9 +160,11 @@
         <div class="spacer"></div>
         <jdoc:include type="modules" name="articleslider2" style="none" />
         <jdoc:include type="component" />
+         <div class="spacer"></div>
         <jdoc:include type="message" />
         <div class="spacer"></div>
         <jdoc:include type="modules" name="relatedarticles" style="none" />
+         <div class="spacer"></div>
     </div>
     <div class="col-md-3 hidden-xs hidden-sm">
         <div class="spacer"></div>
@@ -193,11 +195,8 @@
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-49809214-1', 'astroisha.com');
-  ga('require', 'linkid', 'linkid.js');
+  ga('create', 'UA-49809214-1', 'auto');
   ga('send', 'pageview');
-
 </script>
 
 </body>
