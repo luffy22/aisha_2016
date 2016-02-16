@@ -143,11 +143,11 @@ class HoroscopeModelLagna extends JModelItem
     // converting decimal to degree for example 12.22 = 12 deg 22 min 30 sec
     public function convertDecimalToDegree($decimal)
     {
-        $deg        = abs(($decimal/(60*4)));
+        $deg        = round(($decimal/(60*4)),4);
         $real_deg   = explode(".",$deg);
-        $min        = intval(($deg-$real_deg[0])*60);
+        $min        = abs(($deg-$real_deg[0])*60);
         $real_min   = explode(".", $min);
-        $sec        = intval(($deg-$real_deg[0]-($min/60))*3600);
+        $sec        = abs(($deg-$real_deg[0]-($real_min[0]/60))*3600);
         $real_sec   = explode(".", $sec);
         return $real_deg[0].":".$real_min[0].":".$real_sec[0];
     }
@@ -163,51 +163,20 @@ class HoroscopeModelLagna extends JModelItem
     // subtracting degree minutes seconds
     public function subDegMinSec($deg1,$min1,$sec1,$deg2,$min2,$sec2)
     {
-        if($deg1>$deg2)
+        while($sec2>$sec1)
         {
-            $deg            = $deg1-$deg2;
-            if($min2>$min1)
-            {
-                $deg        = $deg-1;
-                $min        = ($min1+60)-$min2;
-            }
-            else
-            {
-                $min        = $min1-$min2;
-            }
-            if($sec2>$sec1)
-            {
-                $min        = $min-1;
-                $sec        = ($sec+60)-$sec2;
-            }
-            else
-            {
-                $sec        = $sec-$sec2;
-            }
+            $min1       = $min1-1;
+            $sec1       = $sec1+60;
         }
-        else if($deg1<$deg2)
+        while($min2>$min1)
         {
-            $deg        = $deg2-$deg1;
-            if($min2>$min1)
-            {
-                $deg        = $deg-1;
-                $min        = ($min1+60)-$min2;
-            }
-            else
-            {
-                $min        = $min1-$min2;
-            }
-            if($sec2>$sec1)
-            {
-                $min        = $min-1;
-                $sec        = ($sec+60)-$sec2;
-            }
-            else
-            {
-                $sec        = $sec-$sec2;
-            }
+            $deg1       = $deg1-1;
+            $min1       = $min1+60;
         }
-        $value      = $this->convertDegMinSec($deg,$min,$sec);
+        $deg            = intval($deg1-$deg2);
+        $min            = $min1-$min2;
+        $sec            = $sec1-$sec2;
+        $value          = $deg.":".$min.":".$sec;
         return $value;
     }
     // divinding degree, minute and second by divisor
@@ -666,104 +635,130 @@ class HoroscopeModelLagna extends JModelItem
     protected function calculateSun($data)
     {
             //print_r($data);
-        $dob        = explode("/",$data['dob']);
-        $year       = (int)$dob[0];
-        $month      = (int)$dob[1];
-        $day        = (int)$dob[2];
-        
+        $dob        = date("Y-m-d", strtotime($data['dob']));
+        $year       = date("Y", strtotime($data['dob']));
+        $planets    = array("full_year","surya","mangal","guru","shukra","shani","rahu");
         if($year <= 2000)
         {
+            $count          = count($planets);
+            // getting lower value
             $db             = JFactory::getDbo();
             $query          = $db->getQuery(true);
-            $query          ->select($db->quoteName(array('full_year','surya')));
+            $query          ->select($db->quoteName($planets));
             $query          ->from($db->quoteName('#__raman_planets2000'));
-            $query          ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'<='.$db->quote($day));
-            $query          ->order($db->quoteName('day').' desc');
+            $query          ->where($db->quoteName('full_year').'<='.$db->quote($dob));
+            $query          ->order($db->quoteName('full_year').' desc');
             $query          ->setLimit('1');
             $db             ->setQuery($query);
-            $result         = $db->loadAssoc();
-            $down_yob       = $result['full_year'];
-            $down_deg       = explode(".",$result['surya']);
-
-            $query              ->clear();
-            $query              ->select($db->quoteName(array('full_year','surya')));
-            $query              ->from($db->quoteName('#__raman_planets2000'));
-            $query              ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'>'.$db->quote($day));
-            $query              ->order($db->quoteName('day').' asc');
-            $query              ->setLimit('1');
-            $db                 ->setQuery($query);
-            $result             = $db->loadAssoc();
-            $up_yob             = $result['full_year'];
-            $up_deg             = explode(".",$result['surya']);
-            $datetime1          = new DateTime($down_yob);          // lower value of surya from two arrived values
-            $datetime2          = new DateTime($up_yob);       // exact dob
+            $result1        = $db->loadAssoc();
+            $down_year      = $result1['full_year'];
+            
+            $query          ->clear();
+            $query          ->select($db->quoteName($planets));
+            $query          ->from($db->quoteName('#__raman_planets2000'));
+            $query          ->where($db->quoteName('full_year').'>'.$db->quote($dob));
+            $query          ->order($db->quoteName('full_year').' asc');
+            $query          ->setLimit('1');
+            $db             ->setQuery($query);
+            $result2        = $db->loadAssoc();
+            $up_year        = $result2['full_year'];
+            
+            //echo $up_deg.":".$down_deg;exit;
+            $datetime1          = new DateTime($down_year);          // lower value of year
+            $datetime2          = new DateTime($up_year);           // upper value of year
             $datetime3          = new DateTime($data['dob']);       // exact dob
             $interval           = $datetime1->diff($datetime2);     // get difference
             $intval             = (int)$interval->format('%a');     // format in int example 2
-            $interval1           = $datetime1->diff($datetime3);
+            $interval1          = $datetime1->diff($datetime3);
             $intval2            = (int)$interval1->format('%a');
-            
-            if($up_deg[0]<$down_deg[0])
+            for($i=1;$i<$count;$i++)
             {
-                $up_deg[0]         = $up_deg[0]+360;
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            else
-            {
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));       // one day transit
-            if($intval2!==0)
-            {
+                $planet         = $planets[$i];
+                $down_deg       = $result1[$planet];
+                $up_deg         = $result2[$planet];
+                $down_val       = explode(".",$down_deg);
+                $up_val         = explode(".",$up_deg);
+                if($up_deg<$down_deg && intval($up_deg-$down_deg)>300)
+                {
+                    $up_val[0]      = $up_val[0]+360;
+                    $diff           = explode(":",$this->subDegMinSec($up_val[0],$up_val[1],0,$down_val[0],$down_val[1],0));
+                }
+                else
+                {
+                    $diff           = explode(":",$this->subDegMinSec($up_val[0],$up_val[1],0,$down_val[0],$down_val[1],0));
+                }
+                //echo $diff[0].":".$diff[1].":".$diff[2];exit;
+                $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));       // one day transit
                 $diff               = $diff[0]*60*4+$diff[1]*4;
-                $dob_transit        = explode(":",$this->getDiffTransit2($diff,$intval2, $intval));
-                $dob_transit        = explode(":",$this->addDegMinSec($down_deg[0], $down_deg[1], 0, $dob_transit[0], $dob_transit[1], $dob_transit[2]));
+                //echo $day_transit[0].":".$day_transit[2].":".$day_transit[2];exit;
+                if($intval2!==0)
+                {
+                    $dob_transit        = explode(":",$this->getDiffTransit2($diff,$intval2, $intval));
+                    $dob_transit        = explode(":",$this->addDegMinSec($down_val[0], $down_val[1], 0, $dob_transit[0], $dob_transit[1], $dob_transit[2]));
+                }
+                else
+                {
+                    $dob_transit        = explode(":",$down_val[0].":".$down_val[1].":00");
+                }
+                //echo $dob_transit[0].":".$dob_transit[1].":".$dob_transit[2];exit;
+                $time_diff          = substr($data['time_diff'],1);
+                $sign               = substr($data['time_diff'],0,1);
+                $time_diff          = explode(":",$time_diff);
+                $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
+                $intval_sec         = 24*3600;
+                $day_transit        = $day_transit[0]*60*4+$day_transit[1]*4;
+                $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval_sec));
+                //echo $hr_transit[0].":".$hr_transit[1].":".$hr_transit[2];exit;
+                if($sign == "+")
+                {
+                    $actual_transit    = explode(":",$this->addDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
+                }
+                else if($sign == "-")
+                {
+                    $actual_transit    = explode(":",$this->subDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
+                }
+                //echo $actual_transit[0].":".$actual_transit[1].":".$actual_transit[2];exit;
+                $date1  = null;
+                unset($date1);
+                $query                  ->clear();
+                $query                  ->select($db->quoteName('ayanamsha'))
+                                        ->from($db->quoteName('#__lahiri_ayanamsha'))
+                                        ->where($db->quoteName('year').'<='.$db->quote($year))
+                                        ->order($db->quoteName('year').' desc')
+                                        ->setLimit('1');
+                $db->setQuery($query);
+                $result                 = $db->loadAssoc();
+                $ayanamsha              = explode(":",$result['ayanamsha'].":00");
+                $value                  = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
+                unset($result);
+                if($up_deg<$down_deg && !(intval($up_deg-$down_deg)>300))
+                {
+                    $result                 = array($planet=>$value.":r");
+                }
+                else
+                {
+                    $result                 = array($planet=>$value);
+                }
+                /*if($planet=="rahu")
+                {
+                    echo "calls<br/>";
+                    /*$value                  = explode(":",$value);
+                    $value[0]               = $value[0]+180;
+                    if($value[0]>=360)
+                    {
+                        $value[0]           = $value[0] - 360;
+                    }
+                    $ketu                   = $value[0].":".$value[1].":".$value[2].":r";
+                    $ketu                   = array("ketu"=>$ketu);
+                    array_merge($data,$ketu);
+                }*/
+                $data                   = array_merge($data, $result);
+                //print_r($data);exit;
             }
-            else
-            {
-                $dob_transit        = explode(":",$down_deg[0].":".$down_deg[1].":00");
-            }
-            //echo $dob_transit;exit;
-            $time_diff          = substr($data['time_diff'],1);
-            $sign               = substr($data['time_diff'],0,1);
-            $time_diff          = explode(":",$time_diff);
-            $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
-            $intval             = 24*3600;
-            $day_transit        = $day_transit[0]*60*4+$day_transit[1]*4;
-            $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval));
-            //echo $hr_transit;exit;
-            if($sign == "+")
-            {
-                $actual_transit    = explode(":",$this->addDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-            else if($sign == "-")
-            {
-                $actual_transit    = explode(":",$this->subDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-             //$actual_transit         = round($actual_transit/(4*60),2);
-            $date1  = null;
-            unset($date1);
-            $query                  ->clear();
-            $query                  ->select($db->quoteName('ayanamsha'))
-                                    ->from($db->quoteName('#__lahiri_ayanamsha'))
-                                    ->where($db->quoteName('year').'<='.$db->quote($dob[0]))
-                                    ->order($db->quoteName('year').' desc')
-                                    ->setLimit('1');
-            $db->setQuery($query);
-            $result                 = $db->loadAssoc();
-            $ayanamsha              = explode(":",$result['ayanamsha']);
-            $surya                  = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
-            $surya                  = array("surya"=>$surya);
-        //print_r($lagna);exit;*/
-            
         }
-        $data            = array_merge($data, $surya);
-        //print_r($data);exit;
-        $this->calculateMangal($data);   
+        
+        print_r($data);exit;
+        //$this->calculateMangal($data);   
     }
     protected function calculateMangal($data)
     {
@@ -868,8 +863,8 @@ class HoroscopeModelLagna extends JModelItem
             
         }
         $data            = array_merge($data, $mangal);
-        //print_r($data);exit;
-        $this->calculateGuru($data);   
+        print_r($data);exit;
+        //$this->calculateGuru($data);   
     }
     protected function calculateGuru($data)
     {
