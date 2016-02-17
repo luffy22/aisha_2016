@@ -173,7 +173,10 @@ class HoroscopeModelLagna extends JModelItem
             $deg1       = $deg1-1;
             $min1       = $min1+60;
         }
-        $deg            = intval($deg1-$deg2);
+        if($deg2 > $deg1)
+        $deg            = $deg2 - $deg1;
+        else
+        $deg            = $deg1 - $deg2;
         $min            = $min1-$min2;
         $sec            = $sec1-$sec2;
         $value          = $deg.":".$min.":".$sec;
@@ -622,6 +625,10 @@ class HoroscopeModelLagna extends JModelItem
             $db->setQuery($query);
             $result                 = $db->loadAssoc();
             $ayanamsha              = explode(":",$result['ayanamsha']);
+            if($actual_transit[0]<$ayanamsha[0])
+            {
+                $actual_transit[0]  = $actual_transit[0]+360;
+            }
             $moon                   = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
             $moon                   = array("moon"=>$moon);
             
@@ -652,7 +659,7 @@ class HoroscopeModelLagna extends JModelItem
             $db             ->setQuery($query);
             $result1        = $db->loadAssoc();
             $down_year      = $result1['full_year'];
-            
+            //print_r($result1);
             $query          ->clear();
             $query          ->select($db->quoteName($planets));
             $query          ->from($db->quoteName('#__raman_planets2000'));
@@ -662,7 +669,7 @@ class HoroscopeModelLagna extends JModelItem
             $db             ->setQuery($query);
             $result2        = $db->loadAssoc();
             $up_year        = $result2['full_year'];
-            
+            //print_r($result2);exit;
             //echo $up_deg.":".$down_deg;exit;
             $datetime1          = new DateTime($down_year);          // lower value of year
             $datetime2          = new DateTime($up_year);           // upper value of year
@@ -673,6 +680,7 @@ class HoroscopeModelLagna extends JModelItem
             $intval2            = (int)$interval1->format('%a');
             for($i=1;$i<$count;$i++)
             {
+                
                 $planet         = $planets[$i];
                 $down_deg       = $result1[$planet];
                 $up_deg         = $result2[$planet];
@@ -729,6 +737,10 @@ class HoroscopeModelLagna extends JModelItem
                 $db->setQuery($query);
                 $result                 = $db->loadAssoc();
                 $ayanamsha              = explode(":",$result['ayanamsha'].":00");
+                if($actual_transit[0]<$ayanamsha[0])
+                {
+                    $actual_transit[0]  = $actual_transit[0]+360;
+                }
                 $value                  = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
                 unset($result);
                 if($up_deg<$down_deg && !(intval($up_deg-$down_deg)>300))
@@ -739,551 +751,25 @@ class HoroscopeModelLagna extends JModelItem
                 {
                     $result                 = array($planet=>$value);
                 }
-                /*if($planet=="rahu")
-                {
-                    echo "calls<br/>";
-                    /*$value                  = explode(":",$value);
-                    $value[0]               = $value[0]+180;
-                    if($value[0]>=360)
-                    {
-                        $value[0]           = $value[0] - 360;
-                    }
-                    $ketu                   = $value[0].":".$value[1].":".$value[2].":r";
-                    $ketu                   = array("ketu"=>$ketu);
-                    array_merge($data,$ketu);
-                }*/
-                $data                   = array_merge($data, $result);
-                //print_r($data);exit;
-            }
-        }
-        
-        print_r($data);exit;
-        //$this->calculateMangal($data);   
-    }
-    protected function calculateMangal($data)
-    {
-               //print_r($data);
-        $dob        = explode("/",$data['dob']);
-        $year       = (int)$dob[0];
-        $month      = (int)$dob[1];
-        $day        = (int)$dob[2];
-        
-        if($year <= 2000)
-        {
-            $db             = JFactory::getDbo();
-            $query          = $db->getQuery(true);
-            $query          ->select($db->quoteName(array('full_year','mangal')));
-            $query          ->from($db->quoteName('#__raman_planets2000'));
-            $query          ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'<='.$db->quote($day));
-            $query          ->order($db->quoteName('day').' desc');
-            $query          ->setLimit('1');
-            $db             ->setQuery($query);
-            $result         = $db->loadAssoc();
-            $down_yob       = $result['full_year'];
-            $down_deg       = explode(".",$result['mangal']);
-     
-            $query              ->clear();
-            $query              ->select($db->quoteName(array('full_year','mangal')));
-            $query              ->from($db->quoteName('#__raman_planets2000'));
-            $query              ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'>'.$db->quote($day));
-            $query              ->order($db->quoteName('day').' asc');
-            $query              ->setLimit('1');
-            $db                 ->setQuery($query);
-            $result             = $db->loadAssoc();
-            $up_yob             = $result['full_year'];
-            $up_deg             = explode(".",$result['mangal']);
-            $datetime1          = new DateTime($down_yob);          // lower value of surya from two arrived values
-            $datetime2          = new DateTime($up_yob);       // exact dob
-            $datetime3          = new DateTime($data['dob']);       // exact dob
-            $interval           = $datetime1->diff($datetime2);     // get difference
-            $intval             = (int)$interval->format('%a');     // format in int example 2
-            $interval1           = $datetime1->diff($datetime3);
-            $intval2            = (int)$interval1->format('%a');
-            $sub_diff           = $this->subDegMinSec($up_deg[0], $up_deg[1], 0, $down_deg[0], $down_deg[1], 0);
-            if($up_deg[0]<$down_deg[0] && intval($up_deg[0]-$down_deg[0])>300)
-            {
-                $up_deg[0]         = $up_deg[0]+360;
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            else
-            {
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));       // one day transit
-            if($intval2!==0)
-            {
-                $diff               = $diff[0]*60*4+$diff[1]*4;
-                $dob_transit        = explode(":",$this->getDiffTransit2($diff,$intval2, $intval));
-                $dob_transit        = explode(":",$this->addDegMinSec($down_deg[0], $down_deg[1], 0, $dob_transit[0], $dob_transit[1], $dob_transit[2]));
-            }
-            else
-            {
-                $dob_transit        = explode(":",$down_deg[0].":".$down_deg[1].":00");
-            }
-            //echo $dob_transit;exit;
-            $time_diff          = substr($data['time_diff'],1);
-            $sign               = substr($data['time_diff'],0,1);
-            $time_diff          = explode(":",$time_diff);
-            $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
-            $intval             = 24*3600;
-            $day_transit        = $day_transit[0]*60*4+$day_transit[1]*4;
-            $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval));
-            //echo $hr_transit;exit;
-            if($sign == "+")
-            {
-                $actual_transit    = explode(":",$this->addDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-            else if($sign == "-")
-            {
-                $actual_transit    = explode(":",$this->subDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-             //$actual_transit         = round($actual_transit/(4*60),2);
-            $date1  = null;
-            unset($date1);
-            $query                  ->clear();
-            $query                  ->select($db->quoteName('ayanamsha'))
-                                    ->from($db->quoteName('#__lahiri_ayanamsha'))
-                                    ->where($db->quoteName('year').'<='.$db->quote($dob[0]))
-                                    ->order($db->quoteName('year').' desc')
-                                    ->setLimit('1');
-            $db->setQuery($query);
-            $result                 = $db->loadAssoc();
-            $ayanamsha              = explode(":",$result['ayanamsha']);
-            $mangal                 = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
-            if($down_deg[0]>$up_deg[0])
-            {
-                $mangal             = $mangal.":r";
-            }
-            $mangal                 = array("mangal"=>$mangal);
-        //print_r($lagna);exit;*/
-            
-        }
-        $data            = array_merge($data, $mangal);
-        print_r($data);exit;
-        //$this->calculateGuru($data);   
-    }
-    protected function calculateGuru($data)
-    {
-              //print_r($data);
-        $dob        = explode("/",$data['dob']);
-        $year       = (int)$dob[0];
-        $month      = (int)$dob[1];
-        $day        = (int)$dob[2];
-        
-        if($year <= 2000)
-        {
-            $db             = JFactory::getDbo();
-            $query          = $db->getQuery(true);
-            $query          ->select($db->quoteName(array('full_year','guru')));
-            $query          ->from($db->quoteName('#__raman_planets2000'));
-            $query          ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'<='.$db->quote($day));
-            $query          ->order($db->quoteName('day').' desc');
-            $query          ->setLimit('1');
-            $db             ->setQuery($query);
-            $result         = $db->loadAssoc();
-            $down_yob       = $result['full_year'];
-            $down_deg       = explode(".",$result['guru']);
-     
-            $query              ->clear();
-            $query              ->select($db->quoteName(array('full_year','guru')));
-            $query              ->from($db->quoteName('#__raman_planets2000'));
-            $query              ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'>'.$db->quote($day));
-            $query              ->order($db->quoteName('day').' asc');
-            $query              ->setLimit('1');
-            $db                 ->setQuery($query);
-            $result             = $db->loadAssoc();
-            $up_yob             = $result['full_year'];
-            $up_deg             = explode(".",$result['guru']);
-            $datetime1          = new DateTime($down_yob);          // lower value of surya from two arrived values
-            $datetime2          = new DateTime($up_yob);       // exact dob
-            $datetime3          = new DateTime($data['dob']);       // exact dob
-            $interval           = $datetime1->diff($datetime2);     // get difference
-            $intval             = (int)$interval->format('%a');     // format in int example 2
-            $interval1           = $datetime1->diff($datetime3);
-            $intval2            = (int)$interval1->format('%a');
-            
-            if($up_deg[0]<$down_deg[0] && intval($up_deg[0]-$down_deg[0])>300)
-            {
-                $up_deg[0]         = $up_deg[0]+360;
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            else
-            {
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));       // one day transit
-            if($intval2!==0)
-            {
-                $diff               = $diff[0]*60*4+$diff[1]*4;
-                $dob_transit        = explode(":",$this->getDiffTransit2($diff,$intval2, $intval));
-                $dob_transit        = explode(":",$this->addDegMinSec($down_deg[0], $down_deg[1], 0, $dob_transit[0], $dob_transit[1], $dob_transit[2]));
-            }
-            else
-            {
-                $dob_transit        = explode(":",$down_deg[0].":".$down_deg[1].":00");
-            }
-            //echo $dob_transit;exit;
-            $time_diff          = substr($data['time_diff'],1);
-            $sign               = substr($data['time_diff'],0,1);
-            $time_diff          = explode(":",$time_diff);
-            $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
-            $intval             = 24*3600;
-            $day_transit        = $day_transit[0]*60*4+$day_transit[1]*4;
-            $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval));
-            //echo $hr_transit;exit;
-            if($sign == "+")
-            {
-                $actual_transit    = explode(":",$this->addDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-            else if($sign == "-")
-            {
-                $actual_transit    = explode(":",$this->subDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-             //$actual_transit         = round($actual_transit/(4*60),2);
-            $date1  = null;
-            unset($date1);
-            $query                  ->clear();
-            $query                  ->select($db->quoteName('ayanamsha'))
-                                    ->from($db->quoteName('#__lahiri_ayanamsha'))
-                                    ->where($db->quoteName('year').'<='.$db->quote($dob[0]))
-                                    ->order($db->quoteName('year').' desc')
-                                    ->setLimit('1');
-            $db->setQuery($query);
-            $result                 = $db->loadAssoc();
-            $ayanamsha              = explode(":",$result['ayanamsha']);
-            $guru                   = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
-            
-            if($down_deg[0]>$up_deg[0])
-            {
-                $guru               = $guru.":r";
-            }
-            $guru                   = array("guru"=>$guru);
                 
+                $data                   = array_merge($data, $result);
+                
+            }
         }
-        $data            = array_merge($data, $guru);
-        //print_r($data);exit;
-        $this->calculateShukra($data);   
-    }
-    protected function calculateShukra($data)
-    {
-        $dob        = explode("/",$data['dob']);
-        $year       = (int)$dob[0];
-        $month      = (int)$dob[1];
-        $day        = (int)$dob[2];
         
-        if($year <= 2000)
-        {
-            $db             = JFactory::getDbo();
-            $query          = $db->getQuery(true);
-            $query          ->select($db->quoteName(array('full_year','shukra')));
-            $query          ->from($db->quoteName('#__raman_planets2000'));
-            $query          ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'<='.$db->quote($day));
-            $query          ->order($db->quoteName('day').' desc');
-            $query          ->setLimit('1');
-            $db             ->setQuery($query);
-            $result         = $db->loadAssoc();
-            $down_yob       = $result['full_year'];
-            $down_deg       = explode(".",$result['shukra']);
-     
-            $query              ->clear();
-            $query              ->select($db->quoteName(array('full_year','shukra')));
-            $query              ->from($db->quoteName('#__raman_planets2000'));
-            $query              ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'>'.$db->quote($day));
-            $query              ->order($db->quoteName('day').' asc');
-            $query              ->setLimit('1');
-            $db                 ->setQuery($query);
-            $result             = $db->loadAssoc();
-            $up_yob             = $result['full_year'];
-            $up_deg             = explode(".",$result['shukra']);
-            $datetime1          = new DateTime($down_yob);          // lower value of surya from two arrived values
-            $datetime2          = new DateTime($up_yob);       // exact dob
-            $datetime3          = new DateTime($data['dob']);       // exact dob
-            $interval           = $datetime1->diff($datetime2);     // get difference
-            $intval             = (int)$interval->format('%a');     // format in int example 2
-            $interval1           = $datetime1->diff($datetime3);
-            $intval2            = (int)$interval1->format('%a');
-            
-            if($up_deg[0]<$down_deg[0] && intval($up_deg[0]-$down_deg[0])>300)
-            {
-                $up_deg[0]         = $up_deg[0]+360;
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            else
-            {
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));       // one day transit
-            if($intval2!==0)
-            {
-                $diff               = $diff[0]*60*4+$diff[1]*4;
-                $dob_transit        = explode(":",$this->getDiffTransit2($diff,$intval2, $intval));
-                $dob_transit        = explode(":",$this->addDegMinSec($down_deg[0], $down_deg[1], 0, $dob_transit[0], $dob_transit[1], $dob_transit[2]));
-            }
-            else
-            {
-                $dob_transit        = explode(":",$down_deg[0].":".$down_deg[1].":00");
-            }
-            //echo $dob_transit;exit;
-            $time_diff          = substr($data['time_diff'],1);
-            $sign               = substr($data['time_diff'],0,1);
-            $time_diff          = explode(":",$time_diff);
-            $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
-            $intval             = 24*3600;
-            $day_transit        = $day_transit[0]*60*4+$day_transit[1]*4;
-            $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval));
-            //echo $hr_transit;exit;
-            if($sign == "+")
-            {
-                $actual_transit    = explode(":",$this->addDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-            else if($sign == "-")
-            {
-                $actual_transit    = explode(":",$this->subDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-             //$actual_transit         = round($actual_transit/(4*60),2);
-            $date1  = null;
-            unset($date1);
-            $query                  ->clear();
-            $query                  ->select($db->quoteName('ayanamsha'))
-                                    ->from($db->quoteName('#__lahiri_ayanamsha'))
-                                    ->where($db->quoteName('year').'<='.$db->quote($dob[0]))
-                                    ->order($db->quoteName('year').' desc')
-                                    ->setLimit('1');
-            $db->setQuery($query);
-            $result                 = $db->loadAssoc();
-            $ayanamsha              = explode(":",$result['ayanamsha']);
-            $shukra                 = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
-            
-            if($down_deg[0]>$up_deg[0])
-            {
-                $shukra               = $shukra.":r";
-            }
-            $shukra                   = array("shukra"=>$shukra);      
-        }
-        $data            = array_merge($data, $shukra);
-        //print_r($data);exit;
-        $this->calculateShani($data);
-    }
-    protected function calculateShani($data)
-    {
-        $dob        = explode("/",$data['dob']);
-        $year       = (int)$dob[0];
-        $month      = (int)$dob[1];
-        $day        = (int)$dob[2];
-        
-        if($year <= 2000)
-        {
-            $db             = JFactory::getDbo();
-            $query          = $db->getQuery(true);
-            $query          ->select($db->quoteName(array('full_year','shani')));
-            $query          ->from($db->quoteName('#__raman_planets2000'));
-            $query          ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'<='.$db->quote($day));
-            $query          ->order($db->quoteName('day').' desc');
-            $query          ->setLimit('1');
-            $db             ->setQuery($query);
-            $result         = $db->loadAssoc();
-            $down_yob       = $result['full_year'];
-            $down_deg       = explode(".",$result['shani']);
-     
-            $query              ->clear();
-            $query              ->select($db->quoteName(array('full_year','shani')));
-            $query              ->from($db->quoteName('#__raman_planets2000'));
-            $query              ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'>'.$db->quote($day));
-            $query              ->order($db->quoteName('day').' asc');
-            $query              ->setLimit('1');
-            $db                 ->setQuery($query);
-            $result             = $db->loadAssoc();
-            $up_yob             = $result['full_year'];
-            $up_deg             = explode(".",$result['shani']);
-            $datetime1          = new DateTime($down_yob);          // lower value of surya from two arrived values
-            $datetime2          = new DateTime($up_yob);       // exact dob
-            $datetime3          = new DateTime($data['dob']);       // exact dob
-            $interval           = $datetime1->diff($datetime2);     // get difference
-            $intval             = (int)$interval->format('%a');     // format in int example 2
-            $interval1           = $datetime1->diff($datetime3);
-            $intval2            = (int)$interval1->format('%a');
-            
-            if($up_deg[0]<$down_deg[0] && intval($up_deg[0]-$down_deg[0])>300)
-            {
-                $up_deg[0]         = $up_deg[0]+360;
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            else
-            {
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));       // one day transit
-            if($intval2!==0)
-            {
-                $diff               = $diff[0]*60*4+$diff[1]*4;
-                $dob_transit        = explode(":",$this->getDiffTransit2($diff,$intval2, $intval));
-                $dob_transit        = explode(":",$this->addDegMinSec($down_deg[0], $down_deg[1], 0, $dob_transit[0], $dob_transit[1], $dob_transit[2]));
-            }
-            else
-            {
-                $dob_transit        = explode(":",$down_deg[0].":".$down_deg[1].":00");
-            }
-            //echo $dob_transit;exit;
-            $time_diff          = substr($data['time_diff'],1);
-            $sign               = substr($data['time_diff'],0,1);
-            $time_diff          = explode(":",$time_diff);
-            $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
-            $intval             = 24*3600;
-            $day_transit        = $day_transit[0]*60*4+$day_transit[1]*4;
-            $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval));
-            //echo $hr_transit;exit;
-            if($sign == "+")
-            {
-                $actual_transit    = explode(":",$this->addDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-            else if($sign == "-")
-            {
-                $actual_transit    = explode(":",$this->subDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-             //$actual_transit         = round($actual_transit/(4*60),2);
-            $date1  = null;
-            unset($date1);
-            $query                  ->clear();
-            $query                  ->select($db->quoteName('ayanamsha'))
-                                    ->from($db->quoteName('#__lahiri_ayanamsha'))
-                                    ->where($db->quoteName('year').'<='.$db->quote($dob[0]))
-                                    ->order($db->quoteName('year').' desc')
-                                    ->setLimit('1');
-            $db->setQuery($query);
-            $result                 = $db->loadAssoc();
-            $ayanamsha              = explode(":",$result['ayanamsha']);
-            $shani                  = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
-            
-            if($down_deg[0]>$up_deg[0])
-            {
-                $shani              = $shani.":r";
-            }
-            $shani                  = array("shani"=>$shani);      
-        }
-        $data            = array_merge($data, $shani);
-        //print_r($data);exit;
-        $this->calculateRahu($data);
-    }
-    protected function calculateRahu($data)
-    {
-        $dob        = explode("/",$data['dob']);
-        $year       = (int)$dob[0];
-        $month      = (int)$dob[1];
-        $day        = (int)$dob[2];
-        
-        if($year <= 2000)
-        {
-            $db             = JFactory::getDbo();
-            $query          = $db->getQuery(true);
-            $query          ->select($db->quoteName(array('full_year','rahu')));
-            $query          ->from($db->quoteName('#__raman_planets2000'));
-            $query          ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'<='.$db->quote($day));
-            $query          ->order($db->quoteName('day').' desc');
-            $query          ->setLimit('1');
-            $db             ->setQuery($query);
-            $result         = $db->loadAssoc();
-            $down_yob       = $result['full_year'];
-            $down_deg       = explode(".",$result['rahu']);
-     
-            $query              ->clear();
-            $query              ->select($db->quoteName(array('full_year','rahu')));
-            $query              ->from($db->quoteName('#__raman_planets2000'));
-            $query              ->where($db->quoteName('year').'='.$db->quote($year).
-                                    'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                                    $db->quoteName('day').'>'.$db->quote($day));
-            $query              ->order($db->quoteName('day').' asc');
-            $query              ->setLimit('1');
-            $db                 ->setQuery($query);
-            $result             = $db->loadAssoc();
-            $up_yob             = $result['full_year'];
-            $up_deg             = explode(".",$result['rahu']);
-            $datetime1          = new DateTime($down_yob);          // lower value of surya from two arrived values
-            $datetime2          = new DateTime($up_yob);       // exact dob
-            $datetime3          = new DateTime($data['dob']);       // exact dob
-            $interval           = $datetime1->diff($datetime2);     // get difference
-            $intval             = (int)$interval->format('%a');     // format in int example 2
-            $interval1           = $datetime1->diff($datetime3);
-            $intval2            = (int)$interval1->format('%a');
-            
-            if(intval($up_deg[0]-$down_deg[0])>300)
-            {
-                $up_deg[0]         = $up_deg[0]+360;
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            else
-            {
-                $diff               = explode(":",$this->subDegMinSec($up_deg[0],$up_deg[1],0,$down_deg[0],$down_deg[1],0));
-            }
-            $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));       // one day transit
-            if($intval2!==0)
-            {
-                $diff               = $diff[0]*60*4+$diff[1]*4;
-                $dob_transit        = explode(":",$this->getDiffTransit2($diff,$intval2, $intval));
-                $dob_transit        = explode(":",$this->addDegMinSec($down_deg[0], $down_deg[1], 0, $dob_transit[0], $dob_transit[1], $dob_transit[2]));
-            }
-            else
-            {
-                $dob_transit        = explode(":",$down_deg[0].":".$down_deg[1].":00");
-            }
-            //echo $dob_transit;exit;
-            $time_diff          = substr($data['time_diff'],1);
-            $sign               = substr($data['time_diff'],0,1);
-            $time_diff          = explode(":",$time_diff);
-            $time_diff          = $time_diff[0]*3600+$time_diff[1]*60+$time_diff[2];
-            $intval             = 24*3600;
-            $day_transit        = $day_transit[0]*60*4+$day_transit[1]*4;
-            $hr_transit         = explode(":",$this->getDiffTransit2($day_transit, $time_diff, $intval));
-            //echo $hr_transit;exit;
-            if($sign == "+")
-            {
-                $actual_transit    = explode(":",$this->addDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-            else if($sign == "-")
-            {
-                $actual_transit    = explode(":",$this->subDegMinSec($dob_transit[0], $dob_transit[1], $dob_transit[2], $hr_transit[0], $hr_transit[1], $hr_transit[2]));
-            }
-             //$actual_transit         = round($actual_transit/(4*60),2);
-            $date1  = null;
-            unset($date1);
-            $query                  ->clear();
-            $query                  ->select($db->quoteName('ayanamsha'))
-                                    ->from($db->quoteName('#__lahiri_ayanamsha'))
-                                    ->where($db->quoteName('year').'<='.$db->quote($dob[0]))
-                                    ->order($db->quoteName('year').' desc')
-                                    ->setLimit('1');
-            $db->setQuery($query);
-            $result                 = $db->loadAssoc();
-            $ayanamsha              = explode(":",$result['ayanamsha']);
-            $rahu                   = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
-            $val                    = explode(":",$rahu);
-            $val[0]                 = $val[0]+180;
-            if($val[0]>=360)
-            {
-                $val[0]               = $val[0]-360;
-            }
-            $ketu                   = $val[0].":".$val[1].":".$val[2];
-            $values                 = array("rahu"=>$rahu,"ketu"=>$ketu);
-        }
-        $data            = array_merge($data, $values);
         print_r($data);exit;
+        $this->calculateBudh($data);   
+    }
+    protected function calculateBudh($data)
+    {
+        $rahu       = explode(":",$data['rahu']);
+        $ketu       = $rahu[0]+180;
+        if($ketu >= 360)
+        {
+            $ketu   = $ketu-360;
+        }
+        $ketu       = $ketu.":".$rahu[1].":".$rahu[2];
+        
     }
 }
 ?>
