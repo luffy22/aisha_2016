@@ -631,15 +631,12 @@ class HoroscopeModelLagna extends JModelItem
             }
             $moon                   = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
             $moon                   = array("moon"=>$moon);
-            
-        //print_r($lagna);exit;*/
-            
         }
         $data            = array_merge($data, $moon);
         //print_r($data);exit;
-        $this->calculateSun($data);
+        $this->calculate7Planets($data);
     }
-    protected function calculateSun($data)
+    protected function calculate7Planets($data)
     {
             //print_r($data);
         $dob        = date("Y-m-d", strtotime($data['dob']));
@@ -753,23 +750,79 @@ class HoroscopeModelLagna extends JModelItem
                 }
                 
                 $data                   = array_merge($data, $result);
-                
             }
         }
-        
-        print_r($data);exit;
+        //print_r($data);exit;
         $this->calculateBudh($data);   
     }
     protected function calculateBudh($data)
     {
+        $dob        = date("Y-m-d", strtotime($data['dob']));
         $rahu       = explode(":",$data['rahu']);
         $ketu       = $rahu[0]+180;
         if($ketu >= 360)
         {
             $ketu   = $ketu-360;
         }
-        $ketu       = $ketu.":".$rahu[1].":".$rahu[2];
+        $ketu           = $ketu.":".$rahu[1].":".$rahu[2];
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName(array("budh", "budh_5","full_year")));
+        $query          ->from($db->quoteName('#__raman_planets2000'));
+        $query          ->where($db->quoteName('full_year').'<='.$db->quote($dob));
+        $query          ->order($db->quoteName('full_year').' desc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
+        $result         = $db->loadAssoc();
+        $down_year      = $result['full_year'];
+        $down_budh      = $result['budh'];
+        $down_budh5     = $result['budh_5'];
+        unset($result);
+        $query          ->clear();
+        $query          ->select($db->quoteName(array("budh", "budh_5","full_year")));
+        $query          ->from($db->quoteName('#__raman_planets2000'));
+        $query          ->where($db->quoteName('full_year').'>'.$db->quote($dob));
+        $query          ->order($db->quoteName('full_year').' asc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
+        $result         = $db->loadAssoc();
+        $up_year      = $result['full_year'];
+        $up_budh      = $result['budh'];
+        $up_budh5     = $result['budh_5'];
         
+        // adding 5 days to both upper and lower value of years
+        $down_year5         = date('Y-m-d',strtotime($down_year.' +5 day'));
+        $up_year5           = date('Y-m-d',strtotime($up_year.' +5 day'));
+        $dob_year           = new DateTime($data['dob']);       // exact dob
+        $down_year          = new DateTime($down_year);
+        $up_year            = new DateTime($up_year);
+        $interval1          = $down_year->diff($dob_year);     // get difference
+        $interval2          = $up_year->diff($dob_year);
+      
+        $intval1            = (int)$interval1->format('%a');     // format in int example 2
+        $intval2            = (int)$interval2->format('%a');     // format in int example 2
+    
+        echo $intval1.":".$intval2;
+        if($intval1 >$intval2 && $down_budh5 !== "0")
+        {
+            $down_val           = explode(".",$down_budh5);
+            $up_val             = explode(".",$up_budh);
+        }
+        else
+        {
+            $down_val           = explode(".",$down_budh);
+            $up_val             = explode(".",$down_budh5);
+            
+        }
+        if($up_budh<$down_budh5 && intval($up_deg-$down_deg)>300)
+        {
+            $up_val[0]      = $up_val[0]+360;
+            $diff           = explode(":",$this->subDegMinSec($up_val[0],$up_val[1],0,$down_val[0],$down_val[1],0));
+        }
+        else
+        {
+            $diff           = explode(":",$this->subDegMinSec($up_val[0],$up_val[1],0,$down_val[0],$down_val[1],0));
+        }
     }
 }
 ?>
