@@ -755,6 +755,7 @@ class HoroscopeModelLagna extends JModelItem
         //print_r($data);exit;
         $this->calculateBudh($data);   
     }
+    // function calculates value of Budh and also Ketu
     protected function calculateBudh($data)
     {
         $dob        = date("Y-m-d", strtotime($data['dob']));
@@ -802,7 +803,7 @@ class HoroscopeModelLagna extends JModelItem
         $intval1            = (int)$interval1->format('%a');     // format in int example 2
         $intval2            = (int)$interval2->format('%a');     // format in int example 2
     
-        echo $intval1.":".$intval2;
+        //echo $intval1.":".$intval2;
         if($intval1 >$intval2 && $down_budh5 !== "0")
         {
             $down_val           = explode(".",$down_budh5);
@@ -811,8 +812,7 @@ class HoroscopeModelLagna extends JModelItem
         else
         {
             $down_val           = explode(".",$down_budh);
-            $up_val             = explode(".",$down_budh5);
-            
+            $up_val             = explode(".",$down_budh5);    
         }
         if($up_budh<$down_budh5 && intval($up_deg-$down_deg)>300)
         {
