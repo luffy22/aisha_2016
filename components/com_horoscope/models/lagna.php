@@ -27,6 +27,7 @@ class HoroscopeModelLagna extends JModelItem
         {
             $tob   = $tob[0].":".$tob[1].":".$tob[2];
         }
+        //echo $tob;exit;
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         $query2         = $db->getQuery(true);
@@ -398,6 +399,7 @@ class HoroscopeModelLagna extends JModelItem
         {
             $dateObject = $this->getAddSubTime($dob,$sidtime,$lmt,"-");
         }
+        //echo $dateObject;exit;
         if($dir == "S")
         {
             $noon           = strtotime('12:00:00');
@@ -475,7 +477,7 @@ class HoroscopeModelLagna extends JModelItem
         
        //echo $lagna_acc_sign.":".$lagna_acc_deg.":".$lagna_acc_min.":".$lagna_acc_sec;exit;
         $year                   = $doy[0];
-        //echo $year;exit;
+
         $query                  ->clear();
         $query                  = "SELECT correction FROM jv_lahiri_5 WHERE Year='".$year."'";
         $db                     ->setQuery($query);
@@ -520,7 +522,14 @@ class HoroscopeModelLagna extends JModelItem
         //print_r($lagna);exit;
         $data            = array_merge($data, $lagna);
         //print_r($data);exit;
-        $this->getMoonData($data);
+        if($year <= 2000)
+        {
+            $this->getMoonData($data);
+        }
+        else
+        {
+            $this->getRaman2050($data);
+        }
     }
     protected function getMoonData($data)
     {
@@ -888,6 +897,9 @@ class HoroscopeModelLagna extends JModelItem
         $data                   = array_merge($data, $result);
         print_r($data);
     }
-    
+    protected function getRaman2050($data)
+    {
+        echo "yes success. 2050 calling.";
+    }
 }
 ?>

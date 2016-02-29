@@ -645,6 +645,10 @@
 	<changefreq>Weekly</changefreq>
   </url>
   <url>
+	<loc>http://www.astroisha.com/featured-articles/237-science-prayers</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
 	  <loc>http://www.astroisha.com/career-astrology/166-career-roles</loc>
 	  <changefreq>Weekly</changefreq>
   </url>
@@ -695,6 +699,22 @@
   <url>
        <loc>http://www.astroisha.com/relationship-astrology/206-right-marriage</loc>
        <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/relationship-astrology/229-divorce-choice</loc>
+	  <changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	  <loc>http://www.astroisha.com/relationship-astrology/234-marriage-propose</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+		<loc>http://www.astroisha.com/relationship-astrology/235-12th-delay</loc>
+		<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+		<loc>http://www.astroisha.com/relationship-astrology/236-kumbh-fate</loc>
+		<changefreq>Weekly</changefreq>
   </url>
   <url>
 	  <loc>http://www.astroisha.com/planets-bhavas/134-chandra-1st-house</loc>
@@ -822,6 +842,22 @@
   </url>
   <url>
 	<loc>http://www.astroisha.com/planets-bhavas/228-mangal-8th-house</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	<loc>http://www.astroisha.com/planets-bhavas/230-mangal-9th-house</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	<loc>http://www.astroisha.com/planets-bhavas/231-mars-10th-house</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	<loc>http://www.astroisha.com/planets-bhavas/232-mars-11th-house</loc>
+	<changefreq>Weekly</changefreq>
+  </url>
+  <url>
+	<loc>http://www.astroisha.com/planets-bhavas/233-mars-12th-house</loc>
 	<changefreq>Weekly</changefreq>
   </url>
   <url>
