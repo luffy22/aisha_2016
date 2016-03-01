@@ -679,19 +679,21 @@ class HoroscopeModelLagna extends JModelItem
         $interval           = $datetime1->diff($datetime2);     // get difference
         $intval             = (int)$interval->format('%a');     // format in int example 2
         $interval1          = $datetime1->diff($datetime3);
-        $intval2            = (int)$interval1->format('%a');
+        $intval2            = (int)$interval1->format('%a');    
         //echo $intval.":".$intval2;exit;
         for($i=1;$i<$count;$i++)
         {
 
-            $planet         = $planets[$i];
-            $down_deg       = $result1[$planet];
-            $up_deg         = $result2[$planet];
+            $planet         = $planets[$i];         // planet eg. sun, moon etc
+            $down_deg       = $result1[$planet];        // lower value of planet
+            $up_deg         = $result2[$planet];        // upper value of planet
             $down_val       = explode(".",$down_deg);
             $up_val         = explode(".",$up_deg);
-            if($up_deg<$down_deg && intval($up_deg-$down_deg)>300)
+            // checks if difference between lower and upper value is greater then 300.
+            // In other words if lower value is in pisces sign(360) and upper value is aries sign(0)
+            if($up_deg<$down_deg && intval($up_deg-$down_deg)>300)      
             {
-                $up_val[0]      = $up_val[0]+360;
+                $up_val[0]      = $up_val[0]+360;      // adds 360 degree to upper value if it is aries sign and lower value in pisces sign 
                 $diff           = explode(":",$this->subDegMinSec($up_val[0],$up_val[1],0,$down_val[0],$down_val[1],0));
             }
             else
@@ -899,7 +901,83 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function getRaman2050($data)
     {
-        echo "yes success. 2050 calling.";
+        $dob            = $data['dob'];
+        $tob            = strtotime($data['tob']);
+        $tob            = explode(":",date('G:i:s', $tob));
+
+        $planets        = array("full_year","moon","sun","mars","mercury","jupiter","venus","saturn","rahu");
+        $count          = count($planets);
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName($planets));
+        $query          ->from($db->quoteName('#__raman_2050planets'));
+        $query          ->where($db->quoteName('full_year').'='.$db->quote($dob));
+        $query          ->order($db->quoteName('full_year').' desc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
+        $result1        = $db->loadAssoc();
+        
+        $query          ->clear();
+        $query          ->select($db->quoteName($planets));
+        $query          ->from($db->quoteName('#__raman_2050planets'));
+        $query          ->where($db->quoteName('full_year').'>'.$db->quote($dob));
+        $query          ->order($db->quoteName('full_year').' asc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
+        $result2        = $db->loadAssoc();
+
+        for($i=1;$i<$count;$i++)
+        {
+            $planet         = $planets[$i];
+            $down_deg       = explode(".",$result1[$planet]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+            $up_deg         = explode(".",$result2[$planet]);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+            (int)$down_deg      = ((int)$down_deg[0]*30+$down_deg[1]).".".$down_deg[2];
+            (int)$up_deg        = ((int)$up_deg[0]*30+$up_deg[1]).".".$up_deg[2];
+            $down_val           = explode(".",$down_deg);
+            $up_val             = explode(".", $up_deg);
+            //echo $planet."  ".$up_deg." : ".$down_deg."<br/>";
+            if($up_deg < $down_deg)
+            {
+                $diff               = explode(":", $this->subDegMinSec($down_val[0], $down_val[1], 0, $up_val[0], $up_val[1], 0));
+            }
+            else
+            {
+                $diff               = explode(":", $this->subDegMinSec($up_val[0], $up_val[1], 0, $down_val[0], $down_val[1], 0));
+                //echo $diff[0].":".$diff[1].":".$diff[2]."<br/>";
+            }
+            $deg                = $diff[0];
+            $min                = $diff[1];
+            $query              ->clear();
+            $query          ->select($db->quoteName(array("value")));
+            $query          ->from($db->quoteName('#__raman_log'));
+            $query          ->where($db->quoteName('degree').'='.$db->quote($deg).'AND'.
+                                    $db->quoteName('min')."=".$db->quote($min));
+            $db             ->setQuery($query);
+            unset($result1);unset($result2);
+            $result1         = $db->loadAssoc();
+            
+            $query              ->clear();
+            $query          ->select($db->quoteName(array("value")));
+            $query          ->from($db->quoteName('#__raman_log'));
+            $query          ->where($db->quoteName('degree').'='.$db->quote($deg).'AND'.
+                                    $db->quoteName('min')."=".$db->quote($min));
+            $db             ->setQuery($query);
+            unset($result1);unset($result2);
+            $result1         = $db->loadAssoc();
+            
+            $tob_deg        = $tob[0];
+            $tob_min        = $tob[1];
+            $query          ->clear();
+            $query          ->select($db->quoteName(array("value")));
+            $query          ->from($db->quoteName('#__raman_log'));
+            $query          ->where($db->quoteName('degree').'='.$db->quote($tob_deg).'AND'.
+                                    $db->quoteName('min')."=".$db->quote($tob_min));
+            $db             ->setQuery($query);
+            $result2        = $db->loadAssoc();
+            
+            $result         = (int)$result1['value'] + (int)$result2['value'];
+        }   
     }
 }
 ?>
