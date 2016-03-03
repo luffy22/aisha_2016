@@ -932,10 +932,10 @@ class HoroscopeModelLagna extends JModelItem
             $down_deg       = explode(".",$result1[$planet]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
             $up_deg         = explode(".",$result2[$planet]);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-            (int)$down_deg      = ((int)$down_deg[0]*30+$down_deg[1]).".".$down_deg[2];
-            (int)$up_deg        = ((int)$up_deg[0]*30+$up_deg[1]).".".$up_deg[2];
-            $down_val           = explode(".",$down_deg);
-            $up_val             = explode(".", $up_deg);
+            (double)$down_deg       = ((double)$down_deg[0]*30+$down_deg[1]).".".$down_deg[2];
+            (double)$up_deg         = ((double)$up_deg[0]*30+$up_deg[1]).".".$up_deg[2];
+            $down_val               = explode(".",$down_deg);
+            $up_val                 = explode(".", $up_deg);
             //echo $planet."  ".$up_deg." : ".$down_deg."<br/>";
             if($up_deg < $down_deg)
             {
@@ -976,7 +976,21 @@ class HoroscopeModelLagna extends JModelItem
             $db             ->setQuery($query);
             $result2        = $db->loadAssoc();
             
-            $result         = (int)$result1['value'] + (int)$result2['value'];
+            $value1         = $result1["value"];
+            $value2         = $result2["value"];
+            $result         = number_format(($value1 + $value2),4);
+            $query          ->clear();
+            $query          ->select($db->quoteName(array('degree','min')));
+            $query          ->from($db->quoteName('#__raman_log'));
+            $query          ->where($db->quoteName('value').'<='.$db->quote($result));
+            $query          ->order($db->quoteName('value').' desc');
+            $query          ->setLimit('1');
+            $db             ->setQuery($query);
+            $result1        = $db->loadAssoc();
+            $diff           = $result1["degree"].".".$result1["min"];
+            
+            $distance       = $down_deg + $diff;
+            echo $distance;exit;
         }   
     }
 }
