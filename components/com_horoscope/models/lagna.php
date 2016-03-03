@@ -925,7 +925,6 @@ class HoroscopeModelLagna extends JModelItem
         $query          ->setLimit('1');
         $db             ->setQuery($query);
         $result2        = $db->loadAssoc();
-
         for($i=1;$i<$count;$i++)
         {
             $planet         = $planets[$i];
@@ -944,27 +943,20 @@ class HoroscopeModelLagna extends JModelItem
             else
             {
                 $diff               = explode(":", $this->subDegMinSec($up_val[0], $up_val[1], 0, $down_val[0], $down_val[1], 0));
-                //echo $diff[0].":".$diff[1].":".$diff[2]."<br/>";
             }
             $deg                = $diff[0];
             $min                = $diff[1];
+            if($min < 10)
+            {
+                $min            = "0".$min;
+            }
             $query              ->clear();
             $query          ->select($db->quoteName(array("value")));
             $query          ->from($db->quoteName('#__raman_log'));
             $query          ->where($db->quoteName('degree').'='.$db->quote($deg).'AND'.
                                     $db->quoteName('min')."=".$db->quote($min));
             $db             ->setQuery($query);
-            unset($result1);unset($result2);
-            $result1         = $db->loadAssoc();
-            
-            $query              ->clear();
-            $query          ->select($db->quoteName(array("value")));
-            $query          ->from($db->quoteName('#__raman_log'));
-            $query          ->where($db->quoteName('degree').'='.$db->quote($deg).'AND'.
-                                    $db->quoteName('min')."=".$db->quote($min));
-            $db             ->setQuery($query);
-            unset($result1);unset($result2);
-            $result1         = $db->loadAssoc();
+            $result3         = $db->loadAssoc();
             
             $tob_deg        = $tob[0];
             $tob_min        = $tob[1];
@@ -974,10 +966,11 @@ class HoroscopeModelLagna extends JModelItem
             $query          ->where($db->quoteName('degree').'='.$db->quote($tob_deg).'AND'.
                                     $db->quoteName('min')."=".$db->quote($tob_min));
             $db             ->setQuery($query);
-            $result2        = $db->loadAssoc();
+            $result4        = $db->loadAssoc();
             
-            $value1         = $result1["value"];
-            $value2         = $result2["value"];
+            $value1         = $result3["value"];
+            $value2         = $result4["value"];
+            
             $result         = number_format(($value1 + $value2),4);
             $query          ->clear();
             $query          ->select($db->quoteName(array('degree','min')));
@@ -986,12 +979,35 @@ class HoroscopeModelLagna extends JModelItem
             $query          ->order($db->quoteName('value').' desc');
             $query          ->setLimit('1');
             $db             ->setQuery($query);
-            $result1        = $db->loadAssoc();
-            $diff           = $result1["degree"].".".$result1["min"];
+            $result5        = $db->loadAssoc();
+            $diff           = $result5["degree"].".".$result5["min"];
+              
+            //echo $down_deg." : ".$diff."<br/>";
+            if($up_deg < $down_deg)
+            {
+                $distance       = ($down_deg - $diff)-30.00;
+                $graha          = array($planet=>$distance.".r");
+            }
+            else
+            {
+                $distance       = ($down_deg + $diff)-30.00;
+                $graha          = array($planet=>$distance);
+            }
+            if($i==8)
+            {
+                $ketu           = $distance+180;
+                if($ketu>360)
+                {
+                    $ketu       = $ketu-360;
+                }
+                $ketu           = array("ketu"=> $ketu.".r");
+                $data           = array_merge($data,$graha, $ketu);
+            }  
             
-            $distance       = $down_deg + $diff;
-            echo $distance;exit;
+            $data           = array_merge($data, $graha);
+                       
         }   
+        print_r($data);
     }
 }
 ?>
