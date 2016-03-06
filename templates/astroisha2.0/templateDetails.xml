@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="template">
+        <name>AstroIsha 2.0</name>
+        <creationDate>2016-03-05</creationDate>
+        <author>Mugiwara No Luffy</author>
+        <authorEmail>kopnite@gmail.com</authorEmail>
+        <authorUrl>https://www.facebook.com/rohandesai22</authorUrl>
+        <license>GNU/GPL</license>
+        <version>1.0</version>
+        <description>Responsive Template for websites</description>
+        <files>
+                <filename>index.php</filename>
+                <filename>templateDetails.xml</filename>
+                <folder>images</folder>
+                <folder>css</folder>
+                <folder>js</folder>
+        </files>
+        <positions>
+                <position>breadcrumbs</position>
+                <position>jbanner</position>
+                <position>menu1</position>
+                <position>menu2</position>
+                <position>menu3</position>
+                <position>menu4</position>
+                <position>menu5</position>
+                <position>userlogin</position>
+                <position>relatedarticles</position>
+                <position>footer</position>
+                <position>socialplugins</position>
+                <position>fblikeplugin</position>
+                <position>sidebar</position>
+                <position>searchbox</position>
+                <position>relatedarticles</position>
+                <position>adwords</position>
+                <position>articleslider</position>
+                <position>articleslider2</position>
+                <position>about_us</position>
+        </positions>
+</extension>
