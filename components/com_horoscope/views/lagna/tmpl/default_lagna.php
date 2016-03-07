@@ -1,9 +1,3 @@
-<?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+lagna
 
-echo "hello world!!";
-
-?>
+Ok go to hell

@@ -764,7 +764,7 @@ class HoroscopeModelLagna extends JModelItem
         $this->calculateBudh($data);   
     }
     // function calculates value of Budh and also Ketu
-    protected function calculateBudh($data)
+    protected function getBudh($data)
     {
         $dob        = date("Y-m-d", strtotime($data['dob']));
         $year       = date("Y", strtotime($data['dob']));
@@ -899,6 +899,7 @@ class HoroscopeModelLagna extends JModelItem
         $data                   = array_merge($data, $result);
         print_r($data);
     }
+   
     protected function getRaman2050($data)
     {
         $dob            = $data['dob'];
