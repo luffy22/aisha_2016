@@ -25,7 +25,11 @@ class HoroscopeControllerLagna extends HoroscopeController
                                     'tob'=>$tob,'lon'=>$lon,'lat'=>$lat,'tmz'=>$timezone
                                     );
             $model          = $this->getModel('lagna');  // Add the array to model
-            $model          ->getLagna($user_details);
+            $data           = $model->getLagna($user_details);
+            $view = $this->getView('lagna','html');
+            $this->data = $data;
+            $view->display();
+            //print_r($data);
         }
         else
         {
@@ -35,18 +39,6 @@ class HoroscopeControllerLagna extends HoroscopeController
         //$model          ->getLagna();
         //echo "calls";
     }
-    /*public function switchview()
-    {
-        if(!empty($data))
-        {
-            $view = &$this->getView('lagna', 'html');
-            $view->setModel($this->getModel('lagna'),false);
-            $view->display();
-        }
-        else
-        {
-            "Not returning data";
-        }
-    }*/
+    
 }
 ?>

@@ -12,6 +12,7 @@ class HoroscopeModelLagna extends JModelItem
         $fname        = $user_details['fname'];
         $gender       = $user_details['gender'];
         $dob          = $user_details['dob'];
+        $year         = date("Y",strtotime($dob));
         $tob          = $user_details['tob'];
         $lon          = $user_details['lon'];
         $lat          = $user_details['lat'];
@@ -60,13 +61,20 @@ class HoroscopeModelLagna extends JModelItem
         *  @param timezone in hours:minutes:seconds format
         */ 
      
-        $this->data  = array(
+        $data  = array(
                                 "fname"=>$fname,"gender"=>$gender,"dob"=>$dob,
                                 "tob"=>$tob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
                                 "tmz_hr"=>$gmt,"time_diff"=>$diff
                             );
-        //print_r($this->data);exit;
-        $this->calculatelagna($this->data);  
+        if($year <= 2000)
+        {
+            $this->data     = $this->getBudh($data);
+        }
+        else
+        {
+            $this->data     = $this->getRaman2050($data);
+        }
+        return $this->data;
     }
     /*
      *  get the local time for example India= 17:30:00, London= 12:00:00
@@ -519,17 +527,7 @@ class HoroscopeModelLagna extends JModelItem
             $lagna              = $lagna_sign[0].":".$lagna_sign[1].":".$lagna_sign[2];
         }
         $lagna           = array("lagna"=>$lagna);
-        //print_r($lagna);exit;
-        $data            = array_merge($data, $lagna);
-        //print_r($data);exit;
-        if($year <= 2000)
-        {
-            $this->getMoonData($data);
-        }
-        else
-        {
-            $this->getRaman2050($data);
-        }
+        return $lagna;  
     }
     protected function getMoonData($data)
     {
@@ -638,16 +636,14 @@ class HoroscopeModelLagna extends JModelItem
         }
         $moon                   = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
         $moon                   = array("moon"=>$moon);
-
-        $data            = array_merge($data, $moon);
-        //print_r($data);exit;
-        $this->calculate7Planets($data);
+        return $moon;
     }
     protected function calculate7Planets($data)
     {
             //print_r($data);
         $dob        = date("Y-m-d", strtotime($data['dob']));
         $year       = date("Y", strtotime($data['dob']));
+        $seven_planets     = array();
         $planets    = array("full_year","surya","mangal","guru","shukra","shani","rahu");
         $count          = count($planets);
         // getting lower value
@@ -679,8 +675,7 @@ class HoroscopeModelLagna extends JModelItem
         $interval           = $datetime1->diff($datetime2);     // get difference
         $intval             = (int)$interval->format('%a');     // format in int example 2
         $interval1          = $datetime1->diff($datetime3);
-        $intval2            = (int)$interval1->format('%a');    
-        //echo $intval.":".$intval2;exit;
+        $intval2            = (int)$interval1->format('%a'); 
         for($i=1;$i<$count;$i++)
         {
 
@@ -748,6 +743,7 @@ class HoroscopeModelLagna extends JModelItem
             }
             $value                  = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
             unset($result);
+            
             if($up_deg<$down_deg && !(intval($up_deg-$down_deg)>300))
             {
                 $result                 = array($planet=>$value.":r");
@@ -756,19 +752,19 @@ class HoroscopeModelLagna extends JModelItem
             {
                 $result                 = array($planet=>$value);
             }
-
-            $data                   = array_merge($data, $result);
-        }
-
-        //print_r($data);exit;
-        $this->calculateBudh($data);   
+            $seven_planets                     = array_merge($seven_planets, $result);
+          }
+        return $seven_planets   ;
     }
     // function calculates value of Budh and also Ketu
     protected function getBudh($data)
     {
+        $lagna      = $this->calculatelagna($data);
+        $moon       = $this->getMoonData($data);
+        $planets    = $this->calculate7Planets($data);
         $dob        = date("Y-m-d", strtotime($data['dob']));
         $year       = date("Y", strtotime($data['dob']));
-        $rahu       = explode(":",$data['rahu']);
+        $rahu       = explode(":",$planets['rahu']);
         $ketu       = $rahu[0]+180;
         if($ketu >= 360)
         {
@@ -896,12 +892,13 @@ class HoroscopeModelLagna extends JModelItem
             $result                 = array("ketu"=>$ketu.":r","budh"=>$value);
         }
 
-        $data                   = array_merge($data, $result);
-        print_r($data);
+        $data                   = array_merge($data,$lagna,$moon,$planets, $result);
+        return $data;
     }
    
     protected function getRaman2050($data)
     {
+        $lagna          = $this->calculatelagna($data);
         $dob            = $data['dob'];
         $tob            = strtotime($data['tob']);
         $tob            = explode(":",date('G:i:s', $tob));
@@ -986,6 +983,10 @@ class HoroscopeModelLagna extends JModelItem
             //echo $down_deg." : ".$diff."<br/>";
             if($up_deg < $down_deg)
             {
+				if($result5['min'] < 10)
+                {
+                    $diff   = $result5['degree'].'.0'.$result5['min'];
+                }
                 $distance       = ($down_deg - $diff)-30.00;
                 $graha          = array($planet=>$distance.".r");
             }
@@ -1005,10 +1006,10 @@ class HoroscopeModelLagna extends JModelItem
                 $data           = array_merge($data,$graha, $ketu);
             }  
             
-            $data           = array_merge($data, $graha);
+            $data           = array_merge($data, $lagna, $graha);
                        
         }   
-        print_r($data);
+        return $data;
     }
 }
 ?>

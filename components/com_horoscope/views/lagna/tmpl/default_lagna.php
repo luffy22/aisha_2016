@@ -1,3 +1,4 @@
-lagna
+<?php
 
-Ok go to hell
+print_r($data);
+?>

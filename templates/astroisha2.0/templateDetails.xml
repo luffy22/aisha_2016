@@ -16,24 +16,12 @@
                 <folder>js</folder>
         </files>
         <positions>
-                <position>breadcrumbs</position>
-                <position>jbanner</position>
-                <position>menu1</position>
-                <position>menu2</position>
-                <position>menu3</position>
-                <position>menu4</position>
-                <position>menu5</position>
-                <position>userlogin</position>
-                <position>relatedarticles</position>
-                <position>footer</position>
-                <position>socialplugins</position>
-                <position>fblikeplugin</position>
-                <position>sidebar</position>
-                <position>searchbox</position>
-                <position>relatedarticles</position>
-                <position>adwords</position>
-                <position>articleslider</position>
-                <position>articleslider2</position>
-                <position>about_us</position>
+            <position>breadcrumbs</position>
+            <position>jbanner</position>
+            <position>topmenu</position>
+            <position>userlogin</position>
+            <position>relatedarticles</position>
+            <position>footer</position>
+            <position>socialplugins</position>
         </positions>
 </extension>

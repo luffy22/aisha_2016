@@ -13,21 +13,23 @@ class HoroscopeViewLagna extends JViewLegacy
     protected $data;
     function display($tpl = null) 
     {
-        $model              = $this->getModel('lagna');
-        $this->data         = $model->get('Data');
+        $data       = $this->data;
+        echo $data;
         if (count($errors   = $this->get('Errors')))
         {
                 JError::raiseError(500, implode('<br />', $errors));
                 return false;
         }
-        if(!empty($this->data))
+        if(!empty($data))
         {
+            
             $tpl    = 'lagna';
         }
         else
         {
             $tpl        = null;
         }
+     
         //echo gettype($this->data);
         parent::display($tpl);
         
