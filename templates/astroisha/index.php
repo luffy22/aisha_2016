@@ -99,7 +99,7 @@
                     <jdoc:include type="modules" name="menu4" style="none" />
                 </li>
                 <li class="dropdown">
-                    <jdoc:include type="modules" name="menu" style="none" />
+                    <jdoc:include type="modules" name="menu5" style="none" />
                 </li>
             </ul>
         </div>
