@@ -32,9 +32,8 @@ if(isset($_GET['email'])&&($_GET['email']=='sent'))
 else
 {
 ?>
-
 <div class="spacer"></div>
-<form class="form-horizontal" id="ques_form" role="form" enctype="application/x-www-form-urlencoded" method="post" 
+<form id="ques_form" role="form" enctype="application/x-www-form-urlencoded" method="post" 
       action="<?php echo JRoute::_('index.php?option=com_astrologin&task=astroask.askQuestions'); ?>">
 <div id="ques_page_1">
 <h3>Enter Your Details</h3>
@@ -307,7 +306,6 @@ else
 
 </div>
 </form>
-</div>
 <?php
 }
 ?>

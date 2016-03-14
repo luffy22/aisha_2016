@@ -23,5 +23,6 @@
             <position>relatedarticles</position>
             <position>footer</position>
             <position>socialplugins</position>
+            <position>quesmenu</position>
         </positions>
 </extension>

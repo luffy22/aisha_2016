@@ -23,7 +23,7 @@ class ModFooterHelper
 ?>
 <footer class="footer">
       <div class="container">
-        <p class="text-muted">Place sticky footer content here.</p>
+        <p class="footer-text"><a href="<?php echo JUri::base(); ?>" title="Navigate to Home Page"><?php echo date("Y"); ?> Astro Isha</a></p>
       </div>
     </footer>
 <?php
