@@ -21,11 +21,11 @@ class ModFooterHelper
     public function showFooter()
     {
 ?>
-        <div class="footer-text">
-            <div class="custom">
-                <h3><?php echo date("Y"); ?>&nbsp;Astro Isha</h3>
-            </div>
-        </div>
+<footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
 <?php
     }
 }

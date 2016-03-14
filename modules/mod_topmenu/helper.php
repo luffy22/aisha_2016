@@ -35,6 +35,7 @@ class modTopMenuHelper
 <?php
         foreach($result as $items)
         {
+            
             if($items->level !== '2')
             {
                 continue;
@@ -46,13 +47,13 @@ class modTopMenuHelper
             {
                 $children       = $menu->getItems('parent_id',$items->id, false);
           ?>
-             <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="<?php echo trim($items->link); ?>"><?php echo trim($items->title); ?><span class="caret"></span></a>
-             <ul class="dropdown-menu navbar navbar-nav navbar-inverse">
+             <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="<?php echo $items->link; ?>"><?php echo $items->title ?><span class="caret"></span></a>
+             <ul class="nav navbar-inverse dropdown-menu">
              <?php
                     foreach($children as $child)
                     {
                     ?>
-                         <li><a href="<?php echo trim($child->link); ?>" title="<?php echo $child->title; ?>"><?php echo trim($child->title); ?></a></li>
+                         <li><a href="<?php echo $child->link; ?>" title="<?php echo $child->title; ?>"><?php echo $child->title; ?></a></li>
                  <?php
                     }
              ?>
