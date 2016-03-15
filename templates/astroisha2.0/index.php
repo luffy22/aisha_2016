@@ -14,7 +14,8 @@ $head_data = $doc->getHeadData();
 <meta name="robots" content="index, follow" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="msvalidate.01" content="E689BB58897C0A89BDC88E5DF8800B2F" />
-<link rel="shortcut icon" href="<?php echo $this->baseurl ?>/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="<?php echo $this->baseurl ?>/logo.png" type="image/x-icon">
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/style.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/css/bootstrap.min.css" type="text/css" />
@@ -98,6 +99,7 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
     </div>
     </div>
 </div>
+<jdoc:include type="modules" name="footer2" style="none" />
 <jdoc:include type="modules" name="footer" style="none" />
 <script>
   $(function() {

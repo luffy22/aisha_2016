@@ -32,25 +32,27 @@ class modTopMenuHelper
 <?php
         foreach($result as $items)
         {
-            
-            if($items->level !== '2')
+            $url   = JRoute::_($items->link . "&Itemid=" . $items->id);
+            if($items->level !== '1')
             {
                 continue;
             }
        ?>
             <li class="dropdown navbar-inverse">
           <?php
-            if($items->level=="2")
+            if($items->level=="1")
             {
                 $children       = $menu->getItems('parent_id',$items->id, false);
+                
           ?>
-             <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="<?php echo $items->link; ?>"><?php echo $items->title ?><span class="caret"></span></a>
+             <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="<?php echo $url ?>"><?php echo $items->title ?><span class="caret"></span></a>
              <ul class="nav navbar-inverse dropdown-menu">
              <?php
                     foreach($children as $child)
                     {
+                        $url   = JRoute::_($child->link . "&Itemid=" . $child->id);
                     ?>
-                         <li><a href="<?php echo $child->link; ?>" title="<?php echo $child->title; ?>"><?php echo $child->title; ?></a></li>
+                         <li><a href="<?php echo $url; ?>" title="<?php echo $child->title; ?>"><?php echo $child->title; ?></a></li>
                  <?php
                     }
              ?>
