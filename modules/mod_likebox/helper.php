@@ -8,14 +8,8 @@
 		public function showLikeBox()
 		{
 		?>
-                    <div class="row hidden-phone hidden-tablet">
-                        <div class="fb-page" data-href="https://www.facebook.com/AstroIsha" data-hide-cover="false" data-width="auto" data-show-facepile="true" data-show-posts="false">
-                            <div class="fb-xfbml-parse-ignore">
-                                <blockquote cite="https://www.facebook.com/AstroIsha">
-                                    <a href="https://www.facebook.com/AstroIsha">AstroIsha</a>
-                                </blockquote>
-                            </div>
-                        </div>
+                    <div class="hidden-xs hidden-sm">
+                        <div class="fb-page" data-href="https://www.facebook.com/AstroIsha/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/AstroIsha/"><a href="https://www.facebook.com/AstroIsha/">AstroIsha</a></blockquote></div></div>
                         <div class="spacer"></div>
                         <!-- Place this tag where you want the widget to render. -->
                         <div class="g-page" data-href="//plus.google.com/u/0/100464003715258637571" data-showcoverphoto="false" data-rel="publisher"></div>
