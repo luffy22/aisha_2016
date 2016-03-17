@@ -26,8 +26,9 @@ class HoroscopeControllerLagna extends HoroscopeController
                                     );
             $model          = $this->getModel('lagna');  // Add the array to model
             $data           = $model->getLagna($user_details);
-            $view = $this->getView('lagna','html');
-            $this->data = $data;
+            
+            $view           = $this->getView('lagna','html');
+            $view->data     = $data;
             $view->display();
             //print_r($data);
         }

@@ -162,6 +162,7 @@
     </div>
     </div>
 </div>
+<div class="spacer"></div>
 <div class="footer2">
     <div class="spacer"></div>
     <jdoc:include type="modules" name="footer2" style="none" />
