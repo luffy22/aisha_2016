@@ -15,18 +15,18 @@ class HoroscopeControllerLagna extends HoroscopeController
         
         if(isset($_POST['lagnasubmit']))
         {
-            $fname  = $_POST['fname'];$gender   = $_POST['gender'];$dob     = $_POST['dob'];
+            $fname  = $_POST['fname'];$gender   = $_POST['gender'];$dob     = $_POST['dob'];$pob    = $_POST['lagna_pob'];
             $tob    = $_POST['lagna_hr'].":".$_POST['lagna_min'].":".$_POST['lagna_sec'].":".$_POST['lagna_time'];
             $lon    = $_POST['lon_deg'].":".$_POST['lon_min'].":".$_POST['lon_dir'];
             $lat    = $_POST['lat_deg'].":".$_POST['lat_min'].":".$_POST['lat_dir'];$timezone   = $_POST['lagna_timezone'];
             
             $user_details   = array(
-                                    'fname'=>$fname,'gender'=>$gender,'dob'=>$dob,
+                                    'fname'=>$fname,'gender'=>$gender,'dob'=>$dob,"pob"=>$pob,
                                     'tob'=>$tob,'lon'=>$lon,'lat'=>$lat,'tmz'=>$timezone
                                     );
             $model          = $this->getModel('lagna');  // Add the array to model
             $data           = $model->getLagna($user_details);
-            
+
             $view           = $this->getView('lagna','html');
             $view->data     = $data;
             $view->display();
@@ -40,6 +40,10 @@ class HoroscopeControllerLagna extends HoroscopeController
         //$model          ->getLagna();
         //echo "calls";
     }
-    
+    public function getascendant()
+    {
+        print_r($_POST['data']);
+        
+    }
 }
 ?>

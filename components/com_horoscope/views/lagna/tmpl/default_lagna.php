@@ -1,44 +1,6 @@
 <?php
 defined('_JEXEC') or die();
-function calcDetails($planet)
-{
-    $details        = explode(":", $planet);
-    $sign_num       = intval($details[0]/30);
-
-    switch($sign_num)
-    {
-        case 0:
-        echo "Aries";break;
-        case 1:
-        echo "Taurus";break;
-        case 2:
-        echo "Gemini";break;
-        case 3:
-        echo "Cancer";break;
-        case 4:
-        echo "Leo";break;
-        case 5:
-        echo "Virgo";break;
-        case 6:
-        echo "Libra";break;
-        case 7:
-        echo "Scorpio";break;
-        case 8:
-        echo "Sagittarius";break;
-        case 9:
-        echo "Capricorn";break;
-        case 10:
-        echo "Aquarius";break;
-        case 11:
-        echo "Pisces";break;
-    }
-}
-function calcDistance($planet)
-{
-    $details        = explode(":", $planet);
-    $sign_num       = intval($details[0]%30);
-    echo $sign_num."&deg;".$details[1]."'";
-}
+//print_r($this->data);exit;
 ?>
 
 <nav class="navbar navbar-inverse">
@@ -55,7 +17,13 @@ function calcDistance($planet)
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Planet Details</a></li>
-              <li><a href="#">Ascendant</a></li>
+          <li>
+              <?php $array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
+                                  $this->data['tob'],$this->data['pob'],$this->data['lat'],
+                                  $this->data['lon'],$this->data['tmz'],
+                                  $this->data['lagna_sign']); $array = json_encode($array); ?>
+              <form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getascendant'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Get Ascendant" /></form>Ascendant
+                  </li>
               <li><a href="#">Moon</a></li>
               <li><a href="#">Navamsha</a></li>
               <li class="dropdown">
@@ -94,6 +62,10 @@ function calcDistance($planet)
         <td><?php echo $this->data['tob']; ?></td>
     </tr>
     <tr>
+        <th>Place Of Birth</th>
+        <td><?php echo $this->data['pob']; ?></td>
+    </tr>
+    <tr>
         <th>Latitude</th>
         <td><?php echo $this->data['lat']; ?></td>
     </tr>
@@ -117,57 +89,59 @@ function calcDistance($planet)
     </tr>
     <tr>
         <th>Ascendant</th>
-        <td><?php calcDetails($this->data['lagna']); ?></td>
-        <td><?php calcDistance($this->data['lagna']); ?></td>
+        <td><?php echo $this->data['lagna_sign'] ?></td>
+        <td><?php echo $this->data['lagna_distance'] ?></td>
     </tr>
     <tr>
         <th>Sun</th>
-        <td><?php calcDetails($this->data['surya']) ?></td>
-        <td><?php calcDistance($this->data['surya']); ?></td>
+        <td><?php echo $this->data['surya_details']; ?></td>
+        <td><?php echo $this->data['surya_distance']; ?></td>
     </tr>
     <tr>
         <th>Moon</th>
-        <td><?php calcDetails($this->data['moon']) ?></td>
-        <td><?php calcDistance($this->data['moon']); ?></td>
+        <td><?php echo $this->data['moon_details']; ?></td>
+        <td><?php echo $this->data['moon_distance']; ?></td>
     </tr>
     <tr>
         <th>Mars</th>
-        <td><?php calcDetails($this->data['mangal']) ?></td>
-        <td><?php calcDistance($this->data['mangal']); ?></td>
+        <td><?php echo $this->data['mangal_details']; ?></td>
+        <td><?php echo $this->data['mangal_distance']; ?></td>
     </tr>
     <tr>
         <th>Mercury</th>
-        <td><?php calcDetails($this->data['budh']) ?></td>
-        <td><?php calcDistance($this->data['budh']); ?></td>
+        <td><?php echo $this->data['budh_details']; ?></td>
+        <td><?php echo $this->data['budh_distance']; ?></td>
     </tr>
     <tr>
         <th>Jupiter</th>
-        <td><?php calcDetails($this->data['guru']) ?></td>
-        <td><?php calcDistance($this->data['guru']); ?></td>
+        <td><?php echo $this->data['guru_details']; ?></td>
+        <td><?php echo $this->data['guru_distance']; ?></td>
     </tr>
     <tr>
         <th>Venus</th>
-        <td><?php calcDetails($this->data['shukra']) ?></td>
-        <td><?php calcDistance($this->data['shukra']); ?></td>
+        <td><?php echo $this->data['shukra_details']; ?></td>
+        <td><?php echo $this->data['shukra_distance']; ?></td>
         
     </tr>
     <tr>
         <th>Saturn</th>
-        <td><?php calcDetails($this->data['shani']) ?></td>
-        <td><?php calcDistance($this->data['shani']); ?></td>
+        <td><?php echo $this->data['shani_details']; ?></td>
+        <td><?php echo $this->data['shani_distance']; ?></td>
     </tr>
     <tr>
         <th>Rahu</th>
-        <td><?php calcDetails($this->data['rahu']) ?></td>
-        <td><?php calcDistance($this->data['rahu']); ?></td>
+        <td><?php echo $this->data['rahu_details']; ?></td>
+        <td><?php echo $this->data['rahu_distance']; ?></td>
     </tr>
     <tr>
         <th>Ketu</th>
-        <td><?php calcDetails($this->data['ketu']) ?></td>
-        <td><?php calcDistance($this->data['ketu']); ?></td>
+        <td><?php echo $this->data['ketu_details']; ?></td>
+        <td><?php echo $this->data['ketu_distance']; ?></td>
     </tr>
 </table>
 </div>
 <?php
-unset($this->data);
+unset($this->data['surya_details'],$this->data['surya_distance'],
+    $this->data['moon_details'],$this->data['moon_distance'],
+    $this->data['mangal_details'],$this->data['moon_distance']);
 ?>
