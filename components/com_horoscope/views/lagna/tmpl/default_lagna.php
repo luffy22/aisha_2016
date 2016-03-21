@@ -1,6 +1,10 @@
 <?php
 defined('_JEXEC') or die();
 //print_r($this->data);exit;
+$array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
+                                  $this->data['tob'],$this->data['pob'],$this->data['lat'],
+                                  $this->data['lon'],$this->data['tmz']);
+$array = json_encode($array);
 ?>
 
 <nav class="navbar navbar-inverse">
@@ -17,28 +21,10 @@ defined('_JEXEC') or die();
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Planet Details</a></li>
-          <li>
-              <?php $array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
-                                  $this->data['tob'],$this->data['pob'],$this->data['lat'],
-                                  $this->data['lon'],$this->data['tmz'],
-                                  $this->data['lagna_sign']); $array = json_encode($array); ?>
-              <form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getascendant'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Get Ascendant" /></form>Ascendant
-                  </li>
-              <li><a href="#">Moon</a></li>
-              <li><a href="#">Navamsha</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-            </ul>
+          <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getascendant'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Ascendant" /></form></li>
+          <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getmoon'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Moon" /></form></li>
+          <li><a href="#">Navamsha</a></li>
+        </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
@@ -141,7 +127,15 @@ defined('_JEXEC') or die();
 </table>
 </div>
 <?php
-unset($this->data['surya_details'],$this->data['surya_distance'],
-    $this->data['moon_details'],$this->data['moon_distance'],
-    $this->data['mangal_details'],$this->data['moon_distance']);
+unset(
+        $this->data['surya_details'],$this->data['surya_distance'],
+        $this->data['moon_details'],$this->data['moon_distance'],
+        $this->data['mangal_details'],$this->data['mangal_distance'],
+        $this->data['budh_details'],$this->data['budh_distance'],
+        $this->data['guru_details'],$this->data['guru_distance'],
+        $this->data['shukra_details'],$this->data['shukra_distance'],
+        $this->data['shani_details'],$this->data['shani_distance'],
+        $this->data['rahu_details'],$this->data['rahu_distance'],
+        $this->data['ketu_details'],$this->data['ketu_distance']
+    );
 ?>

@@ -18,18 +18,7 @@ class HoroscopeModelLagna extends JModelItem
         $lon            = $user_details['lon'];
         $lat            = $user_details['lat'];
         $tmz            = $user_details['tmz'];
-        
-        $tob          = explode(":",$tob);
-        if($tob[3]=="PM")
-        {
-            $tob[0] = (int)$tob[0]+12;
-            $tob   = $tob[0].":".$tob[1].":".$tob[2];
-        }
-        else
-        {
-            $tob   = $tob[0].":".$tob[1].":".$tob[2];
-        }
-        //echo $tob;exit;
+
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         $query2         = $db->getQuery(true);
@@ -39,8 +28,8 @@ class HoroscopeModelLagna extends JModelItem
         $hits           = (int)$hits['hits'];
         $hits           = $hits+1;
         
-        $query2      = "UPDATE jv_hits_counter SET hits='".$hits."' WHERE product='calc_lagna'";
-        $db                 ->setQuery($query2);
+        $query2         = "UPDATE jv_hits_counter SET hits='".$hits."' WHERE product='calc_lagna'";
+        $db             ->setQuery($query2);
         $db->execute();
         $gmt            = "12:00:00";
         $gmt            = $this->getGMT($gmt, $tmz);
@@ -353,14 +342,12 @@ class HoroscopeModelLagna extends JModelItem
         if($count > 0)
         {
             $meridian           = $db->loadAssoc();
-           
             $std_meridian       = explode(".",$meridian['std_meridian']);  
             
             $std_lon_sec	= $this->convertDegMinToSec($std_meridian[0], $std_meridian[1]);		// convert minutes into seconds & multiply by 4 then add to seconds multiplied by 4
             $loc_lon_sec	= $this->convertDegMinToSec($lon[0],$lon[1]);			// convert minutes into seconds & multiply by 4 then add to seconds multiplied by 4
             if($std_lon_sec > $loc_lon_sec)
             {
-                
                 $new_diff	= $std_lon_sec - $loc_lon_sec;
                 //$new_diff	= gmdate('H:i:s', $new_diff);
                 $diff           = strtotime(gmdate("G:i:s",$new_diff));     // gmdate is used for value below 24 hr
@@ -428,13 +415,12 @@ class HoroscopeModelLagna extends JModelItem
         $lat            = explode(":",$data['lat']);
         $dir            = $lat[2];
         $lat            = $lat[0].'.'.$lat[1];
-
         //echo $this->getSiderealTime($data)."<br/>";
         //echo $this->getLmt($data);exit;
         $sidtime        = strtotime($this->getSiderealTime($data));
        	$lmt            = strtotime($this->getLmt($data));
         $dob            = $data['dob'];
-        //return $dob;
+        
         $doy            = explode("/",$dob);
         $tob            = strtotime($data['tob']);
         
@@ -578,7 +564,7 @@ class HoroscopeModelLagna extends JModelItem
         $year       = (int)$dob[0];
         $month      = (int)$dob[1];
         $day        = (int)$dob[2];
- 
+        
         $db         = JFactory::getDbo();
         $query      = $db->getQuery(true);
         $query      ->select($db->quoteName(array('yob','moon')));
@@ -1072,6 +1058,79 @@ class HoroscopeModelLagna extends JModelItem
             $data           = array_merge($data, $lagna, $graha);
                        
         }   
+        return $data;
+    }
+    public function getAscendant($details)
+    {
+        //print_r($details);exit;
+        $gender             = ucfirst($details['gender']);
+        $lagna              = $this->calculatelagna($details);
+        $lagna_details      = $this->calcDetails($lagna);
+        $lagna_distance     = $this->calcDistance($lagna);
+        $lagna              = array("lagna"=>$lagna,"sign"=>$lagna_details,
+                               "lagna_distance"=>$lagna_distance);
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName(array('id','introtext')));
+        $query          ->from($db->quoteName('#__content'));
+        $query          ->where($db->quoteName('title').'LIKE'.$db->quote('%'.$gender.'%').
+                                ' AND '.$db->quoteName('title').'LIKE'.$db->quote('%'.$lagna_details.'%')); 
+        $db             ->setQuery($query);
+        $result         = $db->loadAssoc();
+        
+        $data           = array_merge($details,$lagna,$result);
+        return $data;
+    }
+    public function getMoon($details)
+    {
+        $fname          = $details['fname'];
+        $gender         = $details['gender'];
+        $dob            = $details['dob'];
+        $year           = date("Y",strtotime($dob));
+        $tob            = $details['tob'];
+        $pob            = $details['pob'];
+        $lon            = $details['lon'];
+        $lat            = $details['lat'];
+        $tmz            = $details['tmz'];
+        $gmt            = "12:00:00";
+        $gmt            = $this->getGMT($gmt, $tmz);
+      
+        $tob_str        = strtotime($tob);
+        $gmt_str        = strtotime($gmt);
+        if($tob_str>$gmt_str)
+        {
+            $diff       = "+".$this->getAddSubTime($dob,$tob_str,$gmt_str,"-");
+        }
+        else if($gmt_str>$tob_str)
+        {
+            $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$tob_str,"-");
+        }
+        
+        /* 
+        *  @param fullname, gender, date of birth, time of birth, 
+        *  @param longitude, latitude, timezone and
+        *  @param timezone in hours:minutes:seconds format
+        */ 
+     
+        $data  = array(
+                        "fname"=>$fname,"gender"=>$gender,"dob"=>$dob,
+                        "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
+                        "tmz_hr"=>$gmt,"time_diff"=>$diff
+                    );
+        $moon               = $this->getMoonData($data);
+        $moon_details       = $this->calcDetails($moon);
+        $moon_distance      = $this->calcDistance($moon);
+        $moon               = array("moon"=>$moon,"moon_details"=>$moon_details,
+                                    "moon_distance"=>$moon_distance);
+        $sign           = $moon_details." Sign";
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName(array('id','introtext')));
+        $query          ->from($db->quoteName('#__content'));
+        $query          ->where($db->quoteName('title').'LIKE'.$db->quote('%'.$sign.'%')); 
+        $db             ->setQuery($query);
+        $result         = $db->loadAssoc();
+        $data           = array_merge($details,$moon,$result);
         return $data;
     }
 }

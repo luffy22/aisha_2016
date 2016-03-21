@@ -25,15 +25,15 @@ defined('_JEXEC') or die();
         <input type="radio" name="gender" value="female" id="lagna_gender2" checked> Female
     </div>
     <div class="form-group" id="lagna_grp_3">
-        <label for="dob" class="control-label">Date Of Birth:</label>
+        <label for="dob" class="control-label">Date Of Birth(Year/Month/Date Format):</label>
         <input type="text" name="dob" id="datepicker" class="form-control" placeholder="Date Of Birth in Year/Month/Day Format" />
         <span class="error1" id="lagna_err_3">Please insert date in yyyy/mm/dd format.</span>
     </div>
     <div class="form-group">
-        <label for="dob" class="control-label">Time Of Birth:</label><br/>
+        <label for="dob" class="control-label">Time Of Birth(24 Hour Format):</label><br/>
         <select class="select2" id="lagna_tob_hr" name="lagna_hr">
         <?php
-             for($i=0;$i<12;$i++)
+             for($i=0;$i<24;$i++)
              {
                  if($i<10)
                  {
@@ -88,10 +88,7 @@ defined('_JEXEC') or die();
             }
         ?>
         </select>
-        <select class="select2" id="lagna_tob_am-pm" name="lagna_time">
-            <option>AM</option>
-            <option>PM</option>
-        </select>
+        
     </div>
     <div class="form-group" id="lagna_grp_4">
         <label for="dob" class="control-label">Place Of Birth</label>
@@ -124,7 +121,7 @@ defined('_JEXEC') or die();
         <input type="text" id="lagna_timezone" class="form-text" name="lagna_timezone"  />
     </div>
     <div class="form-group">
-            <button type="submit" class="btn btn-primary" name="lagnasubmit" onclick="javascript:getLagna();return false;">Get Lagna</button>
+            <button type="submit" class="btn btn-primary" name="lagnasubmit" onclick="javascript:getLagna();return false;">Get Horoscope</button>
              <button type="reset" class="btn btn-danger">Reset Form</button>
     </div>
 </form>

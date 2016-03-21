@@ -95,6 +95,8 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
     <div class="spacer"></div>
     </div>
     <div class="col-xs-6 col-md-4">
+		<jdoc:include type="modules" name="sidebar" />
+		<div class="spacer"></div>
         <jdoc:include type="modules" name="socialplugins" />
     </div>
     </div>

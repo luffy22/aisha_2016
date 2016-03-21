@@ -16,7 +16,7 @@ class HoroscopeControllerLagna extends HoroscopeController
         if(isset($_POST['lagnasubmit']))
         {
             $fname  = $_POST['fname'];$gender   = $_POST['gender'];$dob     = $_POST['dob'];$pob    = $_POST['lagna_pob'];
-            $tob    = $_POST['lagna_hr'].":".$_POST['lagna_min'].":".$_POST['lagna_sec'].":".$_POST['lagna_time'];
+            $tob    = $_POST['lagna_hr'].":".$_POST['lagna_min'].":".$_POST['lagna_sec'];
             $lon    = $_POST['lon_deg'].":".$_POST['lon_min'].":".$_POST['lon_dir'];
             $lat    = $_POST['lat_deg'].":".$_POST['lat_min'].":".$_POST['lat_dir'];$timezone   = $_POST['lagna_timezone'];
             
@@ -42,8 +42,50 @@ class HoroscopeControllerLagna extends HoroscopeController
     }
     public function getascendant()
     {
-        print_r($_POST['data']);
-        
+        $decode     = json_decode($_POST['data']);
+        //print_r($decode);
+        $user_details   = array(
+                                    'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
+                                    'pob'=>$decode[4],'tob'=>$decode[3],
+                                    'lat'=>$decode[5],'lon'=>$decode[6],
+                                    'tmz'=>$decode[7]);
+        $model          = $this->getModel('lagna');  // Add the array to model
+        $data           = $model->getAscendant($user_details);
+        $view           = $this->getView('lagna','html');
+        $view->data     = $data;
+        $view->ascendant();
+    }
+    public function getdetails()
+    {
+        $decode     = json_decode($_POST['data']);
+        $user_details   = array(
+                                    'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
+                                    'pob'=>$decode[4],'tob'=>$decode[3],
+                                    'lat'=>$decode[5],'lon'=>$decode[6],
+                                    'tmz'=>$decode[7]
+                                );
+        $model          = $this->getModel('lagna');  // Add the array to model
+        $data           = $model->getLagna($user_details);
+
+        $view           = $this->getView('lagna','html');
+        $view->data     = $data;
+        $view->display();
+    }
+    public function getmoon()
+    {
+        $decode         = json_decode($_POST['data']);
+        $user_details   = array(
+                                    'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
+                                    'pob'=>$decode[4],'tob'=>$decode[3],
+                                    'lat'=>$decode[5],'lon'=>$decode[6],
+                                    'tmz'=>$decode[7]
+                                );
+        $model          = $this->getModel('lagna');  // Add the array to model
+        $data           = $model->getMoon($user_details);
+        //print_r($data);
+        $view           = $this->getView('lagna','html');
+        $view->data     = $data;
+        $view->moon();
     }
 }
 ?>
