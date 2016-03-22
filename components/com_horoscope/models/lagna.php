@@ -944,7 +944,6 @@ class HoroscopeModelLagna extends JModelItem
         $data                   = array_merge($data,$lagna,$moon,$planets,$ketu,$budh);
         return $data;
     }
-   
     protected function getRaman2050($data)
     {
         $lagna          = $this->calculatelagna($data);
@@ -1060,21 +1059,121 @@ class HoroscopeModelLagna extends JModelItem
         }   
         return $data;
     }
+    public function getAscendantId($gender,$sign)
+    {
+        if($sign=="Aries"&&$gender=="female")
+        {
+           $id      =   103;
+        }
+        else if($sign=="Aries"&&$gender=="male")
+        {
+            $id     =   102;
+        }
+        else if($sign=="Taurus"&&$gender=="female")
+        {
+            $id     =   104;
+        }
+        else if($sign=="Taurus"&&$gender=="male")
+        {
+            $id     =   105;
+        }
+        else if($sign=="Gemini"&&$gender=="female")
+        {
+            $id     =   106;
+        }
+        else if($sign=="Gemini"&&$gender=="male")
+        {
+            $id     =   107;
+        }
+        else if($sign=="Cancer"&&$gender=="female")
+        {
+            $id     =   108;
+        }
+        else if($sign=="Cancer"&&$gender=="male")
+        {
+            $id     =   109;
+        }
+        else if($sign=="Leo"&&$gender=="female")
+        {
+            $id     =   110;
+        }
+        else if($sign=="Leo"&&$gender=="male")
+        {
+            $id     =   111;
+        }
+        else if($sign=="Virgo"&&$gender=="female")
+        {
+            $id     =   114;
+        }
+        else if($sign=="Virgo"&&$gender=="male")
+        {
+            $id     =   115;
+        }
+        else if($sign=="Libra"&&$gender=="female")
+        {
+            $id     =   116;
+        }
+        else if($lsign=="Libra"&&$gender=="male")
+        {
+            $id     =   117;
+        }
+        else if($sign=="Scorpio"&&$gender=="female")
+        {
+            $id     =   118;
+        }
+        else if($sign=="Scorpio"&&$gender=="male")
+        {
+            $id     =   119;
+        }
+        else if($sign=="Sagittarius"&&$gender=="female")
+        {
+            $id     =   120;
+        }
+        else if($sign=="Sagittarius"&&$gender=="male")
+        {
+            $id     =   121;
+        }
+        else if($sign=="Capricorn"&&$gender=="female")
+        {
+            $id     =   123;
+        }
+        else if($sign=="Capricorn"&&$gender=="male")
+        {
+            $id     =   124;
+        }
+        else if($sign=="Aquarius"&&$gender=="female")
+        {
+            $id     =   125;
+        }
+        else if($sign=="Aquarius"&&$gender=="male")
+        {
+            $id     =   126;
+        }
+        else if($sign=="Pisces"&&$gender=="female")
+        {
+            $id     =   127;
+        }
+        else if($sign=="Pisces"&&$gender=="male")
+        {
+            $id     =   128;
+        }
+        return $id;
+    }
     public function getAscendant($details)
     {
         //print_r($details);exit;
-        $gender             = ucfirst($details['gender']);
+        $gender             = $details['gender'];
         $lagna              = $this->calculatelagna($details);
         $lagna_details      = $this->calcDetails($lagna);
         $lagna_distance     = $this->calcDistance($lagna);
         $lagna              = array("lagna"=>$lagna,"sign"=>$lagna_details,
                                "lagna_distance"=>$lagna_distance);
+        $id             = $this->getAscendantId($gender,$lagna_details);
         $db             = JFactory::getDbo();
         $query          = $db->getQuery(true);
         $query          ->select($db->quoteName(array('id','introtext')));
         $query          ->from($db->quoteName('#__content'));
-        $query          ->where($db->quoteName('title').'LIKE'.$db->quote('%'.$gender.'%').
-                                ' AND '.$db->quoteName('title').'LIKE'.$db->quote('%'.$lagna_details.'%')); 
+        $query          ->where($db->quoteName('id').'='.$db->quote($id)); 
         $db             ->setQuery($query);
         $result         = $db->loadAssoc();
         
@@ -1105,13 +1204,11 @@ class HoroscopeModelLagna extends JModelItem
         {
             $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$tob_str,"-");
         }
-        
-        /* 
+       /* 
         *  @param fullname, gender, date of birth, time of birth, 
         *  @param longitude, latitude, timezone and
         *  @param timezone in hours:minutes:seconds format
         */ 
-     
         $data  = array(
                         "fname"=>$fname,"gender"=>$gender,"dob"=>$dob,
                         "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
@@ -1132,6 +1229,59 @@ class HoroscopeModelLagna extends JModelItem
         $result         = $db->loadAssoc();
         $data           = array_merge($details,$moon,$result);
         return $data;
+    }
+    public function getNakshatra($details)
+    {
+        $fname          = $details['fname'];
+        $gender         = $details['gender'];
+        $dob            = $details['dob'];
+        $year           = date("Y",strtotime($dob));
+        $tob            = $details['tob'];
+        $pob            = $details['pob'];
+        $lon            = $details['lon'];
+        $lat            = $details['lat'];
+        $tmz            = $details['tmz'];
+        $gmt            = "12:00:00";
+        $gmt            = $this->getGMT($gmt, $tmz);
+      
+        $tob_str        = strtotime($tob);
+        $gmt_str        = strtotime($gmt);
+        if($tob_str>$gmt_str)
+        {
+            $diff       = "+".$this->getAddSubTime($dob,$tob_str,$gmt_str,"-");
+        }
+        else if($gmt_str>$tob_str)
+        {
+            $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$tob_str,"-");
+        }
+       /* 
+        *  @param fullname, gender, date of birth, time of birth, 
+        *  @param longitude, latitude, timezone and
+        *  @param timezone in hours:minutes:seconds format
+        */ 
+        $data  = array(
+                        "fname"=>$fname,"gender"=>$gender,"dob"=>$dob,
+                        "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
+                        "tmz_hr"=>$gmt,"time_diff"=>$diff
+                    );
+        $moon               = $this->getMoonData($data);
+        $moon_details       = $this->calcDetails($moon);
+        $moon_distance      = str_replace("&deg;",".",$this->calcDistance($moon));
+        $moon_distance      = str_replace("'","",$moon_distance);
+        //echo $moon_distance;exit;
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName(array('nakshatra')));
+        $query          ->from($db->quoteName('#__nakshatras'));
+        $query          ->where($db->quoteName('sign').'LIKE'.$db->quote($moon_details).' AND '.
+                                $db->quoteName('up_deg').'>='.$db->quote($moon_distance).' AND '.
+                                $db->quoteName('down_deg').'<'.$db->quote($moon_distance))
+                        ->order($db->quoteName('nakshatra').' desc')
+                        ->setLimit('1');
+        $db             ->setQuery($query);
+        
+        $result         = $db->loadAssoc();
+        print_r($result);
     }
 }
 ?>

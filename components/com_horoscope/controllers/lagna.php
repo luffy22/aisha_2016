@@ -87,5 +87,21 @@ class HoroscopeControllerLagna extends HoroscopeController
         $view->data     = $data;
         $view->moon();
     }
+    public function getnakshatra()
+    {
+        $decode         = json_decode($_POST['data']);
+        $user_details   = array(
+                                    'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
+                                    'pob'=>$decode[4],'tob'=>$decode[3],
+                                    'lat'=>$decode[5],'lon'=>$decode[6],
+                                    'tmz'=>$decode[7]
+                                );
+        $model          = $this->getModel('lagna');  // Add the array to model
+        $data           = $model->getNakshatra($user_details);
+        print_r($data);
+        //$view           = $this->getView('lagna','html');
+        //$view->data     = $data;
+        //$view->moon();
+    }
 }
 ?>
