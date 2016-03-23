@@ -72,4 +72,24 @@ class HoroscopeViewLagna extends JViewLegacy
         //echo gettype($this->data);
         parent::display($tpl);
     }
+    public function nakshatra($tpl=null)
+    {
+        $data       = $this->data;
+        if (count($errors   = $this->get('Errors')))
+        {
+                JError::raiseError(500, implode('<br />', $errors));
+                return false;
+        }
+        if(!empty($data))
+        {
+            $tpl    = 'nakshatra';
+        }
+        else
+        {
+            $tpl        = null;
+        }
+     
+        //echo gettype($this->data);
+        parent::display($tpl);
+    }
 }

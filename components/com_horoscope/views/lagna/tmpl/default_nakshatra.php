@@ -1,5 +1,6 @@
 <?php
 defined('_JEXEC') or die();
+//print_r($this->data);exit;
 $array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
               $this->data['tob'],$this->data['pob'],$this->data['lat'],
               $this->data['lon'],$this->data['tmz']);
@@ -21,9 +22,9 @@ $array = json_encode($array);
           <li>
               <form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getdetails'); ?>">
               <input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Planet Details" /></form></li>
-          <li class="active"><a href="#">Ascendant</a></li>
-          <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getmoon'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Moon" /></form></li></li>
-          <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getnakshatra'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Nakshatra" /></form></li>
+          <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getascendant'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Ascendant" /></form></li>
+          <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getmoon'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Moon" /></form></li>
+          <li class="active"><a href="#">Nakshatra</a></li>
           <li><a href="#">Navamsha</a></li>
         </ul>
     </div><!--/.nav-collapse -->
@@ -32,7 +33,7 @@ $array = json_encode($array);
 <div class="spacer"></div>
 <div id="<?php echo $this->data['id']; ?>" class="accordion-id"></div>
 <div class="spacer"></div>
-<h3>Your Ascendant is: <?php echo $this->data['sign'] ?></h3>
+<h3>Birth-Time Nakshatra: <?php echo $this->data['nakshatra'] ?></h3>
 <?php
 echo $this->data['introtext'];
 

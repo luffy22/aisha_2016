@@ -98,10 +98,10 @@ class HoroscopeControllerLagna extends HoroscopeController
                                 );
         $model          = $this->getModel('lagna');  // Add the array to model
         $data           = $model->getNakshatra($user_details);
-        print_r($data);
-        //$view           = $this->getView('lagna','html');
-        //$view->data     = $data;
-        //$view->moon();
+        //print_r($data);
+        $view           = $this->getView('lagna','html');
+        $view->data     = $data;
+        $view->nakshatra();
     }
 }
 ?>

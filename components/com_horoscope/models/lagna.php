@@ -1273,15 +1273,23 @@ class HoroscopeModelLagna extends JModelItem
         $query          = $db->getQuery(true);
         $query          ->select($db->quoteName(array('nakshatra')));
         $query          ->from($db->quoteName('#__nakshatras'));
-        $query          ->where($db->quoteName('sign').'LIKE'.$db->quote($moon_details).' AND '.
-                                $db->quoteName('up_deg').'>='.$db->quote($moon_distance).' AND '.
-                                $db->quoteName('down_deg').'<'.$db->quote($moon_distance))
-                        ->order($db->quoteName('nakshatra').' desc')
-                        ->setLimit('1');
+        $query          ->where($db->quoteName('sign').'='.$db->quote($moon_details).' AND '.
+                                $db->quote($moon_distance).' BETWEEN '.
+                                $db->quoteName('up_deg').' AND '.
+                                $db->quoteName('down_deg'));
         $db             ->setQuery($query);
         
         $result         = $db->loadAssoc();
-        print_r($result);
+        $nakshatra      = $result['nakshatra'];
+        $query          ->clear();unset($result);
+        $query          ->select($db->quoteName(array('id','introtext')));
+        $query          ->from($db->quoteName('#__content'));
+        $query          ->where($db->quoteName('title').'LIKE'.$db->quote($nakshatra.'%')); 
+        $db             ->setQuery($query);
+        $result         = $db->loadAssoc();
+        $nakshatra      = array("nakshatra"=>$nakshatra);
+        $data           = array_merge($details,$nakshatra, $result);
+        return $data;
     }
 }
 ?>
