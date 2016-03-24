@@ -103,5 +103,10 @@ class HoroscopeControllerLagna extends HoroscopeController
         $view->data     = $data;
         $view->nakshatra();
     }
+    public function getnavamsha()
+    {
+        $decode         = json_decode($_POST['data']);
+        print_r($decode);
+    }
 }
 ?>

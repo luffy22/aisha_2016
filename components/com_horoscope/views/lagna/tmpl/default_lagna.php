@@ -1,6 +1,6 @@
 <?php
 defined('_JEXEC') or die();
-//print_r($this->data);exit;
+print_r($this->data);exit;
 $array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
                                   $this->data['tob'],$this->data['pob'],$this->data['lat'],
                                   $this->data['lon'],$this->data['tmz']);
@@ -72,7 +72,10 @@ $array = json_encode($array);
     <tr>
         <th>Planets</th>
         <th>Sign</th>
+        <th>Sign Lord</th>
         <th>Distance</th>
+        <th>Nakshatra</th>
+        <th>Nakshatra Lord</th>
     </tr>
     <tr>
         <th>Ascendant</th>
