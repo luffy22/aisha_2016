@@ -1,6 +1,6 @@
 <?php
 defined('_JEXEC') or die();
-print_r($this->data);exit;
+//print_r($this->data);exit;
 $array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
                                   $this->data['tob'],$this->data['pob'],$this->data['lat'],
                                   $this->data['lon'],$this->data['tmz']);
@@ -80,66 +80,96 @@ $array = json_encode($array);
     <tr>
         <th>Ascendant</th>
         <td><?php echo $this->data['lagna_sign'] ?></td>
+        <td><?php echo $this->data['lagna_sign_lord'] ?></td>
         <td><?php echo $this->data['lagna_distance'] ?></td>
+        <td><?php echo $this->data['lagna_nakshatra'] ?></td>
+        <td><?php echo $this->data['lagna_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Sun</th>
-        <td><?php echo $this->data['surya_details']; ?></td>
+        <td><?php echo $this->data['surya_sign']; ?></td>
+        <td><?php echo $this->data['surya_sign_lord'] ?></td>
         <td><?php echo $this->data['surya_distance']; ?></td>
+        <td><?php echo $this->data['surya_nakshatra'] ?></td>
+        <td><?php echo $this->data['surya_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Moon</th>
-        <td><?php echo $this->data['moon_details']; ?></td>
+        <td><?php echo $this->data['moon_sign']; ?></td>
+        <td><?php echo $this->data['moon_sign_lord'] ?></td>
         <td><?php echo $this->data['moon_distance']; ?></td>
+        <td><?php echo $this->data['moon_nakshatra'] ?></td>
+        <td><?php echo $this->data['moon_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Mars</th>
-        <td><?php echo $this->data['mangal_details']; ?></td>
+        <td><?php echo $this->data['mangal_sign']; ?></td>
+        <td><?php echo $this->data['mangal_sign_lord'] ?></td>
         <td><?php echo $this->data['mangal_distance']; ?></td>
+        <td><?php echo $this->data['mangal_nakshatra'] ?></td>
+        <td><?php echo $this->data['mangal_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Mercury</th>
-        <td><?php echo $this->data['budh_details']; ?></td>
+        <td><?php echo $this->data['budh_sign']; ?></td>
+        <td><?php echo $this->data['budh_sign_lord'] ?></td>
         <td><?php echo $this->data['budh_distance']; ?></td>
+        <td><?php echo $this->data['budh_nakshatra'] ?></td>
+        <td><?php echo $this->data['budh_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Jupiter</th>
-        <td><?php echo $this->data['guru_details']; ?></td>
+        <td><?php echo $this->data['guru_sign']; ?></td>
+        <td><?php echo $this->data['guru_sign_lord'] ?></td>
         <td><?php echo $this->data['guru_distance']; ?></td>
+        <td><?php echo $this->data['guru_nakshatra'] ?></td>
+        <td><?php echo $this->data['guru_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Venus</th>
-        <td><?php echo $this->data['shukra_details']; ?></td>
+        <td><?php echo $this->data['shukra_sign']; ?></td>
+        <td><?php echo $this->data['shukra_sign_lord'] ?></td>
         <td><?php echo $this->data['shukra_distance']; ?></td>
-        
+        <td><?php echo $this->data['shukra_nakshatra'] ?></td>
+        <td><?php echo $this->data['shukra_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Saturn</th>
-        <td><?php echo $this->data['shani_details']; ?></td>
+        <td><?php echo $this->data['shani_sign']; ?></td>
+        <td><?php echo $this->data['shani_sign_lord'] ?></td>
         <td><?php echo $this->data['shani_distance']; ?></td>
+        <td><?php echo $this->data['shani_nakshatra'] ?></td>
+        <td><?php echo $this->data['shani_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Rahu</th>
-        <td><?php echo $this->data['rahu_details']; ?></td>
+        <td><?php echo $this->data['rahu_sign']; ?></td>
+        <td><?php echo $this->data['rahu_sign_lord'] ?></td>
         <td><?php echo $this->data['rahu_distance']; ?></td>
+        <td><?php echo $this->data['rahu_nakshatra'] ?></td>
+        <td><?php echo $this->data['rahu_nakshatra_lord'] ?></td>
     </tr>
     <tr>
         <th>Ketu</th>
-        <td><?php echo $this->data['ketu_details']; ?></td>
+        <td><?php echo $this->data['ketu_sign']; ?></td>
+        <td><?php echo $this->data['ketu_sign_lord'] ?></td>
         <td><?php echo $this->data['ketu_distance']; ?></td>
+        <td><?php echo $this->data['ketu_nakshatra'] ?></td>
+        <td><?php echo $this->data['ketu_nakshatra_lord'] ?></td>
     </tr>
 </table>
 </div>
 <?php
 unset(
-        $this->data['surya_details'],$this->data['surya_distance'],
-        $this->data['moon_details'],$this->data['moon_distance'],
-        $this->data['mangal_details'],$this->data['mangal_distance'],
-        $this->data['budh_details'],$this->data['budh_distance'],
-        $this->data['guru_details'],$this->data['guru_distance'],
-        $this->data['shukra_details'],$this->data['shukra_distance'],
-        $this->data['shani_details'],$this->data['shani_distance'],
-        $this->data['rahu_details'],$this->data['rahu_distance'],
-        $this->data['ketu_details'],$this->data['ketu_distance']
+        $this->data['surya_sign'],$this->data['surya_distance'],$this->data['surya_sign_lord'],$this->data['surya_nakshatra'],
+        $this->data['moon_sign'],$this->data['moon_distance'],$this->data['moon_sign_lord'],$this->data['moon_nakshatra'],
+        $this->data['mangal_sign'],$this->data['mangal_distance'],$this->data['mangal_sign_lord'],$this->data['mangal_nakshatra'],
+        $this->data['budh_sign'],$this->data['budh_distance'],$this->data['budh_sign_lord'],$this->data['budh_nakshatra'],
+        $this->data['guru_sign'],$this->data['guru_distance'],$this->data['guru_sign_lord'],$this->data['guru_nakshatra'],
+        $this->data['shukra_sign'],$this->data['shukra_distance'],$this->data['shukra_sign_lord'],$this->data['shukra_nakshatra'],
+        $this->data['shani_sign'],$this->data['shani_distance'],$this->data['shani_sign_lord'],$this->data['shani_nakshatra'],
+        $this->data['rahu_sign'],$this->data['rahu_distance'],$this->data['rahu_sign_lord'],$this->data['rahu_nakshatra'],
+        $this->data['ketu_sign'],$this->data['ketu_distance'],$this->data['ketu_sign_lord'],$this->data['ketu_nakshatra']
     );
+
 ?>
