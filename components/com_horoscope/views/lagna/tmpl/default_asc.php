@@ -1,5 +1,6 @@
 <?php
 defined('_JEXEC') or die();
+//print_r($this->data);exit;
 $array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
               $this->data['tob'],$this->data['pob'],$this->data['lat'],
               $this->data['lon'],$this->data['tmz']);
@@ -32,7 +33,7 @@ $array = json_encode($array);
 <div class="spacer"></div>
 <div id="<?php echo $this->data['id']; ?>" class="accordion-id"></div>
 <div class="spacer"></div>
-<h3>Your Ascendant is: <?php echo $this->data['sign'] ?></h3>
+<h3>Your Ascendant is: <?php echo $this->data['lagna_sign'] ?></h3>
 <?php
 echo $this->data['introtext'];
 

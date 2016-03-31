@@ -33,7 +33,7 @@ $array = json_encode($array);
 <div class="spacer"></div>
 <div id="<?php echo $this->data['id']; ?>" class="accordion-id"></div>
 <div class="spacer"></div>
-<h3>Birth-Time Nakshatra: <?php echo $this->data['nakshatra'] ?></h3>
+<h3>Birth-Time Nakshatra: <?php echo $this->data['moon_nakshatra'] ?></h3>
 <?php
 echo $this->data['introtext'];
 

@@ -967,7 +967,7 @@ class HoroscopeModelLagna extends JModelItem
         $budh_sign                  = $this->calcDetails($budh);
         $budh_details               = $this->getPlanetaryDetails("budh",$budh_sign, $budh_distance);
         $budh                   = array("budh"=>$budh,"budh_distance"=>$budh_distance,
-                                        "budh_sign"=>$budh_details);
+                                        "budh_sign"=>$budh_sign);
         $budh                   = array_merge($budh,$budh_details);
         $data                   = array_merge($data,$lagna,$moon,$planets,$ketu,$budh);
         return $data;
@@ -1192,18 +1192,15 @@ class HoroscopeModelLagna extends JModelItem
         //print_r($details);exit;
         $gender             = $details['gender'];
         $lagna              = $this->calculatelagna($details);
-        $lagna_details      = $this->calcDetails($lagna);
-        $lagna_distance     = $this->calcDistance($lagna);
-        $lagna              = array("lagna"=>$lagna,"sign"=>$lagna_details,
-                               "lagna_distance"=>$lagna_distance);
-        $id             = $this->getAscendantId($gender,$lagna_details);
-        $db             = JFactory::getDbo();
-        $query          = $db->getQuery(true);
-        $query          ->select($db->quoteName(array('id','introtext')));
-        $query          ->from($db->quoteName('#__content'));
-        $query          ->where($db->quoteName('id').'='.$db->quote($id)); 
-        $db             ->setQuery($query);
-        $result         = $db->loadAssoc();
+        $sign               = $lagna['lagna_sign'];
+        $id                 = $this->getAscendantId($gender,$sign);
+        $db                 = JFactory::getDbo();
+        $query              = $db->getQuery(true);
+        $query              ->select($db->quoteName(array('id','introtext')));
+        $query              ->from($db->quoteName('#__content'));
+        $query              ->where($db->quoteName('id').'='.$db->quote($id)); 
+        $db                 ->setQuery($query);
+        $result             = $db->loadAssoc();
         
         $data           = array_merge($details,$lagna,$result);
         return $data;
@@ -1242,12 +1239,8 @@ class HoroscopeModelLagna extends JModelItem
                         "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
                         "tmz_hr"=>$gmt,"time_diff"=>$diff
                     );
-        $moon               = $this->getMoonData($data);
-        $moon_details       = $this->calcDetails($moon);
-        $moon_distance      = $this->calcDistance($moon);
-        $moon               = array("moon"=>$moon,"moon_details"=>$moon_details,
-                                    "moon_distance"=>$moon_distance);
-        $sign           = $moon_details." Sign";
+        $moon           = $this->getMoonData($data);
+        $sign           = $moon['moon_sign']." Sign";
         $db             = JFactory::getDbo();
         $query          = $db->getQuery(true);
         $query          ->select($db->quoteName(array('id','introtext')));
@@ -1293,22 +1286,12 @@ class HoroscopeModelLagna extends JModelItem
                         "tmz_hr"=>$gmt,"time_diff"=>$diff
                     );
         $moon               = $this->getMoonData($data);
-        $moon_details       = $this->calcDetails($moon);
-        $moon_distance      = str_replace("&deg;",".",$this->calcDistance($moon));
-        $moon_distance      = str_replace("'","",$moon_distance);
-        //echo $moon_distance;exit;
+        $sign           = $moon['moon_sign'];
+        $distance       = $moon['moon_distance'];
+        $moon_info      = $this->getPlanetaryDetails("moon", $sign, $distance);
+        $nakshatra      = $moon_info['moon_nakshatra'];
         $db             = JFactory::getDbo();
         $query          = $db->getQuery(true);
-        $query          ->select($db->quoteName(array('nakshatra')));
-        $query          ->from($db->quoteName('#__nakshatras'));
-        $query          ->where($db->quoteName('sign').'='.$db->quote($moon_details).' AND '.
-                                $db->quote($moon_distance).' BETWEEN '.
-                                $db->quoteName('down_deg').' AND '.
-                                $db->quoteName('up_deg'));
-        $db             ->setQuery($query);
-        
-        $result         = $db->loadAssoc();
-        $nakshatra      = $result['nakshatra'];
         $query          ->clear();unset($result);
         $query          ->select($db->quoteName(array('id','introtext')));
         $query          ->from($db->quoteName('#__content'));
@@ -1316,7 +1299,7 @@ class HoroscopeModelLagna extends JModelItem
         $db             ->setQuery($query);
         $result         = $db->loadAssoc();
         $nakshatra      = array("nakshatra"=>$nakshatra);
-        $data           = array_merge($details,$nakshatra, $result);
+        $data           = array_merge($details,$moon, $result);
         return $data;
     }
 }

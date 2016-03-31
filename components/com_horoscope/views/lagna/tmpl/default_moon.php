@@ -33,7 +33,7 @@ $array = json_encode($array);
 <div class="spacer"></div>
 <div id="<?php echo $this->data['id']; ?>" class="accordion-id"></div>
 <div class="spacer"></div>
-<h3>Your Moon Sign is: <?php echo $this->data['moon_details'] ?></h3>
+<h3>Your Moon Sign is: <?php echo $this->data['moon_sign'] ?></h3>
 <?php
 echo $this->data['introtext'];
 

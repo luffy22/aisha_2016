@@ -14,42 +14,23 @@ use PayPal\Api\Amount;
 use Paypal\Api\Details;
 use PayPal\Api\Authorization;
 use Paypal\Api\Capture;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Rest\ApiContext;
 
-    $paymentId = 'PAY-7ME617039A989632WK3Z5KMI';  // enter payment id here
-
-      $paymentId = $_GET['paymentId']; 
+    $paymentId = "PAY-7ME617039A989632WK3Z5KMI"; 
     //$payment = Payment::get($paymentId, $apiContext);
     // @return result Array of result which shows payment related information
-    //echo $execution->getPayerId();
-    try {
-             // Get payment id, and then execute the payment request
-             $token                 = 'token_56f3d530d577e';
-             $payment               = Payment::get($paymentId, $apiContext);
-             $payer_id              = $payment->getPayer()->getPayerInfo()->getPayerId();
-             $transactions           = $payment->getTransactions();
-             $transaction           = $transactions[0];
-             $execution             = new PaymentExecution();
-             $execution             ->setPayerId($payer_id);
-             $execution             ->addTransaction($transaction);
-             $result                = $payment->execute($execution, $apiContext);
-             $transactions          = $payment->getTransactions();
-             $transaction           = $transactions[0];
-             $relatedResources      = $transaction->getRelatedResources();
-             $relatedResource       = $relatedResources[0];
-             $order                 = $relatedResource->getOrder();
-             $currency              = $transaction->getAmount()->getCurrency();
-             $total                 = $transaction->getAmount()->getTotal();
-             $authorization         = new Authorization();
-             $authorization         ->setAmount(new Amount(
-                                    '{
-                                        "total":"'.$total.'",
-                                        "currency":"'.$currency.'"
-                                    }'));
-             $result            = $order->authorize($authorization, $apiContext);
-             $server            = "http://" . $_SERVER['SERVER_NAME'];
-             //echo $server;exit;
-             header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$paymentId.'&order_id='.$result->getId().'&token='.$token);
+    // Get payment id, and then execute the payment request
+     $payment               = Payment::get($paymentId, $apiContext);
+     $transactions          = $payment->getTransactions();
+     $relatedResources      = $transactions[0]->getRelatedResources();
+     $authorization         = $relatedResources[1]->getAuthorization();
 
-?>
+     try {
+        $amount = new Amount();
+        $amount->setCurrency("GBP");
+        $amount->setTotal("10.00");
+    $authorization->setAmount($amount);
+
+    $reAuthorization = $authorization->reauthorize($apiContext);
+} catch (Exception $ex) {
+                print_r($ex);
+}

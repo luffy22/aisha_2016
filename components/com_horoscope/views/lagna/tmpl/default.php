@@ -9,10 +9,9 @@
 defined('_JEXEC') or die();
 		
 ?>
- <div>
-<h2>Calculate Lagna</h2>
 <div class="spacer"></div>
-<form class="form-horizontal" role="form" enctype="application/x-www-form-urlencoded" method="post" 
+<h2>Calculate Lagna</h2>
+<form role="form" enctype="application/x-www-form-urlencoded" method="post" 
       action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.findlagna'); ?>">
     <div class="form-group" id="lagna_grp_1">
         <label for="inputName" class="control-label">Name:</label>
@@ -125,5 +124,4 @@ defined('_JEXEC') or die();
              <button type="reset" class="btn btn-danger">Reset Form</button>
     </div>
 </form>
- </div>
 <div class="spacer"></div>
