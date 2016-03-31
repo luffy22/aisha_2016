@@ -9,7 +9,6 @@
 
 // no direct access
 defined('_JEXEC') or die;
-
 ?>
 <a id="startOfPage"></a>
 
@@ -22,7 +21,6 @@ defined('_JEXEC') or die;
 	<div class="clr"></div>
 </div>
 <?php endif; ?>
-
 <?php echo $row->text; ?>
 <ul class="nav nav-tabs" role="tablist">
 <li class="active" role="presentation"><a href="#fb" role="tab" data-toggle="tab">FB Comments</a></li>

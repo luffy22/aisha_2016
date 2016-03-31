@@ -979,7 +979,7 @@ class HoroscopeModelLagna extends JModelItem
         $tob            = strtotime($data['tob']);
         $tob            = explode(":",date('G:i:s', $tob));
 
-        $planets        = array("full_year","moon","sun","mars","mercury","jupiter","venus","saturn","rahu");
+        $planets        = array("full_year","moon","surya","mangal","budh","guru","shukra","shani","rahu");
         $count          = count($planets);
         $db             = JFactory::getDbo();
         $query          = $db->getQuery(true);
@@ -999,6 +999,7 @@ class HoroscopeModelLagna extends JModelItem
         $query          ->setLimit('1');
         $db             ->setQuery($query);
         $result2        = $db->loadAssoc();
+        //print_r($result1);exit;
         for($i=1;$i<$count;$i++)
         {
             $planet         = $planets[$i];
@@ -1009,7 +1010,8 @@ class HoroscopeModelLagna extends JModelItem
             (double)$up_deg         = ((double)$up_deg[0]*30+$up_deg[1]).".".$up_deg[2];
             $down_val               = explode(".",$down_deg);
             $up_val                 = explode(".", $up_deg);
-            //echo $planet."  ".$up_deg." : ".$down_deg."<br/>";
+         
+            //echo $planet."  ".$up_deg." : ".$down_deg."<br/>";exit;
             if($up_deg < $down_deg)
             {
                 $diff               = explode(":", $this->subDegMinSec($down_val[0], $down_val[1], 0, $up_val[0], $up_val[1], 0));
@@ -1024,7 +1026,8 @@ class HoroscopeModelLagna extends JModelItem
             {
                 $min            = "0".$min;
             }
-            $query              ->clear();
+            
+            $query          ->clear();
             $query          ->select($db->quoteName(array("value")));
             $query          ->from($db->quoteName('#__raman_log'));
             $query          ->where($db->quoteName('degree').'='.$db->quote($deg).'AND'.
@@ -1046,6 +1049,7 @@ class HoroscopeModelLagna extends JModelItem
             $value2         = $result4["value"];
             
             $result         = number_format(($value1 + $value2),4);
+            
             $query          ->clear();
             $query          ->select($db->quoteName(array('degree','min')));
             $query          ->from($db->quoteName('#__raman_log'));
@@ -1055,22 +1059,33 @@ class HoroscopeModelLagna extends JModelItem
             $db             ->setQuery($query);
             $result5        = $db->loadAssoc();
             $diff           = $result5["degree"].".".$result5["min"];
-              
-            //echo $down_deg." : ".$diff."<br/>";
+            
             if($up_deg < $down_deg)
             {
-				if($result5['min'] < 10)
+                if($result5['min'] < 10)
                 {
                     $diff   = $result5['degree'].'.0'.$result5['min'];
                 }
                 $distance       = ($down_deg - $diff)-30.00;
-                $graha          = array($planet=>$distance.".r");
+                $graha          = array($planet=>str_replace(".",":",$distance).":r");
             }
             else
             {
+                if($result5['min'] < 10)
+                {
+                    $diff   = $result5['degree'].'.0'.$result5['min'];
+                }
                 $distance       = ($down_deg + $diff)-30.00;
-                $graha          = array($planet=>$distance);
+                $graha          = array($planet=>str_replace(".",":",$distance));
             }
+            //$sign               = $planet."_sign";$distance=$planet."_distance";
+            $sign               = $this->calcDetails(str_replace(".", ":", $distance));
+            $sign_det           = array($planet."_sign"=>$sign);
+            $dist               = $this->calcDistance(str_replace(".", ":", $distance));
+            $dist_det           = array($planet."_distance"=>$dist);
+            $details            = $this->getPlanetaryDetails($planet,$sign,$dist);
+            $graha              = array_merge($graha,$sign_det,$dist_det,$details);
+            
             if($i==8)
             {
                 $ketu           = $distance+180;
@@ -1078,14 +1093,125 @@ class HoroscopeModelLagna extends JModelItem
                 {
                     $ketu       = $ketu-360;
                 }
-                $ketu           = array("ketu"=> $ketu.".r");
-                $data           = array_merge($data,$graha, $ketu);
+            $sign               = $this->calcDetails(str_replace(".", ":", $ketu));
+            $sign_det           = array("ketu_sign"=>$sign);
+            $distance           = $this->calcDistance(str_replace(".", ":", $ketu));
+            $distance_det       = array("ketu_distance"=>$distance);
+            $details            = $this->getPlanetaryDetails("ketu",$sign,$distance);
+            $ketu               = array("ketu"=>str_replace(".",":",$ketu));
+            $ketu               = array_merge($ketu,$sign_det,$distance_det,$details);
+            $graha              = array_merge($graha, $ketu);
             }  
             
             $data           = array_merge($data, $lagna, $graha);
                        
         }   
         return $data;
+    }
+    protected function getRaman2050_Moon($data)
+    {
+        $dob            = $data['dob'];
+        $tob            = strtotime($data['tob']);
+        $tob            = explode(":",date('G:i:s', $tob));
+        $count          = count($planets);
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName('moon'));
+        $query          ->from($db->quoteName('#__raman_2050planets'));
+        $query          ->where($db->quoteName('full_year').'='.$db->quote($dob));
+        $query          ->order($db->quoteName('full_year').' desc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
+        $result1        = $db->loadAssoc();
+        
+        $query          ->clear();
+        $query          ->select($db->quoteName('moon'));
+        $query          ->from($db->quoteName('#__raman_2050planets'));
+        $query          ->where($db->quoteName('full_year').'>'.$db->quote($dob));
+        $query          ->order($db->quoteName('full_year').' asc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
+        $result2        = $db->loadAssoc();
+        
+        $down_deg       = explode(".",$result1['moon']);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        $up_deg         = explode(".",$result2['moon']);
+        (double)$down_deg       = ((double)$down_deg[0]*30+$down_deg[1]).".".$down_deg[2];
+        (double)$up_deg         = ((double)$up_deg[0]*30+$up_deg[1]).".".$up_deg[2];
+        $down_val               = explode(".",$down_deg);
+        $up_val                 = explode(".", $up_deg);
+        //echo "Moon ".$up_deg." : ".$down_deg;exit;
+        if($up_deg < $down_deg)
+        {
+            $diff               = explode(":", $this->subDegMinSec($down_val[0], $down_val[1], 0, $up_val[0], $up_val[1], 0));
+        }
+        else
+        {
+            $diff               = explode(":", $this->subDegMinSec($up_val[0], $up_val[1], 0, $down_val[0], $down_val[1], 0));
+        }
+        $deg                = $diff[0];
+        $min                = $diff[1];
+        if($min < 10)
+        {
+            $min            = "0".$min;
+        }
+        $query          ->clear();
+        $query          ->select($db->quoteName(array("value")));
+        $query          ->from($db->quoteName('#__raman_log'));
+        $query          ->where($db->quoteName('degree').'='.$db->quote($deg).'AND'.
+                                $db->quoteName('min')."=".$db->quote($min));
+        $db             ->setQuery($query);
+        $result3         = $db->loadAssoc();
+
+        $tob_deg        = $tob[0];
+        $tob_min        = $tob[1];
+        $query          ->clear();
+        $query          ->select($db->quoteName(array("value")));
+        $query          ->from($db->quoteName('#__raman_log'));
+        $query          ->where($db->quoteName('degree').'='.$db->quote($tob_deg).'AND'.
+                                $db->quoteName('min')."=".$db->quote($tob_min));
+        $db             ->setQuery($query);
+        $result4        = $db->loadAssoc();
+
+        $value1         = $result3["value"];
+        $value2         = $result4["value"];
+
+        $result         = number_format(($value1 + $value2),4);
+        $query          ->clear();
+        $query          ->select($db->quoteName(array('degree','min')));
+        $query          ->from($db->quoteName('#__raman_log'));
+        $query          ->where($db->quoteName('value').'<='.$db->quote($result));
+        $query          ->order($db->quoteName('value').' desc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
+        $result5        = $db->loadAssoc();
+        $diff           = $result5["degree"].".".$result5["min"];
+
+        //echo $down_deg." : ".$diff."<br/>";
+        if($up_deg < $down_deg)
+        {
+            if($result5['min'] < 10)
+            {
+                $diff   = $result5['degree'].'.0'.$result5['min'];
+            }
+            $distance       = ($down_deg - $diff)-30.00;
+            $graha          = array("moon"=>str_replace(".",":",$distance).":r");
+        }
+        else
+        {
+            if($result5['min'] < 10)
+            {
+                $diff   = $result5['degree'].'.0'.$result5['min'];
+            }
+            $distance       = ($down_deg + $diff)-30.00;
+            $graha          = array("moon"=>str_replace(".",":",$distance));
+        }
+        $sign               = $this->calcDetails(str_replace(".", ":", $distance));
+        $sign_det           = array("moon_sign"=>$sign);
+        $dist               = $this->calcDistance(str_replace(".", ":", $distance));
+        $dist_det           = array("moon_distance"=>$dist);
+        $details            = $this->getPlanetaryDetails("moon",$sign,$dist);
+        $graha              = array_merge($graha,$sign_det,$dist_det,$details);
+        return $graha;
     }
     public function getAscendantId($gender,$sign)
     {
@@ -1211,6 +1337,7 @@ class HoroscopeModelLagna extends JModelItem
         $gender         = $details['gender'];
         $dob            = $details['dob'];
         $year           = date("Y",strtotime($dob));
+        
         $tob            = $details['tob'];
         $pob            = $details['pob'];
         $lon            = $details['lon'];
@@ -1239,7 +1366,14 @@ class HoroscopeModelLagna extends JModelItem
                         "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
                         "tmz_hr"=>$gmt,"time_diff"=>$diff
                     );
-        $moon           = $this->getMoonData($data);
+        if($year<=2000)
+        {
+            $moon           = $this->getMoonData($data);
+        }
+        else
+        {
+            $moon           = $this->getRaman2050_Moon($data);
+        }
         $sign           = $moon['moon_sign']." Sign";
         $db             = JFactory::getDbo();
         $query          = $db->getQuery(true);
@@ -1285,7 +1419,14 @@ class HoroscopeModelLagna extends JModelItem
                         "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
                         "tmz_hr"=>$gmt,"time_diff"=>$diff
                     );
-        $moon               = $this->getMoonData($data);
+        if($year<=2000)
+        {
+            $moon           = $this->getMoonData($data);
+        }
+        else
+        {
+            $moon           = $this->getRaman2050_Moon($data);
+        }
         $sign           = $moon['moon_sign'];
         $distance       = $moon['moon_distance'];
         $moon_info      = $this->getPlanetaryDetails("moon", $sign, $distance);
