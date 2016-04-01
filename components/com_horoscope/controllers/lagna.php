@@ -106,7 +106,14 @@ class HoroscopeControllerLagna extends HoroscopeController
     public function getnavamsha()
     {
         $decode         = json_decode($_POST['data']);
-        print_r($decode);
+        $user_details   = array(
+                                    'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
+                                    'pob'=>$decode[4],'tob'=>$decode[3],
+                                    'lat'=>$decode[5],'lon'=>$decode[6],
+                                    'tmz'=>$decode[7]
+                                );
+        $model          = $this->getModel('lagna');  // Add the array to model
+        $data           = $model->getNavamsha($user_details);
     }
 }
 ?>

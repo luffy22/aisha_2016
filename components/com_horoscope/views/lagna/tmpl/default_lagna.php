@@ -24,7 +24,7 @@ $array = json_encode($array);
           <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getascendant'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Ascendant" /></form></li>
           <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getmoon'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Moon" /></form></li>
           <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getnakshatra'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Nakshatra" /></form></li>
-          <li><a href="#">Navamsha</a></li>
+          <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getnavamsha'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Navamsha" /></form></li>
         </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -161,15 +161,15 @@ $array = json_encode($array);
 </div>
 <?php
 unset(
-        $this->data['surya_sign'],$this->data['surya_distance'],$this->data['surya_sign_lord'],$this->data['surya_nakshatra'],
-        $this->data['moon_sign'],$this->data['moon_distance'],$this->data['moon_sign_lord'],$this->data['moon_nakshatra'],
-        $this->data['mangal_sign'],$this->data['mangal_distance'],$this->data['mangal_sign_lord'],$this->data['mangal_nakshatra'],
-        $this->data['budh_sign'],$this->data['budh_distance'],$this->data['budh_sign_lord'],$this->data['budh_nakshatra'],
-        $this->data['guru_sign'],$this->data['guru_distance'],$this->data['guru_sign_lord'],$this->data['guru_nakshatra'],
-        $this->data['shukra_sign'],$this->data['shukra_distance'],$this->data['shukra_sign_lord'],$this->data['shukra_nakshatra'],
-        $this->data['shani_sign'],$this->data['shani_distance'],$this->data['shani_sign_lord'],$this->data['shani_nakshatra'],
-        $this->data['rahu_sign'],$this->data['rahu_distance'],$this->data['rahu_sign_lord'],$this->data['rahu_nakshatra'],
-        $this->data['ketu_sign'],$this->data['ketu_distance'],$this->data['ketu_sign_lord'],$this->data['ketu_nakshatra']
+        $this->data['surya_sign'],$this->data['surya_distance'],$this->data['surya_sign_lord'],$this->data['surya_nakshatra'],$this->data['surya_nakshatra_lord'],
+        $this->data['moon_sign'],$this->data['moon_distance'],$this->data['moon_sign_lord'],$this->data['moon_nakshatra'],$this->data['moon_nakshatra_lord'],
+        $this->data['mangal_sign'],$this->data['mangal_distance'],$this->data['mangal_sign_lord'],$this->data['mangal_nakshatra'],$this->data['mangal_nakshatra_lord'],
+        $this->data['budh_sign'],$this->data['budh_distance'],$this->data['budh_sign_lord'],$this->data['budh_nakshatra'],$this->data['budh_nakshatra_lord'],
+        $this->data['guru_sign'],$this->data['guru_distance'],$this->data['guru_sign_lord'],$this->data['guru_nakshatra'],$this->data['guru_nakshatra_lord'],
+        $this->data['shukra_sign'],$this->data['shukra_distance'],$this->data['shukra_sign_lord'],$this->data['shukra_nakshatra'],$this->data['shukra_nakshatra_lord'],
+        $this->data['shani_sign'],$this->data['shani_distance'],$this->data['shani_sign_lord'],$this->data['shani_nakshatra'],$this->data['shani_nakshatra_lord'],
+        $this->data['rahu_sign'],$this->data['rahu_distance'],$this->data['rahu_sign_lord'],$this->data['rahu_nakshatra'],$this->data['rahu_nakshatra_lord'],
+        $this->data['ketu_sign'],$this->data['ketu_distance'],$this->data['ketu_sign_lord'],$this->data['ketu_nakshatra'],$this->data['ketu_nakshatra_lord']
     );
 
 ?>

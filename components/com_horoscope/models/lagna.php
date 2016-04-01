@@ -32,7 +32,7 @@ class HoroscopeModelLagna extends JModelItem
         $db             ->setQuery($query2);
         $db->execute();
         $gmt            = "12:00:00";
-        $gmt            = $this->getGMT($gmt, $tmz);
+        $gmt            = $this->getGMT($year,$gmt, $tmz);
       
         $tob_str        = strtotime($tob);
         $gmt_str        = strtotime($gmt);
@@ -55,6 +55,7 @@ class HoroscopeModelLagna extends JModelItem
                         "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
                         "tmz_hr"=>$gmt,"time_diff"=>$diff
                     );
+        
         if($year <= 2000)
         {
             $this->data     = $this->getBudh($data);
@@ -73,28 +74,36 @@ class HoroscopeModelLagna extends JModelItem
      * along with + or - sign which requires to be added or
      * subtracted from $value1
      */
-    public function getGMT($val1, $val2)
+    public function getGMT($year, $val1, $val2)
     {
-        $sign           = substr($val2,0,1);
-        $val1           = explode(":",$val1);
-        $val2           = explode(":",substr($val2,1));
-        if($sign == "-")
+        if($year <= 2000)
         {
-            if($val1[1]<$val2[1])
+            $sign           = substr($val2,0,1);
+            $val1           = explode(":",$val1);
+            $val2           = explode(":",substr($val2,1));
+            if($sign == "-")
             {
-                $tmz_min    = $val2[1]-$val1[1];
-                $tmz_hr     = ($val1[0]-$val2[0])-1;
+                if($val1[1]<$val2[1])
+                {
+                    $tmz_min    = $val2[1]-$val1[1];
+                    $tmz_hr     = ($val1[0]-$val2[0])-1;
+                }
+                else
+                {
+                    $tmz_min    = $val1[1]-$val2[1];
+                    $tmz_hr     = $val1[0]-$val2[0];                
+                }
             }
             else
             {
-                $tmz_min    = $val1[1]-$val2[1];
-                $tmz_hr     = $val1[0]-$val2[0];                
+                $tmz_min    = $val1[1]+$val2[1];
+                $tmz_hr     = $val1[0]+$val2[0];       
             }
         }
         else
         {
-            $tmz_min    = $val1[1]+$val2[1];
-            $tmz_hr     = $val1[0]+$val2[0];       
+            $tmz_hr          = "00";
+            $tmz_min         = "00";
         }
         unset($val1);
         unset($val2);
@@ -217,7 +226,6 @@ class HoroscopeModelLagna extends JModelItem
     {
         $details        = explode(":", $planet);
         $sign_num       = intval($details[0]/30);
-        
         switch($sign_num)
         {
             case 0:
@@ -974,6 +982,7 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function getRaman2050($data)
     {
+        
         $lagna          = $this->calculatelagna($data);
         $dob            = $data['dob'];
         $tob            = strtotime($data['tob']);
@@ -1442,6 +1451,35 @@ class HoroscopeModelLagna extends JModelItem
         $nakshatra      = array("nakshatra"=>$nakshatra);
         $data           = array_merge($details,$moon, $result);
         return $data;
+    }
+    public function getNavamsha($data)
+    {
+        $alldata        = $this->getLagna($data);
+        $planet         = array("lagna","moon","surya","mangal","budh",
+                                "guru","shukra","shani","rahu","ketu");
+        $array          = array();
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        foreach($planet as $key)
+        {
+            $query      ->clear();
+            $sign       = $alldata[$key.'_sign'];
+            $dist       = str_replace("&deg;",".",$alldata[$key."_distance"]);
+            $dist       = str_replace("'","",$dist);
+            
+            $query          ->select($db->quoteName('navamsha_sign'));
+            $query          ->from($db->quoteName('#__navamsha'));
+            $query          ->where($db->quoteName('sign').'='.$db->quote($sign).' AND '.
+                                $db->quote($dist).' BETWEEN '.
+                                $db->quoteName('low_deg').' AND '.
+                                $db->quoteName('up_deg')); 
+            $db             ->setQuery($query);
+            $result         = $db->loadAssoc();
+            $planet         = array($key."_nav_sign"=>$result['navamsha_sign']);
+            $array          = array_merge($array,$planet);
+            
+        }
+       print_r($array);exit;
     }
 }
 ?>
