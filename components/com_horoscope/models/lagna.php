@@ -297,7 +297,7 @@ class HoroscopeModelLagna extends JModelItem
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         $query          -> select($db->quoteName('Sidereal'));
-        $query          -> from($db->quoteName('#__lahiri_1'));
+        $query          -> from($db->quoteName('#__sidereal_1'));
         $query          -> where($db->quoteName('Month').'='.$db->quote($monthName).'AND'.
                                  $db->quoteName('Date')."=".$db->quote($dob[2]));
         $db             ->setQuery($query);
@@ -311,14 +311,14 @@ class HoroscopeModelLagna extends JModelItem
             if(($monthName == "January" || $monthName == "February")&&($leap=="1"))
             {
                 $query      ->select($db->quoteName('corr_time'));
-                $query      ->from($db->quoteName('#__lahiri_2'));
+                $query      ->from($db->quoteName('#__sidereal_2'));
                 $query      ->where($db->quoteName('Year').'='.$db->quote($dob[0]).' AND '.
                                     $db->quote('leap').'='.'leap');
             }
             else
             {
                 $query      ->select($db->quoteName('corr_time'));
-                $query      ->from($db->quoteName('#__lahiri_2'));
+                $query      ->from($db->quoteName('#__sidereal_2'));
                 $query      ->where($db->quoteName('Year').'='.$db->quote($dob[0]));
                 //$query_sideyear			= mysqli_query($con, "SELECT corr_time FROM jv_sidereal_2 WHERE Year='".$dob_split[0]."'");
             }
@@ -345,7 +345,7 @@ class HoroscopeModelLagna extends JModelItem
             $corr_time          = strtotime("00:".$corr_time);
             $sidereal           = $this->getAddSubTime($data['dob'],$sid_time,$corr_time,$sign);           
         }
-        return $sidereal;
+        print_r($sidereal);exit;
         //longitude >= '".($lon)."'
     }
     public function getLmt($data)
