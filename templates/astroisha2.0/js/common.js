@@ -22,7 +22,6 @@ $(document).ready(function()
             active      : false
         });
     });
-
 function toggleMenu(id)
 {
     var menu_id = id;
@@ -89,7 +88,8 @@ $(function()
       minLength: 3,
       select: function(request, response)
       {
-            var lat           = response.item.lat;
+            alert(response.item.tmz);
+            /*var lat           = response.item.lat;
             var lon           = response.item.lon;
             var tmz           = response.item.tmz;
             var lat_dir       = lat.substring(0,1);
@@ -123,7 +123,7 @@ $(function()
                 document.getElementById("lagna_lat_direction").value = "N";
                 document.getElementById("lagna_lat_1").value = lat_deg;
                 document.getElementById("lagna_lat_2").value = lat_min;
-            }
+            }*/
       },
       open: function() {
         $('#lagna_pob').removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
@@ -167,11 +167,6 @@ $(function()
         });
     });
     
-function showSideMenu()
-{
-    $('#sidebar').removeClass('hidden-md hidden-xs');
-    $('#sidebar').toggle(1200);
-}
 $(function() 
 {
    var result       = "";
@@ -204,8 +199,8 @@ $(function()
    
 });
 $(function() {
-$( "#ques_dob" ).datepicker({ yearRange: "1900:2050",changeMonth: true,
-  changeYear: true, dateFormat: "yy/mm/dd"  });
+$( "#ques_dob" ).datepicker({yearRange: "1900:2050",changeMonth: true,
+  changeYear: true, dateFormat: "yy/mm/dd"});
 });
 
 function checkDetails()

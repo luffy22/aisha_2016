@@ -26,7 +26,20 @@ else
         $lat        = $row['latitude'];
         $lon        = $row['longitude'];
         $tmz        = $row['timezone'];
-        $json[]     = array('label'=>$city, 'lat'=>$lat, 'lon'=>$lon,'tmz'=>$tmz);
+        if($tmz == 'no')
+        {
+            $date = new DateTime();
+            $timestamp  =  $date->getTimestamp();
+            $key          = AIzaSyAI5nTdtm8iZay-aXDPVanNVHl1QsyVHdA;
+            $url          = "https://maps.googleapis.com/maps/api/timezone/json?location=".$lat.','.$lon.'&timestamp='.$timestamp.'&key='.$key;
+            $result       = file_get_contents($url);
+            
+            $json[]       = array('label'=>$city, 'lat'=>$lat, 'lon'=>$lon,'tmz'=>$result);
+        }
+        else
+        {
+            $json[]     = array('label'=>$city, 'lat'=>$lat, 'lon'=>$lon,'tmz'=>$tmz);
+        }
     }
 
     $data       = json_encode($json);
