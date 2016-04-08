@@ -18,7 +18,7 @@ class HoroscopeModelLagna extends JModelItem
         $lon            = $user_details['lon'];
         $lat            = $user_details['lat'];
         $tmz            = $user_details['tmz'];
-
+        $dst            = $user_details['dst'];
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         $query2         = $db->getQuery(true);
@@ -33,7 +33,7 @@ class HoroscopeModelLagna extends JModelItem
         $db->execute();
         $gmt            = "12:00:00";
         $gmt            = $this->getGMT($year,$gmt, $tmz);
-      
+
         $tob_str        = strtotime($tob);
         $gmt_str        = strtotime($gmt);
         if($tob_str>$gmt_str)
@@ -44,16 +44,18 @@ class HoroscopeModelLagna extends JModelItem
         {
             $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$tob_str,"-");
         }
-        
+        // fetches the Indian standard time for the given time
+        $ind_time       = $this->getISTTime($dob, $tob, $gmt, $dst);
         /* 
         *  @param fullname, gender, date of birth, time of birth, 
         *  @param longitude, latitude, timezone and
         *  @param timezone in hours:minutes:seconds format
         */ 
+        
         $data  = array(
                         "fname"=>$fname,"gender"=>$gender,"dob"=>$dob,
                         "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
-                        "tmz_hr"=>$gmt,"time_diff"=>$diff
+                        "tmz_hr"=>$gmt,"time_diff"=>$diff,"dst"=>$dst
                     );
         
         if($year <= 2000)
@@ -65,6 +67,23 @@ class HoroscopeModelLagna extends JModelItem
             $this->data     = $this->getRaman2050($data);
         }
         return $this->data;
+    }
+    /*
+     * Get The Indian Standard Time from foreign time
+     * @param dob  Date Of Birth
+     * @param tob Time Of Birth
+     * @param tmz  Default Time Zone of the place
+     * @param dst If any daylight saving time is to be applied
+     */
+    public function getISTTime($dob,$tob,$tmz,$dst)
+    {
+        $dob        = str_replace("/","-",$dob);
+        $dob        = $dob." ".$tob;
+        $date       = new DateTime();
+        $date       ->setTimestamp(strtotime($dob));
+        $dst        = explode(":",$dst);
+        $date       ->sub(new DateInterval('PT'.$dst[0].'H'.$dst[1].'M'.$dst[2].'S'));
+        echo $date->format('Y-m-d_H:i:s');exit;
     }
     /*
      *  get the local time for example India= 17:30:00, London= 12:00:00
@@ -252,6 +271,8 @@ class HoroscopeModelLagna extends JModelItem
             return "Aquarius";break;
             case 11:
             return "Pisces";break;
+            default:
+            return "Aries";break;
         }
     }
     // Calculate Distance travelled in sign
@@ -464,7 +485,7 @@ class HoroscopeModelLagna extends JModelItem
         {
             $dateObject     = $dateObject;
         }
-        echo $dateObject;exit;
+        //echo $dateObject;exit;
         $dat_hr         = explode(":",$dateObject);
         $corr_sid_hr    = $dat_hr[0];
         $corr_sid_min   = $dat_hr[1];
@@ -695,7 +716,6 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function calculate7Planets($data)
     {
-            //print_r($data);
         $dob        = date("Y-m-d", strtotime($data['dob']));
         $year       = date("Y", strtotime($data['dob']));
         $seven_planets     = array();
@@ -797,6 +817,7 @@ class HoroscopeModelLagna extends JModelItem
                 $actual_transit[0]  = $actual_transit[0]+360;
             }
             $value                  = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
+             
             unset($result);
             $value_sign             = $this->calcDetails($value);
             $value_distance         = $this->calcDistance($value);

@@ -19,10 +19,10 @@ class HoroscopeControllerLagna extends HoroscopeController
             $tob    = $_POST['lagna_hr'].":".$_POST['lagna_min'].":".$_POST['lagna_sec'];
             $lon    = $_POST['lon_deg'].":".$_POST['lon_min'].":".$_POST['lon_dir'];
             $lat    = $_POST['lat_deg'].":".$_POST['lat_min'].":".$_POST['lat_dir'];$timezone   = $_POST['lagna_timezone'];
-            
+            $dst    = $_POST['lagna_dst'];
             $user_details   = array(
                                     'fname'=>$fname,'gender'=>$gender,'dob'=>$dob,"pob"=>$pob,
-                                    'tob'=>$tob,'lon'=>$lon,'lat'=>$lat,'tmz'=>$timezone
+                                    'tob'=>$tob,'lon'=>$lon,'lat'=>$lat,'tmz'=>$timezone,'dst'=>$dst
                                     );
             $model          = $this->getModel('lagna');  // Add the array to model
             $data           = $model->getLagna($user_details);
@@ -48,7 +48,7 @@ class HoroscopeControllerLagna extends HoroscopeController
                                     'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
                                     'pob'=>$decode[4],'tob'=>$decode[3],
                                     'lat'=>$decode[5],'lon'=>$decode[6],
-                                    'tmz'=>$decode[7]);
+                                    'tmz'=>$decode[7], 'dst'=>$decode[8]);
         $model          = $this->getModel('lagna');  // Add the array to model
         $data           = $model->getAscendant($user_details);
         $view           = $this->getView('lagna','html');
@@ -62,7 +62,7 @@ class HoroscopeControllerLagna extends HoroscopeController
                                     'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
                                     'pob'=>$decode[4],'tob'=>$decode[3],
                                     'lat'=>$decode[5],'lon'=>$decode[6],
-                                    'tmz'=>$decode[7]
+                                    'tmz'=>$decode[7], 'dst'=>$decode[8]
                                 );
         $model          = $this->getModel('lagna');  // Add the array to model
         $data           = $model->getLagna($user_details);
@@ -78,7 +78,7 @@ class HoroscopeControllerLagna extends HoroscopeController
                                     'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
                                     'pob'=>$decode[4],'tob'=>$decode[3],
                                     'lat'=>$decode[5],'lon'=>$decode[6],
-                                    'tmz'=>$decode[7]
+                                    'tmz'=>$decode[7], 'dst'=>$decode[8]
                                 );
         $model          = $this->getModel('lagna');  // Add the array to model
         $data           = $model->getMoon($user_details);
@@ -94,7 +94,7 @@ class HoroscopeControllerLagna extends HoroscopeController
                                     'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
                                     'pob'=>$decode[4],'tob'=>$decode[3],
                                     'lat'=>$decode[5],'lon'=>$decode[6],
-                                    'tmz'=>$decode[7]
+                                    'tmz'=>$decode[7], 'dst'=>$decode[8]
                                 );
         $model          = $this->getModel('lagna');  // Add the array to model
         $data           = $model->getNakshatra($user_details);
@@ -110,7 +110,7 @@ class HoroscopeControllerLagna extends HoroscopeController
                                     'fname'=>$decode[0],'gender'=>$decode[1],'dob'=>$decode[2],
                                     'pob'=>$decode[4],'tob'=>$decode[3],
                                     'lat'=>$decode[5],'lon'=>$decode[6],
-                                    'tmz'=>$decode[7]
+                                    'tmz'=>$decode[7], 'dst'=>$decode[8]
                                 );
         $model          = $this->getModel('lagna');  // Add the array to model
         $data           = $model->getNavamsha($user_details);

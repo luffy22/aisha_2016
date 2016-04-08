@@ -25,7 +25,7 @@ defined('_JEXEC') or die();
     </div>
     <div class="form-group" id="lagna_grp_3">
         <label for="dob" class="control-label">Date Of Birth(Year/Month/Date Format):</label>
-        <input type="text" name="dob" id="datepicker" class="form-control" placeholder="Date Of Birth in Year/Month/Day Format" />
+        <input type="text" name="dob" id="datepicker" class="form-control" placeholder="Example: 1984/03/25" />
         <span class="error1" id="lagna_err_3">Please insert date in yyyy/mm/dd format.</span>
     </div>
     <div class="form-group">
@@ -118,6 +118,16 @@ defined('_JEXEC') or die();
     <div class="form-group">
         <label for="latitude" class="control-label">Timezone: <strong>GMT</strong></label>
         <input type="text" id="lagna_timezone" class="form-text" name="lagna_timezone"  />
+    </div>
+    <div class="form-group">
+        <label for="lagna_dst" class="control-label">DST/Summer War:</label>
+        <select class="select2" name="lagna_dst" id="lagna_dst">
+            <option value="00:00:00">None</option>
+            <option value="01:00:00">One Hour</option>
+            <option value="02:00:00">Two Hour</option>
+            <option value="03:00:00">Three Hour</option>
+        </select>
+        <a href="http://www.timeanddate.com/time/dst/" title="Click on link to understand about Daylight Saving Timings" target="_blank">What is DST?</a>
     </div>
     <div class="form-group">
             <button type="submit" class="btn btn-primary" name="lagnasubmit" onclick="javascript:getLagna();return false;">Get Horoscope</button>

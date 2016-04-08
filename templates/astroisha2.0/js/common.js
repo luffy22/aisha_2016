@@ -88,8 +88,7 @@ $(function()
       minLength: 3,
       select: function(request, response)
       {
-            alert(response.item.tmz);
-            /*var lat           = response.item.lat;
+            var lat           = response.item.lat;
             var lon           = response.item.lon;
             var tmz           = response.item.tmz;
             var lat_dir       = lat.substring(0,1);
@@ -123,7 +122,7 @@ $(function()
                 document.getElementById("lagna_lat_direction").value = "N";
                 document.getElementById("lagna_lat_1").value = lat_deg;
                 document.getElementById("lagna_lat_2").value = lat_min;
-            }*/
+            }
       },
       open: function() {
         $('#lagna_pob').removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
