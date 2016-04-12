@@ -3,7 +3,7 @@ defined('_JEXEC') or die();
 //print_r($this->data);exit;
 $array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
               $this->data['tob'],$this->data['pob'],$this->data['lat'],
-              $this->data['lon'],$this->data['tmz']);
+              $this->data['lon'],$this->data['tmz'],$this->data['dst']);
 $array = json_encode($array); 
 ?>
 <nav class="navbar navbar-inverse">

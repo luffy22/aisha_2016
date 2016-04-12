@@ -3,7 +3,7 @@ defined('_JEXEC') or die();
 //print_r($this->data);exit;
 $array = array($this->data['fname'],$this->data['gender'],str_replace("\/","-",$this->data['dob']),
                                   $this->data['tob'],$this->data['pob'],$this->data['lat'],
-                                  $this->data['lon'],$this->data['tmz']);
+                                  $this->data['lon'],$this->data['tmz'], $this->data['dst']);
 $array = json_encode($array);
 ?>
 
@@ -63,6 +63,13 @@ $array = json_encode($array);
     <tr>
         <th>Time Zone</th>
         <td>GMT<?php echo $this->data['tmz']; ?></td>
+    </tr>
+    <tr>
+        <th>Daylight Savings</th>
+        <td><?php if($this->data['dst'] == '00:00:00')
+                    { echo "None"; }
+                  else
+                  { echo $this->data['dst']; } ?></td>
     </tr>
 </table>
 <div class="spacer"></div>

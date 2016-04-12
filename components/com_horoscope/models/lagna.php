@@ -33,7 +33,7 @@ class HoroscopeModelLagna extends JModelItem
         $result          = $db->query();
         
         // fetches the Indian standard time and Indian Date for the given time and birth
-        $ind_det       = explode("_",$this->getISTTime($dob, $tob, $tmz));
+        $ind_det       = explode("_",$this->getISTTime($dob, $tob, $tmz, $dst));
         $ind_date       = $ind_det[0];
         $ind_time       = $ind_det[1];
         $ind_str        = strtotime($ind_time);
@@ -47,15 +47,20 @@ class HoroscopeModelLagna extends JModelItem
             $gmt        = '00:00:00';
             $gmt_str    = strtotime($gmt);
         }
-        
+        $datetime1      = date_create(str_replace("/","-",$dob));
+        $datetime2      = date_create($ind_date);
+        $interval = date_diff($datetime1, $datetime2);
+        $ind_sign       = $interval->format('%R:%a');
         if($ind_str>$gmt_str)
         {
             $diff       = "+".$this->getAddSubTime($dob,$ind_str,$gmt_str,"-");
+
         }
         else if($ind_str<$gmt_str)
         {
             $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$ind_str,"-");
         }
+
         /* 
         *  @param fullname, gender, date of birth, time of birth, 
         *  @param longitude, latitude, timezone and
@@ -67,7 +72,7 @@ class HoroscopeModelLagna extends JModelItem
                         "tmz_hr"=>$gmt,"time_diff"=>$diff,"dst"=>$dst, 
                         "ind_date"=>$ind_date,"ind_time"=>$ind_time
                     );
-        print_r($data);exit;
+        //print_r($data);exit;
         if($year <= 2000)
         {
             $this->data     = $this->getBudh($data);
@@ -85,8 +90,10 @@ class HoroscopeModelLagna extends JModelItem
      * @param tmz  Default Time Zone of the place
      * @param dst If any daylight saving time is to be applied
      */
-    public function getISTTime($dob,$tob,$tmz)
+    public function getISTTime($dob,$tob,$tmz, $dst)
     {
+        //echo $dob." : ".$tob." : ".$tmz." : ".$dst;exit;
+        $dst        = explode(":", $dst);
         $tmz_sign   = substr($tmz,0 ,1);
         $tmz_val    = substr($tmz.":00",1);
         $tmz_str    = strtotime($tmz_val);
@@ -115,7 +122,7 @@ class HoroscopeModelLagna extends JModelItem
         else if($tmz_sign == '+' && $tmz !== $ist && $ist_str < $tmz_str)
         {
             // timezeon is positive, timezone is not equal to indian time and indian time is less then timezone time
-            if($tmz[1] >= $ist[1])
+            if($tmz_val[1] >= $ist_val[1])
             {
                 $min    = $tmz_val[1]   - $ist_val[1];
                 $hr     = $tmz_val[0]   - $ist_val[0];
@@ -126,11 +133,12 @@ class HoroscopeModelLagna extends JModelItem
                 $hr     = ($tmz_val[0] -1 ) - $ist_val[0];
             }
             $date       ->sub(new DateInterval('PT'.$hr.'H'.$min.'M0S'));
+
         }
         else if($tmz_sign == '+' && $tmz !== $ist && $ist_str > $tmz_str)
         {
             // timezone is positive, timezone is not equal to indian time and indian time is greater then timezone time
-            if($ist[1] >= $tmz[1])
+            if($ist_val[1] >= $tmz_val[1])
             {
                 $min    = $ist_val[1]   - $tmz_val[1];
                 $hr     = $ist_val[0]   - $tmz_val[0];
@@ -146,10 +154,9 @@ class HoroscopeModelLagna extends JModelItem
         {
             $date       ->sub(new DateInterval('PT0H0M0S'));
         }
+        $date           ->sub(new DateInterval('PT'.$dst[0].'H'.$dst[1].'M'.$dst[2].'S'));
         return $date->format('Y-m-d_H:i:s');
-        
     }
-    
     // function checks seconds, minutes and degrees 
     // seconds and mins less then 60 and adding to degrees
     public function convertDegMinSec($deg,$min,$sec)
@@ -244,6 +251,7 @@ class HoroscopeModelLagna extends JModelItem
     }
     public function getAddSubTime($date,$val1,$val2,$sign)
     {
+
         $val2           = explode(":",date('G:i:s',$val2));
         $date           = new DateTime($date);
         $date           ->setTimestamp($val1);
@@ -326,7 +334,7 @@ class HoroscopeModelLagna extends JModelItem
                                 $planet."_nakshatra_lord"=>$result['nakshatra_lord']);
         return $data;
     }
-    // Method to get the sidereal Time
+     // Method to get the sidereal Time
     public function getSiderealTime($data)
     {
         $lon            = explode(":", $data['lon']);
@@ -626,11 +634,11 @@ class HoroscopeModelLagna extends JModelItem
     protected function getMoonData($data)
     {
         //print_r($data);exit;
-        $dob        = explode("/",$data['dob']);
+        $dob        = explode("-",$data['ind_date']);
         $year       = (int)$dob[0];
         $month      = (int)$dob[1];
         $day        = (int)$dob[2];
-        
+
         $db         = JFactory::getDbo();
         $query      = $db->getQuery(true);
         $query      ->select($db->quoteName(array('yob','moon')));
@@ -664,7 +672,7 @@ class HoroscopeModelLagna extends JModelItem
         //echo $down_yob.":".$up_yob;exit;
         $datetime1          = new DateTime($down_yob);
         $datetime2          = new DateTime($up_yob);
-        $datetime3          = new DateTime($data['dob']);
+        $datetime3          = new DateTime($data['ind_date']);
         $interval           = $datetime1->diff($datetime2);
         $interval2          = $datetime1->diff($datetime3);
         $intval             = (int)$interval->format('%a');
@@ -738,8 +746,10 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function calculate7Planets($data)
     {
-        $dob        = date("Y-m-d", strtotime($data['dob']));
-        $year       = date("Y", strtotime($data['dob']));
+        //print_r($data);exit;
+        $dob        = $data['ind_date'];
+        $year       = date("Y", strtotime($data['ind_date']));
+
         $seven_planets     = array();
         $planets    = array("full_year","surya","mangal","guru","shukra","shani","rahu");
         $count          = count($planets);
@@ -768,14 +778,13 @@ class HoroscopeModelLagna extends JModelItem
         //echo $up_deg.":".$down_deg;exit;
         $datetime1          = new DateTime($down_year);          // lower value of year
         $datetime2          = new DateTime($up_year);           // upper value of year
-        $datetime3          = new DateTime($data['dob']);       // exact dob
+        $datetime3          = new DateTime($data['ind_date']);       // exact dob
         $interval           = $datetime1->diff($datetime2);     // get difference
         $intval             = (int)$interval->format('%a');     // format in int example 2
         $interval1          = $datetime1->diff($datetime3);
         $intval2            = (int)$interval1->format('%a'); 
         for($i=1;$i<$count;$i++)
         {
-
             $planet         = $planets[$i];         // planet eg. sun, moon etc
             $down_deg       = $result1[$planet];        // lower value of planet
             $up_deg         = $result2[$planet];        // upper value of planet
@@ -868,10 +877,10 @@ class HoroscopeModelLagna extends JModelItem
         $lagna              = $this->calculatelagna($data);
         $moon               = $this->getMoonData($data);
         $planets            = $this->calculate7Planets($data);
-        $dob        = date("Y-m-d", strtotime($data['dob']));
-        $year       = date("Y", strtotime($data['dob']));
-        $rahu       = explode(":",$planets['rahu']);
-        $ketu       = $rahu[0]+180;
+        $dob                = $data['ind_date'];
+        $year               = date("Y", strtotime($data['ind_date']));
+        $rahu               = explode(":",$planets['rahu']);
+        $ketu               = $rahu[0]+180;
         if($ketu >= 360)
         {
             $ketu   = $ketu-360;
@@ -909,7 +918,7 @@ class HoroscopeModelLagna extends JModelItem
         $up_budh      = $result['budh'];
         $up_budh5     = $result['budh_5'];
         //echo $down_year.":".$up_year;exit;
-        $datetime1          = new DateTime($data['dob']);          // lower value of year
+        $datetime1          = new DateTime($data['ind_date']);          // lower value of year
         $datetime2          = new DateTime($down_year);           // upper value of year
         $datetime3          = new DateTime($up_year);       // exact dob
         $interval1          = $datetime1->diff($datetime2);     // get difference
@@ -1015,9 +1024,8 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function getRaman2050($data)
     {
-        
         $lagna          = $this->calculatelagna($data);
-        $dob            = $data['dob'];
+        $dob            = $data['ind_date'];
         $tob            = strtotime($data['tob']);
         $tob            = explode(":",date('G:i:s', $tob));
 
@@ -1152,7 +1160,7 @@ class HoroscopeModelLagna extends JModelItem
     }
     protected function getRaman2050_Moon($data)
     {
-        $dob            = $data['dob'];
+        $dob            = $data['ind_date'];
         $tob            = strtotime($data['tob']);
         $tob            = explode(":",date('G:i:s', $tob));
         $count          = count($planets);
@@ -1373,32 +1381,48 @@ class HoroscopeModelLagna extends JModelItem
         $data           = array_merge($details,$lagna,$result);
         return $data;
     }
-    public function getMoon($details)
+    public function getMoon($user_details)
     {
-        $fname          = $details['fname'];
-        $gender         = $details['gender'];
-        $dob            = $details['dob'];
+        $fname          = $user_details['fname'];
+        $gender         = $user_details['gender'];
+        $dob            = $user_details['dob'];
         $year           = date("Y",strtotime($dob));
-        
-        $tob            = $details['tob'];
-        $pob            = $details['pob'];
-        $lon            = $details['lon'];
-        $lat            = $details['lat'];
-        $tmz            = $details['tmz'];
-        $gmt            = "12:00:00";
-        $gmt            = $this->getGMT($year,$gmt, $tmz);
-      
-        $tob_str        = strtotime($tob);
-        $gmt_str        = strtotime($gmt);
-        if($tob_str>$gmt_str)
+        $tob            = $user_details['tob'];
+        $pob            = $user_details['pob'];
+        $lon            = $user_details['lon'];
+        $lat            = $user_details['lat'];
+        $tmz            = $user_details['tmz'];
+        $dst            = $user_details['dst'];
+       
+        // fetches the Indian standard time and Indian Date for the given time and birth
+        $ind_det       = explode("_",$this->getISTTime($dob, $tob, $tmz, $dst));
+        $ind_date       = $ind_det[0];
+        $ind_time       = $ind_det[1];
+        $ind_str        = strtotime($ind_time);
+        if($year <= 2000)
         {
-            $diff       = "+".$this->getAddSubTime($dob,$tob_str,$gmt_str,"-");
+            $gmt        = '17:30:00';
+            $gmt_str    = strtotime($gmt);
         }
-        else if($gmt_str>$tob_str)
+        else
         {
-            $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$tob_str,"-");
+            $gmt        = '00:00:00';
+            $gmt_str    = strtotime($gmt);
         }
-        
+        $datetime1      = date_create(str_replace("/","-",$dob));
+        $datetime2      = date_create($ind_date);
+        $interval = date_diff($datetime1, $datetime2);
+        $ind_sign       = $interval->format('%R:%a');
+        if($ind_str>$gmt_str)
+        {
+            $diff       = "+".$this->getAddSubTime($dob,$ind_str,$gmt_str,"-");
+
+        }
+        else if($ind_str<$gmt_str)
+        {
+            $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$ind_str,"-");
+        }
+
         /* 
         *  @param fullname, gender, date of birth, time of birth, 
         *  @param longitude, latitude, timezone and
@@ -1407,7 +1431,8 @@ class HoroscopeModelLagna extends JModelItem
         $data  = array(
                         "fname"=>$fname,"gender"=>$gender,"dob"=>$dob,
                         "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
-                        "tmz_hr"=>$gmt,"time_diff"=>$diff
+                        "tmz_hr"=>$gmt,"time_diff"=>$diff,"dst"=>$dst, 
+                        "ind_date"=>$ind_date,"ind_time"=>$ind_time
                     );
         
         if($year<=2000)
@@ -1426,34 +1451,51 @@ class HoroscopeModelLagna extends JModelItem
         $query          ->where($db->quoteName('title').'LIKE'.$db->quote('%'.$sign.'%')); 
         $db             ->setQuery($query);
         $result         = $db->loadAssoc();
-        $data           = array_merge($details,$moon,$result);
+        $data           = array_merge($user_details,$moon,$result);
         return $data;
     }
-    public function getNakshatra($details)
+    public function getNakshatra($user_details)
     {
-        $fname          = $details['fname'];
-        $gender         = $details['gender'];
-        $dob            = $details['dob'];
+        $fname          = $user_details['fname'];
+        $gender         = $user_details['gender'];
+        $dob            = $user_details['dob'];
         $year           = date("Y",strtotime($dob));
-        $tob            = $details['tob'];
-        $pob            = $details['pob'];
-        $lon            = $details['lon'];
-        $lat            = $details['lat'];
-        $tmz            = $details['tmz'];
-        $gmt            = "12:00:00";
-        $gmt            = $this->getGMT($year,$gmt, $tmz);
-      
-        $tob_str        = strtotime($tob);
-        $gmt_str        = strtotime($gmt);
-        if($tob_str>$gmt_str)
+        $tob            = $user_details['tob'];
+        $pob            = $user_details['pob'];
+        $lon            = $user_details['lon'];
+        $lat            = $user_details['lat'];
+        $tmz            = $user_details['tmz'];
+        $dst            = $user_details['dst'];
+       
+        // fetches the Indian standard time and Indian Date for the given time and birth
+        $ind_det       = explode("_",$this->getISTTime($dob, $tob, $tmz, $dst));
+        $ind_date       = $ind_det[0];
+        $ind_time       = $ind_det[1];
+        $ind_str        = strtotime($ind_time);
+        if($year <= 2000)
         {
-            $diff       = "+".$this->getAddSubTime($dob,$tob_str,$gmt_str,"-");
+            $gmt        = '17:30:00';
+            $gmt_str    = strtotime($gmt);
         }
-        else if($gmt_str>$tob_str)
+        else
         {
-            $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$tob_str,"-");
+            $gmt        = '00:00:00';
+            $gmt_str    = strtotime($gmt);
         }
-        
+        $datetime1      = date_create(str_replace("/","-",$dob));
+        $datetime2      = date_create($ind_date);
+        $interval = date_diff($datetime1, $datetime2);
+        $ind_sign       = $interval->format('%R:%a');
+        if($ind_str>$gmt_str)
+        {
+            $diff       = "+".$this->getAddSubTime($dob,$ind_str,$gmt_str,"-");
+
+        }
+        else if($ind_str<$gmt_str)
+        {
+            $diff       = "-".$this->getAddSubTime($dob,$gmt_str,$ind_str,"-");
+        }
+
         /* 
         *  @param fullname, gender, date of birth, time of birth, 
         *  @param longitude, latitude, timezone and
@@ -1462,7 +1504,8 @@ class HoroscopeModelLagna extends JModelItem
         $data  = array(
                         "fname"=>$fname,"gender"=>$gender,"dob"=>$dob,
                         "tob"=>$tob,"pob"=>$pob,"lon"=>$lon,"lat"=>$lat,"tmz"=>$tmz,
-                        "tmz_hr"=>$gmt,"time_diff"=>$diff
+                        "tmz_hr"=>$gmt,"time_diff"=>$diff,"dst"=>$dst, 
+                        "ind_date"=>$ind_date,"ind_time"=>$ind_time
                     );
         
         if($year<=2000)
@@ -1486,7 +1529,7 @@ class HoroscopeModelLagna extends JModelItem
         $db             ->setQuery($query);
         $result         = $db->loadAssoc();
         $nakshatra      = array("nakshatra"=>$nakshatra);
-        $data           = array_merge($details,$moon, $result);
+        $data           = array_merge($user_details,$moon, $result);
         return $data;
     }
     public function getNavamsha($data)
