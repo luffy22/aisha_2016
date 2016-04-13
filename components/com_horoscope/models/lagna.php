@@ -11,7 +11,7 @@ class HoroscopeModelLagna extends JModelItem
         // Assigning the variables
         $fname          = $user_details['fname'];
         $gender         = $user_details['gender'];
-        $dob            = $user_details['dob'];
+        $dob            = str_replace("/","-",$user_details['dob']);
         $year           = date("Y",strtotime($dob));
         $tob            = $user_details['tob'];
         $pob            = $user_details['pob'];
@@ -337,8 +337,9 @@ class HoroscopeModelLagna extends JModelItem
      // Method to get the sidereal Time
     public function getSiderealTime($data)
     {
+        //print_r($data);exit;
         $lon            = explode(":", $data['lon']);
-        $dob            = explode("/",$data['dob']);
+        $dob            = explode("-",$data['dob']);
         $monthNum       = $dob[1];  // The month in number format (ex. 06 for June)
         $year           = $dob[0];
         $monthName      = date("F", mktime(0, 0, 0, $monthNum, 10));		// month in word format (ex. June/July/August)
@@ -400,12 +401,12 @@ class HoroscopeModelLagna extends JModelItem
     public function getLmt($data)
     {
         //print_r($data);exit;
+        $dst        = explode(":",$data['dst']);
         $lon        = explode(":", $data['lon']);
         $lat        = explode(":", $data['lat']);
         $gmt        = substr($data['tmz'],1);
         $dob        = $data['dob'];
         $tob        = strtotime($data['tob']);
-        
         $gmt        = explode(":",$gmt);
        
         $gmt_meridian       = $gmt[0] + number_format(($gmt[1]/60),2);
@@ -484,6 +485,7 @@ class HoroscopeModelLagna extends JModelItem
         $lat            = explode(":",$data['lat']);
         $dir            = $lat[2];
         $lat            = $lat[0].'.'.$lat[1];
+        $dst            = strtotime($data['dst']);
         //echo $this->getSiderealTime($data)."<br/>";
         //echo $this->getLmt($data);exit;
         $sidtime        = strtotime($this->getSiderealTime($data));
@@ -504,6 +506,8 @@ class HoroscopeModelLagna extends JModelItem
         {
             $dateObject = $this->getAddSubTime($dob,$sidtime,$lmt,"-");
         }
+        //echo $dateObject;exit;
+        $dateObject     = $this->getAddSubTime($dob, strtotime($dateObject), $dst, "-");
         //echo $dateObject;exit;
         if($dir == "S")
         {
@@ -1535,6 +1539,10 @@ class HoroscopeModelLagna extends JModelItem
     public function getNavamsha($data)
     {
         $alldata        = $this->getLagna($data);
+        $data           = array("fname"=>$alldata['fname'],"gender"=>$alldata['gender'],
+                                "dob"=>$alldata['dob'],"tob"=>$alldata['tob'],
+                                "pob"=>$alldata['pob'],'lon'=>$alldata['lon'],
+                                "lat"=>$alldata['lat'],'tmz'=>$alldata['tmz'],'dst'=>$alldata['dst']);
         $planet         = array("lagna","moon","surya","mangal","budh",
                                 "guru","shukra","shani","rahu","ketu");
         $array          = array();
@@ -1544,9 +1552,13 @@ class HoroscopeModelLagna extends JModelItem
         {
             $query      ->clear();
             $sign       = $alldata[$key.'_sign'];
+            $distance   = $alldata[$key.'_distance'];
+            $sign_lord  = $alldata[$key.'_sign_lord'];
+            $nakshatra  = $alldata[$key.'_nakshatra'];
+            $nakshatra_lord = $alldata[$key.'_nakshatra_lord'];
             $dist       = str_replace("&deg;",".",$alldata[$key."_distance"]);
             $dist       = str_replace("'","",$dist);
-            
+
             $query          ->select($db->quoteName('navamsha_sign'));
             $query          ->from($db->quoteName('#__navamsha'));
             $query          ->where($db->quoteName('sign').'='.$db->quote($sign).' AND '.
@@ -1557,10 +1569,10 @@ class HoroscopeModelLagna extends JModelItem
             $result         = $db->loadAssoc();
             $planet         = array($key."_nav_sign"=>$result['navamsha_sign']);
             $array          = array_merge($array,$planet);
-            
+
         }
-      print_r($array);exit;
-    }
-    
+       $data                = array_merge($data, $array);
+       return $data;
+    } 
 }
 ?>

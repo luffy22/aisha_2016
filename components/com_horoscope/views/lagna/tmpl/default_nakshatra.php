@@ -15,7 +15,7 @@ $array = json_encode($array);
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Horoscope</a>
+                <a class="navbar-brand" href="<?php echo JUri::base() ?>calculate-lagna" title="Navigate to Horoscope Form">Horoscope</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -25,7 +25,7 @@ $array = json_encode($array);
           <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getascendant'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Ascendant" /></form></li>
           <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getmoon'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Moon" /></form></li>
           <li class="active"><a href="#">Nakshatra</a></li>
-         <li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.getnavamsha'); ?>"><input type="hidden" name="data" value="<?php echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Navamsha" /></form></li>
+         <!--<li><form method="post"enctype="application/x-www-form-urlencoded" action="<?php //echo JRoute::_('index.php?option=com_horoscope&task=lagna.getnavamsha'); ?>"><input type="hidden" name="data" value="<?php //echo htmlspecialchars($array); ?>" /><input type="submit" class="navbar-brand navbar-inverse" value="Navamsha" /></form></li>-->
         </ul>
     </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
