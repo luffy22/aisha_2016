@@ -133,7 +133,6 @@ class HoroscopeModelLagna extends JModelItem
                 $hr     = ($tmz_val[0] -1 ) - $ist_val[0];
             }
             $date       ->sub(new DateInterval('PT'.$hr.'H'.$min.'M0S'));
-
         }
         else if($tmz_sign == '+' && $tmz !== $ist && $ist_str > $tmz_str)
         {
@@ -308,6 +307,7 @@ class HoroscopeModelLagna extends JModelItem
     // Calculate Distance travelled in sign
     public function calcDistance($planet)
     {
+        
         $details        = explode(":", $planet);
         $sign_num       = intval($details[0]%30);
         return $sign_num."&deg;".$details[1]."'";
@@ -334,7 +334,7 @@ class HoroscopeModelLagna extends JModelItem
                                 $planet."_nakshatra_lord"=>$result['nakshatra_lord']);
         return $data;
     }
-     // Method to get the sidereal Time
+    // Method to get the sidereal Time
     public function getSiderealTime($data)
     {
         //print_r($data);exit;
@@ -401,12 +401,12 @@ class HoroscopeModelLagna extends JModelItem
     public function getLmt($data)
     {
         //print_r($data);exit;
-        $dst        = explode(":",$data['dst']);
         $lon        = explode(":", $data['lon']);
         $lat        = explode(":", $data['lat']);
         $gmt        = substr($data['tmz'],1);
         $dob        = $data['dob'];
         $tob        = strtotime($data['tob']);
+        
         $gmt        = explode(":",$gmt);
        
         $gmt_meridian       = $gmt[0] + number_format(($gmt[1]/60),2);
@@ -437,7 +437,7 @@ class HoroscopeModelLagna extends JModelItem
         $dateObject		->setTimeStamp($date);		// time of birth for user
         $tob_format		= $dateObject->format('g:i a');
         $noon_time          = strtotime('12:00:00');
-        if(strpos($tob_format, am))
+        if(strpos($tob_format, "am"))
         {
             // if lmt is am then subtract that time from 12 at noon
             $date           = $this->getAddSubTime($dob,$noon_time,$date,"-");
@@ -481,7 +481,7 @@ class HoroscopeModelLagna extends JModelItem
     }
     public function calculatelagna($data)
     {
-        //print_r($data);exit;
+        //print_r($data);exit;    
         $lat            = explode(":",$data['lat']);
         $dir            = $lat[2];
         $lat            = $lat[0].'.'.$lat[1];
@@ -492,7 +492,7 @@ class HoroscopeModelLagna extends JModelItem
        	$lmt            = strtotime($this->getLmt($data));
         $dob            = $data['dob'];
         
-        $doy            = explode("/",$dob);
+        $doy            = explode("-",$dob);
         $tob            = strtotime($data['tob']);
         
         $date           = new DateTime($dob);
@@ -506,7 +506,6 @@ class HoroscopeModelLagna extends JModelItem
         {
             $dateObject = $this->getAddSubTime($dob,$sidtime,$lmt,"-");
         }
-        //echo $dateObject;exit;
         $dateObject     = $this->getAddSubTime($dob, strtotime($dateObject), $dst, "-");
         //echo $dateObject;exit;
         if($dir == "S")
@@ -638,41 +637,32 @@ class HoroscopeModelLagna extends JModelItem
     protected function getMoonData($data)
     {
         //print_r($data);exit;
-        $dob        = explode("-",$data['ind_date']);
-        $year       = (int)$dob[0];
-        $month      = (int)$dob[1];
-        $day        = (int)$dob[2];
-
+        $dob        = $data['ind_date'];
+        $year       = date("Y", strtotime($dob));
         $db         = JFactory::getDbo();
-        $query      = $db->getQuery(true);
-        $query      ->select($db->quoteName(array('yob','moon')));
-        $query      ->from($db->quoteName('#__raman_moon2000'));
-        $query      ->where($db->quoteName('year').'='.$db->quote($year).
-                       'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                       $db->quoteName('day').'<='.$db->quote($day));
-        $query      ->order($db->quoteName('day').' desc');
-        $query      ->setLimit('1');
-        $db->setQuery($query);
-        $row            = $db->loadAssoc();
-
+        $db             = JFactory::getDbo();
+        $query          = $db->getQuery(true);
+        $query          ->select($db->quoteName(array('yob','moon')));
+        $query          ->from($db->quoteName('#__raman_moon2000'));
+        $query          ->where($db->quoteName('yob').'<='.$db->quote($dob));
+        $query          ->order($db->quoteName('yob').' desc');
+        $query          ->setLimit('1');
+        $db             ->setQuery($query);
         $row            = $db->loadAssoc();
         $down_yob       = $row['yob'];
-
+        
         $down_moon      = explode(".",$row['moon']);
         //echo $down_moon[0].":".$down_moon[1];exit;
         $query          ->clear();
         $query          ->select($db->quoteName(array('yob','moon')));
         $query          ->from($db->quoteName('#__raman_moon2000'));
-        $query          ->where($db->quoteName('year').'='.$db->quote($year).
-                            'AND'.$db->quoteName('month').'='.$db->quote($month).'AND'.
-                            $db->quoteName('day').'>'.$db->quote($day));
-        $query          ->order($db->quoteName('day').' asc');
+        $query          ->where($db->quoteName('yob').'>'.$db->quote($dob));
+        $query          ->order($db->quoteName('yob').' asc');
         $query          ->setLimit('1');
-        $db->setQuery($query);
-        flush($row);
-        $row                = $db->loadAssoc();
-        $up_yob             = $row['yob'];
-        $up_moon            = explode(".",$row['moon']);
+        $db             ->setQuery($query);  
+        $row1                = $db->loadAssoc();
+        $up_yob             = $row1['yob'];
+        $up_moon            = explode(".",$row1['moon']);
         //echo $down_yob.":".$up_yob;exit;
         $datetime1          = new DateTime($down_yob);
         $datetime2          = new DateTime($up_yob);
@@ -729,17 +719,19 @@ class HoroscopeModelLagna extends JModelItem
         $query                  ->clear();
         $query                  ->select($db->quoteName('ayanamsha'))
                                 ->from($db->quoteName('#__lahiri_ayanamsha'))
-                                ->where($db->quoteName('year').'<='.$db->quote($dob[0]))
+                                ->where($db->quoteName('year').'<='.$db->quote($year))
                                 ->order($db->quoteName('year').' desc')
                                 ->setLimit('1');
         $db->setQuery($query);
         $result                 = $db->loadAssoc();
+       
         $ayanamsha              = explode(":",$result['ayanamsha']);
+     
         if($actual_transit[0]<$ayanamsha[0])
         {
             $actual_transit[0]  = $actual_transit[0]+360;
         }
-        $moon                   = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
+        $moon               = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], 0);
         $moon_sign          = $this->calcDetails($moon);
         $moon_distance      = $this->calcDistance($moon);
         $moon_details       = $this->getPlanetaryDetails("moon",$moon_sign,$moon_distance);
@@ -932,33 +924,34 @@ class HoroscopeModelLagna extends JModelItem
         //echo $intval1.":".$intval2;exit;
         if($intval1 >$intval2 && $down_budh5 !== "0")
         {
-            $down_val           = $down_budh5;
-            $up_val             = $up_budh;
+            $down_deg           = $down_budh5;
+            $up_deg             = $up_budh;
             $intval             = 5;
         }
         else if($intval1 >$intval2 && $down_budh5 !== "0")
         {
-            $down_val           = $down_budh;
-            $up_val             = $down_budh5;
+            $down_deg           = $down_budh;
+            $up_deg             = $down_budh5;
             $intval             = 5;
         }
         else
         {
-            $down_val           = $down_budh;
-            $up_val             = $up_budh;
+            $down_deg           = $down_budh;
+            $up_deg             = $up_budh;
             $intval             = 10;
         }
-        if($up_val<$down_val && intval($up_val-$down_val)>300)
+        //echo $up_val." : ".$down_val;exit;
+        if($up_deg<$down_deg && intval($up_deg-$down_deg)>300)
         {
-            $up_val         = $up_val+360.00;
+            $up_val         = $up_deg+360.00;
             $up_val         = explode(".",$up_val);
-            $down_val       = explode(".",$down_val);
+            $down_val       = explode(".",$down_deg);
             $diff           = explode(":",$this->subDegMinSec($up_val[0],$up_val[1],0,$down_val[0],$down_val[1],0));
         }
         else
         {
-            $up_val         = explode(".",$up_val);
-            $down_val       = explode(".",$down_val);
+            $up_val         = explode(".",$up_deg);
+            $down_val       = explode(".",$down_deg);
             $diff           = explode(":",$this->subDegMinSec($up_val[0],$up_val[1],0,$down_val[0],$down_val[1],0));
         }
         $day_transit        = explode(":",$this->divideDegMinSec($diff[0], $diff[1], $diff[2], $intval));       // one day transit
@@ -1009,6 +1002,7 @@ class HoroscopeModelLagna extends JModelItem
         }
         $value                  = $this->subDegMinSec($actual_transit[0], $actual_transit[1], $actual_transit[2], $ayanamsha[0], $ayanamsha[1], $ayanamsha[2]);
         unset($result);
+        
         if($up_deg<$down_deg && !(intval($up_deg-$down_deg)>300))
         {
             $budh                   = $value.":r";
@@ -1033,7 +1027,7 @@ class HoroscopeModelLagna extends JModelItem
         $tob            = strtotime($data['tob']);
         $tob            = explode(":",date('G:i:s', $tob));
 
-        $planets        = array("full_year","moon","surya","mangal","budh","guru","shukra","shani","rahu");
+        $planets        = array("full_year","moon","surya","budh","shukra","mangal","guru","shani","rahu");
         $count          = count($planets);
         $db             = JFactory::getDbo();
         $query          = $db->getQuery(true);
@@ -1121,7 +1115,9 @@ class HoroscopeModelLagna extends JModelItem
                     $diff   = $result5['degree'].'.0'.$result5['min'];
                 }
                 $distance       = ($down_deg - $diff)-30.00;
-                $graha          = array($planet=>str_replace(".",":",$distance).":r");
+                $dist           = explode(".",$distance);
+                $distance       = $this->convertDegMinSec($dist[0], $dist[1], 0);
+                $graha          = array($planet=>$distance.":r");
             }
             else
             {
@@ -1130,31 +1126,34 @@ class HoroscopeModelLagna extends JModelItem
                     $diff   = $result5['degree'].'.0'.$result5['min'];
                 }
                 $distance       = ($down_deg + $diff)-30.00;
-                $graha          = array($planet=>str_replace(".",":",$distance));
+                $dist           = explode(".",$distance);
+                $distance       = $this->convertDegMinSec($dist[0], $dist[1], 0);
+                $graha          = array($planet=>$distance);
             }
             //$sign               = $planet."_sign";$distance=$planet."_distance";
-            $sign               = $this->calcDetails(str_replace(".", ":", $distance));
+            $sign               = $this->calcDetails($distance);
             $sign_det           = array($planet."_sign"=>$sign);
-            $dist               = $this->calcDistance(str_replace(".", ":", $distance));
+            $dist               = $this->calcDistance($distance);
             $dist_det           = array($planet."_distance"=>$dist);
             $details            = $this->getPlanetaryDetails($planet,$sign,$dist);
             $graha              = array_merge($graha,$sign_det,$dist_det,$details);
             
             if($i==8)
             {
+                $distance       = str_replace(":",".",$distance);
                 $ketu           = $distance+180;
                 if($ketu>360)
                 {
                     $ketu       = $ketu-360;
                 }
-            $sign               = $this->calcDetails(str_replace(".", ":", $ketu));
-            $sign_det           = array("ketu_sign"=>$sign);
-            $distance           = $this->calcDistance(str_replace(".", ":", $ketu));
-            $distance_det       = array("ketu_distance"=>$distance);
-            $details            = $this->getPlanetaryDetails("ketu",$sign,$distance);
-            $ketu               = array("ketu"=>str_replace(".",":",$ketu));
-            $ketu               = array_merge($ketu,$sign_det,$distance_det,$details);
-            $graha              = array_merge($graha, $ketu);
+                $sign               = $this->calcDetails(str_replace(".", ":", $ketu));
+                $sign_det           = array("ketu_sign"=>$sign);
+                $distance           = $this->calcDistance(str_replace(".", ":", $ketu));
+                $distance_det       = array("ketu_distance"=>$distance);
+                $details            = $this->getPlanetaryDetails("ketu",$sign,$distance);
+                $ketu               = array("ketu"=>str_replace(".",":",$ketu));
+                $ketu               = array_merge($ketu,$sign_det,$distance_det,$details);
+                $graha              = array_merge($graha, $ketu);
             }  
             
             $data           = array_merge($data, $lagna, $graha);
@@ -1167,7 +1166,6 @@ class HoroscopeModelLagna extends JModelItem
         $dob            = $data['ind_date'];
         $tob            = strtotime($data['tob']);
         $tob            = explode(":",date('G:i:s', $tob));
-        $count          = count($planets);
         $db             = JFactory::getDbo();
         $query          = $db->getQuery(true);
         $query          ->select($db->quoteName('moon'));
@@ -1240,28 +1238,18 @@ class HoroscopeModelLagna extends JModelItem
         $result5        = $db->loadAssoc();
         $diff           = $result5["degree"].".".$result5["min"];
 
-        //echo $down_deg." : ".$diff."<br/>";
-        if($up_deg < $down_deg)
+        if($result5['min'] < 10)
         {
-            if($result5['min'] < 10)
-            {
-                $diff   = $result5['degree'].'.0'.$result5['min'];
-            }
-            $distance       = ($down_deg - $diff)-30.00;
-            $graha          = array("moon"=>str_replace(".",":",$distance).":r");
+            $diff   = $result5['degree'].'.0'.$result5['min'];
         }
-        else
-        {
-            if($result5['min'] < 10)
-            {
-                $diff   = $result5['degree'].'.0'.$result5['min'];
-            }
-            $distance       = ($down_deg + $diff)-30.00;
-            $graha          = array("moon"=>str_replace(".",":",$distance));
-        }
-        $sign               = $this->calcDetails(str_replace(".", ":", $distance));
+        $distance       = ($down_deg + $diff)-30.00;
+        $dist           = explode(".",$distance);
+        $distance       = $this->convertDegMinSec($dist[0], $dist[1], 0);
+        $graha          = array("moon"=>$distance);
+
+        $sign               = $this->calcDetails($distance);
         $sign_det           = array("moon_sign"=>$sign);
-        $dist               = $this->calcDistance(str_replace(".", ":", $distance));
+        $dist               = $this->calcDistance($distance);
         $dist_det           = array("moon_distance"=>$dist);
         $details            = $this->getPlanetaryDetails("moon",$sign,$dist);
         $graha              = array_merge($graha,$sign_det,$dist_det,$details);
@@ -1321,7 +1309,7 @@ class HoroscopeModelLagna extends JModelItem
         {
             $id     =   116;
         }
-        else if($lsign=="Libra"&&$gender=="male")
+        else if($sign=="Libra"&&$gender=="male")
         {
             $id     =   117;
         }
@@ -1536,43 +1524,6 @@ class HoroscopeModelLagna extends JModelItem
         $data           = array_merge($user_details,$moon, $result);
         return $data;
     }
-    public function getNavamsha($data)
-    {
-        $alldata        = $this->getLagna($data);
-        $data           = array("fname"=>$alldata['fname'],"gender"=>$alldata['gender'],
-                                "dob"=>$alldata['dob'],"tob"=>$alldata['tob'],
-                                "pob"=>$alldata['pob'],'lon'=>$alldata['lon'],
-                                "lat"=>$alldata['lat'],'tmz'=>$alldata['tmz'],'dst'=>$alldata['dst']);
-        $planet         = array("lagna","moon","surya","mangal","budh",
-                                "guru","shukra","shani","rahu","ketu");
-        $array          = array();
-        $db             = JFactory::getDbo();
-        $query          = $db->getQuery(true);
-        foreach($planet as $key)
-        {
-            $query      ->clear();
-            $sign       = $alldata[$key.'_sign'];
-            $distance   = $alldata[$key.'_distance'];
-            $sign_lord  = $alldata[$key.'_sign_lord'];
-            $nakshatra  = $alldata[$key.'_nakshatra'];
-            $nakshatra_lord = $alldata[$key.'_nakshatra_lord'];
-            $dist       = str_replace("&deg;",".",$alldata[$key."_distance"]);
-            $dist       = str_replace("'","",$dist);
-
-            $query          ->select($db->quoteName('navamsha_sign'));
-            $query          ->from($db->quoteName('#__navamsha'));
-            $query          ->where($db->quoteName('sign').'='.$db->quote($sign).' AND '.
-                                $db->quote($dist).' BETWEEN '.
-                                $db->quoteName('low_deg').' AND '.
-                                $db->quoteName('up_deg')); 
-            $db             ->setQuery($query);
-            $result         = $db->loadAssoc();
-            $planet         = array($key."_nav_sign"=>$result['navamsha_sign']);
-            $array          = array_merge($array,$planet);
-
-        }
-       $data                = array_merge($data, $array);
-       return $data;
-    } 
+    
 }
 ?>

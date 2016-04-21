@@ -2,7 +2,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 function getIP() {
-  foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
+  /*foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
      if (array_key_exists($key, $_SERVER) === true) {
         foreach (explode(',', $_SERVER[$key]) as $ip) {
            if (filter_var($ip, FILTER_VALIDATE_IP) !== false) {
@@ -10,12 +10,12 @@ function getIP() {
            }
         }
      }
-  }
-    //$ip = '117.196.1.11';
+  }*/
+   //$ip = '117.196.1.11';
   //$ip = '212.58.244.20';
   //$ip   = '223.223.146.119';
   //$ip   = '208.91.198.52';
- //$ip = '66.249.73.190';
+ $ip = '66.249.73.190';
   //$ip    = '176.102.49.192'; // uk ip
   //$ip = '122.175.21.127';
   //$ip = '157.55.39.123';

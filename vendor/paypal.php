@@ -58,8 +58,8 @@ $transaction    ->setAmount($amount)
                 ->setDescription("Ask An Astrologer")
                 ->setInvoiceNumber("Question Number: ".$token1);
                 
-
 $baseUrl = getBaseUrl();
+
 $redirectUrls = new RedirectUrls();
 $redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true&uniq_id=$token")
     ->setCancelUrl("$baseUrl/ExecutePayment.php?success=false&uniq_id=$token");
@@ -78,7 +78,6 @@ $payment->setIntent("order")
     }
     $approvalUrl    = $payment->getApprovalLink();
     $payment_id     = $payment->id;
-
     header('Location:'.$approvalUrl);
     
  //header('Location:'.$approvalUrl);

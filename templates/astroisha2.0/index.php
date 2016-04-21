@@ -105,7 +105,7 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
 <jdoc:include type="modules" name="footer" style="none" />
 <script>
   $(function() {
-    $( "#datepicker" ).datepicker({ yearRange: "1940:2050",changeMonth: true,
+    $( "#datepicker" ).datepicker({ yearRange: "1950:2016",changeMonth: true,
       changeYear: true, dateFormat: "yy/mm/dd"  });
   });
 </script>

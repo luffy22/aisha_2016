@@ -1,15 +1,11 @@
 <?php
-/*
- * Sample bootstrap file.
- */
 // Include the composer Autoloader
 // The location of your project's vendor autoloader.
 $composerAutoload = dirname(dirname(dirname(__DIR__))) . '/autoload.php';
 if (!file_exists($composerAutoload)) {
     //If the project is used as its own project, it would use rest-api-sdk-php composer autoloader.
     $composerAutoload = dirname(__DIR__) . '/vendor/autoload.php';
-
-
+    
     if (!file_exists($composerAutoload)) {
         echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
         exit(1);
@@ -25,8 +21,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 // Replace these values by entering your own ClientId and Secret by visiting https://developer.paypal.com/webapps/developer/applications/myapps
-$clientId = 'AZSURibGprhN1hx1hxMOJ_AnClc5dy7eamJeWdjcllzY6tQe7K0oRIikKKs9ntzh_n_lrEphL0c72h8G';
-$clientSecret = 'EEh0ZcgYH58LwojkAjzbjuYyEF6OQW8uBrJyWr8CIhtUMxwUFJ9SxOBigMbpzPBsn7CSBe4ZrXDJF82y';
+$clientId = 'AQTmuXv3b_AC_GBMrw7Mw53pWDUmpjbQI68g8ndsrxqXIFa4ORLQfj-5Pc0Vtko0tSBWUPpFuaG06m8J';
+$clientSecret = 'ENK7itoOD2FFbOikvfCm70scARdRVZkSrh-IghH3Z01_jPClOcFSaRMVURvsUx7vdElbN8uYgu5K5gUG';
 
 /** @var \Paypal\Rest\ApiContext $apiContext */
 $apiContext = getApiContext($clientId, $clientSecret);
@@ -70,7 +66,7 @@ function getApiContext($clientId, $clientSecret)
 
     $apiContext->setConfig(
         array(
-            'mode' => 'LIVE',   // use sandbox for testing, LIVE for on
+            'mode' => 'sandbox',   // use sandbox for testing, LIVE for on
             'log.LogEnabled' => true,
             'log.FileName' => '../PayPal.log',
             'log.LogLevel' => 'FINE', // PLEASE USE `FINE` LEVEL FOR LIVE ELSE USE 'DEBUG' FOR TESTING

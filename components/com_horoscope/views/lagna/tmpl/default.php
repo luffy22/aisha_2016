@@ -10,7 +10,19 @@ defined('_JEXEC') or die();
 		
 ?>
 <div class="spacer"></div>
-<h2>Calculate Lagna</h2>
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> This feature is in Testing Phase. Also values are based on Raman Ephemeris 
+  and some difference possible in values from standard Lahiri Ephemeris.
+</div>
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Timezone need to be entered in format +05:30 for India 
+  +00:00 for Greenwich Mean Time and -05:00 for Eastern Time, US and so on. Also Daylight Savings Time need to be entered if Country 
+  follows system of Daylight Savings
+</div>
+<div class="spacer"></div>
+<h2>Calculate Horoscope</h2>
 <form role="form" enctype="application/x-www-form-urlencoded" method="post" 
       action="<?php echo JRoute::_('index.php?option=com_horoscope&task=lagna.findlagna'); ?>">
     <div class="form-group" id="lagna_grp_1">
