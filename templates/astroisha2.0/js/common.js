@@ -776,3 +776,17 @@ function ques_det3_close()
     $('#ques_grp_det3').removeClass(" has-error");
     $('#ques_err_det3').css('visibility','hidden');
 }
+$(window).scroll(function(){
+if ($(window).scrollTop() == $(document).height() - $(window).height()){
+load_other_articles();
+}
+}); 
+function load_other_articles()
+{
+     var id = $('#scroll_article').children().last().attr('id');
+     $.ajax({url:"index.php?option=com_ajax&module=allarticles&format=json&method=HelloWorld&lastid="+id
+     }).done(function(data)
+     {
+         alert(data);
+     }).fail(function(){alert("Faile to Load Data!!")});
+}
