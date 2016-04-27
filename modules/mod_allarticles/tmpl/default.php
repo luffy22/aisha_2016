@@ -1,5 +1,5 @@
 <?php
-defined('_JEXEC') or die;
+JHtml::_('behavior.keepalive');
 //echo "<pre>";
  $i = 0;
 ?>
@@ -15,6 +15,7 @@ foreach($allarticles as $data)
 <div class="panel panel-info" id="panel_<?php echo $data['article_id']; ?>">
 <div class="panel-heading"><h3 class="panel-title"><a href="<?php echo $data['link'] ?>" title="<?php echo $data['title'];?>"><?php echo $data['title']; ?></a></h3></div>
 <div class="panel-body">
+<p class="text-right"><strong>Hits: <?php echo $data['hits']; ?></strong></p>
 <p><?php echo strip_tags(trim($data['article_text'])); ?></p>
 <div class="panel-footer">
     <p class="text-left">Category: <a href="<?php echo $data['catlink']; ?>"><?php echo $data['cat_title'] ?></a></p>

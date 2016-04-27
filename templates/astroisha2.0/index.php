@@ -1,6 +1,9 @@
 <?php
     error_reporting(0);       // uncomment on server
     defined( '_JEXEC' ) or die( 'Restricted access' );
+    $app = JFactory::getApplication();
+    $menu = $app->getMenu();
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->lang; ?>">
@@ -27,6 +30,13 @@ $head_data = $doc->getHeadData();
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/bootstrap/js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery_ui/jquery-ui.min.js" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
+<?php
+if ($menu->getActive() == $menu->getDefault()) {
+?>
+<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/loadmore.js" type="text/javascript" language="javascript"></script>
+<?php
+}
+?>
 <script>
   window.fbAsyncInit = function() {
     FB.init({

@@ -20,8 +20,7 @@ class modNakshatraCompatHelper
 
     public function GirlNakshatraAjax()
     {
-        echo "calls";
-        /*if(isset($_GET['g_rashi']))
+        if(isset($_GET['lastid']))
         {
             $girlsrashi = $_GET['g_rashi'];
             
@@ -44,7 +43,7 @@ class modNakshatraCompatHelper
         else
         {
             echo "error";
-        }*/
+        }
     }
     public function BoyNakshatraAjax()
     {
