@@ -37,19 +37,28 @@ class modAllarticlesHelper
                                     jv_content.asset_id AS article_assetid,jv_content.title, LEFT(jv_content.introtext,1000) AS article_text,
                                     jv_content.hits, jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid FROM jv_content 
                                     INNER JOIN jv_categories ON jv_content.catid = jv_categories.id 
-                                    WHERE jv_content.id < '".$id."' ORDER BY jv_content.id DESC LIMIT 1"; 
+                                    WHERE jv_content.id < '".$id."' ORDER BY jv_content.id DESC LIMIT 10"; 
                 $db->setQuery($query);
                 $item           = array();
                 // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-                $results        = $db->loadAssoc();
-                $results        = json_encode($results);
-                
-            }
-            else
-            {
-                $data = "Fail to load Data";
-                $results   = json_encode($data);
-            }
-            echo $results;
+                $results        = $db->loadObjectList();
+                foreach($results as $items)
+                {
+                    $items['slug']      = $items['article_id'].':'.$items['article_alias'];
+                    $items['catslug']   = $items['catid'].':'.$items['cat_alias'];
+                    $items['link']      = JRoute::_(ContentHelperRoute::getArticleRoute($items['slug'], $items['catslug']));
+                    $items['catlink']    = JRoute::_(ContentHelperRoute::getCategoryRoute($items['catid'], $language));
+                    $arr                = array("art_link"=>$items['link'],"cat_link"=>$items['catlink']);
+                    $item               = array_merge($item,$arr);
+                }
+                //$data               = json_encode(array("link"=>$item));
+                $data               = json_encode(array("art_link"=>$results['title']));
+             }
+            //else
+            //{
+               // $msg = "Fail to load Data";
+                //$data   = json_encode($msg);
+            //}
+            return $data;
         }
 }

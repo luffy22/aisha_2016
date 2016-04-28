@@ -1,6 +1,6 @@
 <?php
 JHtml::_('behavior.keepalive');
-//echo "<pre>";
+//print_r($allarticles);exit;
  $i = 0;
 ?>
 <div class="scroll_article" id="scroll_article">

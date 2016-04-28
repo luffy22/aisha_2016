@@ -13,8 +13,10 @@ function load_other_articles()
     });
     request.done(function(data)
     {
-        alert(data);
-        
+        //var json    = data;
+        //var obj     = $.parseJSON(json);
+       alert(data); 
+       //$('#scroll_article').append(data);
     }
     );
 }
