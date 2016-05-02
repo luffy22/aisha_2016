@@ -1,5 +1,4 @@
 <?php
-
 header('Content-type: application/json');
 
 /*
@@ -29,7 +28,6 @@ $currency           = $_GET['curr'];
 $fees               = $_GET['fees'];
 $payer_info         = new PayerInfo();
 $payer_info         ->setFirstName($name);
-$payer_info         ->setEmail($email);
 
 $payer = new Payer();
 $payer->setPaymentMethod("paypal")
@@ -40,7 +38,7 @@ $item = new Item();
 $item->setName($name)
     ->setCurrency($currency)
     ->setQuantity($quantity)
-    ->setSku($token)
+    ->setSku($token1)
     ->setPrice($fees);
     
 $itemlist       = new ItemList();
@@ -63,11 +61,11 @@ $transaction    ->setAmount($amount)
 $baseUrl = getBaseUrl();
 
 $redirectUrls = new RedirectUrls();
-$redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true&uniq_id=$token")
-    ->setCancelUrl("$baseUrl/ExecutePayment.php?success=false&uniq_id=$token");
+$redirectUrls->setReturnUrl("$baseUrl/executepayment.php?success=true&uniq_id=$token")
+    ->setCancelUrl("$baseUrl/executepayment.php?success=false&uniq_id=$token");
 
 $payment = new Payment();
-$payment->setIntent("sale")
+$payment->setIntent("authorize")
     ->setPayer($payer)
     ->setRedirectUrls($redirectUrls)
     ->setTransactions(array($transaction));

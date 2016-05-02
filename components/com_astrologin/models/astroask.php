@@ -42,7 +42,7 @@ public function askQuestions($details)
 
     $db             = JFactory::getDbo();  // Get db connection
     $query          = $db->getQuery(true);
-
+    $query1         = $db->getQuery(true);
     $columns        = array('UniqueID','name','email','gender', 'dob', 'tob', 
                             'pob','fees','choice','explain_choice','payment_type',
                             'user_location','user_currency','user_curr_full',
@@ -59,6 +59,8 @@ public function askQuestions($details)
                             $db->quote($opt2), $db->quote($ques2), $db->quote($ques_det2),
                             $db->quote($opt3), $db->quote($ques3), $db->quote($ques_det3),
                             );
+    $column1        =  array('UniqueID', 'status');
+    $values1         = array($db->quote($token), $db->quoteName('Pending'));
     // Prepare the insert query
     $query    ->insert($db->quoteName('#__questions'))
                     ->columns($db->quoteName($columns))
@@ -70,6 +72,11 @@ public function askQuestions($details)
     if($result)
     {
         $query              ->clear();
+        $query1    ->insert($db->quoteName('#__paypal_info'))
+                    ->columns($db->quoteName($column1))
+                    ->values(implode(',',$values1));
+        $db             ->setQuery($query1);
+        $query1->clear();                                           
         $query              ->select($db->quoteName(array('UniqueID','name','email',
                                     'gender','dob','pob','tob','fees','choice', 'explain_choice',
                                     'payment_type','user_currency','user_curr_full','user_location',
@@ -108,34 +115,33 @@ public function askQuestions($details)
 public function authorizePayment($details)
 {
     $paypal_id      = $details['paypal_id'];
-    $order_id       = $details['order_id'];
+    $auth_id       = $details['auth_id'];
     $token          = $details['token'];
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     // Fields to update.
     $fields = array(
-        $db->quoteName('paypal_authorize') . ' = ' . $db->quote('yes'),
         $db->quoteName('paypal_id').'='.$db->quote($paypal_id),
-        $db->quoteName('paypal_order_id').'='.$db->quote($order_id));
+        $db->quoteName('authorize_id').'='.$db->quote($auth_id),
+        $db->quoteName('status').'='.$db->quote('Authorized'));
     // Conditions for which records should be updated.
     $conditions = array(
         $db->quoteName('UniqueID').'='.$db->quote($token)
     );
-    $query->update($db->quoteName('#__questions'))->set($fields)->where($conditions);
+    $query->update($db->quoteName('#__paypal_info'))->set($fields)->where($conditions);
  
     $db->setQuery($query);
  
     $result = $db->execute();
-    if($result)
-    {
         $query      ->clear();
-        $query              ->select($db->quoteName(array('UniqueID','name','email',
-                                    'gender','dob','pob','tob','fees','choice','explain_choice',
-                                    'user_currency','user_curr_full','paypal_id', 'paypal_order_id',
-                                    'ques_topic1','ques_1','ques_1_explain',
-                                    'ques_topic2','ques_2','ques_2_explain',
-                                    'ques_topic3','ques_3','ques_3_explain')))
-                            ->from($db->quoteName('#__questions'))
+        $query              ->select($db->quoteName(array('a.UniqueID','a.name','a.email',
+                                    'a.gender','a.dob','a.pob','a.tob','a.fees','a.choice','a.explain_choice',
+                                    'a.user_currency','a.user_curr_full',
+                                    'a.ques_topic1','a.ques_1','a.ques_1_explain',
+                                    'a.ques_topic2','a.ques_2','a.ques_2_explain',
+                                    'a.ques_topic3','a.ques_3','a.ques_3_explain','b.paypal_id','b.status')))
+                            ->from($db->quoteName('#__questions','a'))
+                              ->join('INNER', $db->quoteName('#__paypal_info', 'b') . ' ON (' . $db->quoteName('a.UniqueID').' = '.$db->quoteName('b.UniqueID') . ')')
                             ->where($db->quoteName('paypal_id').'='.$db->quote($paypal_id));
        $db                  ->setQuery($query);
        $details                 = $db->loadAssoc();
@@ -165,7 +171,7 @@ public function authorizePayment($details)
         $body               .= "Place Of Birth: ".$details['pob']."<br/>";
         $body               .= "Token Number: ".$details['UniqueID']."<br/>";
         $body               .= "Payment ID: ".$details['paypal_id']."<br/>";
-        $body               .= "Order ID: ".$details['paypal_order_id']."<br/>";
+        $body               .= "Status: ".$details['status']."<br/>";
         $body               .= "Number Of Questions: ".$details['choice']."<br/>";
         $body               .= "Explanation (Detail/Short): ".ucfirst($details['explain_choice'])."<br/><br/>";
         if($details['explain_choice'] == 'short')
@@ -189,7 +195,7 @@ public function authorizePayment($details)
                 $body               .= "Background: ".${"ques_explain".$j}."<br/><br/>";
             }
         }
-    $body               .= "<br/><div style='align:right'>Your Sincerely,<br/>Admin(Rohan Desai)</div>";        
+    $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>";        
     $mailer             = JFactory::getMailer();
     $config             = JFactory::getConfig();
     $sender             = array( 
@@ -212,11 +218,7 @@ public function authorizePayment($details)
         $app                =&JFactory::getApplication();
         $app                ->redirect('index.php?option=com_astrologin&view=quesconfirm&payment=paypal'); 
     }
-    }
-    else
-    {
-        echo "Failed to Send Mail: Wait For Confirmation if you are sure payment is done.";
-    }
+
 }
 public function failPayment($details)
 {
