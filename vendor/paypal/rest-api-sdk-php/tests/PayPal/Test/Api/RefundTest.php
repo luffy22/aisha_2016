@@ -2,10 +2,6 @@
 
 namespace PayPal\Test\Api;
 
-use PayPal\Common\PayPalResourceModel;
-use PayPal\Validation\ArgumentValidator;
-use PayPal\Rest\ApiContext;
-use PayPal\Transport\PPRestCall;
 use PayPal\Api\Refund;
 
 /**
@@ -17,15 +13,17 @@ class RefundTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object Refund
+     *
      * @return string
      */
     public static function getJson()
     {
-        return '{"id":"TestSample","amount":' .AmountTest::getJson() . ',"state":"TestSample","reason":"TestSample","sale_id":"TestSample","capture_id":"TestSample","parent_payment":"TestSample","description":"TestSample","create_time":"TestSample","update_time":"TestSample","links":' .LinksTest::getJson() . '}';
+        return '{"id":"TestSample","amount":' . AmountTest::getJson() . ',"state":"TestSample","reason":"TestSample","sale_id":"TestSample","capture_id":"TestSample","parent_payment":"TestSample","description":"TestSample","create_time":"TestSample","update_time":"TestSample","links":' . LinksTest::getJson() . '}';
     }
 
     /**
      * Gets Object Instance with Json data filled in
+     *
      * @return Refund
      */
     public static function getObject()
@@ -36,6 +34,7 @@ class RefundTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
+     *
      * @return Refund
      */
     public function testSerializationDeserialization()
@@ -89,7 +88,7 @@ class RefundTest extends \PHPUnit_Framework_TestCase
         $mockPPRestCall->expects($this->any())
             ->method('execute')
             ->will($this->returnValue(
-                    RefundTest::getJson()
+                RefundTest::getJson()
             ));
 
         $result = $obj->get("refundId", $mockApiContext, $mockPPRestCall);
@@ -100,8 +99,8 @@ class RefundTest extends \PHPUnit_Framework_TestCase
     {
         $obj = self::getObject();
         $mockApiContext = $this->getMockBuilder('ApiContext')
-                    ->disableOriginalConstructor()
-                    ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
         return array(
             array($obj, $mockApiContext),
             array($obj, null)

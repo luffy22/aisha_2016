@@ -1,4 +1,5 @@
 <?php
+
 header('Content-type: application/json');
 
 /*
@@ -28,11 +29,12 @@ $currency           = $_GET['curr'];
 $fees               = $_GET['fees'];
 $payer_info         = new PayerInfo();
 $payer_info         ->setFirstName($name);
+$payer_info         ->setEmail($email);
 
 $payer = new Payer();
 $payer->setPaymentMethod("paypal")
        ->setPayerInfo($payer_info);
-$name = "Detailed Explanation";
+$name = "AstroIsha Token: ".$token1;
 
 $item = new Item();
 $item->setName($name)
@@ -56,7 +58,7 @@ $transaction    = new Transaction();
 $transaction    ->setAmount($amount)
                 ->setItemList($itemlist)
                 ->setDescription("Ask An Astrologer")
-                ->setInvoiceNumber("Question Number: ".$token1);
+                ->setInvoiceNumber("Ask AstroIsha Token: ".$token1);
                 
 $baseUrl = getBaseUrl();
 
@@ -65,7 +67,7 @@ $redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true&uniq_id=$t
     ->setCancelUrl("$baseUrl/ExecutePayment.php?success=false&uniq_id=$token");
 
 $payment = new Payment();
-$payment->setIntent("order")
+$payment->setIntent("sale")
     ->setPayer($payer)
     ->setRedirectUrls($redirectUrls)
     ->setTransactions(array($transaction));

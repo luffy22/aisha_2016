@@ -2,7 +2,6 @@
 
 namespace PayPal\Test\Api;
 
-use PayPal\Common\PayPalModel;
 use PayPal\Api\PaymentHistory;
 
 /**
@@ -14,15 +13,17 @@ class PaymentHistoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object PaymentHistory
+     *
      * @return string
      */
     public static function getJson()
     {
-        return '{"payments":' .PaymentTest::getJson() . ',"count":123,"next_id":"TestSample"}';
+        return '{"payments":' . PaymentTest::getJson() . ',"count":123,"next_id":"TestSample"}';
     }
 
     /**
      * Gets Object Instance with Json data filled in
+     *
      * @return PaymentHistory
      */
     public static function getObject()
@@ -33,6 +34,7 @@ class PaymentHistoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
+     *
      * @return PaymentHistory
      */
     public function testSerializationDeserialization()
@@ -56,4 +58,6 @@ class PaymentHistoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getCount(), 123);
         $this->assertEquals($obj->getNextId(), "TestSample");
     }
+
+
 }

@@ -2,7 +2,6 @@
 
 namespace PayPal\Test\Api;
 
-use PayPal\Common\PayPalModel;
 use PayPal\Api\CurrencyConversion;
 
 /**
@@ -14,15 +13,17 @@ class CurrencyConversionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object CurrencyConversion
+     *
      * @return string
      */
     public static function getJson()
     {
-        return '{"conversion_date":"TestSample","from_currency":"TestSample","from_amount":"TestSample","to_currency":"TestSample","to_amount":"TestSample","conversion_type":"TestSample","conversion_type_changeable":true,"web_url":"http://www.google.com","links":' .LinksTest::getJson() . '}';
+        return '{"conversion_date":"TestSample","from_currency":"TestSample","from_amount":"TestSample","to_currency":"TestSample","to_amount":"TestSample","conversion_type":"TestSample","conversion_type_changeable":true,"web_url":"http://www.google.com","links":' . LinksTest::getJson() . '}';
     }
 
     /**
      * Gets Object Instance with Json data filled in
+     *
      * @return CurrencyConversion
      */
     public static function getObject()
@@ -33,6 +34,7 @@ class CurrencyConversionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
+     *
      * @return CurrencyConversion
      */
     public function testSerializationDeserialization()

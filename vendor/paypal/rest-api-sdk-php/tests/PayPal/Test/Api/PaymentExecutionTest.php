@@ -2,7 +2,6 @@
 
 namespace PayPal\Test\Api;
 
-use PayPal\Common\PayPalModel;
 use PayPal\Api\PaymentExecution;
 
 /**
@@ -14,15 +13,17 @@ class PaymentExecutionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object PaymentExecution
+     *
      * @return string
      */
     public static function getJson()
     {
-        return '{"payer_id":"TestSample","transactions":[' .TransactionTest::getJson() . ']}';
+        return '{"payer_id":"TestSample","carrier_account_id":"TestSample","transactions":[' . TransactionTest::getJson() . ']}';
     }
 
     /**
      * Gets Object Instance with Json data filled in
+     *
      * @return PaymentExecution
      */
     public static function getObject()
@@ -33,6 +34,7 @@ class PaymentExecutionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
+     *
      * @return PaymentExecution
      */
     public function testSerializationDeserialization()
@@ -40,6 +42,7 @@ class PaymentExecutionTest extends \PHPUnit_Framework_TestCase
         $obj = new PaymentExecution(self::getJson());
         $this->assertNotNull($obj);
         $this->assertNotNull($obj->getPayerId());
+        $this->assertNotNull($obj->getCarrierAccountId());
         $this->assertNotNull($obj->getTransactions());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
@@ -52,6 +55,9 @@ class PaymentExecutionTest extends \PHPUnit_Framework_TestCase
     public function testGetters($obj)
     {
         $this->assertEquals($obj->getPayerId(), "TestSample");
+        $this->assertEquals($obj->getCarrierAccountId(), "TestSample");
         $this->assertEquals($obj->getTransactions(), array(TransactionTest::getObject()));
     }
+
+
 }

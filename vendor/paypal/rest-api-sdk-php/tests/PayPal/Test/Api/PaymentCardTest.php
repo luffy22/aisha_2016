@@ -2,7 +2,6 @@
 
 namespace PayPal\Test\Api;
 
-use PayPal\Common\PayPalModel;
 use PayPal\Api\PaymentCard;
 
 /**
@@ -14,15 +13,17 @@ class PaymentCardTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object PaymentCard
+     *
      * @return string
      */
     public static function getJson()
     {
-        return '{"id":"TestSample","number":"TestSample","type":"TestSample","expire_month":123,"expire_year":123,"start_month":"TestSample","start_year":"TestSample","cvv2":"TestSample","first_name":"TestSample","last_name":"TestSample","billing_country":"TestSample","billing_address":' .AddressTest::getJson() . ',"external_customer_id":"TestSample","status":"TestSample","valid_until":"TestSample","links":' .LinksTest::getJson() . '}';
+        return '{"id":"TestSample","number":"TestSample","type":"TestSample","expire_month":123,"expire_year":123,"start_month":"TestSample","start_year":"TestSample","cvv2":"TestSample","first_name":"TestSample","last_name":"TestSample","billing_country":"TestSample","billing_address":' . AddressTest::getJson() . ',"external_customer_id":"TestSample","status":"TestSample","valid_until":"TestSample","issue_number":"TestSample","links":' . LinksTest::getJson() . '}';
     }
 
     /**
      * Gets Object Instance with Json data filled in
+     *
      * @return PaymentCard
      */
     public static function getObject()
@@ -33,6 +34,7 @@ class PaymentCardTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
+     *
      * @return PaymentCard
      */
     public function testSerializationDeserialization()
@@ -54,6 +56,7 @@ class PaymentCardTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($obj->getExternalCustomerId());
         $this->assertNotNull($obj->getStatus());
         $this->assertNotNull($obj->getValidUntil());
+        $this->assertNotNull($obj->getIssueNumber());
         $this->assertNotNull($obj->getLinks());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
@@ -80,7 +83,9 @@ class PaymentCardTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getExternalCustomerId(), "TestSample");
         $this->assertEquals($obj->getStatus(), "TestSample");
         $this->assertEquals($obj->getValidUntil(), "TestSample");
+        $this->assertEquals($obj->getIssueNumber(), "TestSample");
         $this->assertEquals($obj->getLinks(), LinksTest::getObject());
     }
+
 
 }

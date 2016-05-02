@@ -2,13 +2,9 @@
 
 namespace PayPal\Test\Api;
 
-use PayPal\Common\PayPalResourceModel;
-use PayPal\Exception\PayPalConnectionException;
-use PayPal\Validation\ArgumentValidator;
-use PayPal\Api\WebhookEventList;
-use PayPal\Rest\ApiContext;
-use PayPal\Transport\PayPalRestCall;
 use PayPal\Api\WebhookEvent;
+use PayPal\Exception\PayPalConnectionException;
+use PayPal\Rest\ApiContext;
 
 /**
  * Class WebhookEvent
@@ -211,17 +207,6 @@ class WebhookEventTest extends \PHPUnit_Framework_TestCase
     public function testValidateWebhookInvalid($mockApiContext)
     {
         WebhookEvent::validateAndGetReceivedEvent('something-invalid', $mockApiContext);
-    }
-
-    /**
-     * @dataProvider mockProvider
-     * @param $mockApiContext ApiContext
-     * @expectedException \PHPUnit_Framework_Error_Notice
-     * @expectedExceptionMessage Missing Accessor: PayPal\Api\WebhookEvent:setValid. You might be using older version of SDK. If not, create an issue at https://github.com/paypal/PayPal-PHP-SDK/issues
-     */
-    public function testValidateWebhookValidJSONWithMissingObject($obj, $mockApiContext)
-    {
-            WebhookEvent::validateAndGetReceivedEvent('{"valid":"json"}', $mockApiContext);
     }
 
     /**

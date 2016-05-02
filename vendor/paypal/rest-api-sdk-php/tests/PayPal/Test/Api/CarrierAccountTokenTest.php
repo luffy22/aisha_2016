@@ -2,7 +2,6 @@
 
 namespace PayPal\Test\Api;
 
-use PayPal\Common\PayPalModel;
 use PayPal\Api\CarrierAccountToken;
 
 /**
@@ -14,6 +13,7 @@ class CarrierAccountTokenTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object CarrierAccountToken
+     *
      * @return string
      */
     public static function getJson()
@@ -23,6 +23,7 @@ class CarrierAccountTokenTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Gets Object Instance with Json data filled in
+     *
      * @return CarrierAccountToken
      */
     public static function getObject()
@@ -33,6 +34,7 @@ class CarrierAccountTokenTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
+     *
      * @return CarrierAccountToken
      */
     public function testSerializationDeserialization()
@@ -54,4 +56,6 @@ class CarrierAccountTokenTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getCarrierAccountId(), "TestSample");
         $this->assertEquals($obj->getExternalCustomerId(), "TestSample");
     }
+
+
 }

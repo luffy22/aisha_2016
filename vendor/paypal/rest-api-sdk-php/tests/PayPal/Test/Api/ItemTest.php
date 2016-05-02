@@ -2,9 +2,6 @@
 
 namespace PayPal\Test\Api;
 
-use PayPal\Common\PayPalModel;
-use PayPal\Converter\FormatConverter;
-use PayPal\Validation\NumericValidator;
 use PayPal\Api\Item;
 
 /**
@@ -16,15 +13,17 @@ class ItemTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object Item
+     *
      * @return string
      */
     public static function getJson()
     {
-        return '{"quantity":"TestSample","name":"TestSample","description":"TestSample","price":"12.34","tax":"12.34","currency":"TestSample","sku":"TestSample","url":"http://www.google.com","category":"TestSample","weight":' .MeasurementTest::getJson() . ',"length":' .MeasurementTest::getJson() . ',"height":' .MeasurementTest::getJson() . ',"width":' .MeasurementTest::getJson() . ',"supplementary_data":' .NameValuePairTest::getJson() . ',"postback_data":' .NameValuePairTest::getJson() . '}';
+        return '{"sku":"TestSample","name":"TestSample","description":"TestSample","quantity":"12.34","price":"12.34","currency":"TestSample","tax":"12.34","url":"http://www.google.com","category":"TestSample","weight":' . MeasurementTest::getJson() . ',"length":' . MeasurementTest::getJson() . ',"height":' . MeasurementTest::getJson() . ',"width":' . MeasurementTest::getJson() . ',"supplementary_data":' . NameValuePairTest::getJson() . ',"postback_data":' . NameValuePairTest::getJson() . '}';
     }
 
     /**
      * Gets Object Instance with Json data filled in
+     *
      * @return Item
      */
     public static function getObject()
@@ -35,19 +34,20 @@ class ItemTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
+     *
      * @return Item
      */
     public function testSerializationDeserialization()
     {
         $obj = new Item(self::getJson());
         $this->assertNotNull($obj);
-        $this->assertNotNull($obj->getQuantity());
+        $this->assertNotNull($obj->getSku());
         $this->assertNotNull($obj->getName());
         $this->assertNotNull($obj->getDescription());
+        $this->assertNotNull($obj->getQuantity());
         $this->assertNotNull($obj->getPrice());
-        $this->assertNotNull($obj->getTax());
         $this->assertNotNull($obj->getCurrency());
-        $this->assertNotNull($obj->getSku());
+        $this->assertNotNull($obj->getTax());
         $this->assertNotNull($obj->getUrl());
         $this->assertNotNull($obj->getCategory());
         $this->assertNotNull($obj->getWeight());
@@ -66,13 +66,13 @@ class ItemTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetters($obj)
     {
-        $this->assertEquals($obj->getQuantity(), "TestSample");
+        $this->assertEquals($obj->getSku(), "TestSample");
         $this->assertEquals($obj->getName(), "TestSample");
         $this->assertEquals($obj->getDescription(), "TestSample");
+        $this->assertEquals($obj->getQuantity(), "12.34");
         $this->assertEquals($obj->getPrice(), "12.34");
-        $this->assertEquals($obj->getTax(), "12.34");
         $this->assertEquals($obj->getCurrency(), "TestSample");
-        $this->assertEquals($obj->getSku(), "TestSample");
+        $this->assertEquals($obj->getTax(), "12.34");
         $this->assertEquals($obj->getUrl(), "http://www.google.com");
         $this->assertEquals($obj->getCategory(), "TestSample");
         $this->assertEquals($obj->getWeight(), MeasurementTest::getObject());
