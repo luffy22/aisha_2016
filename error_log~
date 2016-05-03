@@ -1,0 +1,76 @@
+[14-Apr-2016 08:28:31 Etc/GMT] PHP Notice:  Use of undefined constant am - assumed 'am' in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 440
+[14-Apr-2016 08:28:31 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 607
+[14-Apr-2016 08:28:31 Etc/GMT] PHP Notice:  Undefined offset: 2 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 742
+[14-Apr-2016 08:28:31 Etc/GMT] PHP Notice:  Undefined variable: down_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[14-Apr-2016 08:28:31 Etc/GMT] PHP Notice:  Undefined variable: up_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[14-Apr-2016 08:31:23 Etc/GMT] PHP Notice:  Use of undefined constant am - assumed 'am' in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 440
+[14-Apr-2016 08:31:23 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 607
+[14-Apr-2016 08:31:23 Etc/GMT] PHP Notice:  Undefined variable: lsign in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1324
+[15-Apr-2016 05:05:27 Etc/GMT] PHP Notice:  Use of undefined constant am - assumed 'am' in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 440
+[15-Apr-2016 05:05:27 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 607
+[15-Apr-2016 05:05:28 Etc/GMT] PHP Notice:  Undefined offset: 2 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 742
+[15-Apr-2016 05:05:28 Etc/GMT] PHP Notice:  Undefined variable: down_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[15-Apr-2016 05:05:28 Etc/GMT] PHP Notice:  Undefined variable: up_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[15-Apr-2016 05:12:16 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 608
+[15-Apr-2016 05:12:16 Etc/GMT] PHP Notice:  Undefined offset: 2 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 743
+[15-Apr-2016 05:12:16 Etc/GMT] PHP Notice:  Undefined variable: down_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1013
+[15-Apr-2016 05:12:16 Etc/GMT] PHP Notice:  Undefined variable: up_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1013
+[15-Apr-2016 05:16:18 Etc/GMT] PHP Notice:  Undefined offset: 2 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 742
+[15-Apr-2016 05:16:18 Etc/GMT] PHP Notice:  Undefined variable: down_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[15-Apr-2016 05:16:18 Etc/GMT] PHP Notice:  Undefined variable: up_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[15-Apr-2016 05:18:57 Etc/GMT] PHP Notice:  Undefined offset: 2 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 742
+[15-Apr-2016 05:18:57 Etc/GMT] PHP Notice:  Undefined variable: down_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[15-Apr-2016 05:18:57 Etc/GMT] PHP Notice:  Undefined variable: up_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[15-Apr-2016 05:21:46 Etc/GMT] PHP Notice:  Undefined offset: 2 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 742
+[15-Apr-2016 05:21:46 Etc/GMT] PHP Notice:  Undefined variable: down_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[15-Apr-2016 05:21:46 Etc/GMT] PHP Notice:  Undefined variable: up_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1012
+[15-Apr-2016 05:22:49 Etc/GMT] PHP Notice:  Undefined variable: down_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1013
+[15-Apr-2016 05:22:49 Etc/GMT] PHP Notice:  Undefined variable: up_deg in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1013
+[15-Apr-2016 05:24:34 Etc/GMT] PHP Parse error:  syntax error, unexpected end of file in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1035
+[15-Apr-2016 05:24:49 Etc/GMT] PHP Notice:  Undefined variable: lsign in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1325
+[15-Apr-2016 05:25:31 Etc/GMT] PHP Parse error:  syntax error, unexpected end of file in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1035
+[15-Apr-2016 05:29:49 Etc/GMT] PHP Notice:  Undefined variable: planets in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1171
+[15-Apr-2016 06:52:56 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 313
+[15-Apr-2016 06:55:59 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 314
+[15-Apr-2016 06:59:33 Etc/GMT] PHP Notice:  Undefined variable: planet in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1270
+[15-Apr-2016 07:07:34 Etc/GMT] PHP Fatal error:  Unsupported operand types in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1014
+[15-Apr-2016 07:13:58 Etc/GMT] PHP Fatal error:  Unsupported operand types in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1014
+[15-Apr-2016 07:14:52 Etc/GMT] PHP Notice:  Array to string conversion in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1014
+[15-Apr-2016 07:14:52 Etc/GMT] PHP Notice:  Array to string conversion in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 1014
+[15-Apr-2016 08:13:13 Etc/GMT] PHP Notice:  Use of undefined constant am - assumed 'am' in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 440
+[16-Apr-2016 21:07:24 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[16-Apr-2016 21:07:25 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 687
+[17-Apr-2016 04:45:10 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 687
+[17-Apr-2016 04:51:48 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 687
+[17-Apr-2016 04:53:35 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 687
+[17-Apr-2016 04:53:42 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 687
+[17-Apr-2016 04:56:24 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 684
+[17-Apr-2016 04:56:58 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[17-Apr-2016 04:57:21 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 680
+[17-Apr-2016 04:58:25 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 680
+[17-Apr-2016 05:00:03 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 681
+[17-Apr-2016 05:01:08 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 671
+[17-Apr-2016 05:01:52 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 671
+[17-Apr-2016 05:02:00 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 670
+[17-Apr-2016 05:02:03 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 670
+[17-Apr-2016 05:08:06 Etc/GMT] PHP Notice:  Undefined variable: down_yob in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 648
+[17-Apr-2016 05:08:06 Etc/GMT] PHP Notice:  Undefined variable: up_yob in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 662
+[17-Apr-2016 05:08:06 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 687
+[17-Apr-2016 05:08:06 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 698
+[17-Apr-2016 05:10:20 Etc/GMT] PHP Notice:  Undefined variable: year in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 724
+[17-Apr-2016 05:10:20 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 736
+[17-Apr-2016 05:22:01 Etc/GMT] PHP Notice:  Undefined variable: planets in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 657
+[17-Apr-2016 05:22:01 Etc/GMT] PHP Warning:  Invalid argument supplied for foreach() in /home/astroxou/public_html/libraries/joomla/database/driver.php on line 1490
+[17-Apr-2016 18:10:55 Etc/GMT] PHP Notice:  Undefined index: lon_dir in /home/astroxou/public_html/components/com_horoscope/controllers/lagna.php on line 20
+[17-Apr-2016 18:10:55 Etc/GMT] PHP Notice:  Undefined index: lat_dir in /home/astroxou/public_html/components/com_horoscope/controllers/lagna.php on line 21
+[17-Apr-2016 18:32:47 Etc/GMT] PHP Notice:  Undefined index: lon_dir in /home/astroxou/public_html/components/com_horoscope/controllers/lagna.php on line 20
+[17-Apr-2016 18:32:47 Etc/GMT] PHP Notice:  Undefined index: lat_dir in /home/astroxou/public_html/components/com_horoscope/controllers/lagna.php on line 21
+[17-Apr-2016 19:01:30 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[17-Apr-2016 19:03:27 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[17-Apr-2016 19:03:53 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[17-Apr-2016 19:21:02 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[17-Apr-2016 19:21:12 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[17-Apr-2016 19:22:35 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[17-Apr-2016 19:22:47 Etc/GMT] PHP Notice:  Undefined offset: 1 in /home/astroxou/public_html/components/com_horoscope/models/lagna.php on line 412
+[18-Apr-2016 16:39:14 Etc/GMT] PHP Notice:  Undefined index: lon_dir in /home/astroxou/public_html/components/com_horoscope/controllers/lagna.php on line 20
+[18-Apr-2016 16:39:14 Etc/GMT] PHP Notice:  Undefined index: lat_dir in /home/astroxou/public_html/components/com_horoscope/controllers/lagna.php on line 21

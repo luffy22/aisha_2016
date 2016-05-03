@@ -60,7 +60,7 @@ public function askQuestions($details)
                             $db->quote($opt3), $db->quote($ques3), $db->quote($ques_det3),
                             );
     $column1        =  array('UniqueID', 'status');
-    $values1         = array($db->quote($token), $db->quoteName('Pending'));
+    $values1         = array($db->quote($token), $db->quote('Pending'));
     // Prepare the insert query
     $query    ->insert($db->quoteName('#__questions'))
                     ->columns($db->quoteName($columns))
@@ -76,7 +76,8 @@ public function askQuestions($details)
                     ->columns($db->quoteName($column1))
                     ->values(implode(',',$values1));
         $db             ->setQuery($query1);
-        $query1->clear();                                           
+        $result1  = $db->query();
+        $query1->clear(); 
         $query              ->select($db->quoteName(array('UniqueID','name','email',
                                     'gender','dob','pob','tob','fees','choice', 'explain_choice',
                                     'payment_type','user_currency','user_curr_full','user_location',
@@ -319,8 +320,6 @@ public function confirmCCPayment($details)
                             ->where($db->quoteName('UniqueID').'='.$db->quote($token));
        $db                  ->setQuery($query);
        $details                 = $db->loadAssoc();
-
-
     }
     $name               = $details['name'];
     $gender             = $details['gender'];

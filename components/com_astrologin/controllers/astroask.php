@@ -106,9 +106,9 @@ class AstrologinControllerAstroask extends AstroLoginController
     public function confirmPayment()
     {
         $id             = $_GET['id'];
-        $order_id       = $_GET['order_id'];
+        $auth_id       = $_GET['auth_id'];
         $token          = $_GET['token'];
-        $details        = array("paypal_id"=>$id,"auth_id"=>$order_id,"token"=>$token);
+        $details        = array("paypal_id"=>$id,"auth_id"=>$auth_id,"token"=>$token);
         $model          = $this->getModel('astroask');  // Add the array to model
         $model          ->authorizePayment($details);
     }
