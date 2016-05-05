@@ -1,49 +1,43 @@
 <?php
 include_once('bootstrap.php');
+session_start();
 use PayPal\Api\RedirectUrls;
 $baseUrl = getBaseUrl();
 
 if ((isset($_POST['submit']))&&($_POST['submit']=='yes'))
 {
-    $username = trim($_POST['user']);
-    $passwd = sha1(trim($_POST['pwd']));
-    $time   = date('Y-m-d H:i:s');
-    $date   = new DateTime($time);
-    $date   ->add(new DateInterval('PT0H30M0S'));
-    $valid  = $date->format('Y-m-d H:i:s');
-    $secure_id      = uniqid('user_');
-    $host   = "localhost";$user = "root";
-    $pwd    = "desai1985";$db   = "astroisha";
-    $mysqli = new mysqli($host, $user, $pwd, $db);
-    /* check connection */
-    if (mysqli_connect_errno()) {
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            exit();
-    }
-    else
-    {
-        $sql = "UPDATE jv_paypal_auth SET session_id='".$secure_id."', valid_until='".$valid."' 
-                where user='".$username."' AND password='".$passwd."'";
-        $result	= mysqli_query($mysqli, $sql);
-        if($result)
+    $username = $_POST['user'];
+    $passwd = sha1($_POST['pwd']);
+    
+	$host   = "localhost";$user = "astroxou_admin";
+	$pwd    = "*Jrp;F.=OKzG";$db   = "astroxou_jvidya";
+	$mysqli = new mysqli($host, $user, $pwd, $db);
+	/* check connection */
+	if (mysqli_connect_errno()) {
+			printf("Connect failed: %s\n", mysqli_connect_error());
+			exit();
+	}
+	else
+    { 
+        $query  = "SELECT COUNT(*), user FROM jv_paypal_auth where user='".$username."' 
+                  and password='".$passwd."'";
+        $data       = mysqli_query($mysqli,$query);
+        $result     = mysqli_fetch_array($data);
+        $row      = mysqli_num_rows($data);
+        if($row == '1')
         {
-
-            $query  = "SELECT session_id, valid_until FROM jv_paypal_auth where user='luffy22'";
-            $data       = mysqli_query($mysqli,$query);
-            $assoc      = mysqli_fetch_assoc($data);
-            $session_id = $assoc['session_id'];
-            $valid      = strtotime($assoc['valid_until']);
-            $current    = strtotime(date('Y-m-d H:i:s'));
-            if(isset($session_id) && ($valid > $current))
+            $_SESSION['user']        = $result['user'];
+            if(isset($_SESSION['user']))
             {
-               
                $query1   = "SELECT jv_questions.UniqueID as uniq_id, jv_questions.name as name, jv_questions.email as email, 
                             jv_paypal_info.paypal_id as pay_id, jv_paypal_info.status as status,jv_paypal_info.authorize_id as auth_id FROM jv_questions
-                            INNER JOIN jv_paypal_info ON jv_questions.UniqueID = jv_paypal_info.UniqueID WHERE jv_questions.payment_type='paypal'";
+                            INNER JOIN jv_paypal_info ON jv_questions.UniqueID = jv_paypal_info.UniqueID WHERE jv_questions.payment_type='paypal'
+                            AND NOT(jv_paypal_info.status= 'Completed')";
                $data1    = mysqli_query($mysqli,$query1);
                $rows     = mysqli_num_rows($data1);
 ?>
-<div class="container">
+<div class="fluid-container">
+    <h3 class="text-center">Paypal Orders</h3>
             <div class="table-responsive">
         <table class="table table-striped">
             <tr>
@@ -55,6 +49,7 @@ if ((isset($_POST['submit']))&&($_POST['submit']=='yes'))
                 <th>Authorize</th>
                 <th>Capture Order</th>
                 <th>Cancel Order</th>
+                    
             </tr>
 <?php
                while($assoc1    = mysqli_fetch_array($data1))
@@ -67,8 +62,22 @@ if ((isset($_POST['submit']))&&($_POST['submit']=='yes'))
                 <td><?php echo $assoc1['pay_id'] ?></td>
                 <td><?php echo $assoc1['status'] ?></td>
                 <td><?php echo $assoc1['auth_id'] ?></td>
-                <td><button class="btn btn-success" onclick="javascript:capture(<?php echo $assoc1['auth_id'] ?>);">Capture</button></td>
-                <td><button class="btn btn-danger" onclick="javascript:cancel(<?php echo $assoc1['pay_id'] ?>);">Cancel</button></td>
+                <?php
+                        if($assoc1['status'] !== 'Voided')
+                        {
+                ?>
+                <td><button class="btn btn-success" onclick="javascript:capture('<?php echo $assoc1['auth_id'] ?>');">Capture</button></td>
+                <td><button class="btn btn-danger" onclick="javascript:cancel('<?php echo $assoc1['auth_id'] ?>');">Cancel</button></td>
+                <?php
+                        }
+                        else
+                        {
+               ?>
+                             <td></td>
+                             <td>Order Cancelled</td>
+                <?php
+                        }
+                ?>
             </tr>
 <?php
                }
@@ -78,10 +87,6 @@ if ((isset($_POST['submit']))&&($_POST['submit']=='yes'))
 </div>
  <?php
             }
-        }
-        else
-        {
-            echo "Update failed";
         }
     }
 }
@@ -97,17 +102,24 @@ else
     <link rel="stylesheet" type="text/css" href="../templates/astroisha2.0/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../templates/astroisha2.0/css/template.css" />
     <script type="text/javascript">
-        function capture()
+        function capture(order_id)
         {
-            alert("capture");
+            document.getElementById("auth_capt").value = order_id;
+            document.getElementById("capture_form").submit();
         }
-        function cancel()
+        function cancel(pay_id)
         {
-            alert("cancel");
+            document.getElementById("void_order").value = pay_id;
+            document.getElementById("void_form").submit();
         }
     </script>
 </head>
 <body>
-    <form id="capture_form" method="post" action="<?php echo $baseUrl ?>/auth_capture.php"
+    <form id="capture_form" method="post" action="<?php echo $baseUrl ?>/auth_capture.php" >
+        <input type="hidden" name="auth_capt" id="auth_capt" />
+    </form>
+    <form id="void_form" method="post" action="<?php echo $baseUrl ?>/void_order.php" >
+        <input type="hidden" name="void_order" id="void_order" />
+    </form>
 </body>
 </html>

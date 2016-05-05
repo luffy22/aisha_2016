@@ -28,7 +28,7 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
     $auth_id                = $auth->getId();
     $server            = "http://" . $_SERVER['SERVER_NAME'];
              //echo $server;exit;
-    header('Location:'.$server.'/aisha/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$paymentId.'&auth_id='.$auth_id.'&token='.$token);
+    header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.confirmPayment&id='.$paymentId.'&auth_id='.$auth_id.'&token='.$token);
     //$execution = new PaymentExecution();
     //$execution->setPayerId($_GET['PayerID']);
     //if($execution)

@@ -143,7 +143,7 @@ public function authorizePayment($details)
                                     'a.ques_topic3','a.ques_3','a.ques_3_explain','b.paypal_id','b.status')))
                             ->from($db->quoteName('#__questions','a'))
                               ->join('INNER', $db->quoteName('#__paypal_info', 'b') . ' ON (' . $db->quoteName('a.UniqueID').' = '.$db->quoteName('b.UniqueID') . ')')
-                            ->where($db->quoteName('paypal_id').'='.$db->quote($paypal_id));
+                            ->where($db->quoteName('b.paypal_id').'='.$db->quote($paypal_id));
        $db                  ->setQuery($query);
        $details                 = $db->loadAssoc();
        $fees                = $details['fees'];

@@ -1,6 +1,5 @@
 <?php
 header('Content-type: application/json');
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.

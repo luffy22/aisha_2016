@@ -22,7 +22,7 @@ function getIP() {
   return $ip;
 }
    
-$json = file_get_contents('http://getcitydetails.geobytes.com/GetCityDetails?fqcn='. getIP()); 
+$json = file_get_contents('http://getcitydetails.geobytes.com/GetCityDetails?fqcn='.getIP()); 
 $data = json_decode($json);
 
 if(isset($_GET['email'])&&($_GET['email']=='sent'))
