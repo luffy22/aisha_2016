@@ -18,7 +18,9 @@ class modQuesHelper
         <div class="spacer"></div>
         <div class="btn-toolbar btn-group-lg" role="toolbar" aria-label="Go to Section">
             <a href="<?php echo JUri::base(); ?>calculate-lagna"><button type="button" class="btn btn-primary"><img src="images/horo.png" height="20px" width="20px" /> Calculate Horoscope</button></a>
+            <a href="<?php echo JUri::base(); ?>astro-register"><button type="button" class="btn btn-primary">Are you an Astrologer?</button></a>
         </div>
+        
 <?php
 	}
 }
