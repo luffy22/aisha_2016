@@ -16,6 +16,8 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.keepalive');
 JHtml::_('behavior.formvalidation');
 ?>
+<h3>Already Registered? <a href="<?php echo JUri::base(); ?>login">Please Login</a></h3>
+<div class="spacer"></div>
 <div class="registration<?php echo $this->pageclass_sfx?>">
 <?php if ($this->params->get('show_page_heading')) : ?>
 	<div class="page-header">

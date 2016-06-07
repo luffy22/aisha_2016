@@ -21,12 +21,11 @@ JHtml::_('behavior.formvalidation');
 	</div>
 	<?php endif; ?>
 
-	<form id="user-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=reset.request'); ?>" method="post" class="form-validate form-horizontal">
+	<form id="user-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=reset.request'); ?>" method="post" class="form-validate">
 		<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
 		<p><?php echo JText::_($fieldset->label); ?></p>
-		<fieldset>
 			<?php foreach ($this->form->getFieldset($fieldset->name) as $name => $field) : ?>
-				<div class="control-group">
+				<div class="form-group">
 					<div class="control-label">
 						<?php echo $field->label; ?>
 					</div>
@@ -35,7 +34,6 @@ JHtml::_('behavior.formvalidation');
 					</div>
 				</div>
 			<?php endforeach; ?>
-		</fieldset>
 		<?php endforeach; ?>
 
 		<div class="form-actions">
