@@ -68,7 +68,11 @@ class modTopMenuHelper
       }
 ?>
             </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="<?php echo JURi::base(); ?>login">Login</a>
+    </ul>
     </div><!--/.nav-collapse -->
+    
   </div>
 </nav>
 <?php

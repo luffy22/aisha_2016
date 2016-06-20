@@ -4,7 +4,7 @@
 
 		<field name="password1" type="password"
 			autocomplete="off"
-			class="validate-password"
+			class="validate-password form-control"
 			description="COM_USERS_FIELD_RESET_PASSWORD1_DESC"
 			field="password2"
 			filter="raw"
@@ -16,7 +16,7 @@
 		/>
 		<field name="password2" type="password"
 			autocomplete="off"
-			class="validate-password"
+			class="validate-password form-control"
 			description="COM_USERS_FIELD_RESET_PASSWORD2_DESC"
 			filter="raw"
 			label="COM_USERS_FIELD_RESET_PASSWORD2_LABEL"

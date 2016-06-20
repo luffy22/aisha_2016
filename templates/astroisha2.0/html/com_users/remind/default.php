@@ -11,11 +11,11 @@ defined('_JEXEC') or die;
 $this->form->reset( true );
 
 // to load in our own version of login.xml
-$this->form->loadFile( dirname(__FILE__) . DS . "reset_request.xml");
+$this->form->loadFile( dirname(__FILE__) . DS . "remind.xml");
 JHtml::_('behavior.keepalive');
 JHtml::_('behavior.formvalidation');
 ?>
-<div class="reset <?php echo $this->pageclass_sfx?>">
+<div class="remind <?php echo $this->pageclass_sfx?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 	<div class="page-header">
 		<h1>
@@ -24,9 +24,12 @@ JHtml::_('behavior.formvalidation');
 	</div>
 	<?php endif; ?>
 
-	<form id="user-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=reset.request'); ?>" method="post" class="form-validate">
+	<form id="user-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=remind.remind'); ?>" method="post" class="form-validate">
+
 		<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
 		<p><?php echo JText::_($fieldset->label); ?></p>
+
+		<fieldset>
 			<?php foreach ($this->form->getFieldset($fieldset->name) as $name => $field) : ?>
 				<div class="form-group">
 					<div class="control-label">
@@ -37,8 +40,8 @@ JHtml::_('behavior.formvalidation');
 					</div>
 				</div>
 			<?php endforeach; ?>
+		</fieldset>
 		<?php endforeach; ?>
-
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary validate"><?php echo JText::_('JSUBMIT'); ?></button>
 			<?php echo JHtml::_('form.token'); ?>

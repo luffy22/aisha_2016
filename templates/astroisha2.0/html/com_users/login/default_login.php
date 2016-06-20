@@ -52,18 +52,6 @@ JHtml::_('behavior.keepalive');
 					</div>
 				<?php endif; ?>
 			<?php endforeach; ?>
-
-			<?php if ($this->tfa): ?>
-				<div class="form-group">
-					<div class="control-label">
-						<?php echo $this->form->getField('secretkey')->label; ?>
-					</div>
-					<div class="controls">
-						<?php echo $this->form->getField('secretkey')->input; ?>
-					</div>
-				</div>
-			<?php endif; ?>
-
 			<?php if (JPluginHelper::isEnabled('system', 'remember')) : ?>
 			<div  class="checkbox">
                            <label><input id="remember" type="checkbox" name="remember" class="inputbox" value="yes"/>
