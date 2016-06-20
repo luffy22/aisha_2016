@@ -36,4 +36,10 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
        // href();
     //}
 }
+else if(isset($_GET['success']) && $_GET['success'] == 'false')
+{
+    $token                  = $_GET['uniq_id'];
+    $failid                 = $_GET['token']; 
+    header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.failPayment&failid='.$failid.'&token='.$token);
+}
 ?>

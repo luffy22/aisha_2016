@@ -1,5 +1,8 @@
 <?php
 defined('_JEXEC') or die;
+$app = JFactory::getApplication();
+$menu = $app->getMenu();
+if ($menu->getActive() == $menu->getDefault()) {
 ?>
 <div class="table-responsive">
 <h3>Most Rated</h3>
@@ -29,3 +32,35 @@ defined('_JEXEC') or die;
 ?>
 </table>
 </div>
+<?php
+}
+else
+{
+?>
+<div class="table-responsive">
+<h3>Recent Articles</h3>
+<table class="table table-striped">
+    <tr>
+        <th>Title</th>
+        <th>Category</th>
+    </tr>
+<?php
+    foreach($allarticles as $data)
+    {  
+        $data['slug']       = $data['article_id'].':'.$data['article_alias'];
+        $data['catslug']    = $data['catid'].':'.$data['cat_alias'];
+        $data['link']       = JRoute::_(ContentHelperRoute::getArticleRoute($data['slug'], $data['catslug']));
+        $data['catlink']    = JRoute::_(ContentHelperRoute::getCategoryRoute($data['catid'], $language));
+?>
+    <tr>
+        <td><a href="<?php echo $data['link'] ?>" title="<?php echo $data['title'];?>"><?php echo $data['title']; ?></a></td>
+        <td><a href="<?php echo $data['catlink']; ?>"><?php echo $data['cat_title'] ?></a></td>
+    </tr>
+<?php
+    }
+?>
+</table>
+</div>
+<?php
+}
+?>

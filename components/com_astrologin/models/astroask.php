@@ -72,11 +72,15 @@ public function askQuestions($details)
     if($result)
     {
         $query              ->clear();
-        $query1    ->insert($db->quoteName('#__paypal_info'))
-                    ->columns($db->quoteName($column1))
-                    ->values(implode(',',$values1));
-        $db             ->setQuery($query1);
-        $result1  = $db->query();
+        if($details['user_loc']!=="IN")
+        {
+            $query1    ->insert($db->quoteName('#__paypal_info'))
+                        ->columns($db->quoteName($column1))
+                        ->values(implode(',',$values1));
+            $db             ->setQuery($query1);
+
+            $result1  = $db->query();
+        }
         $query1->clear(); 
         $query              ->select($db->quoteName(array('UniqueID','name','email',
                                     'gender','dob','pob','tob','fees','choice', 'explain_choice',
@@ -224,19 +228,21 @@ public function authorizePayment($details)
 public function failPayment($details)
 {
     $token          = $details['token'];
+    $fail_id        = $details['fail_id'];
     $db         = JFactory::getDbo();
     $query      = $db->getQuery(true);
      $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     // Fields to update.
     $fields = array(
-        $db->quoteName('paypal_authorize') . ' = ' . $db->quote('no'),
-        $db->quoteName('paypal_id').'='.$db->quote($paypal_id));
+        $db->quoteName('authorize_id') . ' = ' . $db->quote('no'),
+        $db->quoteName('paypal_id').'='.$db->quote($fail_id),
+        $db->quoteName('status').'='.$db->quote('Cancelled'));
     // Conditions for which records should be updated.
     $conditions = array(
         $db->quoteName('UniqueID').'='.$db->quote($token)
     );
-    $query->update($db->quoteName('#__questions'))->set($fields)->where($conditions);
+    $query->update($db->quoteName('#__paypal_info'))->set($fields)->where($conditions);
  
     $db->setQuery($query);
  

@@ -30,7 +30,7 @@ class modTopContentHelper
     {
         $today         = new DateTime('NOW');
         $todate        = $today->format('Y-m-d H:i:s');
-        $today    ->sub(new DateInterval('P0Y6M0DT0H0M0S'));
+        $today    ->sub(new DateInterval('P0Y3M0DT0H0M0S'));
         $month_6        = $today->format('Y-m-d H:i:s');
         
         $db             = JFactory::getDbo();  // Get db connection
