@@ -14,7 +14,7 @@ class modTopMenuHelper
     {
 	$app = JFactory::getApplication();
         $menu = $app->getMenu();
-
+        
         // Get active menu item
         $base       = self::getBase($params);
         $result     = $menu->getItems('menutype', $base->menutype);
@@ -46,7 +46,6 @@ class modTopMenuHelper
             if($items->level=="1")
             {
                 $children       = $menu->getItems('parent_id',$items->id, false);
-                
           ?>
              <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="<?php echo $url ?>"><?php echo $items->title ?><span class="caret"></span></a>
              <ul class="nav navbar-inverse dropdown-menu">
@@ -64,12 +63,40 @@ class modTopMenuHelper
             }
       ?>
             </li>
+            
 <?php
       }
 ?>
-            </ul>
+    </ul>
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="<?php echo JURi::base(); ?>login">Login</a>
+        <li class="dropdown navbar-inverse">
+<?php 
+        $user = JFactory::getUser();
+        
+        if($user->guest)
+        {
+
+?>
+            <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+            <ul class="nav navbar-inverse dropdown-menu">
+                <li><a href="<?php echo JURI::base() ?>login">Login</a></li>
+                <li><a href="<?php echo JURi::base() ?>astro-register">Register</a></li>
+                <li><a href="<?php echo JUri::base() ?>reset-pwd">Forgot Password?</a></li>
+                <li><a href="<?php echo JUri::base() ?>remind">Forgot Username?</a></li>
+            </ul>
+<?php
+        }
+        else
+        {
+?>          
+            <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span>Hello <?php echo $user->username; ?> <span class="caret"></span></a>
+            <ul class="nav navbar-inverse dropdown-menu">
+                <li><a href="<?php echo JRoute::_('index.php?option=com_users&task=user.logout'); ?>"><span class="glyphicon glyphicon-off"></span> Sign Out</a></li>
+            </ul>
+<?php
+        }
+?>
+        </li>
     </ul>
     </div><!--/.nav-collapse -->
     
