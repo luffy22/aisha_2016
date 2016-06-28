@@ -89,9 +89,9 @@ class modTopMenuHelper
         else
         {
 ?>          
-            <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span>Hello <?php echo $user->username; ?> <span class="caret"></span></a>
+            <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> Hello <?php echo $user->username; ?> <span class="caret"></span></a>
             <ul class="nav navbar-inverse dropdown-menu">
-                <li><a href="<?php echo JRoute::_('index.php?option=com_users&task=user.logout'); ?>"><span class="glyphicon glyphicon-off"></span> Sign Out</a></li>
+                <li><a href="<?php echo JUri::base() ?>logout"><span class="glyphicon glyphicon-off"></span> Sign Out</a></li>
             </ul>
 <?php
         }
