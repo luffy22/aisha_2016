@@ -1,987 +1,1071 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>http://www.astroisha.com/</loc>
+    <loc>https://www.astroisha.com/</loc>
     <changefreq>Monthly</changefreq>
   </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets/1-surya</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets/1-surya</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets/2-chandra</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets/2-chandra</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets/3-mangal</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets/3-mangal</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets/4-budh</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets/4-budh</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets/5-guru</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets/5-guru</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/astro-tutor/9-planets/6-shukra</loc>
+    <loc>https://www.astroisha.com/astro-tutor/astro-tutor/9-planets/6-shukra</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets/7-shani</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets/7-shani</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets/8-rahu</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets/8-rahu</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/9-planets/9-ketu</loc>
+    <loc>https://www.astroisha.com/astro-tutor/9-planets/9-ketu</loc>
     <changefreq>Weekly</changefreq>
    </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/</loc>
     <changefreq>Weekly</changefreq>
     </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/10-tanu-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/10-tanu-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/11-dhana-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/11-dhana-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/12-bandhu-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/12-bandhu-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/13-matru-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/13-matru-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/14-putra-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/14-putra-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/15-rog-sthana</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/15-rog-sthana</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/16-kalatra-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/16-kalatra-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/17-mrityu-sthana</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/17-mrityu-sthana</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/18-dharma-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/18-dharma-bhava</loc>
     <changefreq>Weekly</changefreq>
     <priority>0.5</priority>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/19-karma-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/19-karma-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/20-labh-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/20-labh-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-bhavas/21-vyaya-bhava</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-bhavas/21-vyaya-bhava</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/22-aries</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/22-aries</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/23-taurus</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/23-taurus</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/24-gemini</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/24-gemini</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/25-cancer</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/25-cancer</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/26-leo</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/26-leo</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/27-virgo</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/27-virgo</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/28-libra</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/28-libra</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/29-scorpio</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/29-scorpio</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/30-sagittarius</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/30-sagittarius</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/31-capricorn</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/31-capricorn</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/32-aquarius</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/32-aquarius</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/12-rashis/33-pisces</loc>
+    <loc>https://www.astroisha.com/astro-tutor/12-rashis/33-pisces</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas/103-aries-females</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas/103-aries-females</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas/102-aries-males</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas/102-aries-males</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas/104-taurus-females</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas/104-taurus-females</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas/105-taurus-males</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas/105-taurus-males</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas/106-gemini-females</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas/106-gemini-females</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas/107-gemini-males</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas/107-gemini-males</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas/108-cancer-females</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas/108-cancer-females</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/12-lagnas/109-cancer-males</loc>
+	<loc>https://www.astroisha.com/astro-tutor/12-lagnas/109-cancer-males</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-       <loc>http://www.astroisha.com/astro-tutor/12-lagnas/110-simha-females</loc>
+       <loc>https://www.astroisha.com/astro-tutor/12-lagnas/110-simha-females</loc>
        <changefreq>Weekly</changefreq>
    </url>
    <url>
-       <loc>http://www.astroisha.com/astro-tutor/12-lagnas/111-simha-males</loc>
+       <loc>https://www.astroisha.com/astro-tutor/12-lagnas/111-simha-males</loc>
        <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/114-kanya-females</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/114-kanya-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/115-kanya-males</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/115-kanya-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/116-libra-females</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/116-libra-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/117-libra-males</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/117-libra-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/118-scorpio-females</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/118-scorpio-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-ascendants/119-scorpio-males</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-ascendants/119-scorpio-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/120-sagittarius-females</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/120-sagittarius-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/121-sagittarius-males</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/121-sagittarius-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/123-capricorn-females</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/123-capricorn-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/124-capricorn-males</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/124-capricorn-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/125-aquarius-females</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/125-aquarius-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/126-aquarius-males</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/126-aquarius-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/127-pisces-females</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/127-pisces-females</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/12-lagnas/128-pisces-males</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/12-lagnas/128-pisces-males</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/34-ashvini</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/34-ashvini</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/35-bharani</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/35-bharani</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/36-krittika</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/36-krittika</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/37-rohini</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/37-rohini</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/38-mrigashira</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/38-mrigashira</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/39-ardra</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/39-ardra</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/40-punarvasu</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/40-punarvasu</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/41-pushya</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/41-pushya</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/42-ashlesha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/42-ashlesha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/43-magha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/43-magha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/44-purva-phalguni</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/44-purva-phalguni</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/45-uttara-phalguni</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/45-uttara-phalguni</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/46-hasta</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/46-hasta</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/47-chitra</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/47-chitra</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/48-swati</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/48-swati</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/49-vishakha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/49-vishakha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/50-anuradha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/50-anuradha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/51-jytestha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/51-jytestha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/52-mula</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/52-mula</loc>
     <changefreq>Weekly</changefreq>
     </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/53-purva-asadha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/53-purva-asadha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/54-uttara-asadha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/54-uttara-asadha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/55-sravana</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/55-sravana</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/56-dhanistha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/56-dhanistha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/57-shatabhisa</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/57-shatabhisa</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/58-purva-bhadrapada</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/58-purva-bhadrapada</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/59-uttara-bhadrapada</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/59-uttara-bhadrapada</loc>
 	<changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/27-nakshatras/60-revati</loc>
+    <loc>https://www.astroisha.com/astro-tutor/27-nakshatras/60-revati</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/74-visha-yoga</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/74-visha-yoga</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/75-nbry</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/75-nbry</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/76-vry</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/76-vry</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/77-vcy</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/77-vcy</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/78-sasha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/78-sasha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/79-ruchaka</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/79-ruchaka</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/80-hansa</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/80-hansa</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/81-mala</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/81-mala</loc>
 	<changefreq>Weekly</changefreq>
    </url><url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/82-bhadra</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/82-bhadra</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/83-payo</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/83-payo</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/84-gky</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/84-gky</loc>
     <changefreq>Weekly</changefreq>
     </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/91-kaal-sarp</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/91-kaal-sarp</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/yogas/96-pitru-dosha</loc>
+    <loc>https://www.astroisha.com/yogas/96-pitru-dosha</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/97-pitru-dosha-2</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/97-pitru-dosha-2</loc>
     <changefreq>Weekly</changefreq>
    </url>
     <url>
-    <loc>http://www.astroisha.com/astro-tutor/imp-yogas/98-pitru-dosha-3</loc>
+    <loc>https://www.astroisha.com/astro-tutor/imp-yogas/98-pitru-dosha-3</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/145-sunapha-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/145-sunapha-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/147-anapha-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/147-anapha-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/148-dhurdhura-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/148-dhurdhura-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/149-kemdruma-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/149-kemdruma-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/150-chandra-mangal</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/150-chandra-mangal</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/151-adhi-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/151-adhi-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/152-chatusagara-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/152-chatusagara-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/154-vasumathi-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/154-vasumathi-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/155-rajlakshana</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/155-rajlakshana</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/156-sakata-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/156-sakata-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/157-amala-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/157-amala-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/158-parvata-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/158-parvata-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas159-kahala-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas159-kahala-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-		<loc>http://www.astroisha.com/astro-tutor/imp-yogas/160-vesi-yoga</loc>
+		<loc>https://www.astroisha.com/astro-tutor/imp-yogas/160-vesi-yoga</loc>
 		<changefreq>Weekly</changefreq>
    </url>
    <url>
-		<loc>http://www.astroisha.com/astro-tutor/imp-yogas/161-obyachari-yoga</loc>
+		<loc>https://www.astroisha.com/astro-tutor/imp-yogas/161-obyachari-yoga</loc>
 		<changefreq>Weekly</changefreq>
    </url>
    <url>
-		<loc>http://www.astroisha.com/astro-tutor/imp-yogas/162-budh-aditya</loc>
+		<loc>https://www.astroisha.com/astro-tutor/imp-yogas/162-budh-aditya</loc>
 		<changefreq>Weekly</changefreq>
    </url>
    <url>
-		<loc>http://www.astroisha.com/astro-tutor/imp-yogas/163-mahabhagya-yoga</loc>
+		<loc>https://www.astroisha.com/astro-tutor/imp-yogas/163-mahabhagya-yoga</loc>
 		<changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/165-pushkala-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/165-pushkala-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/167-laxmi-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/167-laxmi-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/168-gauri-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/168-gauri-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/172-chapa-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/172-chapa-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/173-sreenatha-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/173-sreenatha-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/174-malika-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/174-malika-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/imp-yogas/183-sankha-yoga</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/imp-yogas/183-sankha-yoga</loc>
 	   <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/education</loc>
+    <loc>https://www.astroisha.com/education</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/career</loc>
+    <loc>https://www.astroisha.com/career</loc>
+    <changefreq>Weekly</changefreq>
+   </url> 
+   <url>
+    <loc>https://www.astroisha.com/family</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/health</loc>
-    <changefreq>Weekly</changefreq>
-    </url>
-   <url>
-    <loc>http://www.astroisha.com/family</loc>
+    <loc>https://www.astroisha.com/love-relationship</loc>
     <changefreq>Weekly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/love-relationship</loc>
-    <changefreq>Weekly</changefreq>
-   </url>
-   <url>
-	<loc>http://www.astroisha.com/astro-tutor/main</loc>
+	<loc>https://www.astroisha.com/astro-tutor/main</loc>
 	<changefreq>Monthly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/main/61-vedic-astrology</loc>
+    <loc>https://www.astroisha.com/astro-tutor/main/61-vedic-astrology</loc>
     <changefreq>Monthly</changefreq>
     </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/main/85-laxmi</loc>
+    <loc>https://www.astroisha.com/astro-tutor/main/85-laxmi</loc>
     <changefreq>Monthly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/main/86-vishnu</loc>
+    <loc>https://www.astroisha.com/astro-tutor/main/86-vishnu</loc>
     <changefreq>Monthly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/main/87-prarabdha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/main/87-prarabdha</loc>
     <changefreq>Monthly</changefreq>
    </url>
      <url>
-    <loc>http://www.astroisha.com/astro-tutor/main/88-purushartha</loc>
+    <loc>https://www.astroisha.com/astro-tutor/main/88-purushartha</loc>
     <changefreq>Monthly</changefreq>
    </url>
      <url>
-    <loc>http://www.astroisha.com/astro-tutor/main/89-dushamsthanas</loc>
+    <loc>https://www.astroisha.com/astro-tutor/main/89-dushamsthanas</loc>
     <changefreq>Monthly</changefreq>
    </url>
    <url>
-	   <loc>http://www.astroisha.com/astro-tutor/main/101-lagna</loc>
+	   <loc>https://www.astroisha.com/astro-tutor/main/101-lagna</loc>
 	   <changefreq>Monthly</changefreq>
    </url>
      <url>
-    <loc>http://www.astroisha.com/astro-tutor/featured-articles</loc>
+    <loc>https://www.astroisha.com/astro-tutor/featured-articles</loc>
     <changefreq>Monthly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/featured-articles/67-shani-and-superstition</loc>
+    <loc>https://www.astroisha.com/astro-tutor/featured-articles/67-shani-and-superstition</loc>
     <changefreq>Monthly</changefreq>
    </url>  
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/featured-articles/73-kuja</loc>
+    <loc>https://www.astroisha.com/astro-tutor/featured-articles/73-kuja</loc>
     <changefreq>Monthly</changefreq>
    </url>  
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/featured-articles/92-mantra-power</loc>
+    <loc>https://www.astroisha.com/astro-tutor/featured-articles/92-mantra-power</loc>
     <changefreq>Monthly</changefreq>
    </url> 
    <url>
-    <loc>http://www.astroisha.com/featured-articles/93-numerology-myth</loc>
+    <loc>https://www.astroisha.com/featured-articles/93-numerology-myth</loc>
     <changefreq>Monthly</changefreq>
    </url>  
    <url>
-    <loc>http://www.astroisha.com/featured-articles/94-lucky-charms</loc>
+    <loc>https://www.astroisha.com/featured-articles/94-lucky-charms</loc>
     <changefreq>Monthly</changefreq>
    </url>
    <url>
-    <loc>http://www.astroisha.com/astro-tutor/featured-articles/99-str</loc>
+    <loc>https://www.astroisha.com/astro-tutor/featured-articles/99-str</loc>
     <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/featured-articles/112-don-t-blame-stars</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/112-don-t-blame-stars</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/featured-articles/113-fasting-science</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/113-fasting-science</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/featured-articles/122-fasting-science-2</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/122-fasting-science-2</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/featured-articles/132-gantavya</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/132-gantavya</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/featured-articles/133-astrology-timings</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/133-astrology-timings</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/featured-articles/178-shani-7years</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/178-shani-7years</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/featured-articles/187-astro-swot</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/187-astro-swot</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/featured-articles/191-mangal-compare</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/191-mangal-compare</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/featured-articles/200-science-vs-superstition</loc>
+	  <loc>https://www.astroisha.com/featured-articles/200-science-vs-superstition</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-      <loc>http://www.astroisha.com/astro-tutor/featured-articles/207-astro-noconsult</loc>
+      <loc>https://www.astroisha.com/astro-tutor/featured-articles/207-astro-noconsult</loc>
       <changefreq>Monthly</changefreq>
   </url>
   <url>
-      <loc>http://www.astroisha.com/astro-tutor/featured-articles/209-shani-test</loc>
+      <loc>https://www.astroisha.com/astro-tutor/featured-articles/209-shani-test</loc>
       <changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/featured-articles/214-lal-kitab-farce</loc>
+	<loc>https://www.astroisha.com/astro-tutor/featured-articles/214-lal-kitab-farce</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/featured-articles/237-science-prayers</loc>
+	<loc>https://www.astroisha.com/astro-tutor/featured-articles/237-science-prayers</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/marriage-career/career-astrology/166-career-roles</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/featured-articles/257-hillary-chances</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/marriage-career/career-astrology/211-career-relocation</loc>
+	  <loc>https://www.astroisha.com/marriage-career/career-astrology/166-career-roles</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/marriage-career/relationship-astrology</loc>
+	  <loc>https://www.astroisha.com/marriage-career/career-astrology/211-career-relocation</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/marriage-consider/129-opposites-attract</loc>
-	  <changefreq>Monthly</changefreq>
-  </url>
-  <url>
-	  <loc>http://www.astroisha.com/marriage-consider/130-love-marriage-yoga</loc>
-	  <changefreq>Monthly</changefreq>
-  </url>
-  <url>
-	  <loc>http://www.astroisha.com/marriage-consider/131-find-spouse</loc>
-	  <changefreq>Monthly</changefreq>
-  </url>
-  <url>
-	  <loc>http://www.astroisha.com/marriage-consider/164-divorce-reasons</loc>
-	  <changefreq>Monthly</changefreq>
-  </url>
-  <url>
-	  <loc>http://www.astroisha.com/marriage-consider/169-run-marry</loc>
-	  <changefreq>Monthly</changefreq>
-  </url>
-  <url>
-	<loc>http://www.astroisha.com/marriage-consider/197-astro-interfaith</loc>
-	<changefreq>Monthly</changefreq>
-  </url>
-  <url>
-		<loc>http://www.astroisha.com/marriage-consider/201-arranged-marriage</loc>
+		<loc>https://www.astroisha.com/marriage-career/career-astrology/260-doctor-career</loc>
 		<changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/marriage-consider/202-mangal-dosha-marry</loc>
+	  <loc>https://www.astroisha.com/marriage-career/relationship-astrology</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-      <loc>http://www.astroisha.com/marriage-consider/205-retrograde-divorce</loc>
+	  <loc>https://www.astroisha.com/marriage-consider/129-opposites-attract</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/marriage-consider/130-love-marriage-yoga</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/marriage-consider/131-find-spouse</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/marriage-consider/164-divorce-reasons</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/marriage-consider/169-run-marry</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	<loc>https://www.astroisha.com/marriage-consider/197-astro-interfaith</loc>
+	<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/marriage-consider/201-arranged-marriage</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/marriage-consider/202-mangal-dosha-marry</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+      <loc>https://www.astroisha.com/marriage-consider/205-retrograde-divorce</loc>
       <changefreq>Monthly</changefreq>
   </url>
   <url>
-       <loc>http://www.astroisha.com/marriage-consider/206-right-marriage</loc>
+       <loc>https://www.astroisha.com/marriage-consider/206-right-marriage</loc>
        <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/relationship-astrology/229-divorce-choice</loc>
+	  <loc>https://www.astroisha.com/relationship-astrology/229-divorce-choice</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/marriage-consider/234-marriage-propose</loc>
+	  <loc>https://www.astroisha.com/marriage-consider/234-marriage-propose</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-		<loc>http://www.astroisha.com/marriage-consider/235-12th-delay</loc>
+		<loc>https://www.astroisha.com/marriage-consider/235-12th-delay</loc>
 		<changefreq>Monthly</changefreq>
   </url>
   <url>
-		<loc>http://www.astroisha.com/marriage-consider/236-kumbh-fate</loc>
+		<loc>https://www.astroisha.com/marriage-consider/236-kumbh-fate</loc>
 		<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas</loc>
+		<loc>https://www.astroisha.com/marriage-consider/250-divorce-timings</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/marriage-consider/253-intense-attraction</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/134-chandra-1st-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/134-chandra-1st-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/135-chandra-2nd-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/135-chandra-2nd-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/136-chandra-3rd-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/136-chandra-3rd-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/137-chandra-4th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/137-chandra-4th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/138-chandra-5th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/138-chandra-5th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/139-chandra-6th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/139-chandra-6th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/140-chandra-7th-bouse</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/140-chandra-7th-bouse</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/141-chandra-8th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/141-chandra-8th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/142-chandra-9th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/142-chandra-9th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/143-chandra-10th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/143-chandra-10th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/144-chandra-11th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/144-chandra-11th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/146-chandra-12th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/146-chandra-12th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/170-shani-1st-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/170-shani-1st-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/171-shani-2nd-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/171-shani-2nd-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/175-shani-3rd-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/175-shani-3rd-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/176-shani-4th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/176-shani-4th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/177-shani-5th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/177-shani-5th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/179-shani-6th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/179-shani-6th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/180-shani-7th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/180-shani-7th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/181-shani-8th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/181-shani-8th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/182-shani-9th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/182-shani-9th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/184-shani-10th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/184-shani-10th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/185-shani-11th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/185-shani-11th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/186-shani-12th-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/186-shani-12th-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/203-mangal-1st-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/203-mangal-1st-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/204-mangal-2nd-house</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/204-mangal-2nd-house</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/208-mangal-3rd-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/208-mangal-3rd-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-     <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/210-mangal-4th-house</loc>
+     <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/210-mangal-4th-house</loc>
      <changefreq>Monthly</changefreq>
   </url>
   <url>
-     <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/212-mangal-5th-house</loc>
+     <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/212-mangal-5th-house</loc>
      <changefreq>Monthly</changefreq>
   </url>
   <url>
-     <loc>http://www.astroisha.com/astro-tutor/planets-bhavas/213-mangal-6th-house</loc>
+     <loc>https://www.astroisha.com/astro-tutor/planets-bhavas/213-mangal-6th-house</loc>
      <changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/227-mangal-7th-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/227-mangal-7th-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/228-mangal-8th-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/228-mangal-8th-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/230-mangal-9th-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/230-mangal-9th-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/231-mars-10th-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/231-mars-10th-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/232-mars-11th-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/232-mars-11th-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/233-mars-12th-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/233-mars-12th-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/238-sun-1st-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/238-sun-1st-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/239-sun-2nd-house</loc>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/239-sun-2nd-house</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-		<loc>http://www.astroisha.com/astro-tutor/planets-bhavas/240-sun-3rd-house</loc>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/240-sun-3rd-house</loc>
 		<changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/remedies</loc>
-	  <changefreq>Monthly</changefreq>
-  </url>
-  <url>
- 		<loc>http://www.astroisha.com/astro-tutor/remedies/188-sun-remedies</loc>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/241-sun-4th-house</loc>
 		<changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/remedies/189-chandra-remedies</loc>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/242-sun-5th-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/243-sun-6th-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/244-sun-7th-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/245-sun-8th-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/246-sun-9th-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/248-sun-10th-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/249-sun-11th-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/252-sun-12th-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/259-mercury-1st-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/261-mercury-2nd-house</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/ved-remedies/remedies/</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/remedies/190-mars-remedies</loc>
+ 		<loc>https://www.astroisha.com/ved-remedies/remedies/188-sun-remedies</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/ved-remedies/remedies/189-chandra-remedies</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/remedies/192-mercury-remedies</loc>
+	  <loc>https://www.astroisha.com/ved-remedies/remedies/190-mars-remedies</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/remedies/194-jupiter-remedies</loc>
+	  <loc>https://www.astroisha.com/ved-remedies/remedies/192-mercury-remedies</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/remedies/195-shukra-remedies</loc>
+	  <loc>https://www.astroisha.com/ved-remedies/remedies/194-jupiter-remedies</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/remedies/196-shani-remedies</loc>
+	  <loc>https://www.astroisha.com/astro-tutor/remedies/195-shukra-remedies</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	<loc>https://www.astroisha.com/ved-remedies/remedies/196-shani-remedies</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/remedies/198-rahu-remedies</loc>
+	  <loc>https://www.astroisha.com/ved-remedies/remedies/198-rahu-remedies</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-	  <loc>http://www.astroisha.com/astro-tutor/remedies/199-ketu-remedies</loc>
+	  <loc>https://www.astroisha.com/ved-remedies/remedies/199-ketu-remedies</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.astroisha.com/about-us/contact-us</loc>
+    <loc>https://www.astroisha.com/about-us/contact-us</loc>
     <changefreq>Monthly</changefreq>
    </url>
   <url>
-     <loc>http://www.astroisha.com/about-us/privacy</loc>
+     <loc>https://www.astroisha.com/about-us/privacy</loc>
      <changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/215-aries-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/215-aries-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/216-taurus-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/216-taurus-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/217-gemini-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/217-gemini-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/218-cancer-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/218-cancer-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/219-leo-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/219-leo-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
    <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/220-virgo-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/220-virgo-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/221-libra-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/221-libra-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/222-scorpio-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/222-scorpio-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/223-sagittarius-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/223-sagittarius-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/224-capricorn-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/224-capricorn-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/225-aquarius-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/225-aquarius-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/astro-tutor/yearly-predictions/226-pisces-2016</loc>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/226-pisces-2016</loc>
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
-	<loc>http://www.astroisha.com/about-us/refunds?view=payment</loc>
+		<loc>https://www.astroisha.com/ved-remedies/health</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.astroisha.com/health-article</loc>
+    <changefreq>Monthly</changefreq>
+    </url>
+    <url>
+		<loc>https://www.astroisha.com/ved-remedies/health/247-elements-dosha</loc>
+		<changefreq>Monthly</changefreq>
+    </url>
+    <url>
+		<loc>https://www.astroisha.com/ved-remedies/health/255-kapha</loc>
+		<changefreq>Monthly</changefreq>
+    </url>
+    <url>
+		<loc>https://www.astroisha.com/ved-remedies/health/254-vata</loc>
+		<changefreq>Monthly</changefreq>
+    </url>
+    <url>
+		<loc>https://www.astroisha.com/ved-remedies/health/256-pitta</loc>
+		<changefreq>Monthly</changefreq>
+    </url>
+    <url>
+		<loc>https://www.astroisha.com/ved-remedies/health/258-sleep-astrology</loc>
+		<changefreq>Monthly</changefreq>
+    </url>
+  <url>
+	<loc>https://www.astroisha.com/about-us/refunds?view=payment</loc>
 	<changefreq>Yearly</changefreq>
   </url>
 </urlset>
