@@ -7,6 +7,7 @@
 			<field
 				name="address1"
 				type="text"
+                                class="form-control"
 				id="address1"
 				description="PLG_USER_PROFILE_FIELD_ADDRESS1_DESC"
 				filter="string"
@@ -17,6 +18,7 @@
 			<field
 				name="address2"
 				type="text"
+                                class="form-control"
 				id="address2"
 				description="PLG_USER_PROFILE_FIELD_ADDRESS2_DESC"
 				filter="string"
@@ -27,6 +29,7 @@
 			<field
 				name="city"
 				type="text"
+                                class="form-control"
 				id="city"
 				description="PLG_USER_PROFILE_FIELD_CITY_DESC"
 				filter="string"
@@ -35,8 +38,9 @@
 			/>
 
 			<field
-				name="region"
+				name="state/province"
 				type="text"
+                                class="form-control"
 				id="region"
 				description="PLG_USER_PROFILE_FIELD_REGION_DESC"
 				filter="string"
@@ -47,6 +51,7 @@
 			<field
 				name="country"
 				type="text"
+                                class="form-control"
 				id="country"
 				description="PLG_USER_PROFILE_FIELD_COUNTRY_DESC"
 				filter="string"
@@ -57,6 +62,7 @@
 			<field
 				name="postal_code"
 				type="text"
+                                class="form-control"
 				id="postal_code"
 				description="PLG_USER_PROFILE_FIELD_POSTAL_CODE_DESC"
 				filter="string"
@@ -67,6 +73,7 @@
 			<field
 				name="phone"
 				type="tel"
+                                class="form-control"
 				id="phone"
 				description="PLG_USER_PROFILE_FIELD_PHONE_DESC"
 				filter="string"
@@ -77,6 +84,7 @@
 			<field
 				name="website"
 				type="url"
+                                class="form-control"
 				id="website"
 				description="PLG_USER_PROFILE_FIELD_WEB_SITE_DESC"
 				filter="url"
@@ -86,6 +94,7 @@
 			<field
 				name="aboutme"
 				type="textarea"
+                                class="form-control"
 				description="PLG_USER_PROFILE_FIELD_ABOUT_ME_DESC"
 				label="PLG_USER_PROFILE_FIELD_ABOUT_ME_LABEL"
 				cols="30"
@@ -99,6 +108,7 @@
 			<field
 				name="dob"
 				type="calendar"
+                                class="form-control"
                                 label="PLG_USER_PROFILE_FIELD_DOB_LABEL"
 				description="PLG_USER_PROFILE_FIELD_DOB_DESC"
 				format="%Y-%m-%d"

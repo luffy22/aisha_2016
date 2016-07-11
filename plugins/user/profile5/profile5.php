@@ -16,7 +16,7 @@ defined('JPATH_BASE') or die;
  * @subpackage  User.profile
  * @since       1.6
  */
-class PlgUserProfile extends JPlugin
+class PlgUserProfile5 extends JPlugin
 {
 	/**
 	 * Date of birth.

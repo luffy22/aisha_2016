@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
+$this->form->loadFile( dirname(__FILE__) . DS . "profile.xml");
 defined('_JEXEC') or die;
 
 JHtml::_('behavior.keepalive');
@@ -18,7 +18,7 @@ $lang = JFactory::getLanguage();
 $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 ?>
 <div class="profile-edit<?php echo $this->pageclass_sfx?>">
-<?php if ($this->params->get('show_page_heading')) : ?>
+<?php if (($this->params->get('show_page_heading'))&&($this->params->get('show_page_heading') !== "User Profile")) : ?>
 	<div class="page-header">
 		<h1><?php echo $this->escape($this->params->get('page_heading')); ?></h1>
 	</div>
@@ -76,7 +76,7 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 	<fieldset>
 		<legend><?php echo JText::_('COM_USERS_PROFILE_TWO_FACTOR_AUTH') ?></legend>
 
-		<div class="control-group">
+		<div class="form-group">
 			<div class="control-label">
 				<label id="jform_twofactor_method-lbl" for="jform_twofactor_method" class="hasTooltip"
 					   title="<strong><?php echo JText::_('COM_USERS_PROFILE_TWOFACTOR_LABEL') ?></strong><br/><?php echo JText::_('COM_USERS_PROFILE_TWOFACTOR_DESC') ?>">

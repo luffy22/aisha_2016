@@ -182,3 +182,5 @@
 2016-06-16T05:04:11+00:00	INFO	joomlafailure	Username and password do not match or you do not have an account yet.
 2016-06-27T06:13:48+00:00	INFO	joomlafailure	Username and password do not match or you do not have an account yet.
 2016-06-27T06:15:35+00:00	INFO	joomlafailure	Username and password do not match or you do not have an account yet.
+2016-07-08T05:55:13+00:00	INFO	joomlafailure	Username and password do not match or you do not have an account yet.
+2016-07-11T08:35:01+00:00	INFO	cookiefailure	Empty password not allowed

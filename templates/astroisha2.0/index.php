@@ -111,6 +111,9 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
     $( "#datepicker" ).datepicker({ yearRange: "1950:2016",changeMonth: true,
       changeYear: true, dateFormat: "yy/mm/dd"  });
   });
+  $( "#jform_profile_dob" ).datepicker({ yearRange: "1930:2016",changeMonth: true,
+      changeYear: true, dateFormat: "yy/mm/dd"  });
+  });
 </script>
 </body>
 </html>
