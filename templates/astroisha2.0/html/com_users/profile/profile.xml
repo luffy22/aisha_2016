@@ -6,7 +6,6 @@
 		<field name="id" type="hidden"
 			filter="integer"
 		/>
-
 		<field name="name" type="text"
 			description="COM_USERS_PROFILE_NAME_DESC"
                         class="form-control"

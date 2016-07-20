@@ -106,14 +106,12 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
 </div>
 <jdoc:include type="modules" name="footer2" style="none" />
 <jdoc:include type="modules" name="footer" style="none" />
-<script>
-  $(function() {
+<script>$(function() {
     $( "#datepicker" ).datepicker({ yearRange: "1950:2016",changeMonth: true,
       changeYear: true, dateFormat: "yy/mm/dd"  });
-  });
-  $( "#jform_profile_dob" ).datepicker({ yearRange: "1930:2016",changeMonth: true,
+  });</script>
+<script>$( "#jform_profile_dob" ).datepicker({ yearRange: "1930:2016",changeMonth: true,
       changeYear: true, dateFormat: "yy/mm/dd"  });
-  });
-</script>
+  });</script>
 </body>
 </html>
