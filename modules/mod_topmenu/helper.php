@@ -20,7 +20,7 @@ class modTopMenuHelper
         $result     = $menu->getItems('menutype', $base->menutype);
 ?>
 <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
+  <div class="fluid-container">
     <div class="navbar-header">
      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="Home">
             <span class="sr-only">Toggle navigation</span>
