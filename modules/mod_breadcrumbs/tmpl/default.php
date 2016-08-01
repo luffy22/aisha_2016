@@ -27,7 +27,8 @@ JHtml::_('bootstrap.tooltip');
 	// Get rid of duplicated entries on trail including home page when using multilanguage
 	for ($i = 0; $i < $count; $i++)
 	{
-		if ($i == 1 && !empty($list[$i]->link) && !empty($list[$i - 1]->link) && $list[$i]->link == $list[$i - 1]->link)
+		if ($i == 1 && !empty($list[$i]->link) && !empty($list[$i - 1]->link) && $list[$i]->link == $list[$i - 1]->link ||
+                        $list[$i]->link == "#")
 		{
 			unset($list[$i]);
 		}
@@ -52,7 +53,7 @@ JHtml::_('bootstrap.tooltip');
 		{
 			echo '<a href="' . $item->link . '" class="pathway">' . $item->name . '</a>';
 		}
-		else
+                else
 		{
 			echo '<span>' . $item->name . '</span>';
 		}

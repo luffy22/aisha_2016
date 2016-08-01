@@ -25,7 +25,6 @@ if ($menu->getActive() == $menu->getDefault()) {
                     $rating = round($rating, 1);
             ?>
             <td><?php echo $rating; ?></td>
-
     </tr>
 <?php
     }

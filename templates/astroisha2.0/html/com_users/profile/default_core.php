@@ -13,10 +13,6 @@ defined('_JEXEC') or die;
 <h3><?php echo JText::_('COM_USERS_PROFILE_CORE_LEGEND'); ?></h3>
 <table class="table table-bordered table-hover">
     <tr>
-        <th>Profile Pic</th>
-        <td><img src="..." class="img-responsive" alt="Responsive image" /></td>
-    </tr>
-    <tr>
 	<th><?php echo JText::_('COM_USERS_PROFILE_NAME_LABEL'); ?></th>
         <td><?php echo $this->data->name; ?></td>
     </tr>

@@ -1,0 +1,16 @@
+<?xml version = "1.0" encoding = "utf-8" ?>
+<extension version="3.1" type="plugin" group="social">
+	<name>plg_social_buttons</name>
+	<author>Mugiwara Luffy</author>
+	<creationDate>March 2014</creationDate>
+	<licence>GNU General Public License version 2 or later</licence>
+	<authorEmail>kopnite@gmail.com</authorEmail>
+	<authorUrl>https://www.facebook.com/luffy.mugiwara.58173</authorUrl>
+	<version>1.0</version>
+	<description>Social Networking Buttons for Articles</description>
+	<files>
+		<filename plugin="socialconnect">socialconnect.php</filename>
+		<filename>socialconnect.xml</filename>
+		<filename>index.html</filename>
+	</files>
+</extension>

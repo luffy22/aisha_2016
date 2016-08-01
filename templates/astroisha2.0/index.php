@@ -77,7 +77,7 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
 <jdoc:include type="modules" name="jbanner" />
 <div class="container-fluid">
     <div class="row">
-    <div class="col-xs-12 col-md-8">
+    <div class="col-md-8">
     <gcse:search></gcse:search>
     <div class="spacer"></div>
     <div class="breadcrumb">
@@ -95,7 +95,7 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
     <jdoc:include type="modules" name="relatedarticles" style="none" />
     <div class="spacer"></div>
     </div>
-    <div class="col-xs-6 col-md-4">
+    <div class="col-md-4">
         <jdoc:include type="modules" name="userlogin" style="none" />
         <div class="spacer"></div>
         <jdoc:include type="modules" name="sidebar" />
@@ -110,8 +110,6 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
     $( "#datepicker" ).datepicker({ yearRange: "1950:2016",changeMonth: true,
       changeYear: true, dateFormat: "yy/mm/dd"  });
   });</script>
-<script>$( "#jform_profile_dob" ).datepicker({ yearRange: "1930:2016",changeMonth: true,
-      changeYear: true, dateFormat: "yy/mm/dd"  });
-  });</script>
+
 </body>
 </html>

@@ -168,7 +168,7 @@ $(function()
 $(function() 
 {
    var result       = "";
-   $( "#ques_pob" ).autocomplete({
+   $("#ques_pob").add("#pob_profile").autocomplete({
       source: 
        function(request, response) {
         $.ajax({
@@ -187,11 +187,11 @@ $(function()
       minLength: 3,
      
       open: function() {
-        $('#ques_pob').removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        $('#ques_pob').add("#pob_profile").removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
          $(".ui-autocomplete").css("z-index", 1000);
       },
       close: function() {
-        $('#ques_pob').removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        $('#ques_pob').add("#pob_profile").removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
       }
    })
    
@@ -775,4 +775,7 @@ function ques_det3_close()
     $('#ques_grp_det3').removeClass(" has-error");
     $('#ques_err_det3').css('visibility','hidden');
 }
-
+function callme()
+{
+    alert("yes it calls");
+}
