@@ -1,3 +1,17 @@
+<body onload="hidefields()">
+<script>
+function showfields()
+{
+    $('#profile_hidden').show();
+    document.getElementById("profile_hidden").style.visibility = 'visible';
+}
+function hidefields()
+{
+    $('#profile_hidden').hide();
+    document.getElementById("profile_hidden").style.visibility = 'hidden';
+    //alert("calls");
+}
+</script>
 <?php
 //defined('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
@@ -8,9 +22,17 @@ if($user->guest)
  }
 else
 {
+    if(isset($_GET['upload_pic'])&&($_GET['upload_pic']=='none'))
+    {
+?>
+        <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Kindly Upload a Picture If You Wish To Register as an Astrologer.</div>
+<?php
+    }
+
 ?>
 <h1 class="display-3"><?php echo $this->msg; ?></h1>
-<form>
+<div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>
+<form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
         <label for="inputGender" class="control-label">Gender:</label>
          <input type="radio" name="gender_profile" value="male" id="lagna_gender1" /> Male
@@ -21,7 +43,7 @@ else
     <input type="date" class="form-control" name="dob_profile" id="dob_profile" placeholder="Enter your date of birth" min="1910-01-01" max="2050-12-31"/>
 </div>   
 <div class="form-group">
-    <label for="tob_profile">Time Of Birth: </label>
+    <label for="tob_profile">Time Of Birth(Hour:Minute:Second): </label>
     <select class="select2" name="tob_profile_hr">
     <?php
     for($i=0;$i<12;$i++)
@@ -43,7 +65,7 @@ else
     </select>
     <select class="select2" name="tob_profile_min">
     <?php
-    for($i=0;$i<12;$i++)
+    for($i=0;$i<60;$i++)
     {
         if($i < 10)
         {
@@ -62,7 +84,7 @@ else
     </select>
     <select class="select2" name="tob_profile_sec">
     <?php
-    for($i=0;$i<12;$i++)
+    for($i=0;$i<60;$i++)
     {
         if($i < 10)
         {
@@ -90,16 +112,16 @@ else
 </div>
 <div class="form-group">
         <label for="astroyes" class="control-label">Are You An Astrologer:</label>
-         <input type="radio" name="astro_confirm" value="yes" id="astro_yes" onclick="javascript:callme();" /> Yes
-        <input type="radio" name="astro_confirm" value="no" id="astro_no" checked="che" /> No
+         <input type="radio" name="astro_confirm" value="yes" id="astro_yes" onclick="javascript:showfields();" /> Yes
+        <input type="radio" name="astro_confirm" value="no" id="astro_no" checked="che" onclick="javscript:hidefields();" /> No
     </div>
-<div id="hidden_elements">
+<div id="profile_hidden">
     <div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />
-    Kindly Read and Accept the <a href="">Terms and Conditions</a> for Astrologers
+    Kindly Read and Accept the <a href="">Terms and Conditions</a> for Astrologers *
     </div>
     <div class="form-group">
-        <label for="profile_pic">Upload Picture:</label>
+        <label for="profile_pic">Upload Picture *:</label>
         <input type="file" name="profile_pic" id="profile_pic" />
     </div>
 </div>
@@ -111,3 +133,4 @@ else
 <?php
 }
 ?>
+</body>

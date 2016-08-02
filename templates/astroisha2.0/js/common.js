@@ -775,7 +775,3 @@ function ques_det3_close()
     $('#ques_grp_det3').removeClass(" has-error");
     $('#ques_err_det3').css('visibility','hidden');
 }
-function callme()
-{
-    alert("yes it calls");
-}
