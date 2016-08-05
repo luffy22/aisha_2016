@@ -5,19 +5,32 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
 {
     public function registerAstro()
     {
-        if(isset($_POST['submit_profile'])&&(isset($_POST['astro_confirm'])=="yes"))
+        if(isset($_POST['submit_profile']))
         {
-            if(empty($_POST['profile_pic']))
+            if($_POST['astro_confirm']=="no")
             {
-                header('Location:'.JUri::base().'preference?upload_pic=none');
+                $gender     = $_POST['gender_profile']; $dob    = $_POST['dob_profile'];
+                $tob        = strtotime($_POST['tob_profile_hr'].":".$_POST['tob_profile_min'].":".$_POST['tob_profile_sec']);
+                $pob        = $_POST['pob_profile'];$astro = "no";
+                $user_details   = array(
+                                        'gender'=>$gender,'dob'=>$dob,'pob'=>$pob,
+                                    'tob'=>$tob,'astro'=>$astro
+                                    );
+                $model          = $this->getModel('extendedprofile');  // Add the array to model
+                $data           = $model->saveUser($user_details);
             }
-            else
+            else if($_POST['astro_confirm']=="yes")
             {
-                echo "He/She is an Astrologer";
+                if(!isset($_POST['condition_profile']))
+                {
+                    header('Location: '.JURi::base().'preference?terms=no');
+                }
+                else
+                {
+                    echo "He/She is an Astrologer";
+                }
             }
         }
-        else if(isset($_POST['submit_profile'])&&(isset($_POST['astro_confirm'])=="no")){
-                echo "He/She is not an Astrologer";
-        }
+        
     }
 }
