@@ -30,8 +30,9 @@ else
     }
 
 ?>
-<h1 class="display-3"><?php echo $this->msg; ?></h1>
+<h1 class="display-3">Extended Profile</h1>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>
+<div class="form-group"><label>Name:</label> <?php echo $this->msg['name']; ?></div>
 <form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
         <label for="inputGender" class="control-label">Gender:</label>
