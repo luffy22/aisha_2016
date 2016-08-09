@@ -12,25 +12,44 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         
-        $query          ->select($db->quoteName('UserId'));
+        $query          ->select($db->quoteName(array('UserId','astrologer')));
         $query          ->from($db->quoteName('#__user_extended'));
         $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
+        $astro          = $db->loadAssoc();
+        $astro          = $astro['astrologer'];
+        
         $db->execute();
         $row            = $db->getNumRows();
-        if($row== "0")
+        if($row !== "0")
         {
+            
             $query      ->clear();
-            $query      ->select($db->quoteName('name'));
-            $query      ->from($db->quoteName('#__users'));
-            $query      ->where($db->quoteName('id').' = '.$db->quote($id));
-            $db         ->setQuery($query);
-            $row        = $db->loadAssoc();
-            return $row;
+            if($astro == "yes")
+            {
+                return "calls";
+            }
+            else 
+            {
+                $query      ->select($db->quoteName(array('a.name','b.UserId', 'b.gender', 
+                                       'b.dob','b.tob','b.pob','b.astrologer')))
+                            ->from($db->quoteName('#__users','a'))
+                            ->join('INNER', $db->quoteName('#__user_extended', 'b') .' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
+                            ->where($db->quoteName('b.UserId').' = '.$db->quote($id));
+                $db         ->setQuery($query);
+                $result     = $db->loadAssoc();
+            } 
+            return $result;
         }
         else
         {
-            return "Rows Present";
+            $query      ->clear();
+            $query      ->select($db->quoteName(array('name')));
+            $query      ->from($db->quoteName('#__users'));
+            $query      ->where($db->quoteName('id').' = '.$db->quote($id));
+            $db         ->setQuery($query);
+            $result     = $db->loadAssoc();
+            return $result;
         }
     }
     public function saveUser($data)
@@ -63,6 +82,30 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         {
             echo "Failed Insertion.";
         }
+    }
+    public function updateUser($data)
+    {
+        //print_r($data);exit;
+        $userid         = $data['userid'];
+        //echo $userid;exit;
+        $gender         = $data['gender'];$dob      = $data['dob'];
+        $tob            = $data['tob'];$pob         = $data['pob'];$astro       = $data['astro'];
+        // Get db connection
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+ 
+        $fields         = array($db->quoteName('gender').' = '.$db->quote($gender),
+                                $db->quoteName('dob').' = '.$db->quote($dob),
+                                $db->quoteName('tob').' = '.$db->quote($tob),
+                                $db->quoteName('pob').' = '.$db->quote($pob),
+                                $db->quoteName('astrologer').' = '.$db->quote($astro));
+        $conditions     = array($db->quoteName('UserId').' = '.$db->quote($userid));
+        
+        $query->update($db->quoteName('#__user_extended'))->set($fields)->where($conditions);
+        $db->setQuery($query);
+ 
+        $result = $db->execute();
+        return $result;
     }
 }
 ?>

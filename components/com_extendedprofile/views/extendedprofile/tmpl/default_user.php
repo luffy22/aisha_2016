@@ -13,7 +13,11 @@ function hidefields()
 }
 </script>
 <?php
-echo $this->msg;
+//print_r($this->msg);exit;
+$time   = new DateTime();
+$time   ->setTimeStamp($this->msg['tob']);
+$time   = $time->format('H:i:s');
+$array  = explode(":",$time);
 //defined('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
 if($user->guest)
@@ -34,15 +38,31 @@ else
 <h1 class="display-3">Extended Profile</h1>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>
 <div class="form-group"><label>Name:</label> <?php echo $this->msg['name']; ?></div>
-<form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
+<form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.updateUser'); ?>">
+    <input type="hidden" value="<?php echo $this->msg['UserId'] ?>" name="profile_id" />
 <div class="form-group">
-        <label for="inputGender" class="control-label">Gender:</label>
-         <input type="radio" name="gender_profile" value="male" id="lagna_gender1" /> Male
+         <label for="inputGender" class="control-label">Gender:</label>
+<?php 
+        if($this->msg['gender'] == "female")
+        { 
+?>
+         <input type="radio" name="gender_profile" value="male" id="lagna_gender1"  /> Male
         <input type="radio" name="gender_profile" value="female" id="lagna_gender2" checked="checked" /> Female
+<?php
+        }
+        else
+        {
+?>
+        <input type="radio" name="gender_profile" value="male" id="lagna_gender1" checked="checked" /> Male
+        <input type="radio" name="gender_profile" value="female" id="lagna_gender2"  /> Female
+<?php
+        }
+?>
     </div>
 <div class="form-group">
     <label for="dob_profile">Date Of Birth*: </label>
-    <input type="date" class="form-control" name="dob_profile" id="dob_profile" placeholder="Enter your date of birth" min="1910-01-01" max="2050-12-31" required />
+    <input type="date" class="form-control" name="dob_profile" id="dob_profile" placeholder="Enter your date of birth" min="1910-01-01" max="2050-12-31" required 
+           value="<?php echo $this->msg['dob'] ?>" />
 </div>   
 <div class="form-group">
     <label for="tob_profile">Time Of Birth(24 Hour Format)*: </label>
@@ -52,15 +72,34 @@ else
     {
         if($i < 10)
         {
+            if($i==$array[0])
+            {
+?>
+                <option value="<?php echo "0".$i ?>" selected><?php echo "0".$i ?></option>
+<?php
+            }
+            else
+            {
     ?>
         <option value="<?php echo "0".$i ?>"><?php echo "0".$i ?></option>
     <?php
+            }
         }
         else
         {
+            if($i==$array[0])
+            {
+?>
+                <option value="<?php echo $i ?>" selected><?php echo $i ?></option>
+<?php
+            }
+            else
+            {
+    ?>
     ?>
         <option value="<?php echo $i ?>"><?php echo $i; ?></option>
     <?php
+            }
         }
     }
     ?>
@@ -71,15 +110,33 @@ else
     {
         if($i < 10)
         {
+            if($i==$array[1])
+            {
+?>
+                <option value="<?php echo "0".$i ?>" selected><?php echo "0".$i ?></option>
+<?php
+            }
+            else
+            {
     ?>
         <option value="<?php echo "0".$i ?>"><?php echo "0".$i ?></option>
     <?php
+            }
         }
         else
         {
+            if($i==$array[1])
+            {
+?>
+                <option value="<?php echo $i ?>" selected><?php echo $i ?></option>
+<?php
+            }
+            else
+            {
     ?>
-        <option value="<?php echo $i ?>"><?php echo $i; ?></option>
+                <option value="<?php echo $i ?>"><?php echo $i; ?></option>
     <?php
+            }
         }
     }
     ?>
@@ -90,15 +147,33 @@ else
     {
         if($i < 10)
         {
+            if($i==$array[2])
+            {
+?>
+                <option value="<?php echo "0".$i ?>" selected><?php echo "0".$i ?></option>
+<?php
+            }
+            else
+            {
     ?>
-        <option value="<?php echo "0".$i ?>"><?php echo "0".$i ?></option>
+                <option value="<?php echo "0".$i ?>"><?php echo "0".$i ?></option>
     <?php
+            }
         }
         else
         {
+            if($i==$array[2])
+            {
+?>
+                <option value="<?php echo $i ?>" selected><?php echo $i ?></option>
+<?php
+            }
+            else
+            {
     ?>
-        <option value="<?php echo $i ?>"><?php echo $i; ?></option>
+                <option value="<?php echo $i ?>"><?php echo $i; ?></option>
     <?php
+            }
         }
     }
     ?>
@@ -106,7 +181,8 @@ else
 </div>
 <div class="form-group">
     <label for="pob_profile">Place Of Birth*: </label>
-    <input type="text" name="pob_profile" id="pob_profile" placeholder="Enter Your Place Of Birth" class="form-control" required />
+    <input type="text" name="pob_profile" id="pob_profile" value="<?php echo $this->msg['pob'] ?>"
+           placeholder="Enter Your Place Of Birth" class="form-control" required />
 </div>
 <div class="form-group">
         <label for="astroyes" class="control-label">Are You An Astrologer:</label>
@@ -120,7 +196,7 @@ else
     </div>
 </div>
 <div class="form-group">
-        <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>
+        <button type="submit" name="update_profile" class="btn btn-primary" >Update</button>
         <button type="reset" name="cancel" class="btn btn-navbar">Cancel</button>
     </div>
 </form>
