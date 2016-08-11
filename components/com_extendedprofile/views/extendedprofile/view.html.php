@@ -11,10 +11,14 @@ class ExtendedProfileViewExtendedProfile extends JViewLegacy
 	{
             // Assign data to the view
             $this->msg = $this->get('Data');
-           
+            //print_r($this->msg);exit;
             if((array_key_exists("UserId",$this->msg))&&($this->msg['astrologer']=="no"))
             {
                 $tpl    = "user";
+            }
+            else if((array_key_exists("UserId",$this->msg))&&($this->msg['astrologer']=="yes"))
+            {
+                $tpl    = "astro";
             }
             else
             {

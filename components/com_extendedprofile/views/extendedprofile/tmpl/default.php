@@ -13,7 +13,7 @@ function hidefields()
 }
 </script>
 <?php
-echo $this->msg;
+//print_r($this->msg);exit;
 //defined('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
 if($user->guest)

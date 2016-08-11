@@ -2,7 +2,7 @@
 .error1{font:11px;color:#FF0000;visibility:hidden;}
 .loader{position:absolute;top:0;bottom:0%;left:0;right:0%;background-color:white;z-index:99;display:none;text-align:center;width:100%;padding-top:150px;}#g_rashi_notice,#b_rashi_notice{width:180px;}
 .image-logo{max-height:150%;max-width:90%;}.mini-spacer{margin-top:10px !important;}
-.select2{padding:6px 12px;}.form-text{padding:6px 12px;width:10%;}
+.select2{padding:6px 12px;}.form-text{padding:6px 12px;width:10%;}.form-text2{padding: 6px 12px;width:20%}
 .ui-autocomplete-loading{background:white url("images/ajaxloader.gif") right center no-repeat;}#lagna_pob{width:25em;}.dropdown-menu>li>a{color:#FFFFFF !important;}
 .dropdown-menu>li>a:hover{color:#333 !important;}#heading{font-family:"Georgia";margin:0px;align-content:center;}#heading a{text-decoration:none !important;}.head_title{color:#2d6ca2 !important;}.head_title:hover{color:#FFFFFF !important;}
 .pagination{display:block !important;}

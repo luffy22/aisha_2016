@@ -7,41 +7,31 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
     public function getData()
     {
         $user = JFactory::getUser();
-        $id   = $user->id;
+        $id   = $user->id;       
         // get the data
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        
-        $query          ->select($db->quoteName(array('UserId','astrologer')));
+        $query          ->select($db->quoteName(array('UserId')));
         $query          ->from($db->quoteName('#__user_extended'));
         $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
-        $astro          = $db->loadAssoc();
-        $astro          = $astro['astrologer'];
-        
+        $astro          = $db->loadAssoc();      
         $db->execute();
         $row            = $db->getNumRows();
-        if($row !== "0")
+        // if there are rows present fetch related data
+        if($row > 0)
         {
-            
             $query      ->clear();
-            if($astro == "yes")
-            {
-                return "calls";
-            }
-            else 
-            {
-                $query      ->select($db->quoteName(array('a.name','b.UserId', 'b.gender', 
+            $query      ->select($db->quoteName(array('a.name','b.UserId', 'b.gender', 
                                        'b.dob','b.tob','b.pob','b.astrologer')))
                             ->from($db->quoteName('#__users','a'))
                             ->join('INNER', $db->quoteName('#__user_extended', 'b') .' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
                             ->where($db->quoteName('b.UserId').' = '.$db->quote($id));
-                $db         ->setQuery($query);
-                $result     = $db->loadAssoc();
-            } 
+            $db         ->setQuery($query);
+            $result     = $db->loadAssoc();
             return $result;
         }
-        else
+        else  // if data and rows are absent fetch only name
         {
             $query      ->clear();
             $query      ->select($db->quoteName(array('name')));
