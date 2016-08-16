@@ -63,4 +63,29 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
             }
        // }
     }
+    public function saveAstro()
+    {
+        $id         = $_POST['profile_id'];
+        $img        = $_POST['astro_img'];$addr1        = $_POST['astro_addr1'];
+        $addr2      = $_POST['astro_addr2'];$city       = $_POST['astro_city'];
+        $state      = $_POST['astro_state'];$country    = $_POST['astro_country'];
+        $pcode      = $_POST['astro_pcode'];$phone      = $_POST['astro_code'].'-'.$_POST['astro_phone'];
+        $mobile     = $_POST['astro_mobile'];
+        if(!empty($_POST['astro_whatsapp'])){$whatsapp="yes";}else{$whatsapp="no";};
+        $website   = $_POST['astro_web'];$info          = $_POST['astro_info'];
+        
+        echo $id."<br/>";
+        echo $img."<br/>";
+        echo $addr1."<br/>";
+        echo $addr2."<br/>";
+        echo $city."<br/>";
+        echo $state."<br/>";
+        echo $country."<br/>";
+        echo $pcode."<br/>";
+        echo $phone."<br/>";
+        echo $mobile."<br/>";
+        echo $whatsapp."<br/>";
+        echo $website."<br/>";
+        echo $info."<br/>";
+    }
 }
