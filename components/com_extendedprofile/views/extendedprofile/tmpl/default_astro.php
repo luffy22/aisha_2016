@@ -23,6 +23,18 @@ if($user->guest)
     $location   = JURi::base()."login";
     echo header('Location: '.$location);
 }
+if(isset($_GET['image'])&&($_GET['image']=='false'))
+    {
+?>
+        <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> File must be an image file with jpg, png or gif extension.</div>
+<?php
+    }
+if(isset($_GET['image'])&&($_GET['image']=='size'))
+    {
+?>
+        <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> File must be less then 2 MB(Mega Byte).</div>
+<?php
+    }
 ?>
 <h1 class="display-3">Enter Details</h1>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>

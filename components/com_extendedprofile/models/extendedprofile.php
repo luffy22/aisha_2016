@@ -2,6 +2,7 @@
 defined('_JEXEC') or die;  // No direct Access
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
+jimport('joomla.filesystem.file');
 class ExtendedProfileModelExtendedProfile extends JModelItem
 {
     public function getData()
@@ -96,6 +97,26 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
  
         $result = $db->execute();
         return $result;
+    }
+    public function saveAstro($details)
+    {
+        print_r($details);
+        //$ext            = JFile::getExt($details['img_name']);
+        //$uniq_name      = 'img_'.date('Y-m-d-H-i-s').'_'.uniqid().".".$ext;
+        //$upload_dir     = JURI::root().'images/profile/'.$uniq_name;
+        //echo $upload_dir;exit;
+        $src            = $details['tmp_name']; //echo $src."<br/>";
+        $dest          = JPATH_COMPONENT . DS . "uploads" . DS . $details['img_name'];
+        //echo $dest;exit;
+        $upload          = move_uploaded_file($src, $dest);
+        if($upload)
+        {
+           echo "Success";
+        }
+        else
+        {
+            echo "Failure";
+        }
     }
 }
 ?>
