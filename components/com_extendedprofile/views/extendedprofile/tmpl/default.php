@@ -2,14 +2,17 @@
 <script>
 function showfields()
 {
-    $('#profile_hidden').show();
-    document.getElementById("profile_hidden").style.visibility = 'visible';
+    $('#profile_hidden1').show();
+    document.getElementById("profile_hidden1").style.visibility = 'visible';
+    $('#profile_hidden2').show();
+    document.getElementById("profile_hidden2").style.visibility = 'visible';
 }
 function hidefields()
 {
-    $('#profile_hidden').hide();
-    document.getElementById("profile_hidden").style.visibility = 'hidden';
-    //alert("calls");
+    $('#profile_hidden1').hide();
+    document.getElementById("profile_hidden1").style.visibility = 'hidden';
+    $('#profile_hidden2').hide();
+    document.getElementById("profile_hidden2").style.visibility = 'hidden';
 }
 </script>
 <?php
@@ -31,89 +34,23 @@ else
     }
 
 ?>
-<h1 class="display-3">Extended Profile</h1>
+<h1 class="display-3">User Type</h1>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>
 <div class="form-group"><label>Name:</label> <?php echo $this->msg['name']; ?></div>
 <form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
-        <label for="inputGender" class="control-label">Gender:</label>
-         <input type="radio" name="gender_profile" value="male" id="lagna_gender1" /> Male
-        <input type="radio" name="gender_profile" value="female" id="lagna_gender2" checked="checked" /> Female
+        <label for="inputGender" class="control-label">User Type:</label>
+         <input type="radio" name="user_type" value="astrologer" id="lagna_gender1" onclick="javascript:showfields();" /> Astrologer
+        <input type="radio" name="user_type" value="user" id="lagna_gender2" checked="checked" onclick="javscript:hidefields();"/> Normal User
     </div>
-<div class="form-group">
-    <label for="dob_profile">Date Of Birth*: </label>
-    <input type="date" class="form-control" name="dob_profile" id="dob_profile" placeholder="Enter your date of birth" min="1910-01-01" max="2050-12-31" required />
-</div>   
-<div class="form-group">
-    <label for="tob_profile">Time Of Birth(24 Hour Format)*: </label>
-    <select class="select2" name="tob_profile_hr">
-    <?php
-    for($i=0;$i<23;$i++)
-    {
-        if($i < 10)
-        {
-    ?>
-        <option value="<?php echo "0".$i ?>"><?php echo "0".$i ?></option>
-    <?php
-        }
-        else
-        {
-    ?>
-        <option value="<?php echo $i ?>"><?php echo $i; ?></option>
-    <?php
-        }
-    }
-    ?>
-    </select>
-    <select class="select2" name="tob_profile_min">
-    <?php
-    for($i=0;$i<60;$i++)
-    {
-        if($i < 10)
-        {
-    ?>
-        <option value="<?php echo "0".$i ?>"><?php echo "0".$i ?></option>
-    <?php
-        }
-        else
-        {
-    ?>
-        <option value="<?php echo $i ?>"><?php echo $i; ?></option>
-    <?php
-        }
-    }
-    ?>
-    </select>
-    <select class="select2" name="tob_profile_sec">
-    <?php
-    for($i=0;$i<60;$i++)
-    {
-        if($i < 10)
-        {
-    ?>
-        <option value="<?php echo "0".$i ?>"><?php echo "0".$i ?></option>
-    <?php
-        }
-        else
-        {
-    ?>
-        <option value="<?php echo $i ?>"><?php echo $i; ?></option>
-    <?php
-        }
-    }
-    ?>
-    </select>
-</div>
-<div class="form-group">
-    <label for="pob_profile">Place Of Birth*: </label>
-    <input type="text" name="pob_profile" id="pob_profile" placeholder="Enter Your Place Of Birth" class="form-control" required />
-</div>
-<div class="form-group">
-        <label for="astroyes" class="control-label">Are You An Astrologer:</label>
-         <input type="radio" name="astro_confirm" value="yes" id="astro_yes" onclick="javascript:showfields();" /> Yes
-        <input type="radio" name="astro_confirm" value="no" id="astro_no" checked="che" onclick="javscript:hidefields();" /> No
+<div id="profile_hidden2">
+    <div class="form-group">
+    <label for="inputGender" class="control-label">Membership:</label>
+         <input type="radio" name="astro_type" value="paid" id="astro_paid" onclick="javascript:paidMember();" /> Paid
+        <input type="radio" name="astro_type" value="free" id="astro_free" checked="checked" onclick="javscript:freeMember();"/> Free
     </div>
-<div id="profile_hidden">
+</div>
+<div id="profile_hidden1">
     <div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />
     Kindly Read and Accept the <a href="">Terms and Conditions</a> for Astrologers *

@@ -101,17 +101,46 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
     public function saveAstro($details)
     {
         print_r($details);
-        //$ext            = JFile::getExt($details['img_name']);
-        //$uniq_name      = 'img_'.date('Y-m-d-H-i-s').'_'.uniqid().".".$ext;
-        //$upload_dir     = JURI::root().'images/profile/'.$uniq_name;
-        //echo $upload_dir;exit;
+        $ext            = JFile::getExt($details['img_name']);
+        $uniq_name      = 'img_'.date('Y-m-d-H-i-s').'_'.uniqid().".".$ext;
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
         $src            = $details['tmp_name']; //echo $src."<br/>";
-        $dest          = JPATH_COMPONENT . DS . "uploads" . DS . $details['img_name'];
-        //echo $dest;exit;
-        $upload          = move_uploaded_file($src, $dest);
+        $dest           = JPATH_BASE.DS."images".DS."profiles".DS.$uniq_name;
+        $id             = $details['id'];$img_name      = $details['img_name'];
+        $img_id         = $uniq_name;    $addr1         = $details['addr1'];
+        $addr2          = $details['addr2'];$city       = $details['city'];
+        $state          = $details['state'];$country    = $details['country'];
+        $pcode          = $details['pcode'];$phone      = $details['phone'];
+        $mobile         = $details['mobile'];$whatsapp  = $details['whatsapp'];
+        $website        = $details['website'];$info     = $details['info'];$status  = 'visible';
+        $upload         = move_uploaded_file($src, $dest);
         if($upload)
         {
-           echo "Success";
+            $columns        = array('UserId','img_1','img_1_id','addr_1','addr_2','city',
+                                    'state','country','postcode','phone','mobile','whatsapp',
+                                    'website','info','profile_status');
+            $values         = array($db->quote($id),$db->quote($img_name),$db->quote($img_id),
+                                    $db->quote($addr1),$db->quote($addr2),$db->quote($city),
+                                    $db->quote($state),$db->quote($country),$db->quote($pcode),
+                                    $db->quote($phone),$db->quote($mobile),$db->quote($whatsapp),
+                                    $db->quote($website),$db->quote($info),$db->quote($status));
+            $query
+            ->insert($db->quoteName('#__user_astrologer'))
+            ->columns($db->quoteName($columns))
+            ->values(implode(',', $values));
+            
+            $db             ->setQuery($query);
+            $result          = $db->query();
+
+            if($result)
+            {
+                echo "Insertion Successful";
+            }
+            else
+            {
+                echo "Failed Insertion.";
+            }
         }
         else
         {
