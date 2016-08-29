@@ -12,25 +12,45 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         // get the data
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          ->select($db->quoteName(array('UserId')));
+        $query          ->select($db->quoteName(array('UserId','type')));
         $query          ->from($db->quoteName('#__user_extended'));
         $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
-        $astro          = $db->loadAssoc();      
+        $astro          = $db->loadAssoc();
+        $type           = $astro['type'];
         $db->execute();
-        $row            = $db->getNumRows();
+        $row            = $db->getNumRows();//echo $row;exit;
         // if there are rows present fetch related data
-        if($row > 0)
+        if($row > 0 && $type=="astrologer")
         {
             $query      ->clear();
-            $query      ->select($db->quoteName(array('a.name','b.UserId', 'b.gender', 
-                                       'b.dob','b.tob','b.pob','b.astrologer')))
+            $query      ->select($db->quoteName(array('a.name','b.UserId', 'b.type')))
                             ->from($db->quoteName('#__users','a'))
                             ->join('INNER', $db->quoteName('#__user_extended', 'b') .' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')')
                             ->where($db->quoteName('b.UserId').' = '.$db->quote($id));
             $db         ->setQuery($query);
             $result     = $db->loadAssoc();
             return $result;
+        }
+        else if($row > 0 && $type=="normal")
+        {
+            $query      ->clear();
+            $query      ->select('*')
+                            ->from($db->quoteName('#__user_normal'))
+                            ->where($db->quoteName('UserId').' = '.$db->quote($id));
+            $db         ->setQuery($query);
+            $db         ->execute();unset($row);
+            $row        = $db->getNumRows();
+            if($row > 0)
+            {
+                $result     = $db->loadAssoc();
+                return $result;
+            }
+            else
+            {
+                $result     = array("UserId"=>$id,"data"=>"nodata","type"=>"normal");
+                return $result;
+            }
         }
         else  // if data and rows are absent fetch only name
         {
@@ -48,14 +68,21 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         //print_r($data);exit;
         $user           = JFactory::getUser();
         $id             = $user->id;
-
-        $gender         = $data['gender'];$dob      = $data['dob'];
-        $tob            = $data['tob'];$pob         = $data['pob'];$astro       = $data['astro'];
+        $type           = $data['type'];        // type of user (astrologer or normal user)
+        if($type        == "astrologer"){$membership = $data['membership'];}   // if user is astrologer then get membership type
+        
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $columns        = array('UserId','gender','dob','tob','pob','astrologer');
-        $values         = array($db->quote($id),$db->quote($gender),$db->quote($dob),
-                                $db->quote($tob),$db->quote($pob),$db->quote($astro));
+        if($type        == "astrologer")
+        {
+            $columns        = array('UserId','type','membership');
+            $values         = array($db->quote($id),$db->quote($type),$db->quote($membership));
+        }
+        else if($type   == "normal")
+        {
+            $columns        = array('UserId','type');
+            $values         = array($db->quote($id),$db->quote($type));
+        }
         $query
         ->insert($db->quoteName('#__user_extended'))
         ->columns($db->quoteName($columns))
@@ -67,7 +94,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         
         if($result)
         {
-            echo "Insertion Successful";
+            $this->getData();
         }
         else
         {

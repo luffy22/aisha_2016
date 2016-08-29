@@ -39,13 +39,13 @@ else
 <div class="form-group"><label>Name:</label> <?php echo $this->msg['name']; ?></div>
 <form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
-        <label for="inputGender" class="control-label">User Type:</label>
-         <input type="radio" name="user_type" value="astrologer" id="lagna_gender1" onclick="javascript:showfields();" /> Astrologer
-        <input type="radio" name="user_type" value="user" id="lagna_gender2" checked="checked" onclick="javscript:hidefields();"/> Normal User
+        <label for="user_type1" class="control-label">User Type:</label>
+         <input type="radio" name="user_type" value="astrologer" id="user_type1" onclick="javascript:showfields();" /> Astrologer
+        <input type="radio" name="user_type" value="user" id="user_type2" checked="checked" onclick="javscript:hidefields();"/> Normal User
     </div>
 <div id="profile_hidden2">
     <div class="form-group">
-    <label for="inputGender" class="control-label">Membership:</label>
+    <label for="astro_paid" class="control-label">Membership:</label>
          <input type="radio" name="astro_type" value="paid" id="astro_paid" onclick="javascript:paidMember();" /> Paid
         <input type="radio" name="astro_type" value="free" id="astro_free" checked="checked" onclick="javscript:freeMember();"/> Free
     </div>
