@@ -1,13 +1,13 @@
-<body onload="hidefields()">
+<body onload="hideFields()">
 <script>
-function showfields()
+function showFields()
 {
     $('#profile_hidden1').show();
     document.getElementById("profile_hidden1").style.visibility = 'visible';
     $('#profile_hidden2').show();
     document.getElementById("profile_hidden2").style.visibility = 'visible';
 }
-function hidefields()
+function hideFields()
 {
     $('#profile_hidden1').hide();
     document.getElementById("profile_hidden1").style.visibility = 'hidden';
@@ -34,27 +34,28 @@ else
     }
 
 ?>
-<h1 class="display-3">User Type</h1>
+<h1 class="display-3">Membership Type</h1>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>
 <div class="form-group"><label>Name:</label> <?php echo $this->msg['name']; ?></div>
 <form enctype="application/x-www-form-urlencoded" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.registerAstro'); ?>">
 <div class="form-group">
-        <label for="user_type1" class="control-label">User Type:</label>
-         <input type="radio" name="user_type" value="astrologer" id="user_type1" onclick="javascript:showfields();" /> Astrologer
-        <input type="radio" name="user_type" value="user" id="user_type2" checked="checked" onclick="javscript:hidefields();"/> Normal User
-    </div>
-<div id="profile_hidden2">
-    <div class="form-group">
     <label for="astro_paid" class="control-label">Membership:</label>
-         <input type="radio" name="astro_type" value="paid" id="astro_paid" onclick="javascript:paidMember();" /> Paid
-        <input type="radio" name="astro_type" value="free" id="astro_free" checked="checked" onclick="javscript:freeMember();"/> Free
-    </div>
+         <input type="radio" name="astro_type" value="paid" id="astro_paid" onclick="javascript:showFields();" /> Paid
+        <input type="radio" name="astro_type" value="free" id="astro_free" checked="checked" onclick="javscript:hideFields();"/> Free
 </div>
-<div id="profile_hidden1">
-    <div class="form-group">
+<div id="profile_hidden1" class="form-group">
+    <label for="astro_online" class="control-label">Payment Type:</label>
+    <input type="radio" name="astro_pay" value="online" id="astro_online" checked="checked"  /> Online
+    <input type="radio" name="astro_pay" value="cheque" id="astro_cheque" /> Cheque
+    <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" />Direct Transfer
+</div>
+<div id="profile_hidden2" class="form-group">
+    <label for="astro_amount" class="control-label">Amount:</label>
+    <?php echo "250 Rs" ?>
+</div>
+<div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />
-    Kindly Read and Accept the <a href="">Terms and Conditions</a> for Astrologers *
-    </div>
+    <label for="condition_profile">Kindly Read and Accept the <a href="">Terms and Conditions</a> for Astrologers *</label>
 </div>
 <div class="form-group">
         <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>

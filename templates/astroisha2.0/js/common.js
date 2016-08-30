@@ -68,7 +68,7 @@ function getLagna()
 $(function() 
 {
    var result       = "";
-   $( "#lagna_pob" ).autocomplete({
+   $( "#lagna_pob" ).add("#pob_profile").autocomplete({
       source: 
        function(request, response) {
         $.ajax({
@@ -124,13 +124,12 @@ $(function()
             }
       },
       open: function() {
-        $('#lagna_pob').removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        $('#lagna_pob').add("#pob_profile").removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
          $(".ui-autocomplete").css("z-index", 1000);
       },
       close: function() {
-        $('#lagna_pob').removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-      }
-     
+        $('#lagna_pob').add("#pob_profile").removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }   
     });
 });
  /*success: function(data) {
@@ -168,7 +167,7 @@ $(function()
 $(function() 
 {
    var result       = "";
-   $("#ques_pob").add("#pob_profile").autocomplete({
+   $("#ques_pob").autocomplete({
       source: 
        function(request, response) {
         $.ajax({
@@ -187,14 +186,49 @@ $(function()
       minLength: 3,
      
       open: function() {
-        $('#ques_pob').add("#pob_profile").removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        $('#ques_pob').removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
          $(".ui-autocomplete").css("z-index", 1000);
       },
       close: function() {
-        $('#ques_pob').add("#pob_profile").removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        $('#ques_pob').removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
       }
    })
    
+});
+$(function() 
+{
+   var result       = "";
+   $("#astro_city").autocomplete({
+      source: 
+       function(request, response) {
+        $.ajax({
+          url: "ajaxcalls/autocomplete1.php",
+          dataType: "json",
+          data: {
+            term: request.term
+          },
+          success: function( data ) {
+          response(data);
+          
+          }
+        });
+      },
+      minLength: 3,
+      select: function(request, response)
+      {
+            var state           = response.item.state;
+            var country         = response.item.country;
+            document.getElementById("astro_state").value    = state;
+            document.getElementById("astro_country").value  = country;
+      },
+      open: function() {
+        $('#astro_city').removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+         $(".ui-autocomplete").css("z-index", 1000);
+      },
+      close: function() {
+        $('#astro_city').removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }   
+    });
 });
 $(function() {
 $( "#ques_dob" ).datepicker({yearRange: "1900:2050",changeMonth: true,

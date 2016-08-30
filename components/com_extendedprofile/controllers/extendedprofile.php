@@ -7,39 +7,32 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
     {
         if(isset($_POST['submit_profile']))
         {
-            if($_POST['user_type']=="user")
+            $membership     = $_POST['astro_type'];
+            
+            if(!isset($_POST['condition_profile']))
             {
-                $user           = "normal";
-                $user_details   = array(
-                                        'type'=>$user
+                header('Location: '.JURi::base().'preference?terms=no');
+            }
+            else
+            {
+                if($membership == "free")
+                {
+                    $user_details   = array(
+                                            'membership'=>$membership
                                     );
+                }
+                $model          = $this->getModel('extendedprofile');  // Add the array to model
+                $data           = $model->saveUser($user_details);
                 
             }
-            else if($_POST['user_type']=="astrologer")
-            {
-                $membership     = $_POST['astro_type'];
-                if(!isset($_POST['condition_profile']))
-                {
-                    header('Location: '.JURi::base().'preference?terms=no');
-                }
-                else
-                {
-                    $user           = "astrologer";
-                    $user_details   = array(
-                                            'type'=>$user,'membership'=>$membership
-                                        );
-                }
-            }
-            $model          = $this->getModel('extendedprofile');  // Add the array to model
-            $data           = $model->saveUser($user_details);
+            
         }
         
     }
     public function updateUser()
     {
-        //if(isset($_POST['update_profile']))
-        //{
-            //echo "calls";exit;
+        if(isset($_POST['update_profile']))
+        {
             if($_POST['astro_confirm']=="no")
             {
                 $gender     = $_POST['gender_profile']; $dob    = $_POST['dob_profile']; $id = $_POST['profile_id'];
@@ -63,7 +56,11 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
                     echo "He/She is an Astrologer";
                 }
             }
-       // }
+       }
+       else if(isset($_POST['save_profile']))
+       {
+           echo "calls";exit;
+       }
     }
     public function saveAstro()
     {
