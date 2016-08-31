@@ -6,7 +6,7 @@ jimport('joomla.application.component.modelitem');
 jimport('joomla.filesystem.file');
 class ExtendedProfileModelExtendedProfile extends JModelItem
 {
-    public function redirect($url)
+    public function redirectLink($url)
     {
         header('Location: '.$url);
     }
@@ -37,8 +37,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
             $row        = $db->getNumRows();
             if($row > 0)
             {
-                $url    = JURI::base().'astro-register/profile';
-                $this->redirect($url);
+                echo "calls";exit;
             }
         }
         
@@ -81,7 +80,8 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         }
         else
         {
-            echo "Failed Insertion.";
+            $url         = JURI::base().'preference?data=fail';
+            $this->redirectLink($url);
         }
     }
     public function updateUser($data)

@@ -75,14 +75,12 @@ class PlgUserProfile5 extends JPlugin
 				// Load the profile data from the database.
 				$db = JFactory::getDbo();
 				$db->setQuery(
-					'SELECT profile_key, profile_value FROM #__user_profiles' .
-						' WHERE user_id = ' . (int) $userId . " AND profile_key LIKE 'profile.%'" .
-						' ORDER BY ordering'
+					'SELECT * FROM #__user_astrologer WHERE UserId = '.(int)$userId
 				);
 
 				try
 				{
-					$results = $db->loadRowList();
+					$results = $db->loadAssoc();
 				}
 				catch (RuntimeException $e)
 				{
@@ -90,36 +88,14 @@ class PlgUserProfile5 extends JPlugin
 
 					return false;
 				}
-
+                                //print_r($results);exit;
 				// Merge the profile data.
-				$data->profile = array();
+				$data->profile = $results;
 
-				foreach ($results as $v)
-				{
-					$k = str_replace('profile.', '', $v[0]);
-					$data->profile[$k] = json_decode($v[1], true);
-
-					if ($data->profile[$k] === null)
-					{
-						$data->profile[$k] = $v[1];
-					}
-				}
+				
 			}
 
-			if (!JHtml::isRegistered('users.url'))
-			{
-				JHtml::register('users.url', array(__CLASS__, 'url'));
-			}
-
-			if (!JHtml::isRegistered('users.calendar'))
-			{
-				JHtml::register('users.calendar', array(__CLASS__, 'calendar'));
-			}
-
-			if (!JHtml::isRegistered('users.tos'))
-			{
-				JHtml::register('users.tos', array(__CLASS__, 'tos'));
-			}
+			
 		}
 
 		return true;
@@ -231,10 +207,10 @@ class PlgUserProfile5 extends JPlugin
 			'country',
 			'postal_code',
 			'phone',
+                        'mobile',
 			'website',
-			'aboutme',
-			'dob',
-			'tos',
+			'info',
+	
 		);
 
 		// Change fields description when displayed in front-end or back-end profile editing
@@ -249,10 +225,10 @@ class PlgUserProfile5 extends JPlugin
 			$form->setFieldAttribute('country', 'description', 'PLG_USER_PROFILE_FILL_FIELD_DESC_SITE', 'profile');
 			$form->setFieldAttribute('postal_code', 'description', 'PLG_USER_PROFILE_FILL_FIELD_DESC_SITE', 'profile');
 			$form->setFieldAttribute('phone', 'description', 'PLG_USER_PROFILE_FILL_FIELD_DESC_SITE', 'profile');
+                        $form->setFieldAttribute('mobile', 'description', 'PLG_USER_PROFILE_FILL_FIELD_DESC_SITE', 'profile');
 			$form->setFieldAttribute('website', 'description', 'PLG_USER_PROFILE_FILL_FIELD_DESC_SITE', 'profile');
-			$form->setFieldAttribute('aboutme', 'description', 'PLG_USER_PROFILE_FILL_FIELD_DESC_SITE', 'profile');
-			$form->setFieldAttribute('dob', 'description', 'PLG_USER_PROFILE_FILL_FIELD_DESC_SITE', 'profile');
-			$form->setFieldAttribute('tos', 'description', 'PLG_USER_PROFILE_FIELD_TOS_DESC_SITE', 'profile');
+                        $form->setFieldAttribute('info', 'description', 'PLG_USER_PROFILE_FILL_FIELD_DESC_SITE', 'profile');
+			
 		}
 
 		$tosarticle = $this->params->get('register_tos_article');
