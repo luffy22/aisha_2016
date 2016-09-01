@@ -95,16 +95,20 @@ class PlgContentVote extends JPlugin
 				// Generate voting form
 				$html .= '<form method="post" action="' . htmlspecialchars($uri->toString()) . '" class="form-inline">';
 				$html .= '<span class="content_vote">';
-				$html .= '<label class="unseen element-invisible" for="content_vote_' . $row->id . '">' . JText::_('PLG_VOTE_LABEL') . '</label>';
+				$html .= '<label class="unseen element-invisible" for="content_vote_' . $row->id . '">' . JText::_('PLG_VOTE_LABEL') . '</label>'." : ";
 				$html .= JHtml::_('select.genericlist', $options, 'user_rating', null, 'value', 'text', '5', 'content_vote_' . $row->id);
-				$html .= '&#160;<input class="btn btn-mini" type="submit" name="submit_vote" value="' . JText::_('PLG_VOTE_RATE') . '" />';
+				$html .= '&#160;<input class="btn btn-sm btn-primary" type="submit" name="submit_vote" value="' . JText::_('PLG_VOTE_RATE') . '" />';
 				$html .= '<input type="hidden" name="task" value="article.vote" />';
 				$html .= '<input type="hidden" name="hitcount" value="0" />';
 				$html .= '<input type="hidden" name="url" value="' . htmlspecialchars($uri->toString()) . '" />';
 				$html .= JHtml::_('form.token');
 				$html .= '</span>';
 				$html .= '</form>';
-			}
+                                $html .= "<br/><div class ='row'>";
+                                $html .= '<div class="fb-like col-md-1" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>';
+                                $html .= '<div class="g-plusone col-md-1" data-size="tall"></div>';
+                                $html .= '</div><div class="spacer"></div>';
+                        }
 		}
 
 		return $html;
