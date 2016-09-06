@@ -88,8 +88,8 @@ class PlgContentVote extends JPlugin
 				$options = array();
 
 				for ($i = 1; $i < 6; $i++)
-				{
-					$options[] = JHtml::_('select.option', $i, JText::sprintf('PLG_VOTE_VOTE', $i));
+				{    
+					$options[] = JHtml::_('select.option', $i, $i.' Star ');
 				}
 
 				// Generate voting form

@@ -71,7 +71,7 @@ class UsersControllerUser extends UsersController
 			}
 
 			$app->setUserState('users.login.form.data', array());
-                        $link   = JURI::base().'preference';
+                        $link   = JURI::base().'dashboard';
 			$app->redirect(JRoute::_($link, false));
 		}
 		else

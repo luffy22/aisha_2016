@@ -76,7 +76,10 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         
         if($result)
         {
-            $this->getData();
+            $app = JFactory::getApplication(); 
+            $link = JURI::base().'dashboard';
+            $msg = 'Successfully added Details'; 
+            $app->redirect($link, $msg, $msgType='message');
         }
         else
         {
