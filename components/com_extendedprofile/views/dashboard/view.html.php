@@ -12,7 +12,18 @@ class ExtendedProfileViewDashboard extends JViewLegacy
             // Assign data to the view
             $this->msg = $this->get('Data');
             //print_r($this->msg);exit;
-            
+            if($this->msg == 'NoRow')
+            {
+                $tpl = "choice";
+            }
+            else if(!empty($this->msg))
+            {
+                $tpl    = "free";
+            }
+            else
+            {
+                continue;
+            }
             parent::display($tpl);
 	}
 }

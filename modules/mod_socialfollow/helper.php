@@ -16,10 +16,8 @@ class modSocialHelper
                 <td><a href="https://twitter.com/astroishaweb" target="_blank"><img src="images/twitter.png" alt="Twitter Page" title="Follow Us On Twitter"  /></a></td>
             </tr>
         </table>
-	<?php
-           
+	<?php 
 	}
-        
         
 }
 

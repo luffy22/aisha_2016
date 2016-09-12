@@ -83,6 +83,10 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
     <div class="breadcrumb">
         <jdoc:include type="modules" name="breadcrumbs" style="none" />
     </div>
+    <div class="fb-follow" data-href="https://www.facebook.com/AstroIsha" data-layout="standard" data-size="small" data-show-faces="true"></div>
+    <!-- Place this tag where you want the widget to render. -->
+    <div class="g-follow" data-annotation="none" data-height="20" data-href="//plus.google.com/u/0/100464003715258637571" data-rel="publisher"></div>
+    <a href="https://twitter.com/astroishaweb" class="twitter-follow-button" data-show-count="false">Follow @astroishaweb</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     <jdoc:include type="modules" name="articleslider" style="none" />
     <div class="spacer"></div>
     <jdoc:include type="component" />
