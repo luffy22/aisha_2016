@@ -9,6 +9,7 @@ class ExtendedProfileViewDashboard extends JViewLegacy
     public $msg;
     function display($tpl = null)
 	{
+            
             // Assign data to the view
             $this->msg = $this->get('Data');
             //print_r($this->msg);exit;
@@ -22,7 +23,7 @@ class ExtendedProfileViewDashboard extends JViewLegacy
             }
             else
             {
-                continue;
+                $tpl   = null;
             }
             parent::display($tpl);
 	}

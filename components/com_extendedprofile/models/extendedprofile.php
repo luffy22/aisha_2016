@@ -37,7 +37,15 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
             $row        = $db->getNumRows();
             if($row > 0)
             {
-                echo "calls";exit;
+                $query      ->clear();
+                $query      ->select($db->quoteName(array('UserId','img_1','img_1_id',
+                                     'addr_1','addr_2', 'city','state','country',
+                                    'postcode','phone','mobile','whatsapp','website', 'info','profile_status')))
+                            ->from($db->quoteName('#__user_astrologer'))
+                            ->where($db->quoteName('UserId').' = '.$db->quote($id));
+                $db             ->setQuery($query);
+                $astro          = $db->loadAssoc();
+                return $astro;
             }
         }
         

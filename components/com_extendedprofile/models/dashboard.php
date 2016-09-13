@@ -9,6 +9,15 @@ class ExtendedProfileModelDashboard extends JModelItem
     public function getData()
     {
         $user = JFactory::getUser();
+        if($user->guest)
+         {
+            $location   = JURi::base()."login";
+            $mainframes = JFactory::getApplication();
+            $link=  JURI::base().'login';
+            $msg = "Please Login";
+
+            $mainframes->redirect($link, $msg);
+         }
         $id   = $user->id;$name = $user->name;  
         // get the data
         $db             = JFactory::getDbo();  // Get db connection
