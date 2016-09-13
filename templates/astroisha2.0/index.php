@@ -28,31 +28,17 @@ $doc = JFactory::getDocument(); $head_data = $doc->getHeadData();
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/jquery_ui/jquery-ui.min.js" language="javascript"></script>
 <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/js/common.js" type="text/javascript" language="javascript"></script>
 <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '220390744824296',
-      xfbml      : true,
-      version    : 'v2.4'
-    });
-  };
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+  window.fbAsyncInit = function() {FB.init({appId      : '220390744824296',xfbml      : true,version    : 'v2.4'});};
+  (function(d, s, id){var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
 </script>
 <script>
   (function() {
-    var cx = '006812877761787834600:vf6wtd5lcuk';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
+    var cx = '006812877761787834600:vf6wtd5lcuk';var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(gcse, s);
   })();
 </script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -83,10 +69,6 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
     <div class="breadcrumb">
         <jdoc:include type="modules" name="breadcrumbs" style="none" />
     </div>
-    <div class="fb-follow" data-href="https://www.facebook.com/AstroIsha" data-layout="standard" data-size="small" data-show-faces="true"></div>
-    <!-- Place this tag where you want the widget to render. -->
-    <div class="g-follow" data-annotation="none" data-height="20" data-href="//plus.google.com/u/0/100464003715258637571" data-rel="publisher"></div>
-    <a href="https://twitter.com/astroishaweb" class="twitter-follow-button" data-show-count="false">Follow @astroishaweb</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     <jdoc:include type="modules" name="articleslider" style="none" />
     <div class="spacer"></div>
     <jdoc:include type="component" />
