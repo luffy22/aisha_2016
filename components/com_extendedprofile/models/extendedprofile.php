@@ -121,7 +121,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
     }
     public function saveAstro($details)
     {
-        print_r($details);
+        //print_r($details);exit;
         $ext            = JFile::getExt($details['img_name']);
         $uniq_name      = 'img_'.date('Y-m-d-H-i-s').'_'.uniqid().".".$ext;
         
@@ -169,6 +169,44 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         {
             echo "Failure";
         }
+    }
+    public function updateAstro($details)
+    {
+       //print_r($data);exit;
+        $db             = JFactory::getDbo();  // Get db connection
+        $query          = $db->getQuery(true);
+        $id             = $details['id'];$img_name      = $details['img_name'];
+        $img_id         = $uniq_name;    $addr1         = $details['addr1'];
+        $addr2          = $details['addr2'];$city       = $details['city'];
+        $state          = $details['state'];$country    = $details['country'];
+        $pcode          = $details['pcode'];$phone      = $details['phone'];
+        $mobile         = $details['mobile'];$whatsapp  = $details['whatsapp'];
+        $website        = $details['website'];$info     = $details['info'];$status  = 'visible';
+        $fields         = array(
+                                $db->quoteName('addr_1').'='.$db->quote($addr1),
+                                $db->quoteName('addr_2').'='.$db->quote($addr2),
+                                $db->quoteName('city').'='.$db->quote($city),
+                                $db->quoteName('state').'='.$db->quote($state),
+                                $db->quoteName('country').'='.$db->quote($country),
+                                $db->quoteName('postcode').'='.$db->quote($pcode),
+                                $db->quoteName('phone').'='.$db->quote($phone),
+                                $db->quoteName('mobile').'='.$db->quote($mobile),
+                                $db->quoteName('whatsapp').'='.$db->quote($whatsapp),
+                                $db->quoteName('website').'='.$db->quote($website),
+                                $db->quoteName('info').'='.$db->quote($info),
+                                );
+        $conditions = array(
+                                $db->quoteName('UserId') . ' = '.$db->quote($id)
+                            );
+        $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
+ 
+        $db->setQuery($query);
+        $result = $db->execute();
+        $app            = JFactory::getApplication();
+        $link           = JURI::base().'dashboard?profile_update=success';
+        $msg            = "Profile Updated Successfully... ";
+        $app            ->redirect($link, $msg);
+       
     }
 }
 ?>

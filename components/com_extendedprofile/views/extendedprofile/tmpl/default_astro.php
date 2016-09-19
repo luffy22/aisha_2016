@@ -146,8 +146,12 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
     <input type="checkbox" name="astro_whatsapp" value="yes" /> Check if available on Whatsapp
     <?php } else{ ?>
     <input type="number" class="form-text2" name="astro_mobile" id="astro_mobile" value="<?php echo $this->msg['mobile'] ?>" /> 
+    <?php if($this->msg['whatsapp'] == "yes"){ ?>
+    <input type="checkbox" name="astro_whatsapp" value="yes" checked /> Check if available on Whatsapp
+    <?php } else{ ?>
     <input type="checkbox" name="astro_whatsapp" value="yes" /> Check if available on Whatsapp
     <?php
+            }
     }
     ?>
 </div> 

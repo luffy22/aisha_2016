@@ -79,7 +79,7 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
         $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
         $detectedType = exif_imagetype($_FILES['astro_img']['tmp_name']);
         $error = !in_array($detectedType, $allowedTypes);
-               
+         
         if($error)
         {
             $url = JURi::base().'preference?image=false';
@@ -103,6 +103,48 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
             $model          = $this->getModel('extendedprofile');  // Add the array to model
             $data           = $model->saveAstro($user_details);
         }
+    }
+    public function updateAstro()
+    {
+        $id         = $_POST['profile_id'];
+        //$img        = $_FILES['astro_img']['name'];$img_type    = $_FILES['astro_img']['type'];
+        //$tmp        = $_FILES['astro_img']['tmp_name'];
+        //$img_size   = round((filesize($_FILES['astro_img']['tmp_name'])/1024),2);
+        $addr1        = $_POST['astro_addr1'];
+        $addr2      = $_POST['astro_addr2'];$city       = $_POST['astro_city'];
+        $state      = $_POST['astro_state'];$country    = $_POST['astro_country'];
+        $pcode      = $_POST['astro_pcode'];$phone      = $_POST['astro_code'].'-'.$_POST['astro_phone'];
+        $mobile     = $_POST['astro_mobile'];
+        if(!empty($_POST['astro_whatsapp'])){$whatsapp="yes";}else{$whatsapp="no";};
+        $website   = $_POST['astro_web'];$info          = $_POST['astro_info'];
+        
+        /*$allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
+        $detectedType = exif_imagetype($_FILES['astro_img']['tmp_name']);
+        $error = !in_array($detectedType, $allowedTypes);
+               
+        if($error)
+        {
+            $url = JURi::base().'preference?image=false';
+            $this->directUrl($url);
+        }
+        else if($img_size >= 2048)
+        {
+            $url = JRi::base().'preference?image=size';
+            $this->directUrl($url);
+        }
+        else
+        {*/
+               //echo $tmp;exit;
+            $user_details   = array(
+                                        'id'=>$id,
+                                    'addr1'=>$addr1,'addr2'=>$addr2, 'city'=>$city,
+                                    'state'=>$state,'country'=>$country,'pcode'=>$pcode,
+                                    'phone'=>$phone,'mobile'=>$mobile,'whatsapp'=>$whatsapp,
+                                    'website'=>$website,'info'=>$info
+                                    );
+            $model          = $this->getModel('extendedprofile');  // Add the array to model
+            $data           = $model->updateAstro($user_details);
+       // }
         
     }
     protected function directUrl($url)

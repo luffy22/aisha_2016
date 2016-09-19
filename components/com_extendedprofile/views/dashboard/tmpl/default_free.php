@@ -79,7 +79,7 @@ defined('_JEXEC') or die;
           <table class="table table-hover table-bordered">
               <tr><th>Phone: </th><td><?php echo $this->msg['phone']; ?></td></tr>
               <tr><th>Mobile: </th><td><?php if(empty($this->msg['mobile'])){echo "Not Provided"; }else{ echo $this->msg['mobile'];} ?></td></tr>
-              <tr><th>Available On Whatsapp:</th><td><?php echo ucfirst($this->msg['whatsapp']); ?></td></tr>
+              <tr><th>Available On Whatsapp <img src="<?php echo JURI::base() ?>images/whatsapp.png" alt="whatsapp logo" title="Whether Astrologer Uses Whatsapp" height="25px" width="25px" />: </th><td><?php echo ucfirst($this->msg['whatsapp']); ?></td></tr>
               <tr><th>Website/Blog: </th><td><?php if(empty($this->msg['website'])){echo 'Not Provided'; }else{ echo $this->msg['website']; } ?></td></tr>
           </table>
           </div>
