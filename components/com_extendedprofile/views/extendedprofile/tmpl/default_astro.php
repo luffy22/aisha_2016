@@ -1,16 +1,12 @@
-<script>
- $(document).ready(function() {
-    var text_max = 1500;
-    $('#display_count').html(text_max + ' characters remaining');
+ <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+ <script>
+  tinymce.init({
+    selector: '#astro_info',
+    plugins: "wordcount autolink",
+    menubar: false
+  });
+  </script>
 
-    $('#astro_info').keyup(function() {
-        var text_length = $('#astro_info').val().length;
-        var text_remaining = text_max - text_length;
-
-        $('#display_count').html(text_remaining + ' characters remaining');
-    });
-});
-</script>
 <?php
 /*
  * To change this template, choose Tools | Templates
@@ -166,13 +162,11 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
     ?>
 </div>
 <div class="form-group">
-    <label for="astro_info">Describe About Yourself(1500 Character Max)*: </label>
+    <label for="astro_info">Describe About Yourself(1000 Words Max)*: </label>
     <?php if(empty($this->msg['website'])) { ?> 
     <textarea rows="7" class="form-control" name="astro_info" id="astro_info" placeholder="Describe a little about your Astrological Expertise. It should be short, meaningful and helpful for your clients to understand" maxlength="1500" required></textarea>
-    <span id="display_count"></span>.
     <?php } else{ ?>
-     <textarea rows="7" class="form-control" name="astro_info" id="astro_info" maxlength="1500" required><?php echo $this->msg['info'] ?></textarea>
-     <span id="display_count"></span>.
+     <textarea rows="7" class="form-control" name="astro_info" id="astro_info" maxlength="10000" required><?php echo $this->msg['info'] ?></textarea>
     <?php
     }
     ?>
@@ -192,6 +186,7 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
   <?php
        }
   ?>
-    <button type="reset" name="cancel" class="btn btn-navbar">Cancel</button>
+    <button type="reset" name="reset" class="btn btn-warning">Reset</button>
+    <a class="btn btn-danger" href="<?php echo JURI::base() ?>dashboard">Cancel</a>
 </div>
 </form>

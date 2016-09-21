@@ -3,6 +3,7 @@ JHtml::_('behavior.keepalive');
 //print_r($allarticles);exit;
  $i = 0;
 ?>
+<h3>Recent Articles</h3>
 <div class="scroll_article" id="scroll_article">
 <?php
 foreach($allarticles as $data)

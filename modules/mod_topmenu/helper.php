@@ -28,10 +28,18 @@ class modTopMenuHelper
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
     </button>
-      <a href="<?php echo JUri::base(); ?>" class="navbar-brand">Astro Isha</a>
+        <a href="<?php echo JUri::base(); ?>" class="navbar-brand">Astro Isha</a>
     </div>
 <div class="navbar-collapse collapse" id="navbar">
   <ul class="nav navbar-nav">
+    <li class="dropdown navbar-inverse">
+        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle"> Horoscope <span class="caret"></span></a>
+        <ul class="nav navbar-inverse dropdown-menu">
+            <li><a href="<?php echo JURI::base(); ?>ask-question">Ask An Astrologer</a></li>
+            <li><a href="<?php echo JURI::base(); ?>calculate-lagna">Calculate Horoscope</a></li>
+            <li><a href="https://www.youtube.com/channel/UCe4znwEsQsyRiTJ-xetbS1A">Visit Our Youtube Page</a></li>
+        </ul>
+    </li>
 <?php
         foreach($result as $items)
         {
@@ -68,7 +76,7 @@ class modTopMenuHelper
       }
 ?>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right">
         <li class="dropdown navbar-inverse">
 <?php 
         $user = JFactory::getUser();
@@ -92,7 +100,7 @@ class modTopMenuHelper
             <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> Hello <?php echo $user->username; ?> <span class="caret"></span></a>
             <ul class="nav navbar-inverse dropdown-menu">
                 <li><a href="<?php echo JUri::base() ?>dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
-                <li><a href="<?php echo JUri::base() ?>preference"><span class="glyphicon glyphicon-pencil"></span> Details</a></li>
+                <li><a href="<?php echo JUri::base() ?>details"><span class="glyphicon glyphicon-pencil"></span> Details</a></li>
                 <li><a href="<?php echo JUri::base() ?>logout"><span class="glyphicon glyphicon-off"></span> Sign Out</a></li>
             </ul>
 <?php

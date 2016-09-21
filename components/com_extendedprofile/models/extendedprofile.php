@@ -17,16 +17,16 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         // get the data
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          ->select($db->quoteName(array('UserId','membership')));
-        $query          ->from($db->quoteName('#__user_astro'));
+        $query          ->select($db->quoteName(array('UserId','membership','img_1','img_1_id',
+                                     'addr_1','addr_2', 'city','state','country',
+                                    'postcode','phone','mobile','whatsapp','website', 'info','profile_status')));
+        $query          ->from($db->quoteName('#__user_astrologer'));
         $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
         $astro          = $db->loadAssoc();
-        $membership     = $astro['membership'];
-        $db->execute();
-        $row            = $db->getNumRows();//echo $row;exit;
+        return $astro;
         // if there are rows present fetch related data
-        if($row > 0 && $membership =="free")
+        /*if($row > 0 && $membership =="free")
         {
             $query      ->clear();
             $query      ->select($db->quoteName(array('UserId')))
@@ -58,7 +58,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
             $db         ->setQuery($query);
             $result     = $db->loadAssoc();
             return $result;
-        }
+        }*/
     }
     public function saveUser($data)
     {
@@ -74,7 +74,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $values         = array($db->quote($id),$db->quote($membership));
         
         $query
-        ->insert($db->quoteName('#__user_astro'))
+        ->insert($db->quoteName('#__user_astrologer'))
         ->columns($db->quoteName($columns))
         ->values(implode(',', $values));
         
@@ -91,8 +91,10 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         }
         else
         {
-            $url         = JURI::base().'preference?data=fail';
-            $this->redirectLink($url);
+            $app = JFactory::getApplication(); 
+            $link = JURI::base().'dashboard?data=fail';
+            $msg = 'Unable to add details'; 
+            $app->redirect($link, $msg, $msgType='message');
         }
     }
     public function updateUser($data)

@@ -11,7 +11,7 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
             
             if(!isset($_POST['condition_profile']))
             {
-                header('Location: '.JURi::base().'preference?terms=no');
+                header('Location: '.JURi::base().'dashboard?terms=no');
             }
             else
             {

@@ -23,7 +23,7 @@ class ExtendedProfileModelDashboard extends JModelItem
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
-                                    'b.img_1','b.img_1_id','b.addr_1','b.addr_2','b.city',
+                                    'b.membership','b.img_1','b.img_1_id','b.addr_1','b.addr_2','b.city',
                                     'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
                                     'b.info','b.profile_status')));
         $query          ->from($db->quoteName('#__users', 'a'));

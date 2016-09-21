@@ -7,7 +7,7 @@ defined('_JEXEC') or die;
 //print_r($this->msg);
 ?>
 <div class="spacer"></div>
-<h3>Astrologer: Free Account</h3>
+<h3>Astrologer: Paid Account</h3>
 <div class="text-right"><span class="glyphicon glyphicon-user"></span> Profile  |  <a href="<?php echo JURI::base() ?>preference" title="Edit Details"><span class="glyphicon glyphicon-pencil"></span> Details</a></div>
 <div class="panel-group" id="free_astro" role="tablist" aria-multiselectable="true">
 <div class="panel panel-primary">
@@ -40,6 +40,20 @@ defined('_JEXEC') or die;
          </div>
     </div>    
 </div>
+<div class="panel panel-primary">
+    <div class="panel-heading" role="tab" id="free_astro4">
+        <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#free_astro" href="#astro_data4" aria-expanded="true" aria-controls="astro_data4">
+          Finance Details
+        </a>
+      </h4>
+    </div>
+    <div id="astro_data4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="free_astro4">
+        <div class="panel-body">
+          
+        </div>
+    </div>    
+</div>   
 <div class="panel panel-primary">
     <div class="panel-heading" role="tab" id="free_astro2">
         <h4 class="panel-title">

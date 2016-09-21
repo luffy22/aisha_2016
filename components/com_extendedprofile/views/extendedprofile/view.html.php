@@ -12,14 +12,16 @@ class ExtendedProfileViewExtendedProfile extends JViewLegacy
             // Assign data to the view
             $this->msg = $this->get('Data');
             //print_r($this->msg);exit;
-            if(array_key_exists("UserId",$this->msg))
+            if(empty($this->msg))
             {
-               $tpl    = "astro";
+                $app = JFactory::getApplication(); 
+                $link = JURI::base().'dashboard';
+                $app->redirect($link);
             }
             
             else
             {
-               $tpl      = null;
+                $tpl    = "astro";
             }
             parent::display($tpl);
 	}
