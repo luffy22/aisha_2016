@@ -22,19 +22,30 @@ class ExtendedProfileModelDashboard extends JModelItem
         // get the data
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
-                                    'b.membership','b.img_1','b.img_1_id','b.addr_1','b.addr_2','b.city',
-                                    'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
-                                    'b.info','b.profile_status')));
-        $query          ->from($db->quoteName('#__users', 'a'));
-        $query          ->join('INNER', $db->quoteName('#__user_astrologer','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
-        $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
+        $query          ->select($db->quoteName(array('membership','UserId')));
+        $query          ->from($db->quoteName('#__user_astrologer'));
+        $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);
         $db->execute();
         $row            = $db->getNumRows();
-        if($row > 0)
+        $result         = $db->loadAssoc();
+        if($row > 0 && $result['membership'] == 'free')
         {
+            $query          ->clear();
+            $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
+                                        'b.membership','b.img_1','b.img_1_id','b.addr_1','b.addr_2','b.city',
+                                        'b.state','b.country','b.postcode','b.phone','b.mobile','b.whatsapp','b.website',
+                                        'b.info','b.profile_status')));
+            $query          ->from($db->quoteName('#__users', 'a'));
+            $query          ->join('INNER', $db->quoteName('#__user_astrologer','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
+            $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
+            $db             ->setQuery($query);
             $results =      $db->loadAssoc();
+
+        }
+        else if($row > 0 && $result['membership'] == 'paid')
+        {
+            echo "Paid Member";exit;
         }
         else
         {

@@ -8,7 +8,7 @@ defined('_JEXEC') or die;
 ?>
 <div class="spacer"></div>
 <h3>Astrologer: Free Account</h3>
-<div class="text-right"><span class="glyphicon glyphicon-user"></span> Profile  |  <a href="<?php echo JURI::base() ?>preference" title="Edit Details"><span class="glyphicon glyphicon-pencil"></span> Details</a></div>
+<div class="text-right"><span class="glyphicon glyphicon-user"></span> Profile  |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"><span class="glyphicon glyphicon-pencil"></span> Details</a></div>
 <div class="panel-group" id="free_astro" role="tablist" aria-multiselectable="true">
 <div class="panel panel-primary">
     <div class="panel-heading" role="tab" id="free_astro1">
@@ -22,8 +22,17 @@ defined('_JEXEC') or die;
       <div class="panel-body">
           <div class="row">
               <div class="col-md-3">
+                  <?php if(empty($this->msg['img_1_id'])){ ?>
+                  <img src="<?php echo JURI::base() ?>images/blank-profile.png" alt="blank photo" 
+                       class="img-responsive img-thumbnail" title="Please Upload Your Photo..." />
+                  <?php
+                  }
+                  else
+                  {
+                  ?>
                   <img src="<?php echo JURI::base() ?>images/profiles/<?php echo $this->msg['img_1_id'] ?>" alt="<?php echo $this->msg['name'] ?> image" 
-                       class="img-responsive img-thumbnail" title="<?php echo $this->msg['name']; ?>" /></div>
+                       class="img-responsive img-thumbnail" title="<?php echo $this->msg['name']; ?>" /><?php } ?>
+              </div>
               <div class="col-md-5">
                   <div class="table-responsive">
                   <table class="table table-hover table-bordered">

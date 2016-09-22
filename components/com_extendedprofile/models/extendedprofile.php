@@ -69,32 +69,47 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-
-        $columns        = array('UserId','membership');
-        $values         = array($db->quote($id),$db->quote($membership));
-        
-        $query
-        ->insert($db->quoteName('#__user_astrologer'))
-        ->columns($db->quoteName($columns))
-        ->values(implode(',', $values));
-        
-        // Set the query using our newly populated query object and execute it
-        $db             ->setQuery($query);
-        $result          = $db->query();
-        
-        if($result)
+        $query          ->select(array('UserId'));
+        $query          ->from($db->quoteName('#__user_astrologer'));
+        $query          ->where($db->quoteName('UserId').'='.$data->quote($id));
+        $db->execute();
+        $row            = $db->loadNumRows();
+        if($row > 0)
         {
-            $app = JFactory::getApplication(); 
-            $link = JURI::base().'dashboard';
-            $msg = 'Successfully added Details'; 
-            $app->redirect($link, $msg, $msgType='message');
+            $app        = JFactory::getApplication();
+            $link       = JURI::base().'dashboard?data=double';
+            $msg        = "Data Already Exists..";
+            $app        ->redirect($link,$msg);
         }
         else
         {
-            $app = JFactory::getApplication(); 
-            $link = JURI::base().'dashboard?data=fail';
-            $msg = 'Unable to add details'; 
-            $app->redirect($link, $msg, $msgType='message');
+            $query          ->clear();
+            $columns        = array('UserId','membership');
+            $values         = array($db->quote($id),$db->quote($membership));
+
+            $query
+            ->insert($db->quoteName('#__user_astrologer'))
+            ->columns($db->quoteName($columns))
+            ->values(implode(',', $values));
+
+            // Set the query using our newly populated query object and execute it
+            $db             ->setQuery($query);
+            $result          = $db->query();
+
+            if($result)
+            {
+                $app = JFactory::getApplication(); 
+                $link = JURI::base().'dashboard';
+                $msg = 'Successfully added Details'; 
+                $app->redirect($link, $msg, $msgType='message');
+            }
+            else
+            {
+                $app = JFactory::getApplication(); 
+                $link = JURI::base().'dashboard?data=fail';
+                $msg = 'Unable to add details'; 
+                $app->redirect($link, $msg, $msgType='message');
+            }
         }
     }
     public function updateUser($data)
@@ -142,35 +157,45 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $upload         = JFile::upload($src, $dest);
         if($upload)
         {
-            $columns        = array('UserId','img_1','img_1_id','addr_1','addr_2','city',
-                                    'state','country','postcode','phone','mobile','whatsapp',
-                                    'website','info','profile_status');
-            $values         = array($db->quote($id),$db->quote($img_name),$db->quote($img_id),
-                                    $db->quote($addr1),$db->quote($addr2),$db->quote($city),
-                                    $db->quote($state),$db->quote($country),$db->quote($pcode),
-                                    $db->quote($phone),$db->quote($mobile),$db->quote($whatsapp),
-                                    $db->quote($website),$db->quote($info),$db->quote($status));
-            $query
-            ->insert($db->quoteName('#__user_astrologer'))
-            ->columns($db->quoteName($columns))
-            ->values(implode(',', $values));
-            
-            $db             ->setQuery($query);
-            $result          = $db->query();
+            $fields         = array(
+                                $db->quoteName('img_1').'='.$db->quote($img_name),
+                                $db->quoteName('img_1_id').'='.$db->quote($img_id),
+                                $db->quoteName('addr_1').'='.$db->quote($addr1),
+                                $db->quoteName('addr_2').'='.$db->quote($addr2),
+                                $db->quoteName('city').'='.$db->quote($city),
+                                $db->quoteName('state').'='.$db->quote($state),
+                                $db->quoteName('country').'='.$db->quote($country),
+                                $db->quoteName('postcode').'='.$db->quote($pcode),
+                                $db->quoteName('phone').'='.$db->quote($phone),
+                                $db->quoteName('mobile').'='.$db->quote($mobile),
+                                $db->quoteName('whatsapp').'='.$db->quote($whatsapp),
+                                $db->quoteName('website').'='.$db->quote($website),
+                                $db->quoteName('info').'='.$db->quote($info),
+                                );
+            $conditions = array(
+                                    $db->quoteName('UserId') . ' = '.$db->quote($id)
+                                );
+            $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
 
+            $db->setQuery($query);
+            $result          = $db->query();
+            $app = JFactory::getApplication();
+            $link=  JURI::base().'dashboard';
             if($result)
             {
-                $this->getData();
+                $msg = "Data Added Successfully..";
+                
             }
             else
             {
-                echo "Failed Insertion.";
+               $msg  = "Failed to add data...";
             }
         }
         else
         {
-            echo "Failure";
+            $msg  = "Failed to add data...";
         }
+        $app->redirect($link,$msg);
     }
     public function updateAstro($details)
     {

@@ -12,6 +12,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+//print_r($this->msg);exit;
 $user = JFactory::getUser();
 if($user->guest)
 {
@@ -36,16 +37,16 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>
 <div class="form-group"><label>Name:</label> <?php echo $user->name;; ?></div>
 <?php 
-    if(count($this->msg) > 0)
+    if((empty($this->msg['city']))&&(empty($this->msg['country'])))
     {
 ?>
-    <form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.updateAstro'); ?>">
+    <form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.saveAstro'); ?>">
  <?php
     }
     else
     {
  ?>
-<form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.saveAstro'); ?>">
+    <form enctype="multipart/form-data" method="post" action="<?php echo JRoute::_('index.php?option=com_extendedprofile&task=extendedprofile.updateAstro'); ?>">
 <?php
     }
 ?>
@@ -164,7 +165,7 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
 <div class="form-group">
     <label for="astro_info">Describe About Yourself(1000 Words Max)*: </label>
     <?php if(empty($this->msg['website'])) { ?> 
-    <textarea rows="7" class="form-control" name="astro_info" id="astro_info" placeholder="Describe a little about your Astrological Expertise. It should be short, meaningful and helpful for your clients to understand" maxlength="1500" required></textarea>
+    <textarea rows="7" class="form-control" name="astro_info" id="astro_info" maxlength="10000 ">Describe your astrological expertise...</textarea>
     <?php } else{ ?>
      <textarea rows="7" class="form-control" name="astro_info" id="astro_info" maxlength="10000" required><?php echo $this->msg['info'] ?></textarea>
     <?php
@@ -173,16 +174,16 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
 </div>
 <div class="form-group">
     <?php 
-        if(count($this->msg) > 0)
+       if((empty($this->msg['city']))&&(empty($this->msg['country'])))
         {
     ?>
-    <button type="submit" name="update_profile" class="btn btn-primary" >Update</button>
+            <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>
     <?php
         }
        else
        {
    ?>
-     <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>
+            <button type="submit" name="update_profile" class="btn btn-primary" >Update</button>
   <?php
        }
   ?>

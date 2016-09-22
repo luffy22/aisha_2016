@@ -14,9 +14,10 @@ class ExtendedProfileViewExtendedProfile extends JViewLegacy
             //print_r($this->msg);exit;
             if(empty($this->msg))
             {
-                $app = JFactory::getApplication(); 
-                $link = JURI::base().'dashboard';
-                $app->redirect($link);
+                $app =& JFactory::getApplication();
+                $link   = JURI::base().'dashboard';
+                $msg    = "No Data Found For User. Kindly select membership type before proceding";
+                $app->redirect($link, $msg);
             }
             
             else
