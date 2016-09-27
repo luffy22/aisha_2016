@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 defined('_JEXEC') or die;
-//print_r($this->msg);
+//print_r($this->msg);exit;
 ?>
 <div class="spacer"></div>
 <h3>Astrologer: Paid Account</h3>
-<div class="text-right"><span class="glyphicon glyphicon-user"></span> Profile  |  <a href="<?php echo JURI::base() ?>preference" title="Edit Details"><span class="glyphicon glyphicon-pencil"></span> Details</a></div>
+<div class="text-right"><span class="glyphicon glyphicon-user"></span> Profile  |  <a href="<?php echo JURI::base() ?>details" title="Edit Details"><span class="glyphicon glyphicon-pencil"></span> Details</a> | <a href="<?php echo JURI::base() ?>finance" title="Edit Payment"><span class="glyphicon glyphicon-usd"></span> Payment Details</a></div>
 <div class="panel-group" id="free_astro" role="tablist" aria-multiselectable="true">
 <div class="panel panel-primary">
     <div class="panel-heading" role="tab" id="free_astro1">
@@ -50,7 +50,18 @@ defined('_JEXEC') or die;
     </div>
     <div id="astro_data4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="free_astro4">
         <div class="panel-body">
-          
+          <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+              <tr><th>Account Name: </th><td><?php if(empty($this->msg['acc_holder_name'])){echo "Not Provided"; }else{ echo $this->msg['acc_holder_name'];} ?></td></tr>
+              <tr><th>Account Number: </th><td><?php if(empty($this->msg['acc_number'])){echo "Not Provided"; }else{ echo $this->msg['acc_number'];} ?></td></tr>
+              <tr><th>Bank Name: </th><td><?php if(empty($this->msg['acc_bank_name'])||$this->msg['acc_bank_name'] =='none'){echo "Not Provided"; }else{ echo $this->msg['acc_bank_name']; } ?></td></tr>
+              <tr><th>Bank Address: </th><td><?php if(empty($this->msg['acc_bank_addr'])){echo "Not Provided"; }else{ echo $this->msg['acc_bank_addr'];} ?></td></tr>
+              <tr><th>IBAN: </th><td><?php if(empty($this->msg['acc_iban'])){echo "Not Provided"; }else{ echo $this->msg['acc_iban'];} ?></td></tr>
+              <tr><th>Swift Code: </th><td><?php if(empty($this->msg['acc_swift_code'])){echo "Not Provided"; }else{ echo $this->msg['acc_swift_code'];} ?></td></tr>
+              <tr><th>IFSC: </th><td><?php if(empty($this->msg['acc_ifsc'])|| $this->msg['acc_ifsc']=='none'){echo "Not Provided"; }else{ echo $this->msg['acc_ifsc'];} ?></td></tr>
+              <tr><th>Paypal ID/Email: </th><td><?php if(empty($this->msg['acc_paypalid'])){echo "Not Provided"; }else{ echo $this->msg['acc_paypalid'];} ?></td></tr>
+          </table>
+          </div>
         </div>
     </div>    
 </div>   
