@@ -9,7 +9,7 @@ class ExtendedProfileViewFinance extends JViewLegacy
     public $msg;
     function display($tpl = null)
 	{
-            
-        parent::display($tpl);
+            $this->msg = $this->get('Data');
+            parent::display($tpl);
 	}
 }
