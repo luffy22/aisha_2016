@@ -9,15 +9,26 @@ function showFields()
 }
 function hideFields()
 {
-    $('#profile_hidden1').hide();
-    document.getElementById("profile_hidden1").style.visibility = 'hidden';
-    $('#profile_hidden2').hide();
-    document.getElementById("profile_hidden2").style.visibility = 'hidden';
+    if(document.getElementById("astro_free").checked)
+    {
+        $('#profile_hidden1').hide();
+        document.getElementById("profile_hidden1").style.visibility = 'hidden';
+        $('#profile_hidden2').hide();
+        document.getElementById("profile_hidden2").style.visibility = 'hidden';
+    }
+    else
+    {
+        showFields();
+    }
 }
 </script>
 <?php
 //print_r($this->msg);exit;
-//defined('_JEXEC') or die('Restricted access');
+$ip    = '212.58.244.20'; // ip address
+//$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+$info = geoip_country_code_by_name($ip);
+echo $info;exit;
+defined('_JEXEC') or die('Restricted access');
 $user       = JFactory::getUser();
    if(isset($_GET['terms'])&&($_GET['terms']=='no'))
     {
@@ -46,6 +57,8 @@ $user       = JFactory::getUser();
     <label for="astro_amount" class="control-label">Amount:</label>
     <?php echo "300 Rs" ?>
 </div>
+<input type="hidden" name="astro_amount" id="astro_amount" />
+<input type="hidden" name="astro_currency" id="astro_currency" />
 <div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />
     <label for="condition_profile">Kindly Read and Accept the <a href="">Terms and Conditions</a> for Astrologers *</label>

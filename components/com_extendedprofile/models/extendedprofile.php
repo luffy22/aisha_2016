@@ -25,40 +25,6 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $db             ->setQuery($query);
         $astro          = $db->loadAssoc();
         return $astro;
-        // if there are rows present fetch related data
-        /*if($row > 0 && $membership =="free")
-        {
-            $query      ->clear();
-            $query      ->select($db->quoteName(array('UserId')))
-                        ->from($db->quoteName('#__user_astrologer'))
-                        ->where($db->quoteName('UserId').' = '.$db->quote($id));
-            $db         ->setQuery($query);
-            $db         ->execute();unset($row);
-            $row        = $db->getNumRows();
-            if($row > 0)
-            {
-                $query      ->clear();
-                $query      ->select($db->quoteName(array('UserId','img_1','img_1_id',
-                                     'addr_1','addr_2', 'city','state','country',
-                                    'postcode','phone','mobile','whatsapp','website', 'info','profile_status')))
-                            ->from($db->quoteName('#__user_astrologer'))
-                            ->where($db->quoteName('UserId').' = '.$db->quote($id));
-                $db             ->setQuery($query);
-                $astro          = $db->loadAssoc();
-                return $astro;
-            }
-        }
-        
-        else  // if data and rows are absent fetch only name
-        {
-            $query      ->clear();
-            $query      ->select($db->quoteName(array('name')));
-            $query      ->from($db->quoteName('#__users'));
-            $query      ->where($db->quoteName('id').' = '.$db->quote($id));
-            $db         ->setQuery($query);
-            $result     = $db->loadAssoc();
-            return $result;
-        }*/
     }
     public function saveUser($data)
     {
@@ -66,23 +32,25 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $user           = JFactory::getUser();
         $id             = $user->id;
         $membership     = $data['membership'];   // astrologer membership type free/paid
-        
+
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         $query          ->select(array('UserId'));
         $query          ->from($db->quoteName('#__user_astrologer'));
-        $query          ->where($db->quoteName('UserId').'='.$data->quote($id));
-        $db->execute();
-        $row            = $db->loadNumRows();
+        $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
+        $db             ->setQuery($query);$db->execute();
+        $row            = $db->getNumRows();    
+        
+        $app            = JFactory::getApplication();
         if($row > 0)
         {
-            $app        = JFactory::getApplication();
             $link       = JURI::base().'dashboard?data=double';
             $msg        = "Data Already Exists..";
             $app        ->redirect($link,$msg);
         }
         else
         {
+            
             $query          ->clear();
             $columns        = array('UserId','membership');
             $values         = array($db->quote($id),$db->quote($membership));
@@ -98,14 +66,12 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
 
             if($result)
             {
-                $app = JFactory::getApplication(); 
                 $link = JURI::base().'dashboard';
                 $msg = 'Successfully added Details'; 
                 $app->redirect($link, $msg, $msgType='message');
             }
             else
             {
-                $app = JFactory::getApplication(); 
                 $link = JURI::base().'dashboard?data=fail';
                 $msg = 'Unable to add details'; 
                 $app->redirect($link, $msg, $msgType='message');
