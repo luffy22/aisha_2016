@@ -24,10 +24,7 @@ function hideFields()
 </script>
 <?php
 //print_r($this->msg);exit;
-$ip    = '212.58.244.20'; // ip address
-//$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-$info = geoip_country_code_by_name($ip);
-echo $info;exit;
+$msg        = getAmount();print_r($msg);
 defined('_JEXEC') or die('Restricted access');
 $user       = JFactory::getUser();
    if(isset($_GET['terms'])&&($_GET['terms']=='no'))
@@ -55,10 +52,10 @@ $user       = JFactory::getUser();
 </div>
 <div id="profile_hidden2" class="form-group">
     <label for="astro_amount" class="control-label">Amount:</label>
-    <?php echo "300 Rs" ?>
+    <?php echo $msg['amount'].' '.$msg['curr_code'].'('.$msg['currency'].' - '.$msg['curr_full'].')' ?>
 </div>
-<input type="hidden" name="astro_amount" id="astro_amount" />
-<input type="hidden" name="astro_currency" id="astro_currency" />
+<input type="hidden" name="astro_amount" id="astro_amount"  />
+<input type="hidden" name="astro_currency" id="astro_currency"  />
 <div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />
     <label for="condition_profile">Kindly Read and Accept the <a href="">Terms and Conditions</a> for Astrologers *</label>
@@ -68,4 +65,33 @@ $user       = JFactory::getUser();
         <button type="reset" name="cancel" class="btn btn-navbar">Cancel</button>
     </div>
 </form>
+<?php
+function getAmount()
+{
+    try
+    {
+        $ip    = '157.55.39.123';  // ip address
+        //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+        $info = geoip_country_code_by_name($ip);
+        if($info == "US")
+        {
+            $amount   = array('amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
+        }
+        else if($info == "IN")
+        {
+            $amount   = array('amount'=>'300.00', 'currency'=>'INR','curr_code'=>'&#8377;','curr_full'=>'Indian Rupees');
+        }
+        else if($info=='UK')
+        {
+            $amount   = array('amount'=>'7.00','currency'=>'GBP','curr_code'=>'&#8356;','curr_full'=>'British Pound');
+        }
+        return $amount;
+    }
+    catch(Exception $e)
+    {
+        echo "Data not showing: ".$e->getError();
+    }
+}
+
+?>
 </body>
