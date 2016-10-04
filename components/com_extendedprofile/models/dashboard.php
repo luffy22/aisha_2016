@@ -41,7 +41,6 @@ class ExtendedProfileModelDashboard extends JModelItem
             $query          ->where($db->quoteName('a.id').' = '.$db->quote($id));
             $db             ->setQuery($query);
             $results =      $db->loadAssoc();
-
         }
         else if($row > 0 && $result['membership'] == 'paid')
         {
@@ -60,7 +59,30 @@ class ExtendedProfileModelDashboard extends JModelItem
         }
         else
         {
-            $results = "NoRow";
+            
+            try
+            {
+                $ip    = '157.55.39.123';  // ip address
+                //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+                $info = geoip_country_code_by_name($ip);
+                if($info == "US")
+                {
+                    $results   = array('amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
+                }
+                else if($info == "IN")
+                {
+                    $results   = array('amount'=>'300.00', 'currency'=>'INR','curr_code'=>'&#8377;','curr_full'=>'Indian Rupees');
+                }
+                else if($info=='UK')
+                {
+                    $results   = array('amount'=>'7.00','currency'=>'GBP','curr_code'=>'&#8356;','curr_full'=>'British Pound');
+                }
+                 
+            }
+            catch(Exception $e)
+            {
+                $results =  array('error'=> 'Data not showing');
+            }
         }
         return $results;
     }

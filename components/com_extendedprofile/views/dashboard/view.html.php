@@ -9,11 +9,10 @@ class ExtendedProfileViewDashboard extends JViewLegacy
     public $msg;
     function display($tpl = null)
 	{
-            
             // Assign data to the view
             $this->msg = $this->get('Data');
             //print_r($this->msg);exit;
-            if($this->msg == 'NoRow')
+            if((isset($this->msg['amount']) && isset($this->msg['currency']))||isset($this->msg['error']))
             {
                 $tpl = null;
             }

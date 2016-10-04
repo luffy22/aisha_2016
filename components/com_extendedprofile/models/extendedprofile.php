@@ -50,7 +50,6 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         }
         else
         {
-            
             $query          ->clear();
             $columns        = array('UserId','membership');
             $values         = array($db->quote($id),$db->quote($membership));
