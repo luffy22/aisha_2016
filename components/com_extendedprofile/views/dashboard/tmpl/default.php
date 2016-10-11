@@ -45,9 +45,23 @@ $user       = JFactory::getUser();
 </div>
 <div id="profile_hidden1" class="form-group">
     <label for="astro_online" class="control-label">Payment Type:</label>
+<?php
+    if(isset($this->msg['amount']) && isset($this->msg['currency']) && $this->msg['currency']=='INR')
+    {
+?>
     <input type="radio" name="astro_pay" value="online" id="astro_online" checked="checked"  /> Online
     <input type="radio" name="astro_pay" value="cheque" id="astro_cheque" /> Cheque
     <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" />Direct Transfer
+<?php
+    }
+    else
+    {
+?>
+     <input type="radio" name="astro_pay" value="online" id="astro_online" checked="checked"  /> Online
+    <input type="radio" name="astro_pay" value="transfer" id="astro_transfter" />Direct Transfer
+<?php
+    }
+?>
 </div>
 <div id="profile_hidden2" class="form-group">
     <label for="astro_amount" class="control-label">Amount:</label>
@@ -57,9 +71,9 @@ $user       = JFactory::getUser();
     else
     echo "300 Rs";
  ?>
-</div>
 <input type="hidden" name="astro_amount" id="astro_amount" value="<?php if(isset($this->msg['amount']))echo $this->msg['amount'];else "300"; ?>" />
 <input type="hidden" name="astro_currency" id="astro_currency" value="<?php if(isset($this->msg['currency']))echo $this->msg['currency'];else "300"; ?>" />
+</div>
 <div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />
     <label for="condition_profile">Kindly Read and Accept the <a href="">Terms and Conditions</a> for Astrologers *</label>

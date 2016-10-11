@@ -29,7 +29,7 @@ class ExtendedProfileModelDashboard extends JModelItem
         $db->execute();
         $row            = $db->getNumRows();
         $result         = $db->loadAssoc();
-        if($row > 0 && $result['membership'] == 'free')
+        if($row > 0 && ($result['membership'] == 'free'||$result['membership']=='unpaid'))
         {
             $query          ->clear();
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
@@ -59,7 +59,6 @@ class ExtendedProfileModelDashboard extends JModelItem
         }
         else
         {
-            
             try
             {
                 $ip    = '157.55.39.123';  // ip address
@@ -69,15 +68,39 @@ class ExtendedProfileModelDashboard extends JModelItem
                 {
                     $results   = array('amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
                 }
-                else if($info == "IN")
+                else if($info == "IN"||$info== 'LK'||$info=='NP'||$info=='TH'||$info=='MY'||$info=='MV')
                 {
                     $results   = array('amount'=>'300.00', 'currency'=>'INR','curr_code'=>'&#8377;','curr_full'=>'Indian Rupees');
                 }
                 else if($info=='UK')
                 {
-                    $results   = array('amount'=>'7.00','currency'=>'GBP','curr_code'=>'&#8356;','curr_full'=>'British Pound');
+                    $results   = array('amount'=>'7.50','currency'=>'GBP','curr_code'=>'&#8356;','curr_full'=>'British Pound');
                 }
-                 
+                else if($info=='NZ')
+                {
+                    $results   = array('amount'=>'15.00','currency'=>'NZD','curr_code'=>'&#36;', 'curr_full'=>'New Zealand Dollar');
+                }
+                else if($info=='CA')
+                {
+                    $results   = array('amount'=>'10.00','currency'=>'CAD','curr_code'=>'&#36;', 'curr_full'=>'Canadian Dollar');
+                }
+                else if($info=='SG')
+                {
+                    $results   = array('amount'=>'15.00','currency'=>'SGD','curr_code'=>'&#36;','curr_full'=>'Singapore Dollar');
+                }
+                else if($info=='AU')
+                {
+                    $results   = array('amount'=>'15.00','currency'=>'AUD','curr_code'=>'&#36;', 'curr_full'=>'Australian Dollar');
+                }
+                else if($info=='FR'||$info=='DE'||$info=='IE'||$info=='NL'||$info=='CR'||$info=='BE'
+                        ||$info=='GR'||$info=='IT'||$info=='PT'||$info=='ES'||$info=='MT'||$info=='LV'||$info=='TR')
+                {
+                    $results = array('amount'=>'10.00','currency'=>'EUR','curr_code'=>'&#8364;', 'curr_full'=>'European Union Euro');
+                }
+                 else
+                {
+                    $results   = array('amount'=>'7.00', 'currency'=>'USD','curr_code'=>'&#36;','curr_full'=>'United States Dollar');
+                }
             }
             catch(Exception $e)
             {

@@ -32,42 +32,88 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $user           = JFactory::getUser();
         $id             = $user->id;
         $membership     = $data['membership'];   // astrologer membership type free/paid
-
+        $amount         = $data['amount'];$curr = $data['currency'];
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          ->select(array('UserId'));
+        $query          ->select(array('UserId','membership'));
         $query          ->from($db->quoteName('#__user_astrologer'));
         $query          ->where($db->quoteName('UserId').' = '.$db->quote($id));
         $db             ->setQuery($query);$db->execute();
         $row            = $db->getNumRows();    
-        
         $app            = JFactory::getApplication();
+        
         if($row > 0)
         {
-            $link       = JURI::base().'dashboard?data=double';
-            $msg        = "Data Already Exists..";
-            $app        ->redirect($link,$msg);
+                $link       = JURI::base().'dashboard?data=double';
+                $msg        = "Data Already Exists..";
+                $app        ->redirect($link,$msg);
         }
         else
         {
             $query          ->clear();
-            $columns        = array('UserId','membership');
-            $values         = array($db->quote($id),$db->quote($membership));
-
+            if($membership=='paid')
+            {
+                $membership     = "unpaid";
+                $columns        = array('UserId','membership');
+                $values         = array($db->quote($id),$db->quote($membership));
+            }
+            else
+            {
+                $columns        = array('UserId','membership');
+                $values         = array($db->quote($id),$db->quote($membership));
+            }
             $query
             ->insert($db->quoteName('#__user_astrologer'))
             ->columns($db->quoteName($columns))
             ->values(implode(',', $values));
-
             // Set the query using our newly populated query object and execute it
             $db             ->setQuery($query);
             $result          = $db->query();
-
+            if($membership=='unpaid')
+            {
+                $query      ->clear();
+                $columns    = array('UserId','amount','currency');
+                $values     = array($db->quote($id),$db->quote($amount),$db->quote($curr));
+                $query
+                    ->insert($db->quoteName('#__user_finance'))
+                    ->columns($db->quoteName($columns))
+                    ->values(implode(',', $values));
+                $db             ->setQuery($query);$db->query();
+            }
             if($result)
             {
-                $link = JURI::base().'dashboard';
-                $msg = 'Successfully added Details'; 
-                $app->redirect($link, $msg, $msgType='message');
+                if($membership=='unpaid')
+                {
+                    $token              = uniqid('token_');
+                    $query  ->clear();
+                    $query          ->select(array('a.id','a.name','a.email','b.currency','b.amount'));
+                    $query          ->from($db->quoteName('#__users','a'));
+                    $query          ->join('INNER', $db->quoteName('#__user_finance','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
+                    $query          ->where($db->quoteName('id').' = '.$db->quote($id));
+                    $db             ->setQuery($query);
+                    $result         = $db->loadAssoc();
+                    //print_r($result);exit;
+                    if($data['pay_type'] == 'online'&& $data['currency']=='INR')
+                    {
+                        $link   = JUri::base().'ccavenue/nonseam/ccavenue_astro.php?token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
+                        $app->redirect($link);
+                    }
+                    else if($data['pay_type'] == 'online'&& $data['currency']!=='INR')
+                    {
+                        $link   = JUri::base().'vendor/paypal_astro.php?token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
+                        $app->redirect($link);
+                    }
+                    else
+                    {
+                        echo "Not Online Payment";
+                    }
+                }
+                else
+                {
+                    $link = JURI::base().'dashboard';
+                    $msg = 'Successfully added Details'; 
+                    $app->redirect($link, $msg, $msgType='message');
+                }
             }
             else
             {

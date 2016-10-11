@@ -26,15 +26,14 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
                 else if($membership == "paid")
                 {
                     $pay_type       = $_POST['astro_pay'];
-                    echo $pay_type;exit;
-                    $user_details = array('memership'=>$membership,);
-                   
+                    $amount         = $_POST['astro_amount'];
+                    $currency       = $_POST['astro_currency'];
+                    $user_details = array('membership'=>$membership,'pay_type'=>$pay_type,'amount'=>$amount,'currency'=>$currency);
+                    $model          = $this->getModel('extendedprofile');  // Add the array to model
+                    $data           = $model->saveUser($user_details);
                 }
-                
             }
-            
         }
-        
     }
     public function updateUser()
     {
