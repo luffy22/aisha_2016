@@ -95,12 +95,12 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                     //print_r($result);exit;
                     if($data['pay_type'] == 'online'&& $data['currency']=='INR')
                     {
-                        $link   = JUri::base().'ccavenue/nonseam/ccavenue_astro.php?token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
+                        $link   = JUri::base().'ccavenue/nonseam/ccavenue_astro.php?id='.$id.'&token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
                         $app->redirect($link);
                     }
                     else if($data['pay_type'] == 'online'&& $data['currency']!=='INR')
                     {
-                        $link   = JUri::base().'vendor/paypal_astro.php?token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
+                        $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
                         $app->redirect($link);
                     }
                     else

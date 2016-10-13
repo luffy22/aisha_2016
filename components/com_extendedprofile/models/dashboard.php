@@ -109,4 +109,47 @@ class ExtendedProfileModelDashboard extends JModelItem
         }
         return $results;
     }
+    public function authorizePayment($details)
+    {
+        $email      = $details['email'];$pay_id     = $details['pay_id'];$uid   = $details['uid'];
+        $token      = $details['token'];$status     = $details['status'];
+        $db         = JFactory::getDbo();  // Get db connection
+        $query      = $db->getQuery(true);
+        $app        = JFactory::getApplication();
+        if($status == 'success')
+        {
+           $fields          = array($db->quoteName('membership').' = '.$db->quote('paid'));
+           $conditions      = array($db->quoteName('UserId') . ' = '.$db->quote($uid));
+           $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
+           $db->setQuery($query);$result = $db->execute();
+           unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
+           $fields          = array($db->quoteName('paid').'= '.$db->quote('yes'),$db->quoteName('token').' = '.$db->quote($token),
+                                    $db->quoteName('payment_id').' = '.$db->quote($pay_id),
+                                    $db->quoteName('acc_paypalid').' = '.$db->quote($email));
+           $conditions      = array($db->quoteName('UserId').' = '.$db->quote($uid));
+           $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
+           $db->setQuery($query);$result = $db->execute();
+           unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
+           $fields          = array($db->quoteName('group_id').'='.$db->quote(10));
+           $conditions      = array($db->quoteName('user_id').' = '.$db->quote($uid));
+           $query->update($db->quoteName('#__user_usergroup_map'))->set($fields)->where($conditions);
+           $db->setQuery($query);$result = $db->execute(); 
+           if($result)
+           {
+               $link   = JUri::base().'dashboard?payment=success';
+               $app->redirect($link);
+           }
+           else
+           {
+               $link   = JUri::base().'dashboard?payment=failure';
+               $app->redirect($link);
+           }
+        }
+        else
+        {
+            // if status is failure show payment_failure
+            $link   = JUri::base().'dashboard?payment=failure';
+            $app->redirect($link);
+        }
+    }
 }

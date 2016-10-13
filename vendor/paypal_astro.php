@@ -11,20 +11,22 @@ use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\PayerInfo;
 use PayPal\Api\Payer;
-use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use PayPal\Api\Payment;
+use PayPal\Api\Sale;
 
 if(isset($_GET['token']))
 {
 
 $name               = $_GET['name'];
+$user_id            = $_GET['id'];
 $token              = $_GET['token'];
 $token1             = substr($token,6);
 $email              = $_GET['email'];
 $quantity           = (int)1;
 $currency           = $_GET['curr'];
-$fees            = $_GET['amount'];
+$fees               = $_GET['amount'];
 
 $payer_info         = new PayerInfo();
 $payer_info         ->setFirstName($name);
@@ -60,11 +62,11 @@ $transaction    ->setAmount($amount)
 $baseUrl = getBaseUrl();
 
 $redirectUrls = new RedirectUrls();
-$redirectUrls->setReturnUrl("$baseUrl/executepayment.php?success=true&uniq_id=$token")
-    ->setCancelUrl("$baseUrl/executepayment.php?success=false&uniq_id=$token");
+$redirectUrls->setReturnUrl("$baseUrl/executeastro.php?success=true&uniq_id=$token&email=$email&user_id=$user_id")
+    ->setCancelUrl("$baseUrl/executeastro.php?success=false&uniq_id=$token&email=$email&user_id=$user_id");
 
 $payment = new Payment();
-$payment->setIntent("authorize")
+$payment->setIntent("sale")
     ->setPayer($payer)
     ->setRedirectUrls($redirectUrls)
     ->setTransactions(array($transaction));
@@ -73,7 +75,7 @@ $payment->setIntent("authorize")
     try {
         $payment->create($apiContext);
     } catch (Exception $ex) {
-        ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
+        echo $payment->getFailureReason();
     }
     $approvalUrl    = $payment->getApprovalLink();
     $payment_id     = $payment->id;
