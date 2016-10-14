@@ -64,42 +64,47 @@ class ExtendedProfileModelDashboard extends JModelItem
                 $ip    = '157.55.39.123';  // ip address
                 //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
                 $info = geoip_country_code_by_name($ip);
+                $country    = geoip_country_name_by_name($ip);
                 if($info == "US")
                 {
-                    $results   = array('amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
+                    $results   = array('country'=>$country,'amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
                 }
                 else if($info == "IN"||$info== 'LK'||$info=='NP'||$info=='TH'||$info=='MY'||$info=='MV')
                 {
-                    $results   = array('amount'=>'300.00', 'currency'=>'INR','curr_code'=>'&#8377;','curr_full'=>'Indian Rupees');
+                    $results   = array('country'=>$country,'amount'=>'300.00', 'currency'=>'INR','curr_code'=>'&#8377;','curr_full'=>'Indian Rupees');
                 }
                 else if($info=='UK')
                 {
-                    $results   = array('amount'=>'7.50','currency'=>'GBP','curr_code'=>'&#8356;','curr_full'=>'British Pound');
+                    $results   = array('country'=>$country,'amount'=>'7.50','currency'=>'GBP','curr_code'=>'&#8356;','curr_full'=>'British Pound');
                 }
                 else if($info=='NZ')
                 {
-                    $results   = array('amount'=>'15.00','currency'=>'NZD','curr_code'=>'&#36;', 'curr_full'=>'New Zealand Dollar');
+                    $results   = array('country'=>$country,'amount'=>'15.00','currency'=>'NZD','curr_code'=>'&#36;', 'curr_full'=>'New Zealand Dollar');
                 }
                 else if($info=='CA')
                 {
-                    $results   = array('amount'=>'10.00','currency'=>'CAD','curr_code'=>'&#36;', 'curr_full'=>'Canadian Dollar');
+                    $results   = array('country'=>$country,'amount'=>'10.00','currency'=>'CAD','curr_code'=>'&#36;', 'curr_full'=>'Canadian Dollar');
                 }
                 else if($info=='SG')
                 {
-                    $results   = array('amount'=>'15.00','currency'=>'SGD','curr_code'=>'&#36;','curr_full'=>'Singapore Dollar');
+                    $results   = array('country'=>$country,'amount'=>'15.00','currency'=>'SGD','curr_code'=>'&#36;','curr_full'=>'Singapore Dollar');
                 }
                 else if($info=='AU')
                 {
-                    $results   = array('amount'=>'15.00','currency'=>'AUD','curr_code'=>'&#36;', 'curr_full'=>'Australian Dollar');
+                    $results   = array('country'=>$country,'amount'=>'15.00','currency'=>'AUD','curr_code'=>'&#36;', 'curr_full'=>'Australian Dollar');
                 }
                 else if($info=='FR'||$info=='DE'||$info=='IE'||$info=='NL'||$info=='CR'||$info=='BE'
                         ||$info=='GR'||$info=='IT'||$info=='PT'||$info=='ES'||$info=='MT'||$info=='LV'||$info=='TR')
                 {
-                    $results = array('amount'=>'10.00','currency'=>'EUR','curr_code'=>'&#8364;', 'curr_full'=>'European Union Euro');
+                    $results = array('country'=>$country,'amount'=>'10.00','currency'=>'EUR','curr_code'=>'&#8364;', 'curr_full'=>'European Union Euro');
+                }
+                else if($info =='RU')
+                {
+                    $results = array('country'=>$country,'amount'=>'500.00','currency'=>'RUB','curr_code'=>'&#8364;', 'curr_full'=>'Russian Ruble');
                 }
                  else
                 {
-                    $results   = array('amount'=>'7.00', 'currency'=>'USD','curr_code'=>'&#36;','curr_full'=>'United States Dollar');
+                    $results   = array('country'=>$country,'amount'=>'7.00', 'currency'=>'USD','curr_code'=>'&#36;','curr_full'=>'United States Dollar');
                 }
             }
             catch(Exception $e)
@@ -136,6 +141,8 @@ class ExtendedProfileModelDashboard extends JModelItem
            $db->setQuery($query);$result = $db->execute(); 
            if($result)
            {
+               unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
+               
                $link   = JUri::base().'dashboard?payment=success';
                $app->redirect($link);
            }

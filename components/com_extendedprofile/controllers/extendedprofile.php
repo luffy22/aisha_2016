@@ -28,7 +28,9 @@ class ExtendedProfileControllerExtendedProfile extends ExtendedProfileController
                     $pay_type       = $_POST['astro_pay'];
                     $amount         = $_POST['astro_amount'];
                     $currency       = $_POST['astro_currency'];
-                    $user_details = array('membership'=>$membership,'pay_type'=>$pay_type,'amount'=>$amount,'currency'=>$currency);
+                    $country        = $_POST['astro_country'];
+                    $user_details = array('membership'=>$membership,'pay_type'=>$pay_type,
+                                            'amount'=>$amount,'currency'=>$currency,'country'=>$country);
                     $model          = $this->getModel('extendedprofile');  // Add the array to model
                     $data           = $model->saveUser($user_details);
                 }

@@ -72,7 +72,8 @@ $user       = JFactory::getUser();
     echo "300 Rs";
  ?>
 <input type="hidden" name="astro_amount" id="astro_amount" value="<?php if(isset($this->msg['amount']))echo $this->msg['amount'];else "300"; ?>" />
-<input type="hidden" name="astro_currency" id="astro_currency" value="<?php if(isset($this->msg['currency']))echo $this->msg['currency'];else "300"; ?>" />
+<input type="hidden" name="astro_currency" id="astro_currency" value="<?php if(isset($this->msg['currency']))echo $this->msg['currency'];else "INR"; ?>" />
+<input type="hidden" name="astro_country" id="astro_country" value="<?php if(isset($this->msg['country']))echo $this->msg['country'];else "India"; ?>" />
 </div>
 <div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />

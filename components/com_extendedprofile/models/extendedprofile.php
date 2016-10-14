@@ -32,7 +32,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         $user           = JFactory::getUser();
         $id             = $user->id;
         $membership     = $data['membership'];   // astrologer membership type free/paid
-        $amount         = $data['amount'];$curr = $data['currency'];
+        $amount         = $data['amount'];$curr = $data['currency'];$country=  $data['country'];
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
         $query          ->select(array('UserId','membership'));
@@ -72,8 +72,8 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
             if($membership=='unpaid')
             {
                 $query      ->clear();
-                $columns    = array('UserId','amount','currency');
-                $values     = array($db->quote($id),$db->quote($amount),$db->quote($curr));
+                $columns    = array('UserId','amount','currency','country');
+                $values     = array($db->quote($id),$db->quote($amount),$db->quote($curr),$db->quote($country));
                 $query
                     ->insert($db->quoteName('#__user_finance'))
                     ->columns($db->quoteName($columns))
