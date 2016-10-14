@@ -53,8 +53,8 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
 else if(isset($_GET['success']) && $_GET['success'] == 'false')
 {
     $token                  = $_GET['uniq_id'];
-    echo $token;exit;
-    $failid                 = $_GET['token']; 
-    header('Location:'.$server.'/index.php?option=com_astrologin&task=astroask.failPayment&failid='.$failid.'&token='.$token);
+    $uid                    = $_GET['user_id'];
+    $email                  = $_GET['email'];
+    header('Location:'.$server.'aisha/index.php?option=com_extendedprofile&task=dashboard.confirmPayment&uid='.$uid.'&status=fail&token='.$token.'&email='.$email);
 }
 ?>

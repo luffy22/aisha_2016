@@ -63,8 +63,8 @@ class ExtendedProfileModelDashboard extends JModelItem
             {
                 $ip    = '157.55.39.123';  // ip address
                 //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-                $info = geoip_country_code_by_name($ip);
-                $country    = geoip_country_name_by_name($ip);
+                $info                   = geoip_country_code_by_name($ip);
+                $country                = geoip_country_name_by_name($ip);
                 if($info == "US")
                 {
                     $results   = array('country'=>$country,'amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
@@ -128,7 +128,7 @@ class ExtendedProfileModelDashboard extends JModelItem
            $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
            $db->setQuery($query);$result = $db->execute();
            unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
-           $fields          = array($db->quoteName('paid').'= '.$db->quote('yes'),$db->quoteName('token').' = '.$db->quote($token),
+           $fields          = array($db->quoteName('paid').'= '.$db->quote('Yes'),$db->quoteName('token').' = '.$db->quote($token),
                                     $db->quoteName('payment_id').' = '.$db->quote($pay_id),
                                     $db->quoteName('acc_paypalid').' = '.$db->quote($email));
            $conditions      = array($db->quoteName('UserId').' = '.$db->quote($uid));
@@ -139,21 +139,67 @@ class ExtendedProfileModelDashboard extends JModelItem
            $conditions      = array($db->quoteName('user_id').' = '.$db->quote($uid));
            $query->update($db->quoteName('#__user_usergroup_map'))->set($fields)->where($conditions);
            $db->setQuery($query);$result = $db->execute(); 
-           if($result)
-           {
-               unset($result);$query->clear();unset($fields);unset($conditions);            // unset all variables
-               
-               $link   = JUri::base().'dashboard?payment=success';
-               $app->redirect($link);
-           }
-           else
-           {
-               $link   = JUri::base().'dashboard?payment=failure';
-               $app->redirect($link);
-           }
+           $query->clear();        // unset all variables
+           $query       ->select($db->quoteName(array('a.name','a.email','a.username',
+                                    'b.membership','c.amount','c.currency','c.paid','c.location',
+                                    'c.token','c.payment_id')))
+                            ->from($db->quoteName('#__users','a'))
+                            ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
+                            ->join('INNER', $db->quoteName('#__user_finance', 'c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')')
+                            ->where($db->quoteName('a.id').' = '.$db->quote($uid));
+            $db                  ->setQuery($query);
+            $details                 = $db->loadAssoc();
+            $bcc                = 'kopnite@gmail.com';
+            $subject            = "Astrologer Registration Number: ".substr($details['token'],6);
+            $body               = "Dear ".$details['name'].",<br/>";
+            $body               .= "&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your registration has been successful. We can confirm that 
+                                        your Online Payment has been successful. You can login via: <a href='www.astroisha.com/login'>Login Page</a> and 
+                                        change your details as well as update financial information to start receiving payments. Alternatively you can also 
+                                        email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";
+            $body                  .= "<div style='align:center;font-size:15px'><strong>Payment Details</strong></div><br/>";
+            $body                  .= "Astrologer Registration Number: ".substr($details['token'],6)."<br/>";
+            $body                  .= "Name: ".$details['name']."<br/>";
+            $body                  .= "Email: ".$details['email']."<br/>";
+            $body                  .= "Username: ".$details['username']."<br/>";
+            $body                  .= "Type Of Membership: ".$details['membership']."<br/>";
+            $body                  .= "Payment Completed: ".$details['paid']."<br/>";
+            $body                  .= "Amount: ".$details['amount']." ".$details['currency']."<br/>";
+            $body                  .= "Payment ID: ".$details['payment_id']."<br/><br/>";
+            $body               .= "<span style='color:red'>Kindly Note: Do not ever share your bank password, ATM Pin or 
+                                        other private information with us. We only require your Account Number, Name, and IBAN Code or Paypal ID/Email for money transfer.</span><br/>";
+            $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
+            $mailer             = JFactory::getMailer();
+            $config             = JFactory::getConfig();
+            $sender             = array( 
+                                            $config->get( 'mailfrom' ),
+                                            $config->get( 'fromname' ) 
+                                        );
+
+            $mailer             ->setSender($sender);
+            $mailer             ->addRecipient($details['email']);
+            $mailer             ->addBCC($bcc, 'Rohan Desai');
+            $mailer             ->setSubject($subject);
+            $mailer             ->isHTML(true);
+            $mailer             ->Encoding = 'base64';
+            $mailer             ->setBody($body);
+
+            $send = $mailer->Send();
+             if ( $send !== true ) {
+                $msg    =  'Error sending email: ' . $send->__toString();
+                $msgType = "error";
+                $link   = JUri::base().'dashboard?payment=failure';
+                $app->redirect($link, $msg,$msgType);
+            } else {
+                $msg    = "Check Your Email For Confirmation.";
+                $msgType    = "success";
+                $link   = JUri::base().'dashboard?payment=success';
+               $app->redirect($link); 
+            }
+           
         }
         else
         {
+            
             // if status is failure show payment_failure
             $link   = JUri::base().'dashboard?payment=failure';
             $app->redirect($link);

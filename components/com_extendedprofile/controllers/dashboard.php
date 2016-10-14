@@ -19,7 +19,7 @@ class ExtendedProfileControllerDashboard extends ExtendedProfileController
         }
          else 
         {
-            $details        = array("status"=>$status, "token"=>$token,"pay_id"=>$sale_id,"email"=>$email,"uid"=>$uid);
+            $details        = array("status"=>$status, "token"=>$token,"email"=>$email,"uid"=>$uid);
         }
         $model          = $this->getModel('dashboard');  // Add the array to model
         $model          ->authorizePayment($details);

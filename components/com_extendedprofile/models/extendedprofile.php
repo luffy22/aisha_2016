@@ -72,7 +72,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
             if($membership=='unpaid')
             {
                 $query      ->clear();
-                $columns    = array('UserId','amount','currency','country');
+                $columns    = array('UserId','amount','currency','location');
                 $values     = array($db->quote($id),$db->quote($amount),$db->quote($curr),$db->quote($country));
                 $query
                     ->insert($db->quoteName('#__user_finance'))
