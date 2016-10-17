@@ -30,7 +30,7 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
     $relatedResources       = $transactions[0]->getRelatedResources();
     $sale                   = $relatedResources[0]->getSale();
     $saleId = $sale->getId();
-    $server                 = "http://" . $_SERVER['SERVER_NAME'];
+    $server                 = "https://" . $_SERVER['SERVER_NAME'];
     try 
     {
         $sale = Sale::get($saleId, $apiContext);
@@ -38,10 +38,10 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
         {
             $sale_id         = $sale->id;
              //echo $server;exit;
-            header('Location:'.$server.'aisha/index.php?option=com_extendedprofile&task=dashboard.confirmPayment&uid='.$uid.'&status=success&sale_id='.$sale_id.'&token='.$token.'&email='.$email);
+            header('Location:'.$server.'?option=com_extendedprofile&task=dashboard.confirmPayment&uid='.$uid.'&status=success&sale_id='.$sale_id.'&token='.$token.'&email='.$email);
         } 
          else {
-             header('Location:'.$server.'aisha/index.php?option=com_extendedprofile&task=dashboard.confirmPayment&uid='.$uid.'&status=fail&token='.$token.'&email='.$email);
+             header('Location:'.$server.'?option=com_extendedprofile&task=dashboard.confirmPayment&uid='.$uid.'&status=fail&token='.$token.'&email='.$email);
 
         }
     }
@@ -53,8 +53,8 @@ if (isset($_GET['success']) && $_GET['success'] == 'true')
 else if(isset($_GET['success']) && $_GET['success'] == 'false')
 {
     $token                  = $_GET['uniq_id'];
-    $uid                    = $_GET['user_id'];
-    $email                  = $_GET['email'];
-    header('Location:'.$server.'aisha/index.php?option=com_extendedprofile&task=dashboard.confirmPayment&uid='.$uid.'&status=fail&token='.$token.'&email='.$email);
+    echo $token;exit;
+    $failid                 = $_GET['token']; 
+    header('Location:'.$server.'?option=com_extendedprofile&task=dashboard.confirmPayment&uid='.$uid.'&status=fail&token='.$token.'&email='.$email);
 }
 ?>
