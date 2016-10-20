@@ -63,8 +63,8 @@ class ExtendedProfileModelDashboard extends JModelItem
             {
                 include_once "/home/astroxou/php/Net/GeoIP.php";
                 $geoip = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
-                $ip    = '157.55.39.123';  // ip address
-                //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+                //$ip    = '157.55.39.123';  // ip address
+                $ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
                 $location 		= $geoip->lookupLocation($ip);
                 $info                   = $location->countryCode;
                 $country                = $location->countryName;
@@ -200,11 +200,11 @@ class ExtendedProfileModelDashboard extends JModelItem
         }
         else
         {
-             $query->clear();unset($fields);unset($conditions);
+            $query->clear();unset($fields);unset($conditions);
             $fields          = array($db->quoteName('paid').'= '.$db->quote('No'),$db->quoteName('token').' = '.$db->quote($token));
-           $conditions      = array($db->quoteName('UserId').' = '.$db->quote($uid));
-           $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
-           $db->setQuery($query);$db->execute();
+            $conditions      = array($db->quoteName('UserId').' = '.$db->quote($uid));
+            $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
+            $db->setQuery($query);$db->execute();
             $query->clear();        // unset all variables
             $query       ->select($db->quoteName(array('a.name','a.email','a.username',
                                     'b.membership','c.amount','c.currency','c.paid','c.location',

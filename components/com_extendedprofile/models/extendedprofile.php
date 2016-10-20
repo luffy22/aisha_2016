@@ -95,7 +95,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                     //print_r($result);exit;
                     if($data['pay_type'] == 'online'&& $data['currency']=='INR')
                     {
-                        $link   = JUri::base().'ccavenue/nonseam/ccavenue_astro.php?id='.$id.'&token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
+                        $link   = JUri::base().'ccavenue/nonseam/ccavenue_astrologer.php?id='.$id.'&token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
                         $app->redirect($link);
                     }
                     else if($data['pay_type'] == 'online'&& $data['currency']!=='INR')
@@ -237,7 +237,6 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                                 $db->quoteName('UserId') . ' = '.$db->quote($id)
                             );
         $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
- 
         $db->setQuery($query);
         $result = $db->execute();
         $app            = JFactory::getApplication();

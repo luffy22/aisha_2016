@@ -24,4 +24,8 @@ class ExtendedProfileControllerDashboard extends ExtendedProfileController
         $model          = $this->getModel('dashboard');  // Add the array to model
         $model          ->authorizePayment($details);
     }
+    public function confirmCCPayment()
+    {
+        echo "calls";exit;
+    }
 }
