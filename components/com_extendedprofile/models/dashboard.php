@@ -61,10 +61,13 @@ class ExtendedProfileModelDashboard extends JModelItem
         {
             try
             {
+                include_once "/home/astroxou/php/Net/GeoIP.php";
+                $geoip = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
                 $ip    = '157.55.39.123';  // ip address
                 //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-                $info                   = geoip_country_code_by_name($ip);
-                $country                = geoip_country_name_by_name($ip);
+                $location 		= $geoip->lookupLocation($ip);
+                $info                   = $location->countryCode;
+                $country                = $location->countryName;
                 if($info == "US")
                 {
                     $results   = array('country'=>$country,'amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
@@ -150,8 +153,8 @@ class ExtendedProfileModelDashboard extends JModelItem
             $db                  ->setQuery($query);
             $details                 = $db->loadAssoc();
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "Astrologer Registration Number: ".substr($details['token'],6)."<br/>";
-            $body               = "Dear ".$details['name'].",<br/>";
+            $subject            = "Astrologer Registration Number: ".substr($details['token'],6);
+            $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your registration has been successful. We can confirm that 
                                         your Online Payment has been successful. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details as well as update 						financial information to start receiving payments. Alternatively you can also 
                                         email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";
@@ -164,8 +167,8 @@ class ExtendedProfileModelDashboard extends JModelItem
             $body                  .= "Payment Completed: ".$details['paid']."<br/>";
             $body                  .= "Amount: ".$details['amount']." ".$details['currency']."<br/>";
             $body                  .= "Payment ID: ".$details['payment_id']."<br/><br/>";
-            $body               .= "<span style='color:red'>Kindly Note: Do not ever share your bank password, ATM Pin or 
-                                        other private information with us. We only require your Account Number, Name, IBAN and Swift Code or Paypal ID/Email for money transfer.</span><br/>";
+            $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
+                                        other Private Information with us. We only require your Account Number, Name, IBAN and Swift Code or Paypal ID/Email for money transfer.</span><br/>";
             $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
             $mailer             = JFactory::getMailer();
             $config             = JFactory::getConfig();
@@ -216,11 +219,11 @@ class ExtendedProfileModelDashboard extends JModelItem
             $payhref        = "<a href=".$paylink.">AstroIsha Paypal</a>";
             // if status is failure show payment_failure
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "Astrologer Registration Number: ".substr($details['token'],6)."<br/>";
-            $body               = "Dear ".$details['name'].",<br/>";
+            $subject            = "Astrologer Registration Number: ".substr($details['token'],6);
+            $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;Your Online Payment has failed. We have initiated your Account as a Free Member. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details or alternatively you can also email your details to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
                                     If you wish to be a paid member then kindly submit ".$details['amount']." ".$details['currency']." to URL: ".$payhref.
-                                    " Alternatively you can use direct transfer to get Paid Membership. Details of Direct Transfer are provided below. 
+                                    ". Alternatively you can use direct transfer to get Paid Membership. Details of Direct Transfer are provided below. 
                                     Be sure to notify us at admin@astroisha.com with Registration Number and Email Address
                                     when payment via Paypal or Direct Transfer is done to avail Paid Services.<br/><br/>";
             $body                  .= "<div style='align:center;font-size:15px'><strong>Payment Details</strong></div><br/>";
@@ -237,8 +240,8 @@ class ExtendedProfileModelDashboard extends JModelItem
                                     Axis Bank MANINAGAR, AHMEDABAD <br/>
                                     Address:<br/>GROUND FLOOR, BUSINESS SQUARE BUILDING,<br/>NR. KRISHNABAUG CHAR RISTA<br/> AHMEDABAD 380008<br/>";
             $body               .= "Swift Code: AXISINBB080<br/><br/>";
-            $body               .= "<span style='color:red'>Kindly Note: Do not ever share your bank password, ATM Pin or 
-                                        other private information with us. We only require your Account Number, Name, and Internation Swift Code or Paypal ID/Email for money transfer in case you decide to opt for Paid Membership.</span><br/>";
+            $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
+                                        other Private Information with us. We only require your Account Number, Name, and Internation Swift Code or Paypal ID/Email for money transfer in case you decide to opt for Paid Membership.</span><br/>";
             $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
             $mailer             = JFactory::getMailer();
             $config             = JFactory::getConfig();

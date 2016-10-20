@@ -219,8 +219,8 @@ class ExtendedProfileModelDashboard extends JModelItem
             $payhref        = "<a href=".$paylink.">AstroIsha Paypal</a>";
             // if status is failure show payment_failure
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "Astrologer Registration Number: ".substr($details['token'],6)."<br/>";
-            $body               = "Dear ".$details['name'].",<br/>";
+            $subject            = "Astrologer Registration Number: ".substr($details['token'],6);
+            $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;Your Online Payment has failed. We have initiated your Account as a Free Member. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details or alternatively you can also email your details to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
                                     If you wish to be a paid member then kindly submit ".$details['amount']." ".$details['currency']." to URL: ".$payhref.
                                     " Alternatively you can use direct transfer to get Paid Membership. Details of Direct Transfer are provided below. 
