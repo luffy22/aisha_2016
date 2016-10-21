@@ -1,8 +1,8 @@
 <?php include('Crypto.php')?>
 <?php
-if((isset($_GET['payment']))&&($_GET['payment']=='fail'))
+if(isset($_GET['payment']))
 {
-    header('Location:http://www.astroisha.com/dashboard?payment=fail');
+    header('Location:http://www.astroisha.com/?option=com_extendedprofile&task=dashboard.confirmCCPayment&status=fail');
 }
 else
 {

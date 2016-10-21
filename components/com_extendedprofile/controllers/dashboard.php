@@ -26,6 +26,15 @@ class ExtendedProfileControllerDashboard extends ExtendedProfileController
     }
     public function confirmCCPayment()
     {
-        echo "calls";exit;
+        $status             = $_GET['status'];
+        $token              = $_GET['token'];
+        $email              = $_GET['email'];
+        
+        if($status      == "fail")
+        {
+            $details        = array('status'=>$status,'token'=>$token,'email'=>$email);
+        }
+        print_r($details);exit;
+        $model              ->authorizeCCPayment($details);
     }
 }
