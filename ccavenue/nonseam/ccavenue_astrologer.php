@@ -29,7 +29,7 @@
         <input type="text" name="amount" value="<?php echo trim($fees); ?>"/>
         <input type="text" name="currency" value="<?php echo trim($currency); ?>"/>
         <input type="text" name="redirect_url" value="<?php echo $server.'/ccavenue/nonseam/ccavResponseHandler2.php' ?>"/>
-        <input type="text" name="cancel_url" value="<?php echo $server.'/ccavenue/nonseam/ccavResponseHandler2.php?payment=fail' ?>"/>
+        <input type="text" name="cancel_url" value="<?php echo $server.'/ccavenue/nonseam/ccavResponseHandler2.php?payment=fail&email='.$email.'&token='.$token; ?>"/>
         <input type="text" name="language" value="EN"/>
         <input type="text" name="billing_name" value="<?php echo trim($name); ?>"/>
         <input type="text" name="billing_email" value="<?php echo trim($email); ?>"/>

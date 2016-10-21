@@ -21,7 +21,7 @@ else
 		$information=explode('=',$decryptValues[$i]);
 		if($i==3)	$order_status=$information[1];
 	}
-
+        print_r($information);exit;
 	if($order_status==="Success")
 	{
             $values = array("yes");
@@ -32,6 +32,7 @@ else
                 array_push($values, $information[1]);
 
             }
+            
             $token_number           = "token_".$values[1];
             $ccavenue_track_id      = $values[2];
             $ccavenue_bank_ref      = $values[3];
