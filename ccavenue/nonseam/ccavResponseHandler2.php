@@ -1,8 +1,8 @@
 <?php include('Crypto.php')?>
 <?php
-if(isset($_GET['payment']))
+if((isset($_GET['payment']))&&($_GET['payment']=='fail'))
 {
-    header('Location:http://www.astroisha.com/?option=com_extendedprofile&task=dashboard.confirmCCPayment&status=fail');
+    header('Location:http://www.astroisha.com/?option=com_extendedprofile&task=dashboard.confirmCCPayment&token='.$token_number.'&email='.$email.'&status=fail');
 }
 else
 {
@@ -14,6 +14,7 @@ else
 	$order_status="";
 	$decryptValues=explode('&', $rcvdString);
 	$dataSize=sizeof($decryptValues);
+        //print_r($decryptValues);exit;
 	echo "<center>";
 
 	for($i = 0; $i < $dataSize; $i++) 
@@ -21,33 +22,33 @@ else
 		$information=explode('=',$decryptValues[$i]);
 		if($i==3)	$order_status=$information[1];
 	}
-        print_r($information);exit;
+        $values = array("yes");
+        for($i = 0; $i < $dataSize; $i++) 
+        {
+            $information=explode('=',$decryptValues[$i]);
+            //echo '<tr><td>'.$information[0].'</td><td>'.$information[1].'</td></tr>';
+            array_push($values, $information[1]);
+
+        }
+
+        $token                  = "token_".$values[1];
+        $track_id               = $values[2];
+        $bank_ref               = $values[3];
+        $order_status           = $values[4];
+        $email                  = $values[19];
+        
 	if($order_status==="Success")
 	{
-            $values = array("yes");
-            for($i = 0; $i < $dataSize; $i++) 
-            {
-                $information=explode('=',$decryptValues[$i]);
-                //echo '<tr><td>'.$information[0].'</td><td>'.$information[1].'</td></tr>';
-                array_push($values, $information[1]);
-
-            }
-            
-            $token_number           = "token_".$values[1];
-            $ccavenue_track_id      = $values[2];
-            $ccavenue_bank_ref      = $values[3];
-            $ccavenue_order_status  = $values[4];
-            
-            header('Location:'.$server.'/index.php?option=com_extendedprofile&task=dashboard.confirmCCPayment&token='.$token_number.'&track_id='.$ccavenue_track_id.'&bank_ref='.$ccavenue_bank_ref.'&status='.$ccavenue_order_status);
+             header('Location:'.$server.'/index.php?option=com_extendedprofile&task=dashboard.confirmCCPayment&token='.$token.'&track_id='.$track_id.'&bank_ref='.$bank_ref.'&status='.$order_status.'&email='.$email);
                 
 	}
 	else if($order_status==="Aborted")
 	{
-		header('Location:'.$server.'/index.php?option=com_extendedprofile&task=dashboard.confirmCCPayment&token='.$token_number.'&track_id='.$ccavenue_track_id.'&bank_ref='.$ccavenue_bank_ref.'&status='.$ccavenue_order_status);
+		header('Location:'.$server.'/index.php?option=com_extendedprofile&task=dashboard.confirmCCPayment&token='.$token.'&track_id='.$track_id.'&status='.$order_status.'&email='.$email);
 	}
 	else if($order_status==="Failure")
 	{
-		header('Location:'.$server.'/index.php?option=com_astrologin&task=dashboard.confirmCCPayment&token='.$token_number.'&track_id='.$ccavenue_track_id.'&bank_ref='.$ccavenue_bank_ref.'&status='.$ccavenue_order_status);
+		header('Location:'.$server.'/index.php?option=com_extendedprofile&task=dashboard.confirmCCPayment&token='.$token.'&track_id='.$track_id.'&status='.$order_status.'&email='.$email);
 	}
 	else
 	{

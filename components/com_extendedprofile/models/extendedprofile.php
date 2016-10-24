@@ -71,9 +71,10 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
             $result          = $db->query();
             if($membership=='unpaid')
             {
+                $token              = uniqid('token_');
                 $query      ->clear();
-                $columns    = array('UserId','amount','currency','location');
-                $values     = array($db->quote($id),$db->quote($amount),$db->quote($curr),$db->quote($country));
+                $columns    = array('UserId','token','amount','currency','location');
+                $values     = array($db->quote($id),$db->quote($token),$db->quote($amount),$db->quote($curr),$db->quote($country));
                 $query
                     ->insert($db->quoteName('#__user_finance'))
                     ->columns($db->quoteName($columns))
@@ -84,9 +85,8 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
             {
                 if($membership=='unpaid')
                 {
-                    $token              = uniqid('token_');
                     $query  ->clear();
-                    $query          ->select(array('a.id','a.name','a.email','b.currency','b.amount'));
+                    $query          ->select(array('a.id','a.name','a.email','b.token','b.currency','b.amount'));
                     $query          ->from($db->quoteName('#__users','a'));
                     $query          ->join('INNER', $db->quoteName('#__user_finance','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
                     $query          ->where($db->quoteName('id').' = '.$db->quote($id));
@@ -95,17 +95,17 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                     //print_r($result);exit;
                     if($data['pay_type'] == 'online'&& $data['currency']=='INR')
                     {
-                        $link   = JUri::base().'ccavenue/nonseam/ccavenue_astrologer.php?id='.$id.'&token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
+                        $link   = JUri::base().'ccavenue/nonseam/ccavenue_astrologer.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
                         $app->redirect($link);
                     }
                     else if($data['pay_type'] == 'online'&& $data['currency']!=='INR')
                     {
-                        $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$token.'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
+                        $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
                         $app->redirect($link);
                     }
                     else
                     {
-                        echo "Not Online Payment";
+                        echo "Not Online Payment";exit;
                     }
                 }
                 else

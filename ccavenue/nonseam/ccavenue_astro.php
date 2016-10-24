@@ -34,8 +34,8 @@
         <input type="text" name="billing_name" value="<?php echo trim($name); ?>"/>
         <input type="text" name="billing_email" value="<?php echo trim($email); ?>"/>
         <input type="text" name="billing_address" value="Dummy Address. Please ignore details."/>
-        <input type="text" name="billing_city" value="Ignore City"/>
-        <input type="text" name="billing_state" value="Ignore State"/>
+        <input type="text" name="billing_city" value="Ignore City Details"/>
+        <input type="text" name="billing_state" value="Ignore State Details"/>
         <input type="text" name="billing_country" value="India"/>
         <input type="text" name="billing_zip" value="123456"/>
         <input type="text" name="billing_tel" value="1234567891"/>
