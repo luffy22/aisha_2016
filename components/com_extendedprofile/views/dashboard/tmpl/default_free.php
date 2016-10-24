@@ -85,7 +85,7 @@ defined('_JEXEC') or die;
           <div class="table-responsive">
           <table class="table table-hover table-bordered">
               <tr><th><span class="glyphicon glyphicon-envelope"></span> Email: </th><td><?php echo $this->msg['email']; ?></td></tr>
-              <tr><th><span class="glyphicon glyphicon-phone-alt"></span> Phone: </th><td><?php echo $this->msg['phone']; ?></td></tr>
+              <tr><th><span class="glyphicon glyphicon-phone-alt"></span> Phone: </th><td><?php if(empty($this->msg['phone'])){echo "Not Provided"; }else{ echo $this->msg['phone'];} ?></td></tr>
               <tr><th><span class="glyphicon glyphicon-phone"></span> Mobile: </th><td><?php if(empty($this->msg['mobile'])){echo "Not Provided"; }else{ echo $this->msg['mobile'];} ?></td></tr>
               <tr><th><img src="<?php echo JURI::base() ?>images/whatsapp.png" alt="whatsapp logo" title="Whether Astrologer Uses Whatsapp" height="25px" width="25px" /> Available On Whatsapp: </th><td><?php echo ucfirst($this->msg['whatsapp']); ?></td></tr>
               <tr><th><span class="glyphicon glyphicon-globe"></span> Website/Blog: </th><td><?php if(empty($this->msg['website'])){echo 'Not Provided'; }else{ echo $this->msg['website']; } ?></td></tr>

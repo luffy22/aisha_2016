@@ -26,13 +26,18 @@ function hideFields()
 //print_r($this->msg);exit;
 defined('_JEXEC') or die('Restricted access');
 $user       = JFactory::getUser();
-   if(isset($_GET['terms'])&&($_GET['terms']=='no'))
-    {
+if(isset($_GET['terms'])&&($_GET['terms']=='no'))
+{
 ?>
-        <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Kindly accept the Terms and Conditions if you wish to join as an Astrologer.</div>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Kindly accept the Terms and Conditions if you wish to join as an Astrologer.</div>
 <?php
-    }
-
+}
+else if(isset($_GET['data'])&&($_GET['data']=='double'))
+{
+?>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> User is already registered as Astrologer with us. If you have encountered some problem please email details to admin@astroisha.com</div>
+<?php
+}
 ?>
 <h1 class="display-3">Membership Type</h1>
 <div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Fields marked with asterix(*) are compulsory</div>

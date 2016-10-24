@@ -164,7 +164,7 @@ if(isset($_GET['image'])&&($_GET['image']=='size'))
 </div>
 <div class="form-group">
     <label for="astro_info">Describe About Yourself(1000 Words Max)*: </label>
-    <?php if(empty($this->msg['website'])) { ?> 
+    <?php if(empty($this->msg['info'])) { ?> 
     <textarea rows="7" class="form-control" name="astro_info" id="astro_info" maxlength="10000 ">Describe your astrological expertise...</textarea>
     <?php } else{ ?>
      <textarea rows="7" class="form-control" name="astro_info" id="astro_info" maxlength="10000" required><?php echo $this->msg['info'] ?></textarea>

@@ -1,5 +1,5 @@
 <?php
-    error_reporting(0);       // uncomment on server
+    //error_reporting(0);       // uncomment on server
     defined( '_JEXEC' ) or die( 'Restricted access' );
     $app = JFactory::getApplication();$menu = $app->getMenu();
 ?>
@@ -7,6 +7,7 @@
 <html lang="<?php echo $this->lang; ?>">
 <?php
 $doc = JFactory::getDocument(); $head_data = $doc->getHeadData();
+
 ?>
 <title><?php echo $head_data['title']; ?></title>
 <meta name="description" content="<?php echo $head_data['description']; ?>">

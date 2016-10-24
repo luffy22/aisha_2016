@@ -46,7 +46,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         {
                 $link       = JURI::base().'dashboard?data=double';
                 $msg        = "Data Already Exists..";
-                $app        ->redirect($link,$msg);
+                $app        ->redirect($link,$msg,'info');
         }
         else
         {
