@@ -143,7 +143,7 @@ class ExtendedProfileModelDashboard extends JModelItem
            $db->setQuery($query);$result = $db->execute(); 
            $query->clear();        // unset all variables
            $query       ->select($db->quoteName(array('a.name','a.email','a.username',
-                                    'b.membership','c.amount','c.currency','c.paid','c.location',
+                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location',
                                     'c.token','c.payment_id')))
                             ->from($db->quoteName('#__users','a'))
                             ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
@@ -151,14 +151,15 @@ class ExtendedProfileModelDashboard extends JModelItem
                             ->where($db->quoteName('a.id').' = '.$db->quote($uid));
             $db                  ->setQuery($query);
             $details                 = $db->loadAssoc();
+            $reg_number         = "AS".$details['number']."0000";
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "Astrologer Registration Number: ".substr($details['token'],6);
+            $subject            = "AstroIsha Registration ID: ".$reg_number;
             $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your registration has been successful. We can confirm that 
                                         your Online Payment has been successful. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details as well as update 						financial information to start receiving payments. Alternatively you can also 
                                         email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";
             $body                  .= "<div style='align:center;font-size:15px'><strong>Payment Details</strong></div><br/>";
-            $body                  .= "Astrologer Registration Number: ".substr($details['token'],6)."<br/>";
+            $body                  .= "Astrologer Registration Number: ".$reg_number."<br/>";
             $body                  .= "Name: ".$details['name']."<br/>";
             $body                  .= "Email: ".$details['email']."<br/>";
             $body                  .= "Username: ".$details['username']."<br/>";
@@ -201,9 +202,9 @@ class ExtendedProfileModelDashboard extends JModelItem
         {
              $query->clear();unset($fields);unset($conditions);
             $fields          = array($db->quoteName('paid').'= '.$db->quote('No'),$db->quoteName('token').' = '.$db->quote($token));
-           $conditions      = array($db->quoteName('UserId').' = '.$db->quote($uid));
-           $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
-           $db->setQuery($query);$db->execute();
+            $conditions      = array($db->quoteName('UserId').' = '.$db->quote($uid));
+            $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
+            $db->setQuery($query);$db->execute();
             $query->clear();        // unset all variables
             $query       ->select($db->quoteName(array('a.name','a.email','a.username',
                                     'b.membership','c.amount','c.currency','c.paid','c.location',
@@ -217,8 +218,9 @@ class ExtendedProfileModelDashboard extends JModelItem
             $paylink        = "https://www.paypal.me/AstroIsha/".$details['amount'].$details['currency'];
             $payhref        = "<a href=".$paylink.">AstroIsha Paypal</a>";
             // if status is failure show payment_failure
+            $reg_number         = "AS".$details['number']."0000";
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "Astrologer Registration Number: ".substr($details['token'],6);
+            $subject            = "AstroIsha Registration ID: ".$reg_number;
             $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;Your Online Payment has failed. We have initiated your Account as a Free Member. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details or alternatively you can also email your details to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
                                     If you wish to be a paid member then kindly submit ".$details['amount']." ".$details['currency']." to URL: ".$payhref.
@@ -226,7 +228,7 @@ class ExtendedProfileModelDashboard extends JModelItem
                                     Be sure to notify us at admin@astroisha.com with Registration Number and Email Address
                                     when payment via Paypal or Direct Transfer is done to avail Paid Services.<br/><br/>";
             $body                  .= "<div style='align:center;font-size:15px'><strong>Payment Details</strong></div><br/>";
-            $body                  .= "Astrologer Registration Number: ".substr($details['token'],6)."<br/>";
+            $body                  .= "Astrologer Registration Number: ".$reg_number."<br/>";
             $body                  .= "Name: ".$details['name']."<br/>";
             $body                  .= "Email: ".$details['email']."<br/>";
             $body                  .= "Username: ".$details['username']."<br/>";
@@ -303,7 +305,7 @@ class ExtendedProfileModelDashboard extends JModelItem
            $db->setQuery($query);$result = $db->execute(); 
            $query->clear();        // unset all variables
            $query       ->select($db->quoteName(array('a.name','a.email','a.username',
-                                    'b.membership','c.amount','c.currency','c.paid','c.location',
+                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location',
                                     'c.token','c.payment_id','c.bank_ref')))
                             ->from($db->quoteName('#__users','a'))
                             ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
@@ -311,15 +313,15 @@ class ExtendedProfileModelDashboard extends JModelItem
                             ->where($db->quoteName('a.id').' = '.$db->quote($uid));
             $db                  ->setQuery($query);
             $details                 = $db->loadAssoc();
-            
-             $bcc                = 'kopnite@gmail.com';
-            $subject            = "Astrologer Registration Number: ".substr($details['token'],6);
+            $reg_number         = "AS".$details['number']."0000";
+            $bcc                = 'kopnite@gmail.com';
+            $subject            = "AstroIsha Registration ID: ".$reg_number;
             $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your registration has been successful. We can confirm that 
                                         your Online Payment has been successful. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details as well as update 						financial information to start receiving payments. Alternatively you can also 
                                         email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";
             $body                  .= "<div style='align:center;font-size:15px'><strong>Payment Details</strong></div><br/>";
-            $body                  .= "Astrologer Registration Number: ".substr($details['token'],6)."<br/>";
+            $body                  .= "Astrologer Registration Number: ".$reg_number."<br/>";
             $body                  .= "Name: ".$details['name']."<br/>";
             $body                  .= "Email: ".$details['email']."<br/>";
             $body                  .= "Username: ".$details['username']."<br/>";
@@ -367,7 +369,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             $db->setQuery($query);$db->execute();
             $query->clear();unset($fields);unset($conditions);        // unset all variables
             $query       ->select($db->quoteName(array('a.name','a.email','a.username',
-                                    'b.membership','c.amount','c.currency','c.paid','c.location',
+                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location',
                                     'c.token','c.payment_id', 'c.bank_ref')))
                             ->from($db->quoteName('#__users','a'))
                             ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
@@ -376,16 +378,16 @@ class ExtendedProfileModelDashboard extends JModelItem
             $db                  ->setQuery($query);
             $details                 = $db->loadAssoc();
             
-            // if status is failure show payment_failure
+            $reg_number         = "AS".$details['number']."0000";
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "Astrologer Registration Number: ".substr($details['token'],6);
+            $subject            = "AstroIsha Registration ID: ".$reg_number;
             $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;Your Online Payment has failed. We have initiated your Account as a Free Member. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details or alternatively you can also email your details to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
                                     If you wish to be a paid member then kindly pay a cheque of ".$details['amount']." Rupees (".$details['currency'].") to <strong>Astro Isha</strong> at your nearest Axis Bank Outlet. Alternatively you can use direct transfer to get Paid Membership. Details of Direct Transfer are provided below. 
                                     Be sure to notify us at admin@astroisha.com with Registration Number and Email Address
                                     when payment via Cheque or Direct Transfer is done to avail Paid Services.<br/><br/>";
             $body                  .= "<div style='align:center;font-size:15px'><strong>Payment Details</strong></div><br/>";
-            $body                  .= "Astrologer Registration Number: ".substr($details['token'],6)."<br/>";
+            $body                  .= "Astrologer Registration Number: ".$reg_number."<br/>";
             $body                  .= "Name: ".$details['name']."<br/>";
             $body                  .= "Email: ".$details['email']."<br/>";
             $body                  .= "Username: ".$details['username']."<br/>";

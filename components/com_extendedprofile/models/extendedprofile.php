@@ -46,7 +46,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         {
                 $link       = JURI::base().'dashboard?data=double';
                 $msg        = "Data Already Exists..";
-                $app        ->redirect($link,$msg,'info');
+                $app        ->redirect($link,$msg,$msgType='error');
         }
         else
         {
@@ -80,47 +80,85 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                     ->columns($db->quoteName($columns))
                     ->values(implode(',', $values));
                 $db             ->setQuery($query);$db->query();
-            }
-            if($result)
-            {
-                if($membership=='unpaid')
+                $query  ->clear();
+                $query          ->select(array('a.id','a.name','a.email','b.token','b.currency','b.amount'));
+                $query          ->from($db->quoteName('#__users','a'));
+                $query          ->join('INNER', $db->quoteName('#__user_finance','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
+                $query          ->where($db->quoteName('id').' = '.$db->quote($id));
+                $db             ->setQuery($query);
+                $result         = $db->loadAssoc();
+                //print_r($result);exit;
+                if($data['pay_type'] == 'online'&& $data['currency']=='INR')
                 {
-                    $query  ->clear();
-                    $query          ->select(array('a.id','a.name','a.email','b.token','b.currency','b.amount'));
-                    $query          ->from($db->quoteName('#__users','a'));
-                    $query          ->join('INNER', $db->quoteName('#__user_finance','b'). ' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserId') . ')');
-                    $query          ->where($db->quoteName('id').' = '.$db->quote($id));
-                    $db             ->setQuery($query);
-                    $result         = $db->loadAssoc();
-                    //print_r($result);exit;
-                    if($data['pay_type'] == 'online'&& $data['currency']=='INR')
-                    {
-                        $link   = JUri::base().'ccavenue/nonseam/ccavenue_astrologer.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
-                        $app->redirect($link);
-                    }
-                    else if($data['pay_type'] == 'online'&& $data['currency']!=='INR')
-                    {
-                        $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
-                        $app->redirect($link);
-                    }
-                    else
-                    {
-                        echo "Not Online Payment";exit;
-                    }
+                    $link   = JUri::base().'ccavenue/nonseam/ccavenue_astrologer.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$result['currency'].'&amount='.$result['amount']; 
+                    $app->redirect($link);
+                }
+                else if($data['pay_type'] == 'online'&& $data['currency']!=='INR')
+                {
+                    $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
+                    $app->redirect($link);
                 }
                 else
                 {
-                    $link = JURI::base().'dashboard';
-                    $msg = 'Successfully added Details'; 
-                    $app->redirect($link, $msg, $msgType='message');
+                    $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
+                    $app->redirect($link);
                 }
             }
             else
-            {
-                $link = JURI::base().'dashboard?data=fail';
-                $msg = 'Unable to add details'; 
-                $app->redirect($link, $msg, $msgType='message');
-            }
+            { 
+                $query->clear();        // unset all variables
+                $query          ->select($db->quoteName(array('a.name','a.email','a.username',
+                                    'b.membership', 'b.number')))
+                                ->from($db->quoteName('#__users','a'))
+                                ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
+                                ->where($db->quoteName('a.id').' = '.$db->quote($id));
+                $db             ->setQuery($query);
+                $details        = $db->loadAssoc();
+                
+                $reg_number         = "AS".$details['number']."0000";
+                $bcc                = 'kopnite@gmail.com';
+                $subject            = "AstroIsha Registration ID: ".$reg_number;
+                $body               = "<br/>Dear ".$details['name'].",<br/>";
+                $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your Free Account has been activated. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details.
+                                        Alternatively you can also email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";
+                $body                  .= "<div style='align:center;font-size:15px'><strong>Account Details</strong></div><br/>";
+                $body                  .= "Astrologer Registration Number: ".$reg_number."<br/>";
+                $body                  .= "Name: ".$details['name']."<br/>";
+                $body                  .= "Email: ".$details['email']."<br/>";
+                $body                  .= "Username: ".$details['username']."<br/>";
+                $body                  .= "Type Of Membership: ".$details['membership']."<br/><br/>";
+                $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
+                                            other Private Information with us. We only require your Account Number, Name, IBAN and Swift Code or Paypal ID/Email for money transfer.</span><br/>";
+                $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
+                $mailer             = JFactory::getMailer();
+                $config             = JFactory::getConfig();
+                $sender             = array( 
+                                                $config->get( 'mailfrom' ),
+                                                $config->get( 'fromname' ) 
+                                            );
+
+                $mailer             ->setSender($sender);
+                $mailer             ->addRecipient($details['email']);
+                $mailer             ->addBCC($bcc, 'Rohan Desai');
+                $mailer             ->setSubject($subject);
+                $mailer             ->isHTML(true);
+                $mailer             ->Encoding = 'base64';
+                $mailer             ->setBody($body);
+
+                $send = $mailer->Send();
+                 if ( $send !== true ) {
+                    $msg    =  'Error sending email: ' . $send->__toString();
+                    $msgType = "error";
+                    $link   = JUri::base().'dashboard?freeacc=success';
+                    $app->redirect($link, $msg,$msgType);
+                } else {
+                    $msg    = "Check Your Email For Confirmation.";
+                    $msgType    = "success";
+                    $link   = JUri::base().'dashboard?payment=success';
+                   $app->redirect($link); 
+                }
+                    
+                }
         }
     }
     public function updateUser($data)
