@@ -31,7 +31,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         //print_r($data);exit;
         $user           = JFactory::getUser();
         $id             = $user->id;
-        $membership     = $data['membership'];   // astrologer membership type free/paid
+        $membership     = ucfirst($data['membership']);   // astrologer membership type free/paid
         $amount         = $data['amount'];$curr = $data['currency'];$country=  $data['country'];
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
@@ -51,9 +51,9 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
         else
         {
             $query          ->clear();
-            if($membership=='paid')
+            if($membership=='Paid')
             {
-                $membership     = "unpaid";
+                $membership     = "Unpaid";
                 $columns        = array('UserId','membership');
                 $values         = array($db->quote($id),$db->quote($membership));
             }
@@ -69,7 +69,7 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
             // Set the query using our newly populated query object and execute it
             $db             ->setQuery($query);
             $result          = $db->query();
-            if($membership=='unpaid')
+            if($membership=='Unpaid')
             {
                 $token              = uniqid('token_');
                 $query      ->clear();
@@ -121,12 +121,12 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                 $body               = "<br/>Dear ".$details['name'].",<br/>";
                 $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your Free Account has been activated. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details.
                                         Alternatively you can also email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";
-                $body                  .= "<div style='align:center;font-size:15px'><strong>Account Details</strong></div><br/>";
-                $body                  .= "Astrologer Registration Number: ".$reg_number."<br/>";
-                $body                  .= "Name: ".$details['name']."<br/>";
-                $body                  .= "Email: ".$details['email']."<br/>";
-                $body                  .= "Username: ".$details['username']."<br/>";
-                $body                  .= "Type Of Membership: ".$details['membership']."<br/><br/>";
+                $body               .= "<div style='align:center;font-size:15px'><strong>Account Details</strong></div><br/>";
+                $body               .= "Astrologer Registration Number: ".$reg_number."<br/>";
+                $body               .= "Name: ".$details['name']."<br/>";
+                $body               .= "Email: ".$details['email']."<br/>";
+                $body               .= "Username: ".$details['username']."<br/>";
+                $body               .= "Type Of Membership: ".$details['membership']."<br/><br/>";
                 $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
                                             other Private Information with us. We only require your Account Number, Name, IBAN and Swift Code or Paypal ID/Email for money transfer.</span><br/>";
                 $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 

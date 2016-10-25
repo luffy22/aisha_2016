@@ -29,7 +29,7 @@ class ExtendedProfileModelDashboard extends JModelItem
         $db->execute();
         $row            = $db->getNumRows();
         $result         = $db->loadAssoc();
-        if($row > 0 && ($result['membership'] == 'free'||$result['membership']=='unpaid'))
+        if($row > 0 && ($result['membership'] == 'Free'||$result['membership']=='Unpaid'))
         {
             $query          ->clear();
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
@@ -42,7 +42,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             $db             ->setQuery($query);
             $results =      $db->loadAssoc();
         }
-        else if($row > 0 && $result['membership'] == 'paid')
+        else if($row > 0 && $result['membership'] == 'Paid')
         {
             $query          ->clear();
             $query          ->select($db->quoteName(array('a.id','a.name','a.username','a.email', 
@@ -61,11 +61,13 @@ class ExtendedProfileModelDashboard extends JModelItem
         {
             try
             {
-                $ip    = '157.55.39.123';  // ip address
-                //$ip = '117.196.1.11';
-                //$ip = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
-                $info                   = geoip_country_code_by_name($ip);
-                $country                = geoip_country_name_by_name($ip);
+                include_once "/home/astroxou/php/Net/GeoIP.php";
+                $geoip = Net_GeoIP::getInstance("/home/astroxou/php/Net/GeoLiteCity.dat");
+                //$ip    = '157.55.39.123';  // ip address
+                $ip                     = $_SERVER['REMOTE_ADDR'];        // uncomment this ip on server
+                $location 		= $geoip->lookupLocation($ip);
+                $info                   = $location->countryCode;
+                $country                = $location->countryName;
                 if($info == "US")
                 {
                     $results   = array('country'=>$country,'amount'=>'10.00','currency'=>'USD','curr_code'=>'&#36;', 'curr_full'=>'United States Dollar');
@@ -124,7 +126,7 @@ class ExtendedProfileModelDashboard extends JModelItem
         $app        = JFactory::getApplication();
         if($status == 'success')
         {
-           $fields          = array($db->quoteName('membership').' = '.$db->quote('paid'));
+           $fields          = array($db->quoteName('membership').' = '.$db->quote('Paid'));
            $conditions      = array($db->quoteName('UserId') . ' = '.$db->quote($uid));
            $query->update($db->quoteName('#__user_astrologer'))->set($fields)->where($conditions);
            $db->setQuery($query);$result = $db->execute();
@@ -153,13 +155,13 @@ class ExtendedProfileModelDashboard extends JModelItem
             $details                 = $db->loadAssoc();
             $reg_number         = "AS".$details['number']."0000";
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "AstroIsha Registration ID: ".$reg_number;
+            $subject            = "AstroIsha Register ID: ".$reg_number;
             $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your registration has been successful. We can confirm that 
                                         your Online Payment has been successful. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details as well as update 						financial information to start receiving payments. Alternatively you can also 
                                         email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";
             $body                  .= "<div style='align:center;font-size:15px'><strong>Payment Details</strong></div><br/>";
-            $body                  .= "Astrologer Registration Number: ".$reg_number."<br/>";
+            $body                  .= "Astrologer Registration ID: ".$reg_number."<br/>";
             $body                  .= "Name: ".$details['name']."<br/>";
             $body                  .= "Email: ".$details['email']."<br/>";
             $body                  .= "Username: ".$details['username']."<br/>";
@@ -200,14 +202,14 @@ class ExtendedProfileModelDashboard extends JModelItem
         }
         else
         {
-             $query->clear();unset($fields);unset($conditions);
+            $query->clear();unset($fields);unset($conditions);
             $fields          = array($db->quoteName('paid').'= '.$db->quote('No'),$db->quoteName('token').' = '.$db->quote($token));
             $conditions      = array($db->quoteName('UserId').' = '.$db->quote($uid));
             $query->update($db->quoteName('#__user_finance'))->set($fields)->where($conditions);
             $db->setQuery($query);$db->execute();
             $query->clear();        // unset all variables
             $query       ->select($db->quoteName(array('a.name','a.email','a.username',
-                                    'b.membership','c.amount','c.currency','c.paid','c.location',
+                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location',
                                     'c.token','c.payment_id')))
                             ->from($db->quoteName('#__users','a'))
                             ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
@@ -220,7 +222,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             // if status is failure show payment_failure
             $reg_number         = "AS".$details['number']."0000";
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "AstroIsha Registration ID: ".$reg_number;
+            $subject            = "AstroIsha Register ID: ".$reg_number;
             $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;Your Online Payment has failed. We have initiated your Account as a Free Member. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details or alternatively you can also email your details to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
                                     If you wish to be a paid member then kindly submit ".$details['amount']." ".$details['currency']." to URL: ".$payhref.
@@ -315,7 +317,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             $details                 = $db->loadAssoc();
             $reg_number         = "AS".$details['number']."0000";
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "AstroIsha Registration ID: ".$reg_number;
+            $subject            = "AstroIsha Register ID: ".$reg_number;
             $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your registration has been successful. We can confirm that 
                                         your Online Payment has been successful. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details as well as update 						financial information to start receiving payments. Alternatively you can also 
@@ -380,7 +382,7 @@ class ExtendedProfileModelDashboard extends JModelItem
             
             $reg_number         = "AS".$details['number']."0000";
             $bcc                = 'kopnite@gmail.com';
-            $subject            = "AstroIsha Registration ID: ".$reg_number;
+            $subject            = "AstroIsha Register ID: ".$reg_number;
             $body               = "<br/>Dear ".$details['name'].",<br/>";
             $body               .= "&nbsp;&nbsp;&nbsp;Your Online Payment has failed. We have initiated your Account as a Free Member. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details or alternatively you can also email your details to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
                                     If you wish to be a paid member then kindly pay a cheque of ".$details['amount']." Rupees (".$details['currency'].") to <strong>Astro Isha</strong> at your nearest Axis Bank Outlet. Alternatively you can use direct transfer to get Paid Membership. Details of Direct Transfer are provided below. 

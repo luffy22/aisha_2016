@@ -16,11 +16,11 @@ class ExtendedProfileViewDashboard extends JViewLegacy
             {
                 $tpl = null;
             }
-            else if((!empty($this->msg))&&($this->msg['membership']=='free'||$this->msg['membership']=='unpaid'))
+            else if((!empty($this->msg))&&($this->msg['membership']=='Free'||$this->msg['membership']=='Unpaid'))
             {
                 $tpl    = "free";
             }
-            else if((!empty($this->msg))&&($this->msg['membership']=='paid'))
+            else if((!empty($this->msg))&&($this->msg['membership']=='Paid'))
             {
                 $tpl    = "paid";
             }
