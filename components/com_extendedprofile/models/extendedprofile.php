@@ -101,17 +101,18 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                 else if($data['pay_type'] == 'transfer')
                 {
                     $query->clear();        // unset all variables
-                    $query          ->select($db->quoteName(array('a.name','a.email','a.username',
-                                        'b.membership', 'b.number')))
-                                    ->from($db->quoteName('#__users','a'))
-                                    ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
-                                    ->where($db->quoteName('a.id').' = '.$db->quote($id));
-                    $db             ->setQuery($query);
+                    $query       ->select($db->quoteName(array('a.name','a.email','a.username',
+                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location')))
+                            ->from($db->quoteName('#__users','a'))
+                            ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
+                            ->join('INNER', $db->quoteName('#__user_finance', 'c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')')
+                            ->where($db->quoteName('a.id').' = '.$db->quote($id));
+                    $db                  ->setQuery($query);
                     $details        = $db->loadAssoc();
 
-                    $reg_number         = "AS".$details['number']."0000";
+                    $reg_number         = "AS00".$details['number']."00";
                     $bcc                = 'kopnite@gmail.com';
-                    $subject            = "AstroIsha Registration ID: ".$reg_number;
+                    $subject            = "AstroIsha Register ID: ".$reg_number;
                     $body               = "<br/>Dear ".$details['name'].",<br/>";
                     $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your Free Account has been activated. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details.
                                             Alternatively you can also email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
@@ -123,10 +124,10 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                     $body               .= "Name: ".$details['name']."<br/>";
                     $body               .= "Email: ".$details['email']."<br/>";
                     $body               .= "Username: ".$details['username']."<br/>";
-                    $body                  .= "Type Of Membership: ".$details['membership']."<br/>";
+                    $body               .= "Type Of Membership: Free<br/>";
                     $body                  .= "Payment Completed: ".$details['paid']."<br/>";
                     $body                  .= "Amount To Be Paid: ".$details['amount']." ".$details['currency']."<br/><br/>";
-                    $body               .= "Below are Our Bank Details For Direct Transfer<br/>";
+                    $body               .= "<strong>Below are Our Bank Details For Direct Transfer</strong><br/>";
                     $body               .= "Payable to: Astro Isha<br/> 
                                             Account Number: 915020051554614<br/> 
                                             Axis Bank MANINAGAR, AHMEDABAD <br/>
@@ -135,13 +136,15 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                     {
                         $body               .= "MICR Code: 380211005<br/>";
                         $body               .= "IFSC Code: UTIB0000080<br/><br/>";
+                        $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
+                                        other Private Information with us. We only require your Account Number or Card Number, Name, and IFSC Code for money transfer in case you decide to opt for Paid Membership.</span><br/>";
                     }
                     else
                     {
                         $body               .= "Swift Code: AXISINBB080<br/><br/>";
+                        $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
+                                                other Private Information with us. We only require your Account Number, Name, and Swift Code or Paypal ID/Email for money transfer in case you decide to opt for Paid Membership.</span><br/>";
                     }
-                    $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
-                                            other Private Information with us. We only require your Account Number, Name, and Internation Swift Code or Paypal ID/Email for money transfer in case you decide to opt for Paid Membership.</span><br/>";
                     $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
                     $mailer             = JFactory::getMailer();
                     $config             = JFactory::getConfig();
@@ -173,6 +176,85 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                         $app->redirect($link); 
                     }
                 }
+                else if($data['pay_type'] == 'cheque')
+                {
+                    $query->clear();        // unset all variables
+                    $query       ->select($db->quoteName(array('a.name','a.email','a.username',
+                                    'b.membership','b.number','c.amount','c.currency','c.paid','c.location')))
+                            ->from($db->quoteName('#__users','a'))
+                            ->join('INNER', $db->quoteName('#__user_astrologer','b').' ON (' . $db->quoteName('a.id').' = '.$db->quoteName('b.UserID') . ')')
+                            ->join('INNER', $db->quoteName('#__user_finance', 'c').' ON ('.$db->quoteName('a.id').' = '.$db->quoteName('c.UserId').')')
+                            ->where($db->quoteName('a.id').' = '.$db->quote($id));
+                    $db                  ->setQuery($query);
+                    $details        = $db->loadAssoc();
+
+                    $reg_number         = "AS00".$details['number']."00";
+                    $bcc                = 'kopnite@gmail.com';
+                    $subject            = "AstroIsha Register ID: ".$reg_number;
+                    $body               = "<br/>Dear ".$details['name'].",<br/>";
+                    $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your Free Account has been activated. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details.
+                                            Alternatively you can also email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.
+                                            If you wish to pay by Cheque then write a Cheque to <strong>Astro Isha</strong> and submit it to your nearest Axis Bank. 
+                                            Alternatively you can use direct transfer to send money. Once payment is done kindly reply back at 
+                                            admin@astroisha.com with Registration Number and Email and we would open your Paid Account 
+                                            whereby you can accept Online Payments and Orders. Bank Details for Direct Transfer are provided below.<br/><br/>";
+                    $body               .= "<div style='align:center;font-size:15px'><strong>Account Details</strong></div><br/>";
+                    $body               .= "Astrologer Registration Number: ".$reg_number."<br/>";
+                    $body               .= "Name: ".$details['name']."<br/>";
+                    $body               .= "Email: ".$details['email']."<br/>";
+                    $body               .= "Username: ".$details['username']."<br/>";
+                    $body               .= "Type Of Membership: Free<br/>";
+                    $body                  .= "Payment Completed: ".$details['paid']."<br/>";
+                    $body                  .= "Amount To Be Paid: ".$details['amount']." ".$details['currency']."<br/><br/>";
+                    $body               .= "<strong>Below are Our Bank Details For Direct Transfer</strong><br/>";
+                    $body               .= "Payable to: Astro Isha<br/> 
+                                            Account Number: 915020051554614<br/> 
+                                            Axis Bank MANINAGAR, AHMEDABAD <br/>
+                                            Address:<br/>GROUND FLOOR, BUSINESS SQUARE BUILDING,<br/>NR. KRISHNABAUG CHAR RISTA<br/> AHMEDABAD 380008<br/>";
+                    if($data['currency']=='INR')
+                    {
+                        $body               .= "MICR Code: 380211005<br/>";
+                        $body               .= "IFSC Code: UTIB0000080<br/><br/>";
+                        $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
+                                        other Private Information with us. We only require your Account Number or Card Number, Name, and IFSC Code for money transfer in case you decide to opt for Paid Membership.</span><br/>";
+                    }
+                    else
+                    {
+                        $body               .= "Swift Code: AXISINBB080<br/><br/>";
+                        $body               .= "<span style='color:red'>Kindly Note: Do not ever share your Bank Passwords, ATM Pin or 
+                                                other Private Information with us. We only require your Account Number, Name, and Swift Code or Paypal ID/Email for money transfer in case you decide to opt for Paid Membership.</span><br/>";
+                    }
+                    $body               .= "<br/><div style='align:right'>Admin At Astro Isha,<br/>Rohan Desai</div>"; 
+                    $mailer             = JFactory::getMailer();
+                    $config             = JFactory::getConfig();
+                    $sender             = array( 
+                                                    $config->get( 'mailfrom' ),
+                                                    $config->get( 'fromname' ) 
+                                                );
+
+                    $mailer             ->setSender($sender);
+                    $mailer             ->addRecipient($details['email']);
+                    $mailer             ->addBCC($bcc, 'Rohan Desai');
+                    $mailer             ->setSubject($subject);
+                    $mailer             ->isHTML(true);
+                    $mailer             ->Encoding = 'base64';
+                    $mailer             ->setBody($body);
+
+                    $send = $mailer->Send();
+                    if ( $send !== true ) 
+                    {
+                        $msg    =  'Error sending email: ' . $send->__toString();
+                        $msgType = "error";
+                        $link   = JUri::base().'dashboard?freeacc=success';
+                        $app->redirect($link, $msg,$msgType);
+                    } else 
+                    {
+                        $msg    = "Check Your Email For Confirmation.";
+                        $msgType    = "success";
+                        $link   = JUri::base().'dashboard?freeacc=success';
+                        $app->redirect($link); 
+                    }
+                }
                 else
                 {
                     $link   = JUri::base().'vendor/paypal_astro.php?id='.$id.'&token='.$result['token'].'&name='.$result['name'].'&email='.$result['email'].'&curr='.$curr.'&amount='.$amount;
@@ -190,9 +272,9 @@ class ExtendedProfileModelExtendedProfile extends JModelItem
                 $db             ->setQuery($query);
                 $details        = $db->loadAssoc();
                 
-                $reg_number         = "AS".$details['number']."0000";
+                $reg_number         = "AS00".$details['number']."00";
                 $bcc                = 'kopnite@gmail.com';
-                $subject            = "AstroIsha Registration ID: ".$reg_number;
+                $subject            = "AstroIsha Register ID: ".$reg_number;
                 $body               = "<br/>Dear ".$details['name'].",<br/>";
                 $body               .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Astro Isha. Your Free Account has been activated. You can login via: <a href='https://www.astroisha.com/login'>Login Page</a> and change your details.
                                         Alternatively you can also email them to admin@astroisha.com by filling the attachment form provided or sending the attachment via whatsapp on +91-9727841461.<br/><br/>";

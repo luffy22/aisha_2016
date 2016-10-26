@@ -86,7 +86,7 @@ else if(isset($_GET['data'])&&($_GET['data']=='double'))
 </div>
 <div class="form-group">
         <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>
-        <button type="reset" name="cancel" class="btn btn-navbar">Cancel</button>
+        <a class="btn btn-danger" href="<?php echo JURI::base() ?>dashboard">Cancel</a>
     </div>
 </form>
 </body>
