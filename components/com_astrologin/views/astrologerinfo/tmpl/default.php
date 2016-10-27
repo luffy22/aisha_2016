@@ -28,13 +28,13 @@ receive Online Payments subject to being a Paid Member.</p>
 <div>
 <p>There are two types of accounts which can be opened with Astro Isha. They are: </p>
 <ol>
-<li><strong>Free Account:</strong> Free Account lets you register and share your details with Users. Once you are registered and 
-authenticated your email, you would be provided an option on 
+<li><strong>Free Account:</strong> Free Account lets you register and share your details with Users. Once you are registered and have 
+    authenticated your email, you would be provided an option on 
 your dashboard to open Free Account. Once it is opened you can change your details as and when you please.</li>
 <li><strong>Paid Account:</strong> Paid Account lets you register, share your details, post articles on the 
 website, receive online payments and also reply to client queries online. Once you have registered and authenticated your 
 email there would be an option on your Dashboard to avail Paid Services. Click that option and also choose one of the payment types 
-to complete Payment in order to avail Paid Services.</li>
+to complete Payment.</li>
 </ol>
 </div>
 <h3>Paid Account- How To Pay?</h3>
