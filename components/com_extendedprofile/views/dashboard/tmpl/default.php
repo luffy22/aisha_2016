@@ -82,7 +82,7 @@ else if(isset($_GET['data'])&&($_GET['data']=='double'))
 </div>
 <div class="form-group">
     <input type="checkbox" name="condition_profile" value="yes" />
-    <label for="condition_profile">Kindly Read and Accept the <a href="<?php echo JURI::base() ?>terms" target="_blank" title="Read the Terms And Conditions before Registering as Astrologer">Terms and Conditions</a> for Astrologers *</label>
+    <label for="condition_profile">Kindly Read and Accept the <a href="<?php echo JURI::base() ?>/terms" target="_blank" title="Read the Terms And Conditions before Registering as Astrologer">Terms and Conditions</a> for Astrologers *</label>
 </div>
 <div class="form-group">
         <button type="submit" name="submit_profile" class="btn btn-primary" >Submit</button>

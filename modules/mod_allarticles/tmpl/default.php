@@ -13,7 +13,7 @@ foreach($allarticles as $data)
     $data['link'] = JRoute::_(ContentHelperRoute::getArticleRoute($data['slug'], $data['catslug']));
     $data['catlink']    = JRoute::_(ContentHelperRoute::getCategoryRoute($data['catid'], $language));
 ?>
-<div class="panel panel-info" id="panel_<?php echo $data['article_id']; ?>">
+<div class="panel panel-primary" id="panel_<?php echo $data['article_id']; ?>">
 <div class="panel-heading"><h3 class="panel-title"><a href="<?php echo $data['link'] ?>" title="<?php echo $data['title'];?>"><?php echo $data['title']; ?></a></h3></div>
 <div class="panel-body">
 <p class="text-right"><strong>Hits: <?php echo $data['hits']; ?></strong></p>

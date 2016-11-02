@@ -10,11 +10,13 @@ $(function() {
 defined('_JEXEC') or die('Restricted access');
 ?>
 <div class="spacer"></div>
+<div class="text-right"><a href="<?php echo JURI::base() ?>astro-register" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Register With Us</a></div>
+<div class="spacer"></div>
 <div id="astro-reg">
 <h3>Welcome To Astro Isha</h3>
 <div>
 	
-<p>&nbsp;&nbsp;&nbsp;<img src="<?php echo JURI::base() ?>images/jv_logo3.png" title="Welcome To Astro Isha" class="img-responsive" align="left" />If you happen to be an Astrologer, Palmist, Feng-Shui, Vastu Shastra Expert, 
+<p>&nbsp;&nbsp;&nbsp;<img src="<?php echo JURI::base() ?>images/jv_logo3.png" title="Welcome To Astro Isha" class="img-responsive" align="left" />If you happen to be an Astrologer, Palmist, Feng-Shui Expert, Vastu Shastra Expert, 
 involved in karmakand, poojas or rituals then kindly go through the contents of this page.</p>
 </div>
 <h3>Registering With Astro Isha</h3>
@@ -30,10 +32,10 @@ receive Online Payments subject to being a Paid Member.</p>
 <ol>
 <li><strong>Free Account:</strong> Free Account lets you register and share your details with Users. Once you are registered and have 
     authenticated your email, you would be provided an option on 
-your dashboard to open Free Account. Once it is opened you can change your details as and when you please.</li>
+your <a href="<?php echo JURI::base() ?>dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a> to open Free Account. Once it is opened you can change your details as and when you please.</li>
 <li><strong>Paid Account:</strong> Paid Account lets you register, share your details, post articles on the 
 website, receive online payments and also reply to client queries online. Once you have registered and authenticated your 
-email there would be an option on your Dashboard to avail Paid Services. Click that option and also choose one of the payment types 
+email there would be an option on your <a href="<?php echo JURI::base() ?>dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a> to avail Paid Services. Click that option and also choose one of the payment types 
 to complete Payment.</li>
 </ol>
 </div>
@@ -52,11 +54,12 @@ Paid Account can pay via: </p>
 </div>
 <h3>Receiving Payments- How It Works?</h3>
 <div>
-<img src="<?php echo JURI::base() ?>images/payment_process.png" title="Welcome To Astro Isha" class="img-responsive" />
+<img src="<?php echo JURI::base() ?>images/payment_process.png" title="Payment Process Flow Chart" class="img-responsive" />
 <p>&nbsp&nbsp;&nbsp;Astrologer who have opened <strong>Paid Account</strong> can receive Online Payments from customers. If a customer 
-    decides to use your expertise then he can do so via <a href="<?php echo JURI::base() ?>ask-astrologer">Ask An Astrologer</a> page. Once he 
- orders your Services you have Fifteen Days(15 Days) to answer to his/her queries. Once the answer has been provided you 
-would receive Online Payment for your Consultation Services after deduction of some amount.</p>
+    decides to use your expertise then he can do so via <a href="<?php echo JURI::base() ?>ask-astrologer">Ask An Astrologer</a> page. Once the 
+    customer orders your Services you have Ten Days(10 Days) to answer to his queries. Once the answer has been provided you 
+would receive payment for your Consultation Services after deduction of some amount. If you fail to answer within ten days 
+then the order would automatically be Cancelled and Customer would be Refunded the fees for Consultation.</p>
 </div>
 <h3>Charges, Taxes and Conversion Rates</h3>
 <div>
@@ -73,5 +76,4 @@ touch at email: admin@astroisha.com. Alternatively you can call or whatsapp to +
 </div>
 </div> <!-- astro-reg -->
 <div class="spacer"></div>
-<div class="text-right"><a href="<?php echo JURI::base() ?>astro-register" class="btn btn-primary">Registration</a></div>
-<div class="spacer"></div>
+

@@ -63,8 +63,17 @@ include_once (JPATH_ROOT.DS.'analyticstracking.php');
 <jdoc:include type="modules" name="topmenu" />
 <jdoc:include type="modules" name="jbanner" />
 <div class="container-fluid">
+    <div class=" row alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="col-md-1"><img src="<?php echo $this->baseurl; ?>/images/astrologer.png" title="Register As Astrologer" alt="Astrologer"  /></div>
+    <div class="col-md-4"><p class="lead">Are You An Astrologer? Then do <a href="<?php echo JURI::base() ?>astrologer">Read</a> and <a href="<?php echo JURI::base() ?>astro-register">Register</a> With Astro Isha.</p></div>	
+    </div>
+</div>
+<div class="container-fluid">
     <div class="row">
     <div class="col-md-8">
+        <div class="spacer"></div>
+     <div class="spacer"></div>
     <gcse:search></gcse:search>
     <div class="spacer"></div>
     <div class="breadcrumb">

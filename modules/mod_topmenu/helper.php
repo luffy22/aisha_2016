@@ -85,7 +85,7 @@ class modTopMenuHelper
         {
 
 ?>
-            <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+            <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> Astrologer <span class="caret"></span></a>
             <ul class="nav navbar-inverse dropdown-menu">
                 <li><a href="<?php echo JURI::base() ?>login">Login</a></li>
                 <li><a href="<?php echo JURi::base() ?>astro-register">Register</a></li>

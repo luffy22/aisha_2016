@@ -44,16 +44,16 @@ else
         <th>Category</th>
     </tr>
 <?php
-    foreach($allarticles as $data)
+    foreach($recent as $data)
     {  
-        $data['slug']       = $data['article_id'].':'.$data['article_alias'];
-        $data['catslug']    = $data['catid'].':'.$data['cat_alias'];
-        $data['link']       = JRoute::_(ContentHelperRoute::getArticleRoute($data['slug'], $data['catslug']));
-        $data['catlink']    = JRoute::_(ContentHelperRoute::getCategoryRoute($data['catid'], $language));
+        $data['slug'] = $data['article_id'].':'.$data['article_alias'];
+        $data['catslug'] = $data['cat_id'].':'.$data['cat_alias'];
+        $data['link'] = JRoute::_(ContentHelperRoute::getArticleRoute($data['slug'], $data['catslug']));
+        $data['catlink']    = JRoute::_(ContentHelperRoute::getCategoryRoute($data['cat_id'], $data['language']));
 ?>
     <tr>
-        <td><a href="<?php echo $data['link'] ?>" title="<?php echo $data['title'];?>"><?php echo $data['title']; ?></a></td>
-        <td><a href="<?php echo $data['catlink']; ?>"><?php echo $data['cat_title'] ?></a></td>
+        <td><a href="<?php echo $data['link']; ?>" title="<?php echo $data['title'];  ?> Article"><?php echo $data['title']; ?></a></td>
+        <td><a href="<?php echo $data['catlink']; ?>" title="<?php echo $data['cat_title'] ?> Category"><?php echo $data['cat_title'] ?></a></td>
     </tr>
 <?php
     }
