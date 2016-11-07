@@ -1,5 +1,5 @@
 <?php
-defined('_JEXEC') or die;
+define('_JEXEC', 1) or die;
 $app = JFactory::getApplication();
 $menu = $app->getMenu();
 if ($menu->getActive() == $menu->getDefault()) {
