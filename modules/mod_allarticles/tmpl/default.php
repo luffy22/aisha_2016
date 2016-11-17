@@ -1,3 +1,22 @@
+<script type="text/javascript">
+window.onscroll = function(ev) {
+    if((window.location.pathname ==  window.location.origin)&&(window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+	var lastid      = $('.panel').last().attr("id");
+	var request = $.ajax({
+	 url: "index.php?option=com_ajax&module=allarticles&format=raw&method=MoreArticles",
+	data: "b_rashi="+lastid,
+	dataType: "text"
+	});
+	request.done(function(msg)
+	{
+		alert(msg);
+	});
+	request.fail(function()
+	{
+		alert("Fail to get data");
+	});
+}
+</script>	
 <?php
 JHtml::_('behavior.keepalive');
 //print_r($allarticles);exit;
