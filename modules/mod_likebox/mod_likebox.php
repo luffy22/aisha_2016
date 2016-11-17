@@ -7,6 +7,5 @@
  defined('_JEXEC') or die('Restricted Access');
 require_once(dirname(__FILE__).'/helper.php');
 
-$likebox = modLikeBoxHelper::showLikeBox();
 require(JModuleHelper::getLayoutPath('mod_likebox'));
 ?>

@@ -525,6 +525,14 @@
 		<changefreq>Monthly</changefreq>
    </url>
    <url>
+		<loc>https://www.astroisha.com/astro-tutor/imp-yogas/282-bheri-yoga</loc>
+		<changefreq>Monthly</changefreq>
+   </url>
+   <url>
+		<loc>https://www.astroisha.com/astro-tutor/imp-yogas/288-mridanga-yoga</loc>
+		<changefreq>Monthly</changefreq>
+   </url>
+   <url>
     <loc>https://www.astroisha.com/education</loc>
     <changefreq>Monthly</changefreq>
    </url>
@@ -769,6 +777,10 @@
 		<changefreq>Monthly</changefreq>
   </url>
   <url>
+		<loc>https://www.astroisha.com/marriage-consider/289-signs-divorce</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
 	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas</loc>
 	<changefreq>Monthly</changefreq>
   </url>
@@ -1005,6 +1017,14 @@
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/283-mercury-11th-house</loc>
+	<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	<loc>https://www.astroisha.com/astro-tutor/planets-bhavas/286-mercury-12th-house</loc>
+	<changefreq>Monthly</changefreq>
+  </url>
+  <url>
 	  <loc>https://www.astroisha.com/ved-remedies/remedies/</loc>
 	  <changefreq>Monthly</changefreq>
   </url>
@@ -1105,6 +1125,26 @@
 	<changefreq>Monthly</changefreq>
   </url>
   <url>
+	<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/291-aries-2017</loc>
+	<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+	  <loc>https://www.astroisha.com/astro-tutor/yearly-predictions/292-taurus-2017</loc>
+	  <changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/293-gemini-2017</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/294-cancer-2017</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
+		<loc>https://www.astroisha.com/astro-tutor/yearly-predictions/295-leo-2017</loc>
+		<changefreq>Monthly</changefreq>
+  </url>
+  <url>
 		<loc>https://www.astroisha.com/ved-remedies/health</loc>
 		<changefreq>Monthly</changefreq>
   </url>
@@ -1132,8 +1172,20 @@
 		<loc>https://www.astroisha.com/ved-remedies/health/258-sleep-astrology</loc>
 		<changefreq>Monthly</changefreq>
     </url>
+    <url>
+		<loc>https://www.astroisha.com/ved-remedies/health/287-planets-pulses</loc>
+		<changefreq>Monthly</changefreq>
+    </url>
+    <url>
+		<loc>https://www.astroisha.com/ved-remedies/health/290-mental-worries</loc>
+		<changefreq>Monthly</changefreq>
+	</url>
   <url>
 	<loc>https://www.astroisha.com/about-us/refunds?view=payment</loc>
+	<changefreq>Yearly</changefreq>
+  </url>
+  <url>
+	<loc>https://www.astroisha.com/astrologer</loc>
 	<changefreq>Yearly</changefreq>
   </url>
 </urlset>

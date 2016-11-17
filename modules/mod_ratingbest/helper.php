@@ -36,13 +36,12 @@ class modRatingBestHelper
     {
         $db             = JFactory::getDbo();  // Get db connection
         $query          = $db->getQuery(true);
-        $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
-                        jv_content.asset_id AS article_assetid,jv_content.title as title, jv_content.language as language, 
-                         jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid as cat_id FROM jv_content INNER JOIN jv_categories
-                        ON jv_content.catid = jv_categories.id ORDER BY jv_content.id DESC LIMIT 10"; 
+        $query          =   "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
+                            jv_content.asset_id AS article_assetid,jv_content.title, jv_content.language as language,
+                            jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid as cat_id FROM jv_content INNER JOIN jv_categories
+                            ON jv_content.catid = jv_categories.id ORDER BY jv_content.id DESC LIMIT 10"; 
         $db->setQuery($query);
-        // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-        $results        = $db->loadAssocList();
-        return $results;
+        $result = $db->loadObjectList();
+        return $result;
     }
 }
