@@ -14,11 +14,43 @@ class modAllarticlesHelper
 {
     public function MoreArticlesAjax()
     {
-        echo "calls";exit;
-        /*if(isset($_GET['lastid']))
+        //echo "calls";exit;
+        if(isset($_GET['lastid']))
         {
             $id                 = str_replace("panel_","",$_GET['lastid']);
-            $results            = $this->getArticleList($id);
+            
+	    $db             = JFactory::getDbo();  // Get db connection
+            $query          = $db->getQuery(true);
+            $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
+                                jv_content.title as title, jv_content.language as language,
+                                LEFT(jv_content.introtext,1000) AS article_text,
+                                jv_content.hits AS hits, jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid AS cat_id FROM jv_content INNER JOIN jv_categories
+                                ON jv_content.catid = jv_categories.id WHERE jv_content.id < ".$id." ORDER BY jv_content.id DESC LIMIT 1"; 
+            $db->setQuery($query);
+
+            // Load the results as a list of stdClass objects (see later for more options on retrieving data).
+           $results        = $db->loadObjectList();
+  	   $this->getArticleList($results);
+        }
+    }
+	public function showArticles()
+	{
+            $db             = JFactory::getDbo();  // Get db connection
+            $query          = $db->getQuery(true);
+            $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
+                                jv_content.title as title, jv_content.language as language,
+                                LEFT(jv_content.introtext,1000) AS article_text,
+                                jv_content.hits AS hits, jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid AS cat_id FROM jv_content INNER JOIN jv_categories
+                                ON jv_content.catid = jv_categories.id ORDER BY jv_content.id DESC LIMIT 10"; 
+            $db->setQuery($query);
+  
+            // Load the results as a list of stdClass objects (see later for more options on retrieving data).
+           $results        = $db->loadObjectList();
+           return $results;
+	}
+        public function getArticleList($results)
+        {
+            echo $results;exit;
             $alldata            = array();
             foreach($results as $data)
             {
@@ -31,36 +63,6 @@ class modAllarticlesHelper
                                                 "art_hits"=>$data->hits,"art_id"=>$data->article_id);
                 array_push($alldata, $newdata);
             }
-            return $alldata;
-        }*/
-    }
-    public function showArticles()
-    {
-        $db             = JFactory::getDbo();  // Get db connection
-        $query          = $db->getQuery(true);
-        $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
-                            jv_content.title as title, jv_content.language as language,
-                            LEFT(jv_content.introtext,1000) AS article_text,
-                            jv_content.hits AS hits, jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid AS cat_id FROM jv_content INNER JOIN jv_categories
-                            ON jv_content.catid = jv_categories.id ORDER BY jv_content.id DESC LIMIT 10"; 
-        $db->setQuery($query);
-
-        // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-       $results        = $db->loadObjectList();
-       return $results;
-    }
-    public function getArticleList($key)
-    {
-        $db             = JFactory::getDbo();  // Get db connection
-        $query          = $db->getQuery(true);
-        $query          = "SELECT jv_content.id AS article_id, jv_content.alias as article_alias,
-                            jv_content.title as title, jv_content.language as language,
-                            LEFT(jv_content.introtext,1000) AS article_text,
-                            jv_content.hits AS hits, jv_categories.alias AS cat_alias, jv_categories.title as cat_title, jv_content.catid AS cat_id FROM jv_content INNER JOIN jv_categories
-                            ON jv_content.catid = jv_categories.id WHERE id<".$key." ORDER BY jv_content.id DESC LIMIT 10"; 
-        $db->setQuery($query);
-               // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-        $results        = $db->loadObjectList();
-        return $results;
-    }  
+            echo $alldata;
+        }
 }

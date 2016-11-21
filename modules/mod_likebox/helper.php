@@ -1,10 +1,10 @@
 <?php
-    /*
-    * Helper class for mod_likebox
-    */ 
-
-    class modLikeBoxHelper
-    {
-
-    }
+	/*
+	* Helper class for mod_likebox
+	*/ 
+	
+	class modLikeBoxHelper
+	{
+            
+	}
 ?>
