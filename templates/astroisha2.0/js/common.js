@@ -809,31 +809,3 @@ function ques_det3_close()
     $('#ques_grp_det3').removeClass(" has-error");
     $('#ques_err_det3').css('visibility','hidden');
 }
-window.onscroll = function(ev) {
-    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-      var lastid      = $('.panel').last().attr("id");
-      var request = $.ajax({
-         url: "index.php?option=com_ajax&module=allarticles&format=raw&method=MoreArticles",
-        data: "lastid="+lastid,
-        dataType: "text"
-        });
-        request.done(function(msg)
-        {
-            alert(msg);
-        });
-        request.fail(function()
-        {
-            alert("Fail to get data");
-        });
-    }
-      // you're at the bottom of the page
-      /*$.ajax({
-             url: "?option=com_ajax&module=allarticles&format=raw&method=moreArticles",
-              data: "lastid="+id,
-              dataType: "text"
-            })
-              .done(function(html) {
-                alert(html);
-              }).fail(function(){alert("Something went wrong")});*/
-    }
-      

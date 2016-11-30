@@ -6,11 +6,14 @@ class AstroLoginViewAstroSearch extends JViewLegacy
     /*
     * Display the extended profile view
     */
-    public $astro;
+    var $astro;
+    var $pagination;
     function display($tpl = null)
     {
-        $this->astro = $this->get('Astrologer');
-        //print_r($this->astro);exit;
+        $this->astro = $this->get('Data');
+        $this->pagination = $this->get('Pagination'); 
+ 
+       // print_r($this->pagination);exit;
         parent::display($tpl);
     }
 }

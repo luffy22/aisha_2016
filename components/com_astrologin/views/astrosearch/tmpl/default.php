@@ -1,10 +1,12 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 $astro      = $this->astro;
-//print_r($astro);
 ?>
+<div class="text-right">
+<?php echo $this->pagination->getResultsCounter(); ?></div>
 <div class="spacer"></div>
 <?php
+     //if( count( $this->astro )) : 
      foreach($astro as $data)
      {
 ?>
@@ -30,6 +32,8 @@ $astro      = $this->astro;
 </div>
 <?php
      }
+     //endif;
 ?>
 <div class="spacer"></div>
-
+<?php echo $this->pagination->getPagesLinks(); ?>
+<div class="spacer"></div>
