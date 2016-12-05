@@ -70,7 +70,7 @@ $i = 0;
   
 ?>
     
-
+</div>
   <!-- Left and right controls -->
   <a class="left carousel-control" href="#article_caroussel" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -80,5 +80,5 @@ $i = 0;
     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-</div>
+
 </div>
