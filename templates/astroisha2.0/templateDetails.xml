@@ -17,6 +17,7 @@
         </files>
         <positions>
             <position>breadcrumbs</position>
+            <position>articleslider</position>
             <position>jbanner</position>
             <position>topmenu</position>
             <position>userlogin</position>
