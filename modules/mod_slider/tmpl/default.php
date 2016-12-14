@@ -6,7 +6,6 @@
  * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
 defined('_JEXEC') or die;
 $count = count($list);
 $i = 0;
@@ -46,8 +45,9 @@ $i = 0;
             <div class="item active">
                 <img src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>">
                 <div class="carousel-caption">
-                   <h3><a href="<?php echo $item->link ?>"><?php echo $item->title; ?></a></h3>
-                    <p><?php echo $item->metadesc; ?></p>
+                   <h3 class="hidden-sm hidden-xs"><a href="<?php echo $item->link ?>"><?php echo $item->title; ?></a></h3>
+                   <p class="hidden-lg hidden-md"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></p>
+                   <p class="hidden-sm hidden-xs"><?php echo $item->metadesc; ?></p>
               </div>
             </div>
    <?php
@@ -57,8 +57,9 @@ $i = 0;
       <div class="item">
                 <img src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo $item->title; ?>">
                 <div class="carousel-caption">
-                   <h3><a href="<?php echo $item->link ?>"><?php echo $item->title; ?></a></h3>
-                   <p><?php echo $item->metadesc; ?></p>
+                   <h3 class="hidden-sm hidden-xs"><a href="<?php echo $item->link ?>"><?php echo $item->title; ?></a></h3>
+                   <p class="hidden-lg hidden-md"><a href="<?php echo $item->link ?>"><?php echo "Read More"; ?></a></p>
+                   <p class="hidden-sm hidden-xs"><?php echo $item->metadesc; ?></p>
               </div>
             </div>
   <?php

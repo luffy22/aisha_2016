@@ -10,7 +10,7 @@
 .pagenav ul{display:inline-block;*display:inline;list-style-type:none;margin-left:0;margin-bottom:0;}
 .pagenav li{display:inline;margin:0px;padding:0}
 .pagenav a,span.pagenav{padding:0 14px;margin:0;line-height:1.9em;text-decoration:none;border:1px solid #ddd;border-left:0px solid #ddd;display:inline-block;line-height:1.9em;}
-.footer2{background:url(../images/back_footer.png)!important;height:120px!important;width:100%;color:#FFFFFF;padding:2px;}.footer2 a{color: #fff !important;}
+.footer2{background:url(../images/back_footer.png)!important;width:100%;color:#FFFFFF;padding:2px;}.footer2 a{color: #fff !important;}
 .pagenav li:first-child a,.pagination-start span{-webkit-border-radius:3px 0 0 3px;-moz-border-radius:3px 0 0 3px;border-radius:3px 0 0 3px;border-left:solid 1px #ddd}
 .pagenav li:last-child a,.pagination-end span{-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
 .pagination ul{margin:10px 10px 10px 0;padding:0}
