@@ -35,8 +35,8 @@ fear and superstition took over reasoning and logic part. Astro Isha is intended
 </div>
 <h3>About The Founder</h3>
 <div>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo JURI::base() ?>images/astroisha_founder.jpg" title="Astro Isha Founder" class="img-responsive" align="left" hspace="10" />My name is Rohan Desai and I am the Founder of Astro Isha . I have done my BSc. In Computer Science from 
-Brunel University, London. I am currently the Sole Propreitor of Astro Isha. I am involved in design, coding, maintenance and content of the website. I am not really an Astrologer and prefer the coding and designing parts. But having said that I am 
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo JURI::base() ?>images/astroisha_founder.jpg" title="Astro Isha Founder" class="img-responsive" align="left" hspace="10" />My name is Rohan Desai and I am the Founder of Astro Isha . I have done my BSc. in Computer Science from 
+Brunel University, London. I am currently the Sole Proprietor of Astro Isha. I am involved in design, coding, maintenance and content of the website. I am not really an Astrologer and prefer the coding and designing parts. Having said that I am 
 well-versed in the Astrological Concepts and currently answers all the queries asked on Astro Isha.</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I plan to delegate the writing of Astrological Content and Answering of Queries to Dedicated Astrologers soon enough and focus on my expertise which are
 design and coding.</p>

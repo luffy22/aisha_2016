@@ -21,6 +21,7 @@
 	$encrypted_data=encrypt($merchant_data,$working_key); // Method for encrypting the data.
           //
         //http://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction
+        //https://cctest.ccavenue.com/shopzone/cc_details.jsp
 ?>
 <form method="post" name="redirect" action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction"> 
 <?php
