@@ -17,14 +17,9 @@ public function askQuestions($details)
     $tob                = $details['tob'];
     $pob                = $details['pob'];
     $fees               = $details['fees'];
-    if($details['user_loc']=="IN")
-   {
-        $paytype            = 'ccavenue';
-   }
-   else
-   {
-       $paytype             = 'paypal';
-   }
+    
+    $paytype            = $details['pay_type'];
+    
     $user_loc           = $details['user_loc'];
     $user_curr          = $details['user_curr'];
     $user_curr_full     = $details['user_curr_full'];
@@ -101,10 +96,14 @@ public function askQuestions($details)
                                         'ques_topic_2'=>$row['ques_topic2'],'ques_2'=>$row['ques_2'],'ques_2_explain'=>$row['ques_2_explain'],
                                         'ques_topic_3'=>$row['ques_topic3'],'ques_3'=>$row['ques_3'],'ques_3_explain'=>$row['ques_3_explain']
                                   );
-
-       if($details['location']=="IN")
+       
+       if($details['location']=="IN"&& $paytype == "ccavenue")
        {
             header('Location:'.JUri::base().'ccavenue/nonseam/ccavenue_payment.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
+       }
+       if($details['location']=="IN"&& $paytype == "paytm")
+       {
+            header('Location:'.JUri::base().'PaytmKit/TxnTest.php?token='.$details['token'].'&email='.$details['email'].'&fees='.$details['fees']); 
        }
        else
        {
