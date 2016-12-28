@@ -286,6 +286,9 @@ else
             </select>
     </div>
     <div class="form-group" id="ques_grp_7">
+        
+    </div>
+ <div class="form-group" id="ques_grp_10">
         <label for="ques_pay">Type Of Payment</label>
         <input type="radio" name="pay_type" id="pay_paytm" value="paytm" checked /> Paytm
         <input type="radio" name="pay_type" id="pay_ccacenue" value="ccavenue" /> CCAvenue

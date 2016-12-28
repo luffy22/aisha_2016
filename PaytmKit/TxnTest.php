@@ -60,6 +60,7 @@
 						value="<?php echo trim($price); ?>">
 					</td>
 				</tr>
+                                <input type="hidden" name="CALLBACK_URL" value="https://www.astroisha.com/PaytmKit/pgResponse.php" />
 				<tr>
 					<td></td>
 					<td></td>

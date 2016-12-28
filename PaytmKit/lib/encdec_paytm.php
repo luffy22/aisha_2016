@@ -74,8 +74,10 @@ function getChecksumFromArray($arrayList, $key, $sort=1) {
 	$finalString = $str . "|" . $salt;
 	$hash = hash("sha256", $finalString);
 	$hashString = $hash . $salt;
+	
 	$checksum = encrypt_e($hashString, $key);
-	print_r($checksum);exit;
+	//print_r($checksum);exit;
+	return $checksum;
 }
 function getChecksumFromString($str, $key) {
 	

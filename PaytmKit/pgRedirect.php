@@ -10,11 +10,13 @@ require_once("./lib/encdec_paytm.php");
 $checkSum = "";
 $paramList = array();
 
-$ORDER_ID = $_POST["ORDER_ID"];
+$ORDER_ID = $_POST["ORDER_ID"];         
 $CUST_ID = $_POST["CUST_ID"];
 $INDUSTRY_TYPE_ID = $_POST["INDUSTRY_TYPE_ID"];
 $CHANNEL_ID = $_POST["CHANNEL_ID"];
 $TXN_AMOUNT = $_POST["TXN_AMOUNT"];
+$CALLBACK_URL   = $_POST["CALLBACK_URL"];
+//echo $CALLBACK_URL;EXIT;
 //echo $TXN_AMOUNT;exit;
 
 // Create an array having all required parameters for creating checksum.
@@ -25,9 +27,10 @@ $paramList["INDUSTRY_TYPE_ID"] = $INDUSTRY_TYPE_ID;
 $paramList["CHANNEL_ID"] = $CHANNEL_ID;
 $paramList["TXN_AMOUNT"] = $TXN_AMOUNT;
 $paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
-//$paramList["MSISDN"] = 7777777777; //Mobile number of customer
-//$paramList["EMAIL"] = "kopnite@gmail.com"; //Email ID of customer
-
+$paramList["MSISDN"] = 7777777777; //Mobile number of customer
+$paramList["EMAIL"] = "kopnite@gmail.com";  //Email ID of customer
+$paramList["CALLBACK_URL"]  = $CALLBACK_URL;
+//print_r($paramList);exit;
 $checkSum = getChecksumFromArray($paramList,PAYTM_MERCHANT_KEY);
 //print_r($checkSum);exit;
 /*

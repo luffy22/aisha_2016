@@ -19,7 +19,7 @@ public function askQuestions($details)
     $fees               = $details['fees'];
     
     $paytype            = $details['pay_type'];
-    
+    //echo $paytype;exit;
     $user_loc           = $details['user_loc'];
     $user_curr          = $details['user_curr'];
     $user_curr_full     = $details['user_curr_full'];
@@ -66,17 +66,7 @@ public function askQuestions($details)
     // sending notification email via function
     if($result)
     {
-        $query              ->clear();
-        if($details['user_loc']!=="IN")
-        {
-            $query1    ->insert($db->quoteName('#__paypal_info'))
-                        ->columns($db->quoteName($column1))
-                        ->values(implode(',',$values1));
-            $db             ->setQuery($query1);
-
-            $result1  = $db->query();
-        }
-        $query1->clear(); 
+       
         $query              ->select($db->quoteName(array('UniqueID','name','email',
                                     'gender','dob','pob','tob','fees','choice', 'explain_choice',
                                     'payment_type','user_currency','user_curr_full','user_location',
@@ -96,7 +86,7 @@ public function askQuestions($details)
                                         'ques_topic_2'=>$row['ques_topic2'],'ques_2'=>$row['ques_2'],'ques_2_explain'=>$row['ques_2_explain'],
                                         'ques_topic_3'=>$row['ques_topic3'],'ques_3'=>$row['ques_3'],'ques_3_explain'=>$row['ques_3_explain']
                                   );
-       
+       //print_r($details);exit;
        if($details['location']=="IN"&& $paytype == "ccavenue")
        {
             header('Location:'.JUri::base().'ccavenue/nonseam/ccavenue_payment.php?token='.$details['token'].'&name='.$details['name'].'&email='.$details['email'].'&curr='.$details['user_curr'].'&fees='.$details['fees']); 
